@@ -12,6 +12,7 @@
 		224697CB1F19843A0089C7CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697C91F19843A0089C7CA /* Main.storyboard */; };
 		224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 224697CC1F19843A0089C7CA /* Assets.xcassets */; };
 		224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */; };
+		224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697D71F19E8060089C7CA /* PrettyButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		224697CC1F19843A0089C7CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		224697CF1F19843A0089C7CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		224697D11F19843A0089C7CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		224697D71F19E8060089C7CA /* PrettyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				224697C51F19843A0089C7CA /* AppDelegate.swift */,
 				224697C71F19843A0089C7CA /* ViewController.swift */,
+				224697D71F19E8060089C7CA /* PrettyButton.swift */,
 				224697C91F19843A0089C7CA /* Main.storyboard */,
 				224697CC1F19843A0089C7CA /* Assets.xcassets */,
 				224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				224697C81F19843A0089C7CA /* ViewController.swift in Sources */,
+				224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */,
 				224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +303,7 @@
 				224697D61F19843A0089C7CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

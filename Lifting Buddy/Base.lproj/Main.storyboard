@@ -1,26 +1,98 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Lifting_Buddy" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ak4-wt-Kh1">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="125"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good afternoon, it's" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLa-c4-Dmi">
+                                        <rect key="frame" x="8" y="27" width="304" height="27.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <size key="shadowOffset" width="-1" height="1"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxE-1y-Aab">
+                                        <rect key="frame" x="8" y="63" width="304" height="42"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                        <color key="textColor" red="0.94277064504192654" green="1" blue="0.98805395481877722" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <size key="shadowOffset" width="-1" height="1"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.29198133945465088" green="0.45802891254425049" blue="0.91091817617416382" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="LxE-1y-Aab" secondAttribute="trailing" constant="8" id="3Jt-oH-OEQ"/>
+                                    <constraint firstItem="YLa-c4-Dmi" firstAttribute="leading" secondItem="ak4-wt-Kh1" secondAttribute="leading" constant="8" id="5ht-tR-hh4"/>
+                                    <constraint firstItem="LxE-1y-Aab" firstAttribute="top" secondItem="YLa-c4-Dmi" secondAttribute="bottom" constant="8.5" id="O1B-u6-0II"/>
+                                    <constraint firstAttribute="bottom" secondItem="LxE-1y-Aab" secondAttribute="bottom" constant="20" id="Qtu-US-nCw"/>
+                                    <constraint firstItem="YLa-c4-Dmi" firstAttribute="top" secondItem="ak4-wt-Kh1" secondAttribute="top" constant="27" id="fo3-V6-UAL"/>
+                                    <constraint firstItem="LxE-1y-Aab" firstAttribute="leading" secondItem="ak4-wt-Kh1" secondAttribute="leading" constant="8" id="tT4-PS-Cnx"/>
+                                    <constraint firstAttribute="trailing" secondItem="YLa-c4-Dmi" secondAttribute="trailing" constant="8" id="vHg-0O-2JX"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r7t-dm-l44" customClass="PrettyButton" customModule="Lifting_Buddy" customModuleProvider="target">
+                                <rect key="frame" x="40" y="178" width="240" height="64"/>
+                                <color key="backgroundColor" red="0.29126899294430425" green="0.45989402994592193" blue="0.90986615419387817" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="ojL-pW-UMy"/>
+                                </constraints>
+                                <size key="titleShadowOffset" width="-1" height="1"/>
+                                <state key="normal" title="Start Today's Workout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="startWorkoutButtonTouch:" destination="BYZ-38-t0r" eventType="touchDown" id="oky-C6-xR9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.97443225043160575" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="r7t-dm-l44" firstAttribute="top" secondItem="ak4-wt-Kh1" secondAttribute="bottom" constant="53" id="4Bu-C5-Igt"/>
+                            <constraint firstItem="ak4-wt-Kh1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="AcK-GY-xO3"/>
+                            <constraint firstItem="ak4-wt-Kh1" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="P9l-00-COJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="r7t-dm-l44" secondAttribute="trailing" constant="24" id="UUQ-Qs-0id"/>
+                            <constraint firstItem="r7t-dm-l44" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="24" id="gLV-CO-Je5"/>
+                            <constraint firstAttribute="trailing" secondItem="ak4-wt-Kh1" secondAttribute="trailing" id="vvU-Hv-dRx"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="dayOfTheWeekLabel" destination="LxE-1y-Aab" id="gGl-hY-wUU"/>
+                        <outlet property="startWorkoutButton" destination="r7t-dm-l44" id="kB2-T5-iRs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-82.5" y="135"/>
         </scene>
     </scenes>
 </document>

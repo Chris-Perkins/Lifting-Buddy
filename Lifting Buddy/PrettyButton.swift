@@ -18,6 +18,7 @@ import UIKit
             self.layer.shadowOpacity = shadowOpacity
         }
     }
+    @IBInspectable var slideColor: UIColor = UIColor.white
     
     var slideViewTag: Int = 1337
     
@@ -37,17 +38,17 @@ import UIKit
         self.addTarget(self, action: #selector(releasePress), for: .touchUpOutside)
     }
     
-    @objc private func touchInside(sender: PrettyButton) {
+    private func createSlideView() {
         // If slide view does not currently exist, create it
         if self.viewWithTag(slideViewTag) == nil {
             // Create view that slides to bottom right on press
             let overlayView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: 1, height: self.frame.height))
-            overlayView.backgroundColor = UIColor.white
             overlayView.layer.cornerRadius = cornerRadius
+            overlayView.backgroundColor = slideColor
             overlayView.alpha = 0.25
             overlayView.layer.zPosition = -1
             overlayView.tag = slideViewTag
-            sender.addSubview(overlayView)
+            self.addSubview(overlayView)
             
             UIView.animate(withDuration: 0.5, animations: {
                 overlayView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
@@ -55,17 +56,24 @@ import UIKit
         }
     }
     
-    @objc private func releasePress(sender: PrettyButton) {
+    private func removeSlideView() {
         // Delete slide view on release
         if let slideView: UIView = self.viewWithTag(slideViewTag) {
             UIView.animate(withDuration: 0.25, animations: {
                 slideView.alpha = 0
-                }, completion:
-                    {
-                        (finished: Bool) -> Void in
-                        slideView.removeFromSuperview()
-                    }
-            )
+            }, completion:
+                {
+                    (finished: Bool) -> Void in
+                    slideView.removeFromSuperview()
+            })
         }
+    }
+    
+    @objc private func touchInside(sender: PrettyButton) {
+        createSlideView()
+    }
+    
+    @objc private func releasePress(sender: PrettyButton) {
+        removeSlideView()
     }
 }

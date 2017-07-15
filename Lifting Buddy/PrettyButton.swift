@@ -31,7 +31,7 @@ import UIKit
         
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: -1, height: 1)
-        self.layer.shadowRadius = 5.0
+        self.layer.shadowRadius = 3.0
         
         self.addTarget(self, action: #selector(touchInside), for: .touchDown)
         self.addTarget(self, action: #selector(releasePress), for: .touchUpInside)

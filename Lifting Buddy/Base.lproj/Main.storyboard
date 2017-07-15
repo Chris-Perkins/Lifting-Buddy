@@ -23,22 +23,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ak4-wt-Kh1">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="125"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good afternoon, it's" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLa-c4-Dmi">
-                                        <rect key="frame" x="8" y="27" width="304" height="27.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good afternoon, it's" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLa-c4-Dmi">
+                                        <rect key="frame" x="8" y="27" width="304" height="28.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                         <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <size key="shadowOffset" width="-1" height="1"/>
+                                        <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                        <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[DotW]" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxE-1y-Aab">
-                                        <rect key="frame" x="8" y="63" width="304" height="42"/>
+                                        <rect key="frame" x="8" y="64" width="304" height="42"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                         <color key="textColor" red="0.94277064504192654" green="1" blue="0.98805395481877722" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <size key="shadowOffset" width="-1" height="1"/>
+                                        <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29198133945465088" green="0.45802891254425049" blue="0.91091817617416382" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -53,7 +54,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r7t-dm-l44" customClass="PrettyButton" customModule="Lifting_Buddy" customModuleProvider="target">
-                                <rect key="frame" x="40" y="178" width="240" height="64"/>
+                                <rect key="frame" x="40" y="179" width="240" height="64"/>
                                 <color key="backgroundColor" red="0.29126899290000002" green="0.4598940299" blue="0.90986615420000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="ojL-pW-UMy"/>
@@ -84,6 +85,7 @@
                     </view>
                     <connections>
                         <outlet property="dayOfTheWeekLabel" destination="LxE-1y-Aab" id="gGl-hY-wUU"/>
+                        <outlet property="headerView" destination="ak4-wt-Kh1" id="OY4-ez-aXi"/>
                         <outlet property="startWorkoutButton" destination="r7t-dm-l44" id="kB2-T5-iRs"/>
                     </connections>
                 </viewController>

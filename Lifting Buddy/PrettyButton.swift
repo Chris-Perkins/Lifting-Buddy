@@ -19,22 +19,53 @@ import UIKit
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    var slideViewTag: Int = 1337
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: -1, height: 1)
         self.layer.shadowRadius = 5.0
+        
+        self.addTarget(self, action: #selector(touchInside), for: .touchDown)
+        self.addTarget(self, action: #selector(releasePress), for: .touchUpInside)
+        self.addTarget(self, action: #selector(releasePress), for: .touchUpOutside)
     }
     
-    func buttonPressed() {
-        let view: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        view.backgroundColor = UIColor.white
-        view.layer.cornerRadius = cornerRadius
-        view.alpha = 0.25
-        self.addSubview(view)
-        UIView.animate(withDuration: 0.5, animations: {
-            view.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
-        })
+    @objc private func touchInside(sender: PrettyButton) {
+        // If slide view does not currently exist, create it
+        if self.viewWithTag(slideViewTag) == nil {
+            // Create view that slides to bottom right on press
+            let overlayView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: 1, height: self.frame.height))
+            overlayView.backgroundColor = UIColor.white
+            overlayView.layer.cornerRadius = cornerRadius
+            overlayView.alpha = 0.25
+            overlayView.layer.zPosition = -1
+            overlayView.tag = slideViewTag
+            sender.addSubview(overlayView)
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                overlayView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+            })
+        }
+    }
+    
+    @objc private func releasePress(sender: PrettyButton) {
+        // Delete slide view on release
+        if let slideView: UIView = self.viewWithTag(slideViewTag) {
+            UIView.animate(withDuration: 0.25, animations: {
+                slideView.alpha = 0
+                }, completion:
+                    {
+                        (finished: Bool) -> Void in
+                        slideView.removeFromSuperview()
+                    }
+            )
+        }
     }
 }

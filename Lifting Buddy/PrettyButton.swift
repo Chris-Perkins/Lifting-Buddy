@@ -13,7 +13,7 @@ import UIKit
     @IBInspectable var cornerRadius: CGFloat = 5.0 {
         didSet { self.layer.cornerRadius = cornerRadius }
     }
-    @IBInspectable var shadowOpacity: Float = 1.0 {
+    @IBInspectable var shadowOpacity: Float = 0.2 {
         didSet {
             self.layer.shadowOpacity = shadowOpacity
         }
@@ -30,8 +30,12 @@ import UIKit
         super.init(coder: aDecoder)
         
         self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: -1, height: 1)
+        self.layer.shadowOffset = CGSize(width: 0, height: 1)
         self.layer.shadowRadius = 3.0
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
         self.addTarget(self, action: #selector(touchInside), for: .touchDown)
         self.addTarget(self, action: #selector(releasePress), for: .touchUpInside)

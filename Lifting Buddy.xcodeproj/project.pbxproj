@@ -8,22 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697C51F19843A0089C7CA /* AppDelegate.swift */; };
-		224697C81F19843A0089C7CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697C71F19843A0089C7CA /* ViewController.swift */; };
+		224697C81F19843A0089C7CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697C71F19843A0089C7CA /* MainViewController.swift */; };
 		224697CB1F19843A0089C7CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697C91F19843A0089C7CA /* Main.storyboard */; };
 		224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 224697CC1F19843A0089C7CA /* Assets.xcassets */; };
 		224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */; };
 		224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697D71F19E8060089C7CA /* PrettyButton.swift */; };
+		22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E77E051F1B35310076B3DB /* HelperFunctions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		224697C21F19843A0089C7CA /* Lifting Buddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lifting Buddy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		224697C51F19843A0089C7CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		224697C71F19843A0089C7CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		224697C71F19843A0089C7CA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		224697CA1F19843A0089C7CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		224697CC1F19843A0089C7CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		224697CF1F19843A0089C7CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		224697D11F19843A0089C7CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		224697D71F19E8060089C7CA /* PrettyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyButton.swift; sourceTree = "<group>"; };
+		22E77E051F1B35310076B3DB /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +59,9 @@
 			isa = PBXGroup;
 			children = (
 				224697C51F19843A0089C7CA /* AppDelegate.swift */,
-				224697C71F19843A0089C7CA /* ViewController.swift */,
+				224697C71F19843A0089C7CA /* MainViewController.swift */,
 				224697D71F19E8060089C7CA /* PrettyButton.swift */,
+				22E77E051F1B35310076B3DB /* HelperFunctions.swift */,
 				224697C91F19843A0089C7CA /* Main.storyboard */,
 				224697CC1F19843A0089C7CA /* Assets.xcassets */,
 				224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */,
@@ -139,7 +142,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				224697C81F19843A0089C7CA /* ViewController.swift in Sources */,
+				22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */,
+				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
 				224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */,
 				224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */,
 			);

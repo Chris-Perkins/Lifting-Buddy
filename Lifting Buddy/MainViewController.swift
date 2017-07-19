@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RealmSwift
+import Realm
 
 class MainViewController: UIViewController {
     @IBOutlet weak var dayOfTheWeekLabel: UILabel!
@@ -16,6 +18,10 @@ class MainViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        // Attempt to access local storage
+        let realm = try! Realm()
+        
+        // Adding views
         /* !-- HEADER VIEW SECTION --! */
         // Header view layout
         headerView.layer.shadowColor = UIColor.black.cgColor
@@ -25,9 +31,24 @@ class MainViewController: UIViewController {
         
         // Day of the week label marks
         dayOfTheWeekLabel.numberOfLines = 1
-        dayOfTheWeekLabel.text = NSDate().dayOfTheWeek()
+        dayOfTheWeekLabel.text = NSDate().dayOfTheWeek()!
         dayOfTheWeekLabel.adjustsFontSizeToFitWidth = true
         
+        let todayString = NSDate().dayOfTheWeek()
+        if let workoutToday: Workout = realm.objects(Workout.self).filter(
+                NSPredicate(format: "dayOfTheWeek = %@", todayString!)).first {
+            addWorkoutDisplay(workout: workoutToday)
+        } else {
+            try! realm.write() {
+                let workout: Workout = realm.create(Workout.self, value:["Tuesday"])
+                workout.setDayOfTheWeek(day: "Tuesday")
+            }
+            
+            print(realm.objects(Workout.self))
+        }
+    }
+    
+    func addWorkoutDisplay(workout: Workout) {
         /* !-- QUICK START LAYOUT --! */
         var quickStartSubviews: [UIView] = [UIView]()
         
@@ -69,5 +90,19 @@ extension NSDate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         return dateFormatter.string(from: self as Date)
+    }
+}
+
+extension Results {
+    
+    func toArray() -> [T] {
+        return self.map{$0}
+    }
+}
+
+extension RealmSwift.List {
+    
+    func toArray() -> [T] {
+        return self.map{$0}
     }
 }

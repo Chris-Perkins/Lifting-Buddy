@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		224153761F1EE12B00F7B82B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153751F1EE12B00F7B82B /* Workout.swift */; };
+		224153781F1EE1F000F7B82B /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153771F1EE1F000F7B82B /* Exercise.swift */; };
 		224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697C51F19843A0089C7CA /* AppDelegate.swift */; };
 		224697C81F19843A0089C7CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697C71F19843A0089C7CA /* MainViewController.swift */; };
 		224697CB1F19843A0089C7CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697C91F19843A0089C7CA /* Main.storyboard */; };
@@ -19,6 +21,8 @@
 
 /* Begin PBXFileReference section */
 		07EAE38F8336E92D79D24030 /* Pods-Lifting Buddy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.debug.xcconfig"; sourceTree = "<group>"; };
+		224153751F1EE12B00F7B82B /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		224153771F1EE1F000F7B82B /* Exercise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		224697C21F19843A0089C7CA /* Lifting Buddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lifting Buddy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		224697C51F19843A0089C7CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		224697C71F19843A0089C7CA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -44,6 +48,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		224153791F1EE2C500F7B82B /* Workout Classes */ = {
+			isa = PBXGroup;
+			children = (
+				224153751F1EE12B00F7B82B /* Workout.swift */,
+				224153771F1EE1F000F7B82B /* Exercise.swift */,
+			);
+			name = "Workout Classes";
+			sourceTree = "<group>";
+		};
 		224697B91F19843A0089C7CA = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +78,7 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
+				224153791F1EE2C500F7B82B /* Workout Classes */,
 				224697C51F19843A0089C7CA /* AppDelegate.swift */,
 				224697C71F19843A0089C7CA /* MainViewController.swift */,
 				224697D71F19E8060089C7CA /* PrettyButton.swift */,
@@ -220,7 +234,9 @@
 				22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
 				224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */,
+				224153761F1EE12B00F7B82B /* Workout.swift in Sources */,
 				224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */,
+				224153781F1EE1F000F7B82B /* Exercise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

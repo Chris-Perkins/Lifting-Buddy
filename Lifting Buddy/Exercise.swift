@@ -9,7 +9,7 @@
 import RealmSwift
 import Realm
 
-class Exercise: Object {
+class Exercise: RLMObject {
     // The unit we're measuring in
     private var unit: String?
     // Name of this exercise
@@ -17,21 +17,14 @@ class Exercise: Object {
     
     // MARK: Init Functions
     
-    required init() {
+    required override init() {
         unit = nil
         name = nil
         
         super.init()
     }
     
-    required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        unit = nil
-        name = nil
-        
-        super.init(realm: realm, schema: schema)
-    }
-    
-    required init(value: Any, schema: RLMSchema) {
+    required override init(value: Any, schema: RLMSchema) {
         unit = nil
         name = nil
         

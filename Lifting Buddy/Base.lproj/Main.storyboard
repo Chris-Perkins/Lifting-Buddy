@@ -57,22 +57,22 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" restorationIdentifier="Start Workout View" translatesAutoresizingMaskIntoConstraints="NO" id="PfL-vu-MZg" userLabel="Workout View">
-                                <rect key="frame" x="16" y="161.5" width="288" height="218.5"/>
+                                <rect key="frame" x="16" y="141.5" width="288" height="248.5"/>
                             </view>
                             <view contentMode="scaleToFill" restorationIdentifier="Footer View" translatesAutoresizingMaskIntoConstraints="NO" id="Hwu-Dn-sC2" userLabel="Footer View">
-                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="420" width="320" height="60"/>
                                 <color key="backgroundColor" red="0.29126899290000002" green="0.4598940299" blue="0.90986615420000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="0tE-LC-9ee"/>
+                                    <constraint firstAttribute="height" constant="60" id="0tE-LC-9ee"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.92414434523809508" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Hwu-Dn-sC2" firstAttribute="top" secondItem="PfL-vu-MZg" secondAttribute="bottom" constant="50" id="129-Bt-Vcf"/>
+                            <constraint firstItem="Hwu-Dn-sC2" firstAttribute="top" secondItem="PfL-vu-MZg" secondAttribute="bottom" constant="30" id="129-Bt-Vcf"/>
                             <constraint firstItem="PfL-vu-MZg" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="AI1-6o-tK8"/>
                             <constraint firstItem="ak4-wt-Kh1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HD3-tc-5gs"/>
-                            <constraint firstItem="PfL-vu-MZg" firstAttribute="top" secondItem="ak4-wt-Kh1" secondAttribute="bottom" constant="50" id="PaF-xG-tKa"/>
+                            <constraint firstItem="PfL-vu-MZg" firstAttribute="top" secondItem="ak4-wt-Kh1" secondAttribute="bottom" constant="30" id="PaF-xG-tKa"/>
                             <constraint firstAttribute="trailing" secondItem="ak4-wt-Kh1" secondAttribute="trailing" id="Qek-5r-rUf"/>
                             <constraint firstAttribute="trailing" secondItem="Hwu-Dn-sC2" secondAttribute="trailing" id="dnK-aJ-vHx"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Hwu-Dn-sC2" secondAttribute="bottom" id="eDn-8b-NKU"/>

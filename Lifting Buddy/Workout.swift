@@ -10,35 +10,48 @@ import RealmSwift
 import Realm
 
 class Workout: Object {
+    // Name of this workout
+    dynamic private var name: String?
     // The day this exercise occurs on
-    private var dayOfTheWeek: String?
+    dynamic private var dayOfTheWeek: String?
     // Exercises in this workout
-    private var exercises: [Exercise]
+    dynamic var exercises: RLMArray<Exercise>
     
     // MARK: Init Functions
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        self.name = nil
         self.dayOfTheWeek = nil
-        self.exercises = [Exercise]()
+        self.exercises = RLMArray(objectClassName: Exercise.className())
         
         super.init(realm: realm, schema: schema)
     }
     
     required init() {
+        self.name = nil
         self.dayOfTheWeek = nil
-        self.exercises = [Exercise]()
+        self.exercises = RLMArray(objectClassName: Exercise.className())
         
         super.init()
     }
     
     required init(value: Any, schema: RLMSchema) {
+        self.name = nil
         self.dayOfTheWeek = nil
-        self.exercises = [Exercise]()
+        self.exercises = RLMArray(objectClassName: Exercise.className())
         
         super.init(value: value, schema: schema)
     }
     
     // MARK: Get/Set methods for variables in this class
+    
+    public func getName() -> String? {
+        return self.name
+    }
+    
+    public func setName(name: String?) {
+        self.name = name
+    }
     
     public func getDayOfTheWeek() -> String? {
         return self.dayOfTheWeek
@@ -48,18 +61,18 @@ class Workout: Object {
         self.dayOfTheWeek = day
     }
     
-    public func getExercises() -> [Exercise] {
+    public func getExercises() -> RLMArray<Exercise> {
         return self.exercises
     }
     
     public func addExercise(exercise: Exercise) {
-        self.exercises.append(exercise)
+        self.exercises.add(exercise)
     }
     
     // Remove exercise stored at an index in the int if possible
-    public func removeExerciseAtIndex(index: Int) {
+    public func removeExerciseAtIndex(index: UInt) {
         if index >= 0 && index < self.exercises.count {
-            exercises.remove(at: index)
+            exercises.removeObject(at: index)
         }
     }
 }

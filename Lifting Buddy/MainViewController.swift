@@ -34,32 +34,54 @@ class MainViewController: UIViewController {
         dayOfTheWeekLabel.text = NSDate().dayOfTheWeek()!
         dayOfTheWeekLabel.adjustsFontSizeToFitWidth = true
         
-        let todayString = NSDate().dayOfTheWeek()
+        let todayString = /*NSDate().dayOfTheWeek()*/ "TEST"
         if let workoutToday: Workout = realm.objects(Workout.self).filter(
-                NSPredicate(format: "dayOfTheWeek = %@", todayString!)).first {
+                NSPredicate(format: "dayOfTheWeek = %@", todayString)).first {
             addWorkoutDisplay(workout: workoutToday)
         } else {
-            try! realm.write() {
-                let workout: Workout = realm.create(Workout.self, value:["Tuesday"])
-                workout.setDayOfTheWeek(day: "Tuesday")
+            try! realm.write {
+                let workout: Workout = realm.create(Workout.self)
+                workout.setDayOfTheWeek(day: todayString)
+                workout.setName(name: "[WORKOUT NAME TEST]")
             }
-            
-            print(realm.objects(Workout.self))
         }
+        
+        print(realm.objects(Workout.self))
     }
     
     func addWorkoutDisplay(workout: Workout) {
         /* !-- QUICK START LAYOUT --! */
         var quickStartSubviews: [UIView] = [UIView]()
         
+        // Today's workout label
+        let todayWorkoutLabel: UILabel =
+            UILabel(frame: CGRect(x: 0, y: 0,
+                                  width: quickStartView.frame.width,
+                                  height: quickStartView.frame.height * 0.2))
+        todayWorkoutLabel.text = workout.getName()
+        todayWorkoutLabel.numberOfLines = 1
+        todayWorkoutLabel.textAlignment = .center
+        todayWorkoutLabel.adjustsFontSizeToFitWidth = true
+        todayWorkoutLabel.lineBreakMode = .byClipping
+        /*todayWorkoutLabel.sizeToFit()
+        todayWorkoutLabel.frame = CGRect(x:0, y:0,
+                                         width: quickStartView.frame.width,
+                                         height: todayWorkoutLabel.frame.height)*/
+        
+        quickStartSubviews.append(todayWorkoutLabel)
+        
         // Start today's workout button
         let startTodayWorkoutButton: PrettyButton =
             PrettyButton(frame: CGRect(x: 0, y: 0,
                                        width: quickStartView.frame.width,
-                                       height: 100))
+                                       height: quickStartView.frame.height * 0.5))
         startTodayWorkoutButton.setTitle("Start Today's Workout", for: .normal)
         startTodayWorkoutButton.cornerRadius = 5.0
         startTodayWorkoutButton.shadowOpacity = 0.2
+        startTodayWorkoutButton.titleLabel?.numberOfLines = 0
+        startTodayWorkoutButton.titleLabel?.minimumScaleFactor = 0.5
+        startTodayWorkoutButton.titleLabel?.lineBreakMode = .byClipping
+        startTodayWorkoutButton.titleLabel?.adjustsFontSizeToFitWidth = true
         startTodayWorkoutButton.setTitleColor(UIColor.white, for: .normal)
         startTodayWorkoutButton.backgroundColor = headerView.backgroundColor
         
@@ -69,7 +91,7 @@ class MainViewController: UIViewController {
         let startOtherWorkoutButton: PrettyButton =
             PrettyButton(frame: CGRect(x: 25, y: 0,
                                        width: quickStartView.frame.width - 50,
-                                       height: 75))
+                                       height: quickStartView.frame.height * 0.15))
         startOtherWorkoutButton.setTitle("Start Different Workout", for: .normal)
         startOtherWorkoutButton.setTitleColor(UIColor(red: 0, green: 122.0 / 255.0,
                                                       blue: 1.0, alpha: 1), for: .normal)
@@ -80,7 +102,7 @@ class MainViewController: UIViewController {
         
         quickStartSubviews.append(startOtherWorkoutButton)
         
-        addSubviewsToViewWithYPadding(mainView: quickStartView, subviews: quickStartSubviews, spacing: 50)
+        addSubviewsToViewWithYPadding(mainView: quickStartView, subviews: quickStartSubviews)
     }
 }
 

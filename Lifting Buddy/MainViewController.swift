@@ -21,23 +21,10 @@ class MainViewController: UIViewController {
         // Attempt to access local storage
         let realm = try! Realm()
         
-        // Adding views
-        /* !-- HEADER VIEW SECTION --! */
-        // Header view layout
-        headerView.layer.shadowColor = UIColor.black.cgColor
-        headerView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        headerView.layer.shadowRadius = 3.0
-        headerView.layer.shadowOpacity = 0.4
-        
-        // Day of the week label marks
-        dayOfTheWeekLabel.numberOfLines = 1
-        dayOfTheWeekLabel.text = NSDate().dayOfTheWeek()!
-        dayOfTheWeekLabel.adjustsFontSizeToFitWidth = true
-        
         let todayString = /*NSDate().dayOfTheWeek()*/ "TEST"
         if let workoutToday: Workout = realm.objects(Workout.self).filter(
                 NSPredicate(format: "dayOfTheWeek = %@", todayString)).first {
-            addWorkoutDisplay(workout: workoutToday)
+            //addWorkoutDisplay(workout: workoutToday)
         } else {
             try! realm.write {
                 let workout: Workout = realm.create(Workout.self)
@@ -49,70 +36,8 @@ class MainViewController: UIViewController {
         print(realm.objects(Workout.self))
     }
     
-    func addWorkoutDisplay(workout: Workout) {
-        /* !-- QUICK START LAYOUT --! */
-        var quickStartSubviews: [UIView] = [UIView]()
-        
-        // Today's workout label
-        let todayWorkoutLabel: UILabel =
-            UILabel(frame: CGRect(x: 0, y: 0,
-                                  width: quickStartView.frame.width,
-                                  height: quickStartView.frame.height * 0.1))
-        todayWorkoutLabel.text = workout.getName()
-        todayWorkoutLabel.numberOfLines = 1
-        todayWorkoutLabel.textAlignment = .center
-        todayWorkoutLabel.adjustsFontSizeToFitWidth = true
-        todayWorkoutLabel.lineBreakMode = .byClipping
-        
-        quickStartSubviews.append(todayWorkoutLabel)
-        
-        // Start today's workout button
-        let startTodayWorkoutButton: PrettyButton =
-            PrettyButton(frame: CGRect(x: 0, y: 0,
-                                       width: quickStartView.frame.width,
-                                       height: quickStartView.frame.height * 0.4))
-        startTodayWorkoutButton.setTitle("Start Today's Workout", for: .normal)
-        startTodayWorkoutButton.cornerRadius = 5.0
-        startTodayWorkoutButton.shadowOpacity = 0.2
-        startTodayWorkoutButton.setTitleColor(UIColor.white, for: .normal)
-        startTodayWorkoutButton.backgroundColor = headerView.backgroundColor
-        startTodayWorkoutButton.setOverlayStyle(style: PrettyButton.Styles.BLOOM)
-        
-        quickStartSubviews.append(startTodayWorkoutButton)
-        
-        // Start other workout button
-        let startOtherWorkoutButton: PrettyButton =
-            PrettyButton(frame: CGRect(x: 0, y: 0,
-                                       width: quickStartView.frame.width,
-                                       height: quickStartView.frame.height * 0.2))
-        startOtherWorkoutButton.setTitle("Start Different Workout", for: .normal)
-        startOtherWorkoutButton.setTitleColor(UIColor(red: 0, green: 122.0 / 255.0,
-                                                      blue: 1.0, alpha: 1), for: .normal)
-        startOtherWorkoutButton.cornerRadius = 5.0
-        startOtherWorkoutButton.shadowOpacity = 0.2
-        startOtherWorkoutButton.backgroundColor = UIColor.white
-        startOtherWorkoutButton.setOverlayColor(color: UIColor(white: 0.7, alpha: 1))
-        
-        quickStartSubviews.append(startOtherWorkoutButton)
-        
-        // Create a new workout button
-        let createNewWorkoutButton: PrettyButton =
-            PrettyButton(frame: CGRect(x: 25,
-                                       y:0,
-                                       width: quickStartView.frame.width - 50,
-                                       height: quickStartView.frame.height * 0.15))
-        createNewWorkoutButton.setTitle("Create a new workout", for: .normal)
-        createNewWorkoutButton.setTitleColor(UIColor(red: 0, green: 122.0 / 255.0,
-                                                     blue: 1.0, alpha: 1), for: .normal)
-        createNewWorkoutButton.cornerRadius = 5.0
-        createNewWorkoutButton.shadowOpacity = 0.2
-        createNewWorkoutButton.backgroundColor = UIColor.white
-        createNewWorkoutButton.setOverlayColor(color: UIColor(white: 0.7, alpha: 1))
-        
-        quickStartSubviews.append(createNewWorkoutButton)
-        
-        
-        addSubviewsToViewWithYPadding(mainView: quickStartView, subviews: quickStartSubviews)
+    // We have workouts to display
+    func addWorkoutsDisplay(workout: Workout) {
     }
 }
 

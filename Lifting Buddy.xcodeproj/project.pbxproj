@@ -15,6 +15,8 @@
 		224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 224697CC1F19843A0089C7CA /* Assets.xcassets */; };
 		224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */; };
 		224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697D71F19E8060089C7CA /* PrettyButton.swift */; };
+		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
+		22AA6D141F218AD400624744 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D131F218AD400624744 /* SectionView.swift */; };
 		22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E77E051F1B35310076B3DB /* HelperFunctions.swift */; };
 		987A120A06EF773208F02445 /* Pods_Lifting_Buddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */; };
 /* End PBXBuildFile section */
@@ -31,6 +33,8 @@
 		224697CF1F19843A0089C7CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		224697D11F19843A0089C7CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		224697D71F19E8060089C7CA /* PrettyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyButton.swift; sourceTree = "<group>"; };
+		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		22AA6D131F218AD400624744 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		22E77E051F1B35310076B3DB /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		C522BD41578E9EFDC2DF9433 /* Pods-Lifting Buddy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.release.xcconfig"; sourceTree = "<group>"; };
 		CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lifting_Buddy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,17 +82,43 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
+				22AA6D0F1F2184A400624744 /* View Controllers */,
+				22AA6D0E1F21847F00624744 /* Custom UI Types */,
 				224153791F1EE2C500F7B82B /* Workout Classes */,
-				224697C51F19843A0089C7CA /* AppDelegate.swift */,
-				224697C71F19843A0089C7CA /* MainViewController.swift */,
-				224697D71F19E8060089C7CA /* PrettyButton.swift */,
-				22E77E051F1B35310076B3DB /* HelperFunctions.swift */,
+				22AA6D101F2184BD00624744 /* Miscellaneous */,
 				224697C91F19843A0089C7CA /* Main.storyboard */,
 				224697CC1F19843A0089C7CA /* Assets.xcassets */,
 				224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */,
 				224697D11F19843A0089C7CA /* Info.plist */,
 			);
 			path = "Lifting Buddy";
+			sourceTree = "<group>";
+		};
+		22AA6D0E1F21847F00624744 /* Custom UI Types */ = {
+			isa = PBXGroup;
+			children = (
+				224697D71F19E8060089C7CA /* PrettyButton.swift */,
+				22AA6D111F21851400624744 /* HeaderView.swift */,
+				22AA6D131F218AD400624744 /* SectionView.swift */,
+			);
+			name = "Custom UI Types";
+			sourceTree = "<group>";
+		};
+		22AA6D0F1F2184A400624744 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				224697C71F19843A0089C7CA /* MainViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		22AA6D101F2184BD00624744 /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				224697C51F19843A0089C7CA /* AppDelegate.swift */,
+				22E77E051F1B35310076B3DB /* HelperFunctions.swift */,
+			);
+			name = Miscellaneous;
 			sourceTree = "<group>";
 		};
 		83E4B382E04A5660340B4E74 /* Frameworks */ = {
@@ -235,8 +265,10 @@
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
 				224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */,
 				224153761F1EE12B00F7B82B /* Workout.swift in Sources */,
+				22AA6D141F218AD400624744 /* SectionView.swift in Sources */,
 				224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */,
 				224153781F1EE1F000F7B82B /* Exercise.swift in Sources */,
+				22AA6D121F21851400624744 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

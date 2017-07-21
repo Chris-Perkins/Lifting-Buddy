@@ -10,6 +10,8 @@ import UIKit
 
 class HeaderView: UIView {
     override func layoutSubviews() {
+        self.backgroundColor = getNiceBlue()
+        
         // Need status bar height to not overlap other views
         let statusBarHeight = getStatusBarHeight()
         

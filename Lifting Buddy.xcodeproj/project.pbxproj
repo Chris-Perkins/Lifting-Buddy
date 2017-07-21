@@ -113,10 +113,10 @@
 			isa = PBXGroup;
 			children = (
 				224697D71F19E8060089C7CA /* PrettyButton.swift */,
+				225E65D61F22A4B4004B3AF4 /* ExerciseButton.swift */,
 				22AA6D111F21851400624744 /* HeaderView.swift */,
 				22AA6D131F218AD400624744 /* SectionView.swift */,
 				225E65D11F22A041004B3AF4 /* WorkoutView.swift */,
-				225E65D61F22A4B4004B3AF4 /* ExerciseButton.swift */,
 			);
 			name = "Custom UI Types";
 			sourceTree = "<group>";

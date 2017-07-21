@@ -8,6 +8,10 @@
 
 import UIKit
 
+func getNiceBlue() -> UIColor {
+    return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
+}
+
 // Add an array of views to a main view with equal vertical spacing
 func addSubviewsToViewWithYPadding(mainView: UIView, subviews: [UIView], spacing: CGFloat = -1) {
     var trueSpacing: CGFloat = spacing

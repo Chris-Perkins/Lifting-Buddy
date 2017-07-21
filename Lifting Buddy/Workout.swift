@@ -15,7 +15,7 @@ class Workout: Object {
     // The day this exercise occurs on
     dynamic private var dayOfTheWeek: String?
     // Exercises in this workout
-    dynamic var exercises: RLMArray<Exercise>
+    dynamic private var exercises: RLMArray<Exercise>
     
     // MARK: Init Functions
     

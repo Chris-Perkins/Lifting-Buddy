@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -28,10 +29,20 @@
                                     <constraint firstAttribute="height" constant="125" id="SEB-YA-e1Z"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rid-pF-kLD" customClass="ExerciseButton" customModule="Lifting_Buddy" customModuleProvider="target">
+                                <rect key="frame" x="40" y="176" width="240" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="5pn-eW-iIk"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.92414434523809508" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="dBG-i1-qoX" secondAttribute="trailing" id="12q-Ms-Nep"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Rid-pF-kLD" secondAttribute="trailing" constant="24" id="MbL-CQ-Xfs"/>
+                            <constraint firstItem="Rid-pF-kLD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="24" id="Qt5-ao-lZb"/>
+                            <constraint firstItem="Rid-pF-kLD" firstAttribute="top" secondItem="dBG-i1-qoX" secondAttribute="bottom" constant="51" id="Zkj-DJ-neh"/>
                             <constraint firstItem="dBG-i1-qoX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="aqM-r5-TdP"/>
                             <constraint firstItem="dBG-i1-qoX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="kho-VG-uXY"/>
                         </constraints>

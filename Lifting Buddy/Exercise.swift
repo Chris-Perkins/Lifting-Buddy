@@ -11,14 +11,14 @@ import Realm
 
 class Exercise: RLMObject {
     // Name of this exercise
-    dynamic var name: String?
+    dynamic private var name: String?
     
     // How many sets of this exercise
-    dynamic var setCount: Int
+    dynamic private var setCount: Int
     // How many reps per set
-    dynamic var repCount: Int
+    dynamic private var repCount: Int
     // Units for reps (seconds, kilos, etc)
-    dynamic var unit: String?
+    dynamic private var unit: String?
     
     // MARK: Init Functions
     
@@ -41,6 +41,23 @@ class Exercise: RLMObject {
     }
     
     // MARK: Get/Set methods for variables in this class
+    
+    public func getRepCount() -> Int {
+        return self.repCount
+    }
+    
+    public func setRepCount(repCount: Int) {
+        self.repCount = repCount
+    }
+    
+    public func getSetCount() -> Int {
+        return self.setCount
+    }
+    
+    // This variable's name is kind of funny. :)
+    public func setSetCount(setCount: Int) {
+        self.setCount = setCount
+    }
     
     public func getUnit() -> String? {
         return self.unit

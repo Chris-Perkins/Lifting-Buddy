@@ -25,6 +25,7 @@ import UIKit
     // MARK: Properties
     
     public enum Styles {
+        case NONE
         case SLIDE
         case BLOOM
     }
@@ -37,13 +38,13 @@ import UIKit
     // MARK: Init Functions
     
     override init(frame: CGRect) {
-        self.style = Styles.SLIDE
+        self.style = Styles.NONE
         
         super.init(frame: frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.style = Styles.SLIDE
+        self.style = Styles.NONE
         
         super.init(coder: aDecoder)
         
@@ -138,6 +139,8 @@ import UIKit
     
     @objc private func touchInside(sender: PrettyButton) {
         switch self.style {
+        case Styles.NONE:
+            break
         case Styles.SLIDE:
             createSlideView()
             break

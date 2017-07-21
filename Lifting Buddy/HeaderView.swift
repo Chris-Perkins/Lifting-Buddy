@@ -18,7 +18,7 @@ class HeaderView: UIView {
         
         // Bar that displays title of app
         let titleBar: UILabel = UILabel(frame: CGRect(x: 0,
-                                                      y: statusBarHeight + 5,
+                                                      y: statusBarHeight + 10,
                                                       width: self.frame.width,
                                                       height: divide - 10))
         titleBar.text = "Lifting Buddy [ALPHA]"

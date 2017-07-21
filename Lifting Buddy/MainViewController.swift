@@ -22,9 +22,8 @@ class MainViewController: UIViewController {
         let realm = try! Realm()
         
         let todayString = /*NSDate().dayOfTheWeek()*/ "TEST"
-        if let workoutToday: Workout = realm.objects(Workout.self).filter(
-                NSPredicate(format: "dayOfTheWeek = %@", todayString)).first {
-            //addWorkoutDisplay(workout: workoutToday)
+        if realm.objects(Workout.self).filter(
+                NSPredicate(format: "dayOfTheWeek = %@", todayString)).count == 1 {
         } else {
             try! realm.write {
                 let workout: Workout = realm.create(Workout.self)

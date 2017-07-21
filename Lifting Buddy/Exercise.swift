@@ -10,23 +10,32 @@ import RealmSwift
 import Realm
 
 class Exercise: RLMObject {
-    // The unit we're measuring in
-    private var unit: String?
     // Name of this exercise
-    private var name: String?
+    dynamic var name: String?
+    
+    // How many sets of this exercise
+    dynamic var setCount: Int
+    // How many reps per set
+    dynamic var repCount: Int
+    // Units for reps (seconds, kilos, etc)
+    dynamic var unit: String?
     
     // MARK: Init Functions
     
     required override init() {
-        unit = nil
-        name = nil
+        self.unit = nil
+        self.name = nil
+        self.setCount = 0
+        self.repCount = 0
         
         super.init()
     }
     
     required override init(value: Any, schema: RLMSchema) {
-        unit = nil
-        name = nil
+        self.unit = nil
+        self.name = nil
+        self.setCount = 0
+        self.repCount = 0
         
         super.init(value: value, schema: schema)
     }

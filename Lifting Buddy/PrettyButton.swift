@@ -65,14 +65,6 @@ import UIKit
     
     // MARK: Custom view handling
     
-    public func setOverlayStyle(style: PrettyButton.Styles) {
-        self.style = style
-    }
-    
-    public func setOverlayColor(color: UIColor) {
-        self.overlayColor = color
-    }
-    
     // Creates the sliding effect on the button's background
     private func createSlideView() {
         // If slide view does not currently exist, create it
@@ -152,5 +144,15 @@ import UIKit
     
     @objc private func releasePress(sender: PrettyButton) {
         removeOverlayView()
+    }
+    
+    // MARK: Get / Set Methods
+    
+    public func setOverlayStyle(style: PrettyButton.Styles) {
+        self.style = style
+    }
+    
+    public func setOverlayColor(color: UIColor) {
+        self.overlayColor = color
     }
 }

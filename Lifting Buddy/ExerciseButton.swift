@@ -23,6 +23,8 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     private var exeriseInfoDisplayed: Bool = false
     private var cornerRadius: CGFloat = 5.0
     
+    private var viewsCreated: Bool = false
+    
     // MARK: View Inits
     init(frame: CGRect, exercise: Exercise) {
         self.exercise = exercise
@@ -37,22 +39,36 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     // MARK: Override View functions
     // sets iconView, dividingView, and exerciseTitleView layouts
     override func layoutSubviews() {
-        addTouchEvents()
-        createButtonView()
-        createExerciseInfoView()
-        
+        if !viewsCreated {
+            addTouchEvents()
+            createAndAddButtonView()
+            createAndAddExerciseInfoViews()
+            self.viewsCreated = true
+        }
         super.layoutSubviews()
     }
     
     // MARK: View Creation Functions
     
     // The button itself
-    private func createButtonView() {
-        self.backgroundColor = .white
+    private func createAndAddButtonView() {
         self.layer.cornerRadius = cornerRadius
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 1)
-        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOpacity = 0.2
+        
+        // Create overlay for the overlay so we can add shadows without worrying about
+        // clipsToBounds = true. Ugly? Yes. Effective? Yes.
+        let overlayOverlayView = UIView(frame: CGRect(x: 0,
+                                                      y: 0,
+                                                      width: self.frame.width,
+                                                      height: self.frame.height))
+        overlayOverlayView.backgroundColor = .white
+        overlayOverlayView.layer.cornerRadius = cornerRadius
+        overlayOverlayView.layer.shadowColor = UIColor.black.cgColor
+        overlayOverlayView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        overlayOverlayView.layer.shadowOpacity = 0.4
+        self.addSubview(overlayOverlayView)
         
         /* Testing Exercise to test view work */
         
@@ -61,23 +77,14 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
         self.exercise?.setRepCount(repCount: 2)
         
         
-        // Have to create subview with clipsToBounds = true
-        // as otherwise the main button will not have a shadow.
-        // Ugly? Yes. Effective? Yes.
+        // Add subviews to overlayView. Prevents view from going off of
+        // the button.
         let overlayView = UIView(frame: CGRect(x: 0,
                                                y: 0,
                                                width: self.frame.width,
                                                height: self.frame.height))
         overlayView.layer.cornerRadius = 5.0
         overlayView.clipsToBounds = true
-        
-        //dividingView declaration
-        self.dividingView = UIView(frame: CGRect(x: 50,
-                                                 y: 0,
-                                                 width: 1,
-                                                 height: self.frame.height))
-        dividingView?.backgroundColor = getNiceBlue()
-        overlayView.addSubview(dividingView!)
         
         if exercise != nil {
             // iconView declaration
@@ -95,7 +102,7 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
             overlayView.addSubview(exerciseTitleView!)
         }
         
-        self.addSubview(overlayView)
+        overlayOverlayView.addSubview(overlayView)
     }
     
     // Create the title view for this exercise
@@ -112,27 +119,74 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
         exerciseTitleView?.numberOfLines = 1
     }
     
-    // The view that appears below the button
-    private func createExerciseInfoView() {
+    // The view that appears below the button and it's overlay
+    private func createAndAddExerciseInfoViews() {
+        // Subtract corner radius * 2 so that we display the view from within the flat line
+        // of the button.
+        // Picture of what this means to be added
+        self.exerciseViewOverlay = UIView(frame: CGRect(x: cornerRadius,
+                                                        y: self.frame.height - self.cornerRadius,
+                                                        width: self.frame.width - cornerRadius * 2,
+                                                        height: 0))
+        self.exerciseViewOverlay?.clipsToBounds = true
+        self.exerciseViewOverlay?.layer.cornerRadius = self.cornerRadius
+        self.addSubview(self.exerciseViewOverlay!)
+        // Display behind button view
+        self.sendSubview(toBack: exerciseViewOverlay!)
         
+        let createHeight: CGFloat = 100.0
+        self.exerciseView = UIView(frame: CGRect(x: 0,
+                                                 y: -createHeight,
+                                                 width: (self.exerciseViewOverlay?.frame.width)!,
+                                                 height: createHeight))
+        self.exerciseView?.backgroundColor = .white
+        exerciseViewOverlay?.addSubview(self.exerciseView!)
     }
     
     // MARK: Function for button behavior
-    // Toggle if exercise info is displayed
+    // Toggle exercise info display state
     private func toggleExerciseInfo() {
         self.exeriseInfoDisplayed ? hideExerciseInfo() : showExerciseInfo()
     }
     
+    // Show the exercise info view if it exists
     private func showExerciseInfo() {
-        self.exeriseInfoDisplayed = true
+        if self.exerciseView != nil && self.exerciseViewOverlay != nil {
+            self.exeriseInfoDisplayed = true
+            
+            UIView.animate(withDuration: 0.25, animations: {
+                // Slide view down. This creates the illusion of the exerciseView
+                // sliding from the button.
+                self.exerciseViewOverlay?.frame = CGRect(x: self.cornerRadius,
+                                                         y: self.frame.height - self.cornerRadius,
+                                                         width: (self.exerciseViewOverlay?.frame.width)!,
+                                                         height: (self.exerciseView?.frame.height)!)
+                self.exerciseView?.frame = CGRect(x: 0,
+                                                  y: 0,
+                                                  width: (self.exerciseView?.frame.width)!,
+                                                  height: (self.exerciseView?.frame.height)!)
+            })
+        }
     }
     
+    // Hide the exercise info view if it exists
     private func hideExerciseInfo() {
-        self.exeriseInfoDisplayed = false
-        
-        UIView.animate(withDuration: 0.25, animations: {
+        if self.exerciseView != nil && self.exerciseViewOverlay != nil {
+            self.exeriseInfoDisplayed = false
             
-        })
+            UIView.animate(withDuration: 0.25, animations: {
+                // Bring overlay view to height 0, main view to -height
+                // This creates the illusion of the view sliding into the button
+                self.exerciseViewOverlay?.frame = CGRect(x: self.cornerRadius,
+                                                         y: self.frame.height - self.cornerRadius,
+                                                         width: (self.exerciseViewOverlay?.frame.width)!,
+                                                         height: 1)
+                self.exerciseView?.frame = CGRect(x: 0,
+                                                  y: -(self.exerciseView?.frame.height)!,
+                                                  width: (self.exerciseView?.frame.width)!,
+                                                  height: (self.exerciseView?.frame.height)!)
+            })
+        }
     }
     
     // MARK: Button Press Events

@@ -6,6 +6,8 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
+/// Header View shown at the top of the application at all times
+
 import UIKit
 
 class HeaderView: UIView {

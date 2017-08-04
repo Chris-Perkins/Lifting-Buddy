@@ -6,6 +6,8 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
+/// A button / View which displays information about an exercise
+
 import UIKit
 
 // Please create this view with a height of "50" for best results.

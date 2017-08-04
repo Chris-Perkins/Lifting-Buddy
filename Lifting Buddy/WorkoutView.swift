@@ -6,6 +6,8 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
+/// View which shows all workouts
+
 import UIKit
 
 import RealmSwift

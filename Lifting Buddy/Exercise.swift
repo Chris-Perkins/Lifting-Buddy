@@ -6,6 +6,8 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
+/// A class that holds information about an exercise.
+
 import RealmSwift
 import Realm
 

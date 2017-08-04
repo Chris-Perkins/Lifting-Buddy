@@ -6,6 +6,8 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
+/// A button with animations. It looks pretty. Pretty Button.
+
 import UIKit
 
 @IBDesignable class PrettyButton: UIButton {

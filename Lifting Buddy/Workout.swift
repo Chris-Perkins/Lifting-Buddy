@@ -6,6 +6,9 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
+/// Class holding information about a workout
+/// Workouts contain exercises.
+
 import RealmSwift
 import Realm
 

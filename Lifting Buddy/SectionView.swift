@@ -6,6 +6,8 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
+/// Sections shown on the bottom of the header view
+
 import UIKit
 
 class SectionView: UIView {

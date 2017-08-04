@@ -6,6 +6,9 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
+
+/// Functions to help make the application more readable.
+
 import UIKit
 
 func getNiceBlue() -> UIColor {

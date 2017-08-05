@@ -14,14 +14,11 @@ class SectionView: UIView {
     // MARK: View properties
     
     // Required view for modifying sectionContentView
-    var headerView: UIView
+    var mainViewController: MainViewController?
     
     // MARK: Init functions
     
-    init(headerView: HeaderView, frame: CGRect) {
-        
-        self.headerView = headerView
-        
+    override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
@@ -32,6 +29,8 @@ class SectionView: UIView {
     // MARK: Overrides
     
     override func layoutSubviews() {
+        self.mainViewController = (self.next?.next?.next as! MainViewController)
+        
         let width: CGFloat = self.frame.width / 4
         
         // Today Button
@@ -85,6 +84,6 @@ class SectionView: UIView {
     }
     
     @objc private func testF() {
-        (self.next?.next?.next as! MainViewController).showSettingsView()
+        self.mainViewController?.showSettingsView()
     }
 }

@@ -49,8 +49,20 @@ class MainViewController: UIViewController {
     }
     
     @objc func showSettingsView() {
-        let frame: CGRect = self.sectionContentView.frame
-        self.view.addSubview(SettingsView(frame: frame))
+        removeSectionContentSubviews()
+        
+        let frame: CGRect = CGRect(x: 0,
+                                   y: 0,
+                                   width: self.sectionContentView.frame.size.width,
+                                   height: self.sectionContentView.frame.size.height)
+        self.sectionContentView.addSubview(SettingsView(frame: frame))
+    }
+    
+    // Remove all views from the superview
+    func removeSectionContentSubviews() {
+        for subview in self.sectionContentView.subviews {
+            subview.removeFromSuperview()
+        }
     }
 }
 

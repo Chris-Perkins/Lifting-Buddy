@@ -47,8 +47,7 @@ class HeaderView: UIView {
         self.addSubview(divideView)
         
         // View for different buttons
-        let sectionsView: SectionView = SectionView(headerView: self,
-                                                    frame: CGRect(x: 5,
+        let sectionsView: SectionView = SectionView(frame: CGRect(x: 5,
                                                                   y: statusBarHeight + divide + 10,
                                                                   width: self.frame.width - 10,
                                                                   height: divide - 10))

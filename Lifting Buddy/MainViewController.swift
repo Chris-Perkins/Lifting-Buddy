@@ -11,9 +11,8 @@ import RealmSwift
 import Realm
 
 class MainViewController: UIViewController {
-    @IBOutlet weak var dayOfTheWeekLabel: UILabel!
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var quickStartView: UIView!
+    @IBOutlet weak var sectionContentView: UIView!
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

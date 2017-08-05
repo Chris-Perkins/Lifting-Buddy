@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina3_5" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,38 +18,39 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dBG-i1-qoX" customClass="HeaderView" customModule="Lifting_Buddy" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="125"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="125"/>
                                 <color key="backgroundColor" red="0.29126899290000002" green="0.4598940299" blue="0.90986615420000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="125" id="SEB-YA-e1Z"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rid-pF-kLD" customClass="ExerciseButton" customModule="Lifting_Buddy" customModuleProvider="target">
-                                <rect key="frame" x="40" y="176" width="240" height="50"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4I-V8-PjE">
+                                <rect key="frame" x="8" y="133" width="398" height="595"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="5pn-eW-iIk"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.92414434523809508" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="dBG-i1-qoX" secondAttribute="trailing" id="12q-Ms-Nep"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Rid-pF-kLD" secondAttribute="trailing" constant="24" id="MbL-CQ-Xfs"/>
-                            <constraint firstItem="Rid-pF-kLD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="24" id="Qt5-ao-lZb"/>
-                            <constraint firstItem="Rid-pF-kLD" firstAttribute="top" secondItem="dBG-i1-qoX" secondAttribute="bottom" constant="51" id="Zkj-DJ-neh"/>
+                            <constraint firstItem="O4I-V8-PjE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="SS1-P7-fth"/>
+                            <constraint firstItem="O4I-V8-PjE" firstAttribute="top" secondItem="dBG-i1-qoX" secondAttribute="bottom" constant="8" id="Uzc-u2-VTc"/>
                             <constraint firstItem="dBG-i1-qoX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="aqM-r5-TdP"/>
+                            <constraint firstAttribute="trailing" secondItem="O4I-V8-PjE" secondAttribute="trailing" constant="8" id="dId-On-gvv"/>
                             <constraint firstItem="dBG-i1-qoX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="kho-VG-uXY"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="O4I-V8-PjE" secondAttribute="bottom" constant="8" id="rdM-hj-gWk"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="sectionContentView" destination="O4I-V8-PjE" id="nR9-gv-yIj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-84.375" y="133.75"/>
+            <point key="canvasLocation" x="-85.507246376811594" y="133.69565217391306"/>
         </scene>
     </scenes>
 </document>

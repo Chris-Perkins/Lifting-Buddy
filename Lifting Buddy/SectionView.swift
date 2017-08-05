@@ -69,16 +69,22 @@ class SectionView: UIView {
         self.addSubview(statsButton)
         
         // Settings Button
-        let settingsButton: UIButton =
-            UIButton(frame: CGRect(x: width * 3,
-                                   y: 0,
-                                   width: width,
-                                   height: self.frame.height))
+        let settingsButton: PrettyButton =
+            PrettyButton(frame: CGRect(x: width * 3,
+                                       y: 0,
+                                       width: width,
+                                       height: self.frame.height))
         
         settingsButton.setTitle("settings", for: .normal)
         settingsButton.titleLabel?.textColor = .white
+        settingsButton.setOverlayStyle(style: .BLOOM)
+        settingsButton.addTarget(self, action: #selector(testF), for: .touchUpInside)
         self.addSubview(settingsButton)
         
         super.layoutSubviews()
+    }
+    
+    @objc private func testF() {
+        (self.next?.next?.next as! MainViewController).showSettingsView()
     }
 }

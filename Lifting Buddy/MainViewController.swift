@@ -13,20 +13,20 @@ import Realm
 class MainViewController: UIViewController {
     // MARK: IBOutlets
     
-    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var sectionContentView: UIView!
     
-    // MARK: Override functions of gay people
+    // MARK: Override functions
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         // Attempt to access local storage
         let realm = try! Realm()
         
-        let todayString = /*NSDate().dayOfTheWeek()*/ "TEST"
+        let todayString = "TEST"
         if realm.objects(Workout.self).filter(
-                NSPredicate(format: "dayOfTheWeek = %@", todayString)).count == 1 {
+            NSPredicate(format: "dayOfTheWeek = %@", todayString)).count == 1 {
         } else {
             try! realm.write {
                 let workout: Workout = realm.create(Workout.self)
@@ -38,14 +38,24 @@ class MainViewController: UIViewController {
         print(realm.objects(Workout.self))
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+    
     // MARK: View functions
     
     // We have workouts to display
     func addWorkoutsDisplay(workout: Workout) {
     }
+    
+    @objc func showSettingsView() {
+        let frame: CGRect = self.sectionContentView.frame
+        self.view.addSubview(SettingsView(frame: frame))
+    }
 }
 
 // MARK: Extensions
+
 
 extension NSDate {
     // Get the current day of the week (in string format) ex: "Monday"

@@ -25,8 +25,8 @@ class WorkoutView: UIView {
     }
     
     func showExercises() {
-        for exercise in (self.workout?.getExercises())! {
+        /*for exercise in (self.workout?.getExercises())! {
             
-        }
+        }*/
     }
 }

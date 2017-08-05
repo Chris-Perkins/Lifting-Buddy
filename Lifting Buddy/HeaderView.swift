@@ -13,19 +13,7 @@ import UIKit
 class HeaderView: UIView {
     // MARK: View properties
     
-    var sectionContentView: UIView
-    
-    // MARK: Init functions
-    
-    init(sectionContentView: UIView, frame: CGRect) {
-        self.sectionContentView = sectionContentView
-        
-        super.init(frame: frame)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private var sectionContentView: UIView?
     
     // MARK: Overrides
     
@@ -69,4 +57,10 @@ class HeaderView: UIView {
         super.layoutSubviews()
     }
     
+    // MARK: Custom view functions
+    
+    // Set the section view we change to
+    public func setSectionContentView(sectionContentView: UIView) {
+        self.sectionContentView = sectionContentView
+    }
 }

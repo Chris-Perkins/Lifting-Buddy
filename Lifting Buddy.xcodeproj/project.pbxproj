@@ -21,6 +21,7 @@
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
 		22AA6D141F218AD400624744 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D131F218AD400624744 /* SectionView.swift */; };
 		22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E77E051F1B35310076B3DB /* HelperFunctions.swift */; };
+		22EDF04E1F35860E0074E2F2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EDF04D1F35860E0074E2F2 /* SettingsView.swift */; };
 		987A120A06EF773208F02445 /* Pods_Lifting_Buddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		22AA6D131F218AD400624744 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		22E77E051F1B35310076B3DB /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
+		22EDF04D1F35860E0074E2F2 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C522BD41578E9EFDC2DF9433 /* Pods-Lifting Buddy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.release.xcconfig"; sourceTree = "<group>"; };
 		CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lifting_Buddy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -117,6 +119,7 @@
 				22AA6D111F21851400624744 /* HeaderView.swift */,
 				22AA6D131F218AD400624744 /* SectionView.swift */,
 				225E65D11F22A041004B3AF4 /* WorkoutView.swift */,
+				22EDF04D1F35860E0074E2F2 /* SettingsView.swift */,
 			);
 			name = "Custom UI Types";
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				22AA6D141F218AD400624744 /* SectionView.swift in Sources */,
 				224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */,
 				225E65D41F22A442004B3AF4 /* RLMSupport.swift in Sources */,
+				22EDF04E1F35860E0074E2F2 /* SettingsView.swift in Sources */,
 				224153781F1EE1F000F7B82B /* Exercise.swift in Sources */,
 				22AA6D121F21851400624744 /* HeaderView.swift in Sources */,
 			);

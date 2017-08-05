@@ -6,7 +6,7 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
-/// View which shows all workouts
+/// View which shows information about a workout
 
 import UIKit
 

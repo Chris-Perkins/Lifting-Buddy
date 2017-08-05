@@ -48,44 +48,20 @@ class MainViewController: UIViewController {
     func addWorkoutsDisplay(workout: Workout) {
     }
     
-    @objc func showSettingsView() {
-        removeSectionContentSubviews()
+    func showContentView(viewType: SectionView.contentViews) {
+        sectionContentView.removeAllSubviews()
         
         let frame: CGRect = CGRect(x: 0,
                                    y: 0,
                                    width: self.sectionContentView.frame.size.width,
                                    height: self.sectionContentView.frame.size.height)
-        self.sectionContentView.addSubview(SettingsView(frame: frame))
-    }
-    
-    // Remove all views from the superview
-    func removeSectionContentSubviews() {
-        for subview in self.sectionContentView.subviews {
-            subview.removeFromSuperview()
+        
+        switch(viewType) {
+        case SectionView.contentViews.SETTINGS:
+            self.sectionContentView.addSubview(SettingsView(frame: frame))
+            break
+        default:
+            break
         }
-    }
-}
-
-// MARK: Extensions
-
-
-extension NSDate {
-    // Get the current day of the week (in string format) ex: "Monday"
-    func dayOfTheWeek() -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        return dateFormatter.string(from: self as Date)
-    }
-}
-
-extension Results {
-    func toArray() -> [T] {
-        return self.map{$0}
-    }
-}
-
-extension RealmSwift.List {
-    func toArray() -> [T] {
-        return self.map{$0}
     }
 }

@@ -29,19 +29,18 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4I-V8-PjE">
-                                <rect key="frame" x="8" y="133" width="398" height="595"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="125" width="414" height="611"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.92414434523809508" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="dBG-i1-qoX" secondAttribute="trailing" id="12q-Ms-Nep"/>
-                            <constraint firstItem="O4I-V8-PjE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="SS1-P7-fth"/>
-                            <constraint firstItem="O4I-V8-PjE" firstAttribute="top" secondItem="dBG-i1-qoX" secondAttribute="bottom" constant="8" id="Uzc-u2-VTc"/>
+                            <constraint firstItem="O4I-V8-PjE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="SS1-P7-fth"/>
+                            <constraint firstItem="O4I-V8-PjE" firstAttribute="top" secondItem="dBG-i1-qoX" secondAttribute="bottom" id="Uzc-u2-VTc"/>
                             <constraint firstItem="dBG-i1-qoX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="aqM-r5-TdP"/>
-                            <constraint firstAttribute="trailing" secondItem="O4I-V8-PjE" secondAttribute="trailing" constant="8" id="dId-On-gvv"/>
+                            <constraint firstAttribute="trailing" secondItem="O4I-V8-PjE" secondAttribute="trailing" id="dId-On-gvv"/>
                             <constraint firstItem="dBG-i1-qoX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="kho-VG-uXY"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="O4I-V8-PjE" secondAttribute="bottom" constant="8" id="rdM-hj-gWk"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="O4I-V8-PjE" secondAttribute="bottom" id="rdM-hj-gWk"/>
                         </constraints>
                     </view>
                     <connections>

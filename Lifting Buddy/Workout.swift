@@ -13,6 +13,8 @@ import RealmSwift
 import Realm
 
 class Workout: Object {
+    // MARK: View properties
+    
     // Name of this workout
     dynamic private var name: String?
     // The day this exercise occurs on

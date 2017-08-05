@@ -28,6 +28,7 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     private var viewsCreated: Bool = false
     
     // MARK: View Inits
+    
     init(frame: CGRect, exercise: Exercise) {
         self.exercise = exercise
         
@@ -39,6 +40,7 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     }
     
     // MARK: Override View functions
+    
     // sets iconView, dividingView, and exerciseTitleView layouts
     override func layoutSubviews() {
         if !viewsCreated {
@@ -146,6 +148,7 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     }
     
     // MARK: Function for button behavior
+    
     // Toggle exercise info display state
     private func toggleExerciseInfo() {
         self.exeriseInfoDisplayed ? hideExerciseInfo() : showExerciseInfo()

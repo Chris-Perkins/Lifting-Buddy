@@ -11,6 +11,24 @@
 import UIKit
 
 class HeaderView: UIView {
+    // MARK: View properties
+    
+    var sectionContentView: UIView
+    
+    // MARK: Init functions
+    
+    init(sectionContentView: UIView, frame: CGRect) {
+        self.sectionContentView = sectionContentView
+        
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Overrides
+    
     override func layoutSubviews() {
         self.backgroundColor = getNiceBlue()
         
@@ -41,7 +59,8 @@ class HeaderView: UIView {
         self.addSubview(divideView)
         
         // View for different buttons
-        let sectionsView: SectionView = SectionView(frame: CGRect(x: 5,
+        let sectionsView: SectionView = SectionView(headerView: self,
+                                                    frame: CGRect(x: 5,
                                                                   y: statusBarHeight + divide + 10,
                                                                   width: self.frame.width - 10,
                                                                   height: divide - 10))

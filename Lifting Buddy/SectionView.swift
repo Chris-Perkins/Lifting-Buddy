@@ -11,6 +11,26 @@
 import UIKit
 
 class SectionView: UIView {
+    // MARK: View properties
+    
+    // Required view for modifying sectionContentView
+    var headerView: UIView
+    
+    // MARK: Init functions
+    
+    init(headerView: HeaderView, frame: CGRect) {
+        
+        self.headerView = headerView
+        
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Overrides
+    
     override func layoutSubviews() {
         let width: CGFloat = self.frame.width / 4
         

@@ -11,8 +11,12 @@ import RealmSwift
 import Realm
 
 class MainViewController: UIViewController {
+    // MARK: IBOutlets
+    
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var sectionContentView: UIView!
+    
+    // MARK: Override functions of gay people
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -34,10 +38,14 @@ class MainViewController: UIViewController {
         print(realm.objects(Workout.self))
     }
     
+    // MARK: View functions
+    
     // We have workouts to display
     func addWorkoutsDisplay(workout: Workout) {
     }
 }
+
+// MARK: Extensions
 
 extension NSDate {
     // Get the current day of the week (in string format) ex: "Monday"
@@ -49,14 +57,12 @@ extension NSDate {
 }
 
 extension Results {
-    
     func toArray() -> [T] {
         return self.map{$0}
     }
 }
 
 extension RealmSwift.List {
-    
     func toArray() -> [T] {
         return self.map{$0}
     }

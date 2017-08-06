@@ -15,6 +15,13 @@ class SectionView: UIView {
     
     // Required view for modifying sectionContentView
     var mainViewController: MainViewController?
+    // Our sections
+    var todayButton: PrettyButton?
+    var workoutsButton: PrettyButton?
+    var statsButton: PrettyButton?
+    var settingsButton: PrettyButton?
+    
+    var selectedView: PrettyButton?
     
     
     // MARK: Enums
@@ -40,64 +47,64 @@ class SectionView: UIView {
     // MARK: Overrides
     
     override func layoutSubviews() {
+        super.layoutSubviews()
+        
         self.mainViewController = (self.next?.next?.next as! MainViewController)
         
         let width: CGFloat = self.frame.width / 4
         
         // Today Button
-        let todayButton: PrettyButton =
+        todayButton =
             PrettyButton(frame: CGRect(x: 0,
                                        y: 0,
                                     width: width,
                                     height: self.frame.height))
         
-        todayButton.setTitle("today", for: .normal)
-        todayButton.titleLabel?.textColor = .white
-        todayButton.setOverlayStyle(style: .BLOOM)
-        todayButton.addTarget(self, action: #selector(self.showTodayView), for: .touchUpInside)
-        self.addSubview(todayButton)
+        todayButton?.setTitle("today", for: .normal)
+        todayButton?.titleLabel?.textColor = .white
+        todayButton?.setOverlayStyle(style: .BLOOM)
+        todayButton?.addTarget(self, action: #selector(self.showTodayView), for: .touchUpInside)
+        self.addSubview(todayButton!)
         
         // Workouts Button
-        let workoutsButton: PrettyButton =
+        workoutsButton =
             PrettyButton(frame: CGRect(x: width,
                                        y: 0,
                                        width: width,
                                        height: self.frame.height))
         
-        workoutsButton.setTitle("workouts", for: .normal)
-        workoutsButton.titleLabel?.textColor = .white
-        workoutsButton.setOverlayStyle(style: .BLOOM)
-        workoutsButton.addTarget(self, action: #selector(self.showWorkoutView), for: .touchUpInside)
-        self.addSubview(workoutsButton)
+        workoutsButton?.setTitle("workouts", for: .normal)
+        workoutsButton?.titleLabel?.textColor = .white
+        workoutsButton?.setOverlayStyle(style: .BLOOM)
+        workoutsButton?.addTarget(self, action: #selector(self.showWorkoutView), for: .touchUpInside)
+        self.addSubview(workoutsButton!)
         
         
         // Statistics Button
-        let statsButton: PrettyButton =
+        statsButton =
             PrettyButton(frame: CGRect(x: width * 2,
                                        y: 0,
                                        width: width,
                                        height: self.frame.height))
         
-        statsButton.setTitle("stats", for: .normal)
-        statsButton.titleLabel?.textColor = .white
-        statsButton.setOverlayStyle(style: .BLOOM)
-        statsButton.addTarget(self, action: #selector(self.showStatsView), for: .touchUpInside)
-        self.addSubview(statsButton)
+        statsButton?.setTitle("stats", for: .normal)
+        statsButton?.titleLabel?.textColor = .white
+        statsButton?.setOverlayStyle(style: .BLOOM)
+        statsButton?.addTarget(self, action: #selector(self.showStatsView), for: .touchUpInside)
+        self.addSubview(statsButton!)
         
         // Settings Button
-        let settingsButton: PrettyButton =
+        settingsButton =
             PrettyButton(frame: CGRect(x: width * 3,
                                        y: 0,
                                        width: width,
                                        height: self.frame.height))
         
-        settingsButton.setTitle("settings", for: .normal)
-        settingsButton.titleLabel?.textColor = .white
-        settingsButton.setOverlayStyle(style: .BLOOM)
-        settingsButton.addTarget(self, action: #selector(self.showSettingsView), for: .touchUpInside)
-        self.addSubview(settingsButton)
-        
-        super.layoutSubviews()
+        settingsButton?.setTitle("settings", for: .normal)
+        settingsButton?.titleLabel?.textColor = .white
+        settingsButton?.setOverlayStyle(style: .BLOOM)
+        settingsButton?.addTarget(self, action: #selector(self.showSettingsView), for: .touchUpInside)
+        self.addSubview(settingsButton!)
     }
     
     
@@ -111,19 +118,45 @@ class SectionView: UIView {
     
     // MARK: Event functions
     
+    // TODO: Handle this in a better way...
+    
     @objc private func showTodayView() {
+        if selectedView != nil {
+            selectedView?.backgroundColor = nil
+        }
+        todayButton?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        selectedView = todayButton
+        
         self.showContentView(viewType: SectionView.contentViews.TODAY)
     }
     
     @objc private func showWorkoutView() {
+        if selectedView != nil {
+            selectedView?.backgroundColor = nil
+        }
+        workoutsButton?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        selectedView = workoutsButton
+        
         self.showContentView(viewType: SectionView.contentViews.WORKOUTS)
     }
     
     @objc private func showStatsView() {
+        if selectedView != nil {
+            selectedView?.backgroundColor = nil
+        }
+        statsButton?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        selectedView = statsButton
+        
         self.showContentView(viewType: SectionView.contentViews.STATS)
     }
     
     @objc private func showSettingsView() {
+        if selectedView != nil {
+            selectedView?.backgroundColor = nil
+        }
+        settingsButton?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        selectedView = settingsButton
+        
         self.showContentView(viewType: SectionView.contentViews.SETTINGS)
     }
 }

@@ -26,7 +26,7 @@ class SectionView: UIView {
     
     // MARK: Enums
     
-    public enum contentViews {
+    public enum ContentViews {
         case TODAY
         case WORKOUTS
         case STATS
@@ -63,7 +63,7 @@ class SectionView: UIView {
         todayButton?.setTitle("today", for: .normal)
         todayButton?.titleLabel?.textColor = .white
         todayButton?.setOverlayStyle(style: .BLOOM)
-        todayButton?.addTarget(self, action: #selector(self.showTodayView), for: .touchUpInside)
+        todayButton?.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
         self.addSubview(todayButton!)
         
         // Workouts Button
@@ -76,7 +76,7 @@ class SectionView: UIView {
         workoutsButton?.setTitle("workouts", for: .normal)
         workoutsButton?.titleLabel?.textColor = .white
         workoutsButton?.setOverlayStyle(style: .BLOOM)
-        workoutsButton?.addTarget(self, action: #selector(self.showWorkoutView), for: .touchUpInside)
+        workoutsButton?.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
         self.addSubview(workoutsButton!)
         
         
@@ -90,7 +90,7 @@ class SectionView: UIView {
         statsButton?.setTitle("stats", for: .normal)
         statsButton?.titleLabel?.textColor = .white
         statsButton?.setOverlayStyle(style: .BLOOM)
-        statsButton?.addTarget(self, action: #selector(self.showStatsView), for: .touchUpInside)
+        statsButton?.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
         self.addSubview(statsButton!)
         
         // Settings Button
@@ -103,7 +103,7 @@ class SectionView: UIView {
         settingsButton?.setTitle("settings", for: .normal)
         settingsButton?.titleLabel?.textColor = .white
         settingsButton?.setOverlayStyle(style: .BLOOM)
-        settingsButton?.addTarget(self, action: #selector(self.showSettingsView), for: .touchUpInside)
+        settingsButton?.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
         self.addSubview(settingsButton!)
     }
     
@@ -111,52 +111,35 @@ class SectionView: UIView {
     // MARK: Private functions
     
     // Called by the event handlers to send a call to the main view controller to display view
-    private func showContentView(viewType: SectionView.contentViews) {
-        mainViewController?.showContentView(viewType: viewType)
-    }
-    
-    
-    // MARK: Event functions
-    
-    // TODO: Handle this in a better way...
-    
-    @objc private func showTodayView() {
-        if selectedView != nil {
+    @objc private func buttonPress(sender: PrettyButton) {
+        if selectedView != sender {
             selectedView?.backgroundColor = nil
+            sender.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+            
+            var viewType: SectionView.ContentViews? = nil
+            
+            switch(sender) {
+            case (self.todayButton!):
+                viewType = .TODAY
+                break
+            case (self.workoutsButton!):
+                viewType = .WORKOUTS
+                break
+            case (self.statsButton!):
+                viewType = .STATS
+                break
+            case (self.settingsButton!):
+                viewType = .SETTINGS
+                break
+            default:
+                print("User pressed a button that doesn't exist?")
+                exit(0)
+            }
+            
+            mainViewController?.showContentView(viewType: viewType!)
         }
-        todayButton?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        selectedView = todayButton
         
-        self.showContentView(viewType: SectionView.contentViews.TODAY)
-    }
-    
-    @objc private func showWorkoutView() {
-        if selectedView != nil {
-            selectedView?.backgroundColor = nil
-        }
-        workoutsButton?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        selectedView = workoutsButton
-        
-        self.showContentView(viewType: SectionView.contentViews.WORKOUTS)
-    }
-    
-    @objc private func showStatsView() {
-        if selectedView != nil {
-            selectedView?.backgroundColor = nil
-        }
-        statsButton?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        selectedView = statsButton
-        
-        self.showContentView(viewType: SectionView.contentViews.STATS)
-    }
-    
-    @objc private func showSettingsView() {
-        if selectedView != nil {
-            selectedView?.backgroundColor = nil
-        }
-        settingsButton?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        selectedView = settingsButton
-        
-        self.showContentView(viewType: SectionView.contentViews.SETTINGS)
+        // Set the newly selected view equal to this button
+        selectedView = sender
     }
 }

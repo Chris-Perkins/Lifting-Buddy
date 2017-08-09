@@ -48,7 +48,7 @@ class MainViewController: UIViewController {
     func addWorkoutsDisplay(workout: Workout) {
     }
     
-    func showContentView(viewType: SectionView.contentViews) {
+    func showContentView(viewType: SectionView.ContentViews) {
         sectionContentView.removeAllSubviews()
         
         let frame: CGRect = CGRect(x: 0,
@@ -57,7 +57,7 @@ class MainViewController: UIViewController {
                                    height: self.sectionContentView.frame.size.height)
         
         switch(viewType) {
-        case SectionView.contentViews.SETTINGS:
+        case SectionView.ContentViews.SETTINGS:
             self.sectionContentView.addSubview(SettingsView(frame: frame))
             break
         default:

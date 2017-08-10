@@ -32,8 +32,9 @@ import UIKit
         case BLOOM
     }
     
-    // Current style of this button
-    private var style: PrettyButton.Styles
+    // Default style of button is none
+    private var style: PrettyButton.Styles = .NONE
+    
     // tag of overlay view
     var overlayViewTag: Int = 1337
     

@@ -57,6 +57,9 @@ class MainViewController: UIViewController {
                                    height: self.sectionContentView.frame.size.height)
         
         switch(viewType) {
+        case SectionView.ContentViews.WORKOUTS:
+            self.sectionContentView.addSubview(WorkoutsView(frame: frame))
+            break
         case SectionView.ContentViews.SETTINGS:
             self.sectionContentView.addSubview(SettingsView(frame: frame))
             break

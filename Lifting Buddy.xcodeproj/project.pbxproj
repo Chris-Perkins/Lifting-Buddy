@@ -15,7 +15,7 @@
 		224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 224697CC1F19843A0089C7CA /* Assets.xcassets */; };
 		224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */; };
 		224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697D71F19E8060089C7CA /* PrettyButton.swift */; };
-		225E65D21F22A041004B3AF4 /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D11F22A041004B3AF4 /* WorkoutView.swift */; };
+		225E65D21F22A041004B3AF4 /* WorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D11F22A041004B3AF4 /* WorkoutsView.swift */; };
 		225E65D41F22A442004B3AF4 /* RLMSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D31F22A442004B3AF4 /* RLMSupport.swift */; };
 		225E65D71F22A4B4004B3AF4 /* ExerciseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D61F22A4B4004B3AF4 /* ExerciseButton.swift */; };
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
@@ -37,7 +37,7 @@
 		224697CF1F19843A0089C7CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		224697D11F19843A0089C7CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		224697D71F19E8060089C7CA /* PrettyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyButton.swift; sourceTree = "<group>"; };
-		225E65D11F22A041004B3AF4 /* WorkoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
+		225E65D11F22A041004B3AF4 /* WorkoutsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsView.swift; sourceTree = "<group>"; };
 		225E65D31F22A442004B3AF4 /* RLMSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMSupport.swift; sourceTree = "<group>"; };
 		225E65D61F22A4B4004B3AF4 /* ExerciseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseButton.swift; sourceTree = "<group>"; };
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 				225E65D61F22A4B4004B3AF4 /* ExerciseButton.swift */,
 				22AA6D111F21851400624744 /* HeaderView.swift */,
 				22AA6D131F218AD400624744 /* SectionView.swift */,
-				225E65D11F22A041004B3AF4 /* WorkoutView.swift */,
+				225E65D11F22A041004B3AF4 /* WorkoutsView.swift */,
 				22EDF04D1F35860E0074E2F2 /* SettingsView.swift */,
 			);
 			name = "Custom UI Types";
@@ -286,7 +286,7 @@
 				224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */,
 				224153761F1EE12B00F7B82B /* Workout.swift in Sources */,
 				225E65D71F22A4B4004B3AF4 /* ExerciseButton.swift in Sources */,
-				225E65D21F22A041004B3AF4 /* WorkoutView.swift in Sources */,
+				225E65D21F22A041004B3AF4 /* WorkoutsView.swift in Sources */,
 				22AA6D141F218AD400624744 /* SectionView.swift in Sources */,
 				224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */,
 				225E65D41F22A442004B3AF4 /* RLMSupport.swift in Sources */,

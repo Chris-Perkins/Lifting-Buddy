@@ -16,7 +16,7 @@ class SectionView: UIView {
     // Required view for modifying sectionContentView
     var mainViewController: MainViewController?
     // Our sections
-    var todayButton: PrettyButton?
+    var homeButton: PrettyButton?
     var workoutsButton: PrettyButton?
     var statsButton: PrettyButton?
     var settingsButton: PrettyButton?
@@ -27,7 +27,7 @@ class SectionView: UIView {
     // MARK: Enums
     
     public enum ContentViews {
-        case TODAY
+        case HOME
         case WORKOUTS
         case STATS
         case SETTINGS
@@ -54,15 +54,15 @@ class SectionView: UIView {
         let width: CGFloat = self.frame.width / 4
         
         // Today Button
-        todayButton =
+        homeButton =
             PrettyButton(frame: CGRect(x: 0,
                                        y: 0,
                                     width: width,
                                     height: self.frame.height))
         
-        todayButton?.setTitle("today", for: .normal)
-        setButtonProperties(button: todayButton!)
-        self.addSubview(todayButton!)
+        homeButton?.setTitle("home", for: .normal)
+        setButtonProperties(button: homeButton!)
+        self.addSubview(homeButton!)
         
         // Workouts Button
         workoutsButton =
@@ -97,6 +97,9 @@ class SectionView: UIView {
         settingsButton?.setTitle("settings", for: .normal)
         setButtonProperties(button: settingsButton!)
         self.addSubview(settingsButton!)
+        
+        // Start on the today button
+        buttonPress(sender: homeButton!)
     }
     
     // MARK: Private events
@@ -119,8 +122,8 @@ class SectionView: UIView {
             var viewType: SectionView.ContentViews? = nil
             
             switch(sender) {
-            case (self.todayButton!):
-                viewType = .TODAY
+            case (self.homeButton!):
+                viewType = .HOME
                 break
             case (self.workoutsButton!):
                 viewType = .WORKOUTS

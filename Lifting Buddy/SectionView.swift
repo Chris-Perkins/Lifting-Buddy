@@ -61,9 +61,7 @@ class SectionView: UIView {
                                     height: self.frame.height))
         
         todayButton?.setTitle("today", for: .normal)
-        todayButton?.titleLabel?.textColor = .white
-        todayButton?.setOverlayStyle(style: .BLOOM)
-        todayButton?.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
+        setButtonProperties(button: todayButton!)
         self.addSubview(todayButton!)
         
         // Workouts Button
@@ -74,9 +72,7 @@ class SectionView: UIView {
                                        height: self.frame.height))
         
         workoutsButton?.setTitle("workouts", for: .normal)
-        workoutsButton?.titleLabel?.textColor = .white
-        workoutsButton?.setOverlayStyle(style: .BLOOM)
-        workoutsButton?.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
+        setButtonProperties(button: workoutsButton!)
         self.addSubview(workoutsButton!)
         
         
@@ -88,9 +84,7 @@ class SectionView: UIView {
                                        height: self.frame.height))
         
         statsButton?.setTitle("stats", for: .normal)
-        statsButton?.titleLabel?.textColor = .white
-        statsButton?.setOverlayStyle(style: .BLOOM)
-        statsButton?.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
+        setButtonProperties(button: statsButton!)
         self.addSubview(statsButton!)
         
         // Settings Button
@@ -101,14 +95,20 @@ class SectionView: UIView {
                                        height: self.frame.height))
         
         settingsButton?.setTitle("settings", for: .normal)
-        settingsButton?.titleLabel?.textColor = .white
-        settingsButton?.setOverlayStyle(style: .BLOOM)
-        settingsButton?.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
+        setButtonProperties(button: settingsButton!)
         self.addSubview(settingsButton!)
     }
     
+    // MARK: Private events
     
-    // MARK: Private functions
+    private func setButtonProperties(button: PrettyButton) {
+        button.cornerRadius = 0
+        button.setOverlayStyle(style: .BLOOM)
+        button.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
+    }
+    
+    
+    // MARK: Button events
     
     // Called by the event handlers to send a call to the main view controller to display view
     @objc private func buttonPress(sender: PrettyButton) {

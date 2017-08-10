@@ -60,7 +60,11 @@ import UIKit
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        // User selected button
         self.addTarget(self, action: #selector(touchInside), for: .touchDown)
+        
+        // User exited the button
+        self.addTarget(self, action: #selector(releasePress), for: .touchDragExit)
         self.addTarget(self, action: #selector(releasePress), for: .touchUpInside)
         self.addTarget(self, action: #selector(releasePress), for: .touchUpOutside)
     }

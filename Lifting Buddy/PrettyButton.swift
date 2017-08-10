@@ -33,7 +33,7 @@ import UIKit
     }
     
     // Default style of button is none
-    private var style: PrettyButton.Styles = .NONE
+    private var style: PrettyButton.Styles
     
     // tag of overlay view
     var overlayViewTag: Int = 1337
@@ -50,16 +50,17 @@ import UIKit
         self.style = Styles.NONE
         
         super.init(coder: aDecoder)
-        
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 1)
-        self.layer.shadowRadius = 3.0
     }
     
     // MARK: View overrides
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        // Set shadows for the button
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 1)
+        self.layer.shadowRadius = 3.0
         
         // User selected button
         self.addTarget(self, action: #selector(touchInside), for: .touchDown)

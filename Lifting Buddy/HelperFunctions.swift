@@ -70,6 +70,14 @@ extension UIColor {
     public static func niceBlue() -> UIColor {
         return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
     }
+    
+    public static func niceYellow() -> UIColor {
+        return UIColor(red: 0.95, green: 0.76, blue: 0.2, alpha: 1)
+    }
+    
+    public static func niceGreen() -> UIColor {
+        return UIColor(red: 0.27, green: 0.66, blue: 0.3, alpha: 1.0)
+    }
 }
 
 extension NSDate {

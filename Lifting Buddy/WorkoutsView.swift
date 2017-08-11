@@ -14,7 +14,8 @@ import RealmSwift
 import Realm
 
 class WorkoutsView: UIView {
-    var workout: Workout?
+    
+    // MARK: View Overrides
     
     override func layoutSubviews() {
         let floatyButton: PrettyButton = PrettyButton(frame: CGRect(x: self.frame.maxX - 100,
@@ -25,18 +26,20 @@ class WorkoutsView: UIView {
         floatyButton.setOverlayStyle(style: .BLOOM)
         floatyButton.cornerRadius = floatyButton.frame.width / 2
         floatyButton.shadowOpacity = 0.5
+        floatyButton.setOverlayColor(color: UIColor.niceYellow())
+        floatyButton.setTitle("Create", for: .normal)
+        floatyButton.layer.zPosition = 1
+        floatyButton.addTarget(self, action: #selector(showCreateWorkoutView(sender:)), for: .touchUpInside)
         
         self.addSubview(floatyButton)
         
         super.layoutSubviews()
     }
     
-    func setWorkout(workout: Workout?) {
-        self.workout = workout
-    }
+    // MARK: Event functions
     
-    func getWorkout() -> Workout? {
-        return self.workout
+    @objc func showCreateWorkoutView(sender: PrettyButton) {
+    
     }
     
     func showExercises() {

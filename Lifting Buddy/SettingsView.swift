@@ -9,6 +9,9 @@
 import UIKit
 
 class SettingsView: UIView {
+    
+    // MARK: View overrides
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         

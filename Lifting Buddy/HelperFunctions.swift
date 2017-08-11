@@ -71,6 +71,10 @@ extension UIColor {
         return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
     }
     
+    public static func niceLightBlue() -> UIColor {
+        return UIColor(red: 0.8, green: 0.78, blue: 0.96, alpha: 1.0)
+    }
+    
     public static func niceYellow() -> UIColor {
         return UIColor(red: 0.95, green: 0.76, blue: 0.2, alpha: 1)
     }

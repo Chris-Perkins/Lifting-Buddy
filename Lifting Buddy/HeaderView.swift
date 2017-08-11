@@ -15,9 +15,11 @@ class HeaderView: UIView {
     
     private var sectionContentView: UIView?
     
-    // MARK: Overrides
+    // MARK: View overrides
     
     override func layoutSubviews() {
+        self.layer.zPosition = 1
+        
         self.backgroundColor = UIColor.niceBlue()
         
         // Need status bar height to not overlap other views
@@ -56,7 +58,7 @@ class HeaderView: UIView {
         super.layoutSubviews()
     }
     
-    // MARK: Custom view functions
+    // MARK: Private functions
     
     // Set the section view we change to
     public func setSectionContentView(sectionContentView: UIView) {

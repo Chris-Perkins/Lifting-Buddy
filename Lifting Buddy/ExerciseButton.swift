@@ -39,7 +39,7 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
         super.init(coder: aDecoder)
     }
     
-    // MARK: Override View functions
+    // MARK: View overrides
     
     // sets iconView, dividingView, and exerciseTitleView layouts
     override func layoutSubviews() {
@@ -194,7 +194,7 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    // MARK: Button Press Events
+    // MARK: Event functions
     
     // Add Touch Events to this Button
     private func addTouchEvents() {

@@ -22,7 +22,7 @@ import UIKit
             self.layer.shadowOpacity = shadowOpacity
         }
     }
-    @IBInspectable private var overlayColor: UIColor = UIColor.white
+    @IBInspectable private var overlayColor: UIColor = UIColor.white.withAlphaComponent(0.25)
     
     // MARK: Properties
     
@@ -84,7 +84,6 @@ import UIKit
                                                                 height: self.frame.height))
             overlayView.layer.cornerRadius = cornerRadius
             overlayView.backgroundColor = self.overlayColor
-            overlayView.alpha = 0.25
             overlayView.layer.zPosition = -1
             overlayView.tag = self.overlayViewTag
             self.addSubview(overlayView)
@@ -105,17 +104,14 @@ import UIKit
                                                                 width: 0,
                                                                 height: 0))
             overlayView.layer.cornerRadius = cornerRadius
-            overlayColor.withAlphaComponent(0.5)
             overlayView.backgroundColor = self.overlayColor
             // Start alpha low, then buff opacity during animation
-            overlayView.alpha = 0.05
             overlayView.layer.zPosition = -1
             overlayView.tag = self.overlayViewTag
             self.addSubview(overlayView)
             
             UIView.animate(withDuration: 0.5, animations: {
                 overlayView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
-                overlayView.alpha = 0.25
             })
         }
     }
@@ -135,7 +131,7 @@ import UIKit
         }
     }
     
-    // MARK: Action functions
+    // MARK: Event functions
     
     @objc private func touchInside(sender: PrettyButton) {
         switch self.style {

@@ -44,7 +44,7 @@ class SectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Overrides
+    // MARK: View overrides
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -102,22 +102,23 @@ class SectionView: UIView {
         buttonPress(sender: homeButton!)
     }
     
-    // MARK: Private events
+    // MARK: Private functions
     
     private func setButtonProperties(button: PrettyButton) {
         button.cornerRadius = 0
         button.setOverlayStyle(style: .BLOOM)
+        button.setOverlayColor(color: UIColor.white.withAlphaComponent(0.25))
         button.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
     }
     
     
-    // MARK: Button events
+    // MARK: Event functions
     
     // Called by the event handlers to send a call to the main view controller to display view
     @objc private func buttonPress(sender: PrettyButton) {
         if selectedView != sender {
             selectedView?.backgroundColor = nil
-            sender.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+            sender.backgroundColor = UIColor.niceYellow()
             
             var viewType: SectionView.ContentViews? = nil
             

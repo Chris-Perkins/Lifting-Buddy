@@ -74,6 +74,8 @@ class Workout: Object {
         self.exercises.add(exercise)
     }
     
+    // MARK: Private functions
+    
     // Remove exercise stored at an index in the int if possible
     public func removeExerciseAtIndex(index: UInt) {
         if index >= 0 && index < self.exercises.count {

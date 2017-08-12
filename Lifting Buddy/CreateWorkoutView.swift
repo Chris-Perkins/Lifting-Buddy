@@ -8,6 +8,15 @@
 
 import UIKit
 
-class CreateWorkoutView {
+class CreateWorkoutView: UIView {
     
+    // View overrides
+    
+    override func layoutSubviews() {
+        self.backgroundColor = UIColor.niceYellow()
+        let lbl: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        lbl.text = "Preliminary work"
+        lbl.textColor = UIColor.niceBlue()
+        self.addSubview(lbl)
+    }
 }

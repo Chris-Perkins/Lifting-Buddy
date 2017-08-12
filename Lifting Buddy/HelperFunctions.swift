@@ -67,6 +67,10 @@ extension UIView {
 }
 
 extension UIColor {
+    public static func niceGray() -> UIColor {
+        return UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1)
+    }
+    
     public static func niceBlue() -> UIColor {
         return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
     }

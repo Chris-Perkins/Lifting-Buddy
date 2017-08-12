@@ -39,7 +39,12 @@ class WorkoutsView: UIView {
     // MARK: Event functions
     
     @objc func showCreateWorkoutView(sender: PrettyButton) {
-    
+        let createWorkoutView: CreateWorkoutView =
+            CreateWorkoutView(frame: CGRect(x: 0,
+                                            y: self.frame.minY,
+                                            width: self.frame.width,
+                                            height: self.frame.height))
+        self.addSubview(createWorkoutView)
     }
     
     func showExercises() {

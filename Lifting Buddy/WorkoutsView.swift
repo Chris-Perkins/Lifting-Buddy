@@ -25,7 +25,7 @@ class WorkoutsView: UIView {
         floatyButton.backgroundColor = UIColor.niceBlue()
         floatyButton.setOverlayStyle(style: .BLOOM)
         floatyButton.cornerRadius = floatyButton.frame.width / 2
-        floatyButton.shadowOpacity = 0.5
+        floatyButton.shadowOpacity = 0.2
         floatyButton.setOverlayColor(color: UIColor.niceYellow())
         floatyButton.setTitle("Create", for: .normal)
         floatyButton.layer.zPosition = 1

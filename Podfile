@@ -6,7 +6,6 @@ target 'Lifting Buddy' do
   use_frameworks!
 
   # Realm Install
-  use_frameworks!
   pod 'RealmSwift'
 
   # IQKeyboard Install

@@ -51,18 +51,37 @@ import UIKit
         self.layer.shadowRadius = 3.0
         
         // User selected button
-        self.addTarget(self, action: #selector(touchInside), for: .touchDown)
+        self.addTarget(self, action: #selector(startPress(sender:)), for: .touchDown)
         
         // User exited the button
-        self.addTarget(self, action: #selector(releasePress), for: .touchDragExit)
-        self.addTarget(self, action: #selector(releasePress), for: .touchUpInside)
-        self.addTarget(self, action: #selector(releasePress), for: .touchUpOutside)
+        self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchDragExit)
+        self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchUpInside)
+        self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchUpOutside)
     }
     
     required init?(coder aDecoder: NSCoder) {
         self.style = Styles.NONE
         
         super.init(coder: aDecoder)
+    }
+    
+    // MARK: Event functions
+    
+    @objc private func startPress(sender: PrettyButton) {
+        switch self.style {
+        case Styles.NONE:
+            break
+        case Styles.SLIDE:
+            createSlideView()
+            break
+        case Styles.BLOOM:
+            createBloomView()
+            break
+        }
+    }
+    
+    @objc private func releasePress(sender: PrettyButton) {
+        removeOverlayView()
     }
     
     // MARK: Custom view handling
@@ -123,25 +142,6 @@ import UIKit
                     self.overlayColor.withAlphaComponent(1.0)
             })
         }
-    }
-    
-    // MARK: Event functions
-    
-    @objc private func touchInside(sender: PrettyButton) {
-        switch self.style {
-        case Styles.NONE:
-            break
-        case Styles.SLIDE:
-            createSlideView()
-            break
-        case Styles.BLOOM:
-            createBloomView()
-            break
-        }
-    }
-    
-    @objc private func releasePress(sender: PrettyButton) {
-        removeOverlayView()
     }
     
     // MARK: Get / Set Methods

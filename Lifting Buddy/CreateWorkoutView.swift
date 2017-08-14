@@ -13,10 +13,10 @@ class CreateWorkoutView: UIView {
     // View overrides
     
     override func layoutSubviews() {
-        self.backgroundColor = UIColor.niceYellow()
-        let lbl: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        lbl.text = "Preliminary work"
-        lbl.textColor = UIColor.niceBlue()
-        self.addSubview(lbl)
+        let testView: ExerciseButton = ExerciseButton(frame: CGRect(x: 10,
+                                                                    y: 10,
+                                                                    width: self.frame.width - 20,
+                                                                    height: 50), exercise: Exercise())
+        self.addSubview(testView)
     }
 }

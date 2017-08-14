@@ -16,8 +16,6 @@ import UIKit
 class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     private var exercise: Exercise?
     
-    private var iconView: UIView?
-    private var dividingView: UIView?
     private var exerciseTitleView: UILabel?
     private var exerciseView: UIView?
     private var exerciseViewOverlay: UIView?
@@ -56,10 +54,6 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     
     // The button itself
     private func createAndAddButtonView() {
-        self.layer.cornerRadius = cornerRadius
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 1)
-        self.layer.shadowOpacity = 0.2
         
         // Create overlay for the overlay so we can add shadows without worrying about
         // clipsToBounds = true. Ugly? Yes. Effective? Yes.
@@ -82,7 +76,7 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
         
         
         // Add subviews to overlayView. Prevents view from going off of
-        // the button.
+        // the button (can't do this in normal overlay view or shadow won't work)
         let overlayView = UIView(frame: CGRect(x: 0,
                                                y: 0,
                                                width: self.frame.width,
@@ -91,16 +85,6 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
         overlayView.clipsToBounds = true
         
         if exercise != nil {
-            // iconView declaration
-            self.iconView = UIView(frame: CGRect(x: 0,
-                                                 y: 0,
-                                                 width: 50,
-                                                 height: self.frame.height))
-            iconView?.backgroundColor = .lightGray
-            // because the button is rounded, clip to bounds
-            iconView?.clipsToBounds = true
-            overlayView.addSubview(iconView!)
-            
             // Create the title view
             self.createTitleView(exercise: exercise!)
             overlayView.addSubview(exerciseTitleView!)
@@ -113,9 +97,9 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     private func createTitleView(exercise: Exercise) {
         // exerciseTitleView declaration
         // - 51 to not go out of bounds
-        exerciseTitleView = UILabel(frame: CGRect(x: 51,
+        exerciseTitleView = UILabel(frame: CGRect(x: 0,
                                                   y: 0,
-                                                  width: self.frame.width - 51,
+                                                  width: self.frame.width,
                                                   height: self.frame.height))
         exerciseTitleView?.text = exercise.getName()
         exerciseTitleView?.textColor = .black
@@ -158,6 +142,8 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     private func showExerciseInfo() {
         if self.exerciseView != nil && self.exerciseViewOverlay != nil {
             self.exeriseInfoDisplayed = true
+            self.exerciseTitleView?.backgroundColor = UIColor.niceYellow()
+            self.exerciseTitleView?.textColor = UIColor.white
             
             UIView.animate(withDuration: 0.25, animations: {
                 // Slide view down. This creates the illusion of the exerciseView
@@ -177,6 +163,8 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     // Hide the exercise info view if it exists
     private func hideExerciseInfo() {
         if self.exerciseView != nil && self.exerciseViewOverlay != nil {
+            self.exerciseTitleView?.backgroundColor = UIColor.white
+            self.exerciseTitleView?.textColor = UIColor.black
             self.exeriseInfoDisplayed = false
             
             UIView.animate(withDuration: 0.25, animations: {

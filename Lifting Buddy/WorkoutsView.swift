@@ -15,23 +15,31 @@ import Realm
 
 class WorkoutsView: UIView {
     
+    // View properties
+    
+    var floatyButton: PrettyButton? = nil
+    
     // MARK: View Overrides
     
     override func layoutSubviews() {
-        let floatyButton: PrettyButton = PrettyButton(frame: CGRect(x: self.frame.maxX - 100,
+        if floatyButton != nil {
+            floatyButton?.removeFromSuperview()
+        }
+        
+        floatyButton = PrettyButton(frame: CGRect(x: self.frame.maxX - 100,
                                                                     y: self.frame.maxY - 100,
                                                                     width: 75,
                                                                     height: 75))
-        floatyButton.backgroundColor = UIColor.niceBlue()
-        floatyButton.setOverlayStyle(style: .BLOOM)
-        floatyButton.cornerRadius = floatyButton.frame.width / 2
-        floatyButton.shadowOpacity = 0.2
-        floatyButton.setOverlayColor(color: UIColor.niceYellow())
-        floatyButton.setTitle("Create", for: .normal)
-        floatyButton.layer.zPosition = 1
-        floatyButton.addTarget(self, action: #selector(showCreateWorkoutView(sender:)), for: .touchUpInside)
+        floatyButton?.backgroundColor = UIColor.niceBlue()
+        floatyButton?.setOverlayStyle(style: .BLOOM)
+        floatyButton?.cornerRadius = floatyButton!.frame.width / 2
+        floatyButton?.shadowOpacity = 0.2
+        floatyButton?.setOverlayColor(color: UIColor.niceYellow())
+        floatyButton?.setTitle("Create", for: .normal)
+        floatyButton?.layer.zPosition = 1
+        floatyButton?.addTarget(self, action: #selector(showCreateWorkoutView(sender:)), for: .touchUpInside)
         
-        self.addSubview(floatyButton)
+        self.addSubview(floatyButton!)
         
         super.layoutSubviews()
     }

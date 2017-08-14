@@ -12,6 +12,8 @@ import UIKit
 
 @IBDesignable class PrettyButton: UIButton {
     
+    private var viewCreated: Bool = false
+    
     // MARK: IBInspectables
     
     @IBInspectable var cornerRadius: CGFloat = 5.0 {
@@ -57,18 +59,22 @@ import UIKit
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // Set shadows for the button
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 1)
-        self.layer.shadowRadius = 3.0
-        
-        // User selected button
-        self.addTarget(self, action: #selector(touchInside), for: .touchDown)
-        
-        // User exited the button
-        self.addTarget(self, action: #selector(releasePress), for: .touchDragExit)
-        self.addTarget(self, action: #selector(releasePress), for: .touchUpInside)
-        self.addTarget(self, action: #selector(releasePress), for: .touchUpOutside)
+        if !(viewCreated) {
+            // Set shadows for the button
+            self.layer.shadowColor = UIColor.black.cgColor
+            self.layer.shadowOffset = CGSize(width: 0, height: 1)
+            self.layer.shadowRadius = 3.0
+            
+            // User selected button
+            self.addTarget(self, action: #selector(touchInside), for: .touchDown)
+            
+            // User exited the button
+            self.addTarget(self, action: #selector(releasePress), for: .touchDragExit)
+            self.addTarget(self, action: #selector(releasePress), for: .touchUpInside)
+            self.addTarget(self, action: #selector(releasePress), for: .touchUpOutside)
+            
+            viewCreated = true
+        }
     }
     
     // MARK: Custom view handling

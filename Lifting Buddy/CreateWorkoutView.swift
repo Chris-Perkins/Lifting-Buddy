@@ -86,7 +86,9 @@ class CreateWorkoutView: UIScrollView {
         exercises.backgroundColor = UIColor.niceYellow()
         exercises.dataSource = exercises
         exercises.delegate = exercises
-        exercises.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        exercises.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
+        exercises.data.append("New")
+        
         self.addSubview(exercises)
     }
     

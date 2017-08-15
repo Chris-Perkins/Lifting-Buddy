@@ -13,9 +13,15 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: Edit / Delete dialog
-        self.cellForRow(at: indexPath)?.backgroundColor = UIColor.niceBlue()
-        self.data.remove(at: indexPath.row)
-        self.deleteRows(at: [indexPath], with: .left)
+        let cell: ExerciseTableViewCell = self.cellForRow(at: indexPath) as! ExerciseTableViewCell
+        cell.backgroundColor = UIColor.niceBlue()
+        if cell.getType() == ExerciseTableViewCell.CellTypes.ADD {
+            // Todo: new exercise creation here
+            print("create exercise")
+        } else {
+            self.data.remove(at: indexPath.row)
+            self.deleteRows(at: [indexPath], with: .left)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -23,10 +29,13 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // TODO: Custom data cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath)
-        cell.backgroundColor = UIColor.white
-        cell.textLabel!.text = "\(data[indexPath.row])"
+        let cell:ExerciseTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell",
+                                                 for: indexPath as IndexPath) as! ExerciseTableViewCell
+        if indexPath.row + 1 == data.count {
+            cell.setType(type: .ADD)
+        } else {
+            cell.setType(type: .EXERCISE)
+        }
         return cell
     }
     

@@ -78,6 +78,16 @@ class CreateWorkoutView: UIScrollView {
         curHeight += nameEntryContainingView.frame.height + viewPadding
         
         self.addSubview(nameEntryContainingView)
+        
+        let exercises = ExerciseTableView(frame: CGRect(x: 10,
+            y: curHeight,
+            width: self.frame.width - 20,
+            height: self.frame.height - curHeight - 20), style: .plain)
+        exercises.backgroundColor = UIColor.niceYellow()
+        exercises.dataSource = exercises
+        exercises.delegate = exercises
+        exercises.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.addSubview(exercises)
     }
     
     // Event functions

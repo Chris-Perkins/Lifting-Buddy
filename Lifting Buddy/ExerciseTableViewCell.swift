@@ -35,6 +35,7 @@ class ExerciseTableViewCell: UITableViewCell {
                                          height: self.frame.height - 2 * strokeWidth))
         innerView?.backgroundColor = UIColor.white
         innerView?.layer.cornerRadius = 5.0
+        
         self.addSubview(innerView!)
     }
     

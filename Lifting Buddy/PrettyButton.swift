@@ -36,7 +36,7 @@ import UIKit
     private var style: PrettyButton.Styles
     
     // tag of overlay view
-    var overlayViewTag: Int = 1337
+    private var overlayViewTag: Int = 1337
     
     // MARK: Init Functions
     

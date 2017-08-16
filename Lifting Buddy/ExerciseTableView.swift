@@ -7,9 +7,23 @@
 //
 
 import UIKit
+import DragAndDropTableView
 
-class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
+class ExerciseTableView: DragAndDropTableView, UITableViewDelegate {
     var data = ["1", "2", "3"]
+    
+    override init(frame: CGRect, style: UITableViewStyle) {
+        super.init(frame: frame, style: style)
+        
+        self.delegate = self
+        self.dataSource = self
+        self.backgroundColor = UIColor.niceYellow()
+        self.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: Edit / Delete dialog

@@ -32,9 +32,9 @@ class CreateWorkoutView: UIScrollView {
         
         // Containing view for the name entry label and view
         let nameEntryContainingView: UIView = UIView(frame: CGRect(x: 10,
-                                                         y: curHeight,
-                                                         width: self.frame.width - 20,
-                                                         height: 70))
+                                                                   y: curHeight,
+                                                                   width: self.frame.width - 20,
+                                                                   height: 70))
         
         let nameLabel: UILabel = UILabel(frame: CGRect(x: 0,
                                                        y: 0,
@@ -79,17 +79,38 @@ class CreateWorkoutView: UIScrollView {
         
         self.addSubview(nameEntryContainingView)
         
-        let exercises = ExerciseTableView(frame: CGRect(x: 10,
-            y: curHeight,
-            width: self.frame.width - 20,
-            height: self.frame.height - curHeight - 20), style: .plain)
-        exercises.backgroundColor = UIColor.niceYellow()
-        exercises.dataSource = exercises
-        exercises.delegate = exercises
-        exercises.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
-        exercises.data.append("New")
+        let exerciseTableView = ExerciseTableView(frame: CGRect(x: 10,
+                                                                y: curHeight,
+                                                                width: self.frame.width - 20,
+                                                                height: self.frame.height - curHeight - 100),
+                                                                style: .plain)
+        exerciseTableView.backgroundColor = UIColor.niceYellow()
+        exerciseTableView.data.append("New")
+        exerciseTableView.allowsSelection = false
         
-        self.addSubview(exercises)
+        let createWorkoutButton: PrettyButton = PrettyButton(frame: CGRect(x: 20,
+                                                                           y: 0,
+                                                                           width: self.frame.width - 40,
+                                                                           height: 40))
+        createWorkoutButton.cornerRadius = 5.0
+        createWorkoutButton.setOverlayColor(color: UIColor.niceYellow())
+        createWorkoutButton.setOverlayStyle(style: .BLOOM)
+        self.addSubview(createWorkoutButton)
+        self.addSubview(exerciseTableView)
+        createWorkoutButton.layer.zPosition = 2
+        createWorkoutButton.backgroundColor = UIColor.niceYellow()
+        createWorkoutButton.setTitle("set", for: .normal)
+        
+        createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: createWorkoutButton,
+                           attribute: .leading,
+                           relatedBy: .equal,
+                           toItem: exerciseTableView,
+                           attribute: .trailing,
+                           multiplier: 1,
+                           constant: 20).isActive = true
+        
     }
     
     // Event functions

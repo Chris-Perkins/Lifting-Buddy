@@ -20,6 +20,8 @@
 		225E65D41F22A442004B3AF4 /* RLMSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D31F22A442004B3AF4 /* RLMSupport.swift */; };
 		225E65D71F22A4B4004B3AF4 /* ExerciseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D61F22A4B4004B3AF4 /* ExerciseButton.swift */; };
 		22A36A2F1F43A1F5000DCDBF /* ExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A2E1F43A1F5000DCDBF /* ExerciseTableViewCell.swift */; };
+		22A36A311F4513AD000DCDBF /* LPRTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A301F4513AD000DCDBF /* LPRTableView.swift */; };
+		22A36A341F451492000DCDBF /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 22A36A331F451492000DCDBF /* LICENSE */; };
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
 		22AA6D141F218AD400624744 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D131F218AD400624744 /* SectionView.swift */; };
 		22BC5AF41F3E5C2A00B150BD /* CreateWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */; };
@@ -45,6 +47,8 @@
 		225E65D31F22A442004B3AF4 /* RLMSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMSupport.swift; sourceTree = "<group>"; };
 		225E65D61F22A4B4004B3AF4 /* ExerciseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseButton.swift; sourceTree = "<group>"; };
 		22A36A2E1F43A1F5000DCDBF /* ExerciseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseTableViewCell.swift; sourceTree = "<group>"; };
+		22A36A301F4513AD000DCDBF /* LPRTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPRTableView.swift; path = "Lifting Buddy/LPRTableView.swift"; sourceTree = "<group>"; };
+		22A36A331F451492000DCDBF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		22AA6D131F218AD400624744 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWorkoutView.swift; sourceTree = "<group>"; };
@@ -78,6 +82,7 @@
 		224697B91F19843A0089C7CA = {
 			isa = PBXGroup;
 			children = (
+				22A36A321F451479000DCDBF /* Libraries */,
 				224697C41F19843A0089C7CA /* Lifting Buddy */,
 				224697C31F19843A0089C7CA /* Products */,
 				DA15027B3E5B3207682F7681 /* Pods */,
@@ -115,6 +120,15 @@
 				225E65D31F22A442004B3AF4 /* RLMSupport.swift */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22A36A321F451479000DCDBF /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				22A36A301F4513AD000DCDBF /* LPRTableView.swift */,
+				22A36A331F451492000DCDBF /* LICENSE */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 		22AA6D0E1F21847F00624744 /* Custom UI Types */ = {
@@ -231,6 +245,7 @@
 			files = (
 				224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */,
 				224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */,
+				22A36A341F451492000DCDBF /* LICENSE in Resources */,
 				224697CB1F19843A0089C7CA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +319,7 @@
 				22EDF04E1F35860E0074E2F2 /* SettingsView.swift in Sources */,
 				224153781F1EE1F000F7B82B /* Exercise.swift in Sources */,
 				22BC5AF41F3E5C2A00B150BD /* CreateWorkoutView.swift in Sources */,
+				22A36A311F4513AD000DCDBF /* LPRTableView.swift in Sources */,
 				22AA6D121F21851400624744 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

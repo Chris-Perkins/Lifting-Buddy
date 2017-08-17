@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import DragAndDropTableView
 
-class ExerciseTableView: DragAndDropTableView, UITableViewDelegate {
+class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate {
     var data = ["1", "2", "3"]
     
     override init(frame: CGRect, style: UITableViewStyle) {

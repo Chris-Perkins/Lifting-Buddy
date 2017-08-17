@@ -11,6 +11,8 @@ import UIKit
 class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate {
     var data = ["1", "2", "3"]
     
+    // MARK: Override Init
+    
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
         
@@ -24,7 +26,20 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: TableViewOverrides
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // Modify this code as needed to support more advanced reordering, such as between sections.
+        let source = data[sourceIndexPath.row]
+        let destination = data[destinationIndexPath.row]
+        data[sourceIndexPath.row] = destination
+        data[destinationIndexPath.row] = source
+    }
+    
+    // MARK: Table view functions
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(data)
         // TODO: Edit / Delete dialog
         let cell: ExerciseTableViewCell = self.cellForRow(at: indexPath) as! ExerciseTableViewCell
         cell.backgroundColor = UIColor.niceBlue()
@@ -32,8 +47,8 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
             // Todo: new exercise creation here
             print("create exercise")
         } else {
-            self.data.remove(at: indexPath.row)
-            self.deleteRows(at: [indexPath], with: .left)
+           // self.data.remove(at: indexPath.row)
+           // self.deleteRows(at: [indexPath], with: .left)
         }
     }
     
@@ -44,6 +59,7 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:ExerciseTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell",
                                                  for: indexPath as IndexPath) as! ExerciseTableViewCell
+        cell.label.text = data[indexPath.row]
         if indexPath.row + 1 == data.count {
             cell.setType(type: .ADD)
         } else {

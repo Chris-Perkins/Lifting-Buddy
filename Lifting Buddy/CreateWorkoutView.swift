@@ -86,7 +86,7 @@ class CreateWorkoutView: UIScrollView {
                                                                 style: .plain)
         exerciseTableView.backgroundColor = UIColor.niceYellow()
         exerciseTableView.data.append("New")
-        exerciseTableView.allowsSelection = false
+        //exerciseTableView.allowsSelection = false
         
         let createWorkoutButton: PrettyButton = PrettyButton(frame: CGRect(x: 20,
                                                                            y: 0,
@@ -95,11 +95,12 @@ class CreateWorkoutView: UIScrollView {
         createWorkoutButton.cornerRadius = 5.0
         createWorkoutButton.setOverlayColor(color: UIColor.niceYellow())
         createWorkoutButton.setOverlayStyle(style: .BLOOM)
-        self.addSubview(createWorkoutButton)
-        self.addSubview(exerciseTableView)
         createWorkoutButton.layer.zPosition = 2
         createWorkoutButton.backgroundColor = UIColor.niceYellow()
         createWorkoutButton.setTitle("set", for: .normal)
+        self.addSubview(createWorkoutButton)
+        
+        self.addSubview(exerciseTableView)
         
         createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
         

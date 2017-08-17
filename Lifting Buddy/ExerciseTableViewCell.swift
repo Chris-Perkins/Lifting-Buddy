@@ -20,6 +20,7 @@ class ExerciseTableViewCell: UITableViewCell {
     private var innerView: UIView?
     private var strokeWidth: CGFloat = 1.0
     private var type: CellTypes?
+    public var label: UILabel = UILabel.init()
     
     
     // View overrides
@@ -35,6 +36,9 @@ class ExerciseTableViewCell: UITableViewCell {
                                          height: self.frame.height - 2 * strokeWidth))
         innerView?.backgroundColor = UIColor.white
         innerView?.layer.cornerRadius = 5.0
+        label.frame = CGRect(x: 5, y: 5, width: innerView!.frame.width - 10, height: innerView!.frame.height - 10)
+        label.textColor = UIColor.niceBlue()
+        innerView?.addSubview(label)
         
         self.addSubview(innerView!)
     }

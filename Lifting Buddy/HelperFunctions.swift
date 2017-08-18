@@ -110,3 +110,53 @@ extension RealmSwift.List {
         return self.map{$0}
     }
 }
+
+extension NSLayoutConstraint {
+    
+    // Return a constraint that will center a view inside a view
+    public static func createCenterViewHorizontallyInViewConstraint(view: UIView,
+                                                              inView: UIView) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: inView,
+                                  attribute: .centerX,
+                                  relatedBy: .equal,
+                                  toItem: view,
+                                  attribute: .centerX,
+                                  multiplier: 1,
+                                  constant: 0)
+    }
+    
+    // Return a constraint that will place a view below a view with padding
+    public static func createViewBelowViewConstraint(view: UIView, belowView: UIView,
+                                                    withPadding: CGFloat) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: belowView,
+                                  attribute: .bottom,
+                                  relatedBy: .equal,
+                                  toItem: view,
+                                  attribute: .top,
+                                  multiplier: 1,
+                                  constant: -withPadding)
+    }
+    
+    // Return a constraint that will create a width constraint for the given view
+    public static func createWidthConstraintForView(view: UIView, width: CGFloat) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: view,
+                                  attribute: .width,
+                                  relatedBy: .equal,
+                                  toItem: nil,
+                                  attribute: .notAnAttribute,
+                                  multiplier: 1,
+                                  constant: width)
+    }
+    
+    // Return a constraint that will create a height constraint for the given view
+    public static func createHeightConstraintForView(view: UIView, height: CGFloat) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: view,
+                                  attribute: .height,
+                                  relatedBy: .equal,
+                                  toItem: nil,
+                                  attribute: .notAnAttribute,
+                                  multiplier: 1,
+                                  constant: height)
+    }
+    
+}

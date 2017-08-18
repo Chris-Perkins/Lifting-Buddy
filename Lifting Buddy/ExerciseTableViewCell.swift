@@ -31,7 +31,10 @@ class ExerciseTableViewCell: UITableViewCell {
         innerView?.backgroundColor = UIColor.white
         self.addSubview(innerView!)
         
-        label.frame = CGRect(x: 5, y: 5, width: innerView!.frame.width - 10, height: innerView!.frame.height - 10)
+        label.frame = CGRect(x: 5,
+                             y: 5,
+                             width: innerView!.frame.width - 10,
+                             height: innerView!.frame.height - 10)
         label.textColor = UIColor.niceBlue()
         innerView?.addSubview(label)
     }

@@ -13,10 +13,24 @@ class CreateWorkoutView: UIScrollView {
     // View properties
     
     let viewPadding: CGFloat = 20.0
-    var nameEntryField: UITextField?
+    // variable stating how many cells are in the exercise table view
     private var prevDataCount = -1
+    
+    // Exercise name field
+    private var nameEntryField: UITextField?
+    // Table holding all of our exercises
     private var exerciseTableView: ExerciseTableView?
-    private var createWorkoutButton: PrettyButton?
+    // Button to create our workout
+    private var createWorkoutButton: PrettyButton
+    
+    override init(frame: CGRect) {
+        createWorkoutButton = PrettyButton()
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // View overrides
     
@@ -92,59 +106,38 @@ class CreateWorkoutView: UIScrollView {
             exerciseTableView?.backgroundColor = UIColor.white
             exerciseTableView?.appendDataToTableView(data: "test")
             
-            self.createWorkoutButton = PrettyButton()
             // Give it standard default properties
-            createWorkoutButton?.setTitle("Create Workout", for: .normal)
-            createWorkoutButton?.backgroundColor = UIColor.niceBlue()
-            createWorkoutButton?.setOverlayColor(color: UIColor.niceYellow())
-            createWorkoutButton?.setOverlayStyle(style: .BLOOM)
-            createWorkoutButton?.cornerRadius = 5.0
+            createWorkoutButton.setTitle("Create Workout", for: .normal)
+            createWorkoutButton.backgroundColor = UIColor.niceBlue()
+            createWorkoutButton.setOverlayColor(color: UIColor.niceYellow())
+            createWorkoutButton.setOverlayStyle(style: .BLOOM)
+            createWorkoutButton.cornerRadius = 5.0
             
-            self.addSubview(createWorkoutButton!)
+            self.addSubview(createWorkoutButton)
             self.addSubview(exerciseTableView!)
             
-            createWorkoutButton?.translatesAutoresizingMaskIntoConstraints = false
+            createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
             
             /*
              * Create width and height for constraints
              */
-            NSLayoutConstraint(item: createWorkoutButton!,
-                               attribute: .width,
-                               relatedBy: .equal,
-                               toItem: nil,
-                               attribute: .notAnAttribute,
-                               multiplier: 1,
-                               constant: 200).isActive = true
-            NSLayoutConstraint(item: createWorkoutButton!,
-                               attribute: .height,
-                               relatedBy: .equal,
-                               toItem: nil,
-                               attribute: .notAnAttribute,
-                               multiplier: 1, constant: 50).isActive = true
+            NSLayoutConstraint.createWidthConstraintForView(view: createWorkoutButton, width: 200).isActive = true
+            NSLayoutConstraint.createHeightConstraintForView(view: createWorkoutButton, height: 50).isActive = true
             
             /*
              * Center on x axis,
              * position createWorkout Button below exerciseTableView
              */
-            NSLayoutConstraint(item: exerciseTableView!,
-                               attribute: .bottom,
-                               relatedBy: .equal,
-                               toItem: createWorkoutButton!,
-                               attribute: .top,
-                               multiplier: 1,
-                               constant: -20).isActive = true
-            NSLayoutConstraint(item: window!,
-                               attribute: .centerX,
-                               relatedBy: .equal,
-                               toItem: createWorkoutButton!,
-                               attribute: .centerX,
-                               multiplier: 1,
-                               constant: 0).isActive = true
+            NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
+                                                            belowView: exerciseTableView!,
+                                                            withPadding: 20).isActive = true
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: createWorkoutButton,
+                                                                            inView: window!).isActive = true
             
-            prevDataCount = exerciseTableView!.data.count
-        } else if prevDataCount != exerciseTableView!.data.count { // If tableview was updated
-            prevDataCount = (exerciseTableView?.data.count)!
-            self.contentSize.height = createWorkoutButton!.frame.maxY + 20
+            prevDataCount = exerciseTableView!.getData().count
+        } else if prevDataCount != exerciseTableView!.getData().count { // If tableview was updated
+            prevDataCount = (exerciseTableView?.getData().count)!
+            self.contentSize.height = createWorkoutButton.frame.maxY + 20
         }
         
     }

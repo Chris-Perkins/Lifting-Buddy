@@ -9,7 +9,10 @@
 import UIKit
 
 class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate {
-    var data:[String] = [String].init()
+    
+    // MARK: View properties
+    
+    private var data:[String] = [String].init()
     var cellHeight: CGFloat = 50.0
     
     // MARK: Override Init
@@ -74,5 +77,9 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         
         self.data.append(data)
         reloadData()
+    }
+    
+    public func getData() -> [String] {
+        return data
     }
 }

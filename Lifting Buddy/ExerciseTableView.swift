@@ -9,7 +9,8 @@
 import UIKit
 
 class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate {
-    var data = ["1", "2", "3"]
+    var data:[String] = [String].init()
+    var cellHeight: CGFloat = 50.0
     
     // MARK: Override Init
     
@@ -18,7 +19,6 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         
         self.delegate = self
         self.dataSource = self
-        self.backgroundColor = UIColor.niceYellow()
         self.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
@@ -26,8 +26,9 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: TableViewOverrides
+    // MARK: TableView Functions
     
+    // Moved a cell (LPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // Modify this code as needed to support more advanced reordering, such as between sections.
         let source = data[sourceIndexPath.row]
@@ -36,39 +37,42 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         data[destinationIndexPath.row] = source
     }
     
-    // MARK: Table view functions
-    
+    // Selected a table view cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(data)
         // TODO: Edit / Delete dialog
         let cell: ExerciseTableViewCell = self.cellForRow(at: indexPath) as! ExerciseTableViewCell
         cell.backgroundColor = UIColor.niceBlue()
-        if cell.getType() == ExerciseTableViewCell.CellTypes.ADD {
-            // Todo: new exercise creation here
-            print("create exercise")
-        } else {
-           // self.data.remove(at: indexPath.row)
-           // self.deleteRows(at: [indexPath], with: .left)
-        }
+        
+        appendDataToTableView(data: cell.label.text ?? "nothing")
     }
     
+    // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
     
+    // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:ExerciseTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell",
-                                                 for: indexPath as IndexPath) as! ExerciseTableViewCell
+        let cell:ExerciseTableViewCell =
+            tableView.dequeueReusableCell(withIdentifier: "cell",
+                                          for: indexPath as IndexPath) as! ExerciseTableViewCell
         cell.label.text = data[indexPath.row]
-        if indexPath.row + 1 == data.count {
-            cell.setType(type: .ADD)
-        } else {
-            cell.setType(type: .EXERCISE)
-        }
         return cell
     }
     
+    // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return cellHeight
+    }
+    
+    // MARK: Custom functions
+    
+    // Append some data to the tableView
+    public func appendDataToTableView(data: String) {
+        self.frame.size.height += cellHeight
+        
+        self.data.append(data)
+        reloadData()
     }
 }

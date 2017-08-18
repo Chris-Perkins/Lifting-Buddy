@@ -12,16 +12,9 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // View properties
     
-    public enum CellTypes {
-        case ADD
-        case EXERCISE
-    }
-    
     private var innerView: UIView?
     private var strokeWidth: CGFloat = 1.0
-    private var type: CellTypes?
     public var label: UILabel = UILabel.init()
-    
     
     // View overrides
     
@@ -34,20 +27,12 @@ class ExerciseTableViewCell: UITableViewCell {
                                          y: strokeWidth,
                                          width: self.frame.width - 2 * strokeWidth,
                                          height: self.frame.height - 2 * strokeWidth))
-        innerView?.backgroundColor = UIColor.white
         innerView?.layer.cornerRadius = 5.0
+        innerView?.backgroundColor = UIColor.white
+        self.addSubview(innerView!)
+        
         label.frame = CGRect(x: 5, y: 5, width: innerView!.frame.width - 10, height: innerView!.frame.height - 10)
         label.textColor = UIColor.niceBlue()
         innerView?.addSubview(label)
-        
-        self.addSubview(innerView!)
-    }
-    
-    public func setType(type: CellTypes) {
-        self.type = type
-    }
-    
-    public func getType() -> CellTypes? {
-        return self.type
     }
 }

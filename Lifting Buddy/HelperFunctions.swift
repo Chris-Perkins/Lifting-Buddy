@@ -137,6 +137,18 @@ extension NSLayoutConstraint {
                                   constant: -withPadding)
     }
     
+    // Return a constraint that will place a view below's top a view with padding
+    public static func createViewBelowViewTopConstraint(view: UIView, belowView: UIView,
+                                                     withPadding: CGFloat) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: belowView,
+                                  attribute: .top,
+                                  relatedBy: .equal,
+                                  toItem: view,
+                                  attribute: .top,
+                                  multiplier: 1,
+                                  constant: -withPadding)
+    }
+    
     // Return a constraint that will create a width constraint for the given view
     public static func createWidthConstraintForView(view: UIView, width: CGFloat) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: view,

@@ -17,15 +17,26 @@ class CreateWorkoutView: UIScrollView {
     private var prevDataCount = -1
     
     // Exercise name field
-    private var nameEntryField: UITextField?
+    private var nameEntryContainerView: UIView
+    private var nameEntryLabel: UILabel
+    private var nameEntryField: UITextField
     // Table holding all of our exercises
     private var exerciseTableView: ExerciseTableView?
     // Button to create our workout
     private var createWorkoutButton: PrettyButton
     
     override init(frame: CGRect) {
+        nameEntryContainerView = UIView()
+        nameEntryLabel = UILabel()
+        nameEntryField = UITextField()
         createWorkoutButton = PrettyButton()
+        
         super.init(frame: frame)
+        
+        self.addSubview(nameEntryContainerView)
+        nameEntryContainerView.addSubview(nameEntryLabel)
+        nameEntryContainerView.addSubview(nameEntryField)
+        self.addSubview(createWorkoutButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,63 +55,60 @@ class CreateWorkoutView: UIScrollView {
          * -1 notes that the view wasn't loaded.
          */
         if prevDataCount == -1 {
-            // Current height we append to
-            var curHeight: CGFloat = 20
-            
-            // NAME VIEW
             
             // Containing view for the name entry label and view
             let nameEntryContainingView: UIView = UIView(frame: CGRect(x: 10,
-                                                                       y: curHeight,
+                                                                       y: viewPadding,
                                                                        width: self.frame.width - 20,
                                                                        height: 70))
+            self.addSubview(nameEntryContainingView)
             
-            let nameLabel: UILabel = UILabel(frame: CGRect(x: 0,
-                                                           y: 0,
-                                                           width: nameEntryContainingView.frame.width,
-                                                           height: 20))
-            nameLabel.text = "Name of New Workout"
-            nameLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
-            nameLabel.textAlignment = .center
-            nameLabel.textColor = UIColor.niceBlue()
-            nameEntryContainingView.addSubview(nameLabel)
+            // MARK: Name Entry Label
+            nameEntryContainingView.addSubview(nameEntryLabel)
+            nameEntryLabel.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.createHeightConstraintForView(view: nameEntryLabel,
+                                                             height: 20).isActive = true
+            NSLayoutConstraint.createWidthConstraintForView(view: nameEntryLabel,
+                                                            width: nameEntryContainingView.frame.width).isActive = true
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryLabel,
+                                                                            inView: nameEntryContainingView).isActive = true
+            NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryLabel,
+                                                                belowView: nameEntryContainingView,
+                                                                withPadding: 0).isActive = true
+            nameEntryLabel.text = "Name of New Workout"
+            nameEntryLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
+            nameEntryLabel.textAlignment = .center
+            nameEntryLabel.textColor = UIColor.niceBlue()
             
-            nameEntryField = UITextField()
-            nameEntryField?.translatesAutoresizingMaskIntoConstraints = false
-            nameEntryContainingView.addSubview(nameEntryField!)
+            // MARK: Name Entry Field
+            nameEntryContainingView.addSubview(nameEntryField)
+            nameEntryField.translatesAutoresizingMaskIntoConstraints = false
             
             /*
              * Center in view, place below the above frame, and give height/width of 40
              */
-            NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField!,
+            NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
                                                              height: 40).isActive = true
-            NSLayoutConstraint.createWidthConstraintForView(view: nameEntryField!,
+            NSLayoutConstraint.createWidthConstraintForView(view: nameEntryField,
                                                             width: nameEntryContainingView.frame.width - 40).isActive = true
-            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryField!,
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryField,
                                                                             inView: nameEntryContainingView).isActive = true
-            NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField!,
-                                                             belowView: nameLabel,
+            NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField,
+                                                             belowView: nameEntryLabel,
                                                              withPadding: viewPadding / 2).isActive = true
             
             // View select / deselect events
-            nameEntryField?.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
-            nameEntryField?.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
+            nameEntryField.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
+            nameEntryField.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
             
             // View prettiness
-            nameEntryField?.layer.cornerRadius = 5.0
-            nameEntryField?.textAlignment = .center
-            nameEntryField?.placeholder = "Name of New Workout"
-            textfieldDeselected(sender: nameEntryField!)
-            
-            
-            // Add height of the containing view for name entry + additional padding
-            // to prevent overlap in views
-            curHeight += nameEntryContainingView.frame.height + viewPadding
-            
-            self.addSubview(nameEntryContainingView)
-            
+            nameEntryField.layer.cornerRadius = 5.0
+            nameEntryField.textAlignment = .center
+            nameEntryField.placeholder = "Name of New Workout"
+            textfieldDeselected(sender: nameEntryField)
+
             self.exerciseTableView = ExerciseTableView(frame: CGRect(x: 10,
-                                                                    y: curHeight,
+                                                                    y: 110,
                                                                     width: self.frame.width - 20,
                                                                     height: 0),
                                                                     style: .plain)
@@ -114,7 +122,6 @@ class CreateWorkoutView: UIScrollView {
             createWorkoutButton.setOverlayStyle(style: .BLOOM)
             createWorkoutButton.cornerRadius = 5.0
             
-            self.addSubview(createWorkoutButton)
             self.addSubview(exerciseTableView!)
             
             createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false

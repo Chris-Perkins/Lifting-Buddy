@@ -63,22 +63,24 @@ class CreateWorkoutView: UIScrollView {
             nameLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
             nameLabel.textAlignment = .center
             nameLabel.textColor = UIColor.niceBlue()
-            curHeight += 10
             nameEntryContainingView.addSubview(nameLabel)
             
-            // If we can fit the enclosed view width in the view, add it.
-            if nameEntryContainingView.frame.width >= 250 {
-                // Display in a middle of view with max width of 50
-                nameEntryField = UITextField(frame: CGRect(x: (nameEntryContainingView.frame.width - 250) / 2,
-                                                           y: 30,
-                                                           width: 250,
-                                                           height: 40))
-            } else { // Otherwise, fit a view that fits.
-                nameEntryField = UITextField(frame: CGRect(x: 0,
-                                                           y: 30,
-                                                           width: nameEntryContainingView.frame.width,
-                                                           height: 20))
-            }
+            nameEntryField = UITextField()
+            nameEntryField?.translatesAutoresizingMaskIntoConstraints = false
+            nameEntryContainingView.addSubview(nameEntryField!)
+            
+            /*
+             * Center in view, place below the above frame, and give height/width of 40
+             */
+            NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField!,
+                                                             height: 40).isActive = true
+            NSLayoutConstraint.createWidthConstraintForView(view: nameEntryField!,
+                                                            width: nameEntryContainingView.frame.width - 40).isActive = true
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryField!,
+                                                                            inView: nameEntryContainingView).isActive = true
+            NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField!,
+                                                             belowView: nameLabel,
+                                                             withPadding: viewPadding / 2).isActive = true
             
             // View select / deselect events
             nameEntryField?.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
@@ -90,7 +92,6 @@ class CreateWorkoutView: UIScrollView {
             nameEntryField?.placeholder = "Name of New Workout"
             textfieldDeselected(sender: nameEntryField!)
             
-            nameEntryContainingView.addSubview(nameEntryField!)
             
             // Add height of the containing view for name entry + additional padding
             // to prevent overlap in views

@@ -111,6 +111,15 @@ extension RealmSwift.List {
     }
 }
 
+extension PrettyButton {
+    public func setDefaultProperties() {
+        self.backgroundColor = UIColor.niceBlue()
+        self.setOverlayColor(color: UIColor.niceYellow())
+        self.setOverlayStyle(style: .BLOOM)
+        self.cornerRadius = 5.0
+    }
+}
+
 extension NSLayoutConstraint {
     
     // Return a constraint that will center a view inside a view

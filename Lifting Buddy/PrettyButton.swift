@@ -23,6 +23,7 @@ import UIKit
         }
     }
     @IBInspectable private var overlayColor: UIColor = UIColor.white.withAlphaComponent(0.25)
+    @IBInspectable private var animationTimeInSeconds: Double = 0.5
     
     // MARK: Properties
     
@@ -30,6 +31,7 @@ import UIKit
         case NONE
         case SLIDE
         case BLOOM
+        case FADE
     }
     
     // Default style of button is none
@@ -77,6 +79,9 @@ import UIKit
         case Styles.BLOOM:
             createBloomView()
             break
+        case Styles.FADE:
+            createFadeView()
+            break
         }
     }
     
@@ -86,22 +91,32 @@ import UIKit
     
     // MARK: Custom view handling
     
+    // Create overlay view with default properties
+    private func createOverlayView(frame: CGRect) -> UIView {
+        // Create view that slides to bottom right on press
+        let overlayView: UIView = UIView.init(frame: frame)
+        overlayView.layer.cornerRadius = cornerRadius
+        overlayView.backgroundColor = self.overlayColor
+        // Display behind the title
+        overlayView.layer.zPosition = -1
+        // Set tag to find this view later
+        overlayView.tag = self.overlayViewTag
+        
+        return overlayView
+    }
+    
     // Creates the sliding effect on the button's background
     private func createSlideView() {
         // If slide view does not currently exist, create it
         if self.viewWithTag(overlayViewTag) == nil {
             // Create view that slides to bottom right on press
-            let overlayView: UIView = UIView.init(frame: CGRect(x: 0,
+            let overlayView: UIView = createOverlayView(frame: CGRect(x: 0,
                                                                 y: 0,
                                                                 width: 1,
                                                                 height: self.frame.height))
-            overlayView.layer.cornerRadius = cornerRadius
-            overlayView.backgroundColor = self.overlayColor
-            overlayView.layer.zPosition = -1
-            overlayView.tag = self.overlayViewTag
             self.addSubview(overlayView)
             
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: animationTimeInSeconds, animations: {
                 overlayView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
             })
         }
@@ -112,19 +127,32 @@ import UIKit
         // If slide view does not currently exist, create it
         if self.viewWithTag(overlayViewTag) == nil {
             // Create view that slides to bottom right on press
-            let overlayView: UIView = UIView.init(frame: CGRect(x: self.frame.width / 2,
+            let overlayView: UIView = createOverlayView(frame: CGRect(x: self.frame.width / 2,
                                                                 y: self.frame.height / 2,
                                                                 width: 0,
                                                                 height: 0))
-            overlayView.layer.cornerRadius = cornerRadius
-            overlayView.backgroundColor = self.overlayColor
-            // Start alpha low, then buff opacity during animation
-            overlayView.layer.zPosition = -1
-            overlayView.tag = self.overlayViewTag
             self.addSubview(overlayView)
             
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: animationTimeInSeconds, animations: {
                 overlayView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+            })
+        }
+    }
+    
+    private func createFadeView() {
+        // If slide view does not currently exist, create it
+        if self.viewWithTag(overlayViewTag) == nil {
+            // Create view that slides to bottom right on press
+            let overlayView: UIView = createOverlayView(frame: CGRect(x: 0,
+                                                                      y: 0,
+                                                                      width: self.frame.width,
+                                                                      height: self.frame.height))
+            // Fade view in
+            overlayView.alpha = 0
+            self.addSubview(overlayView)
+            
+            UIView.animate(withDuration: animationTimeInSeconds, animations: {
+                overlayView.alpha = 1
             })
         }
     }
@@ -132,7 +160,7 @@ import UIKit
     private func removeOverlayView() {
         // Delete slide view on release
         if let slideView: UIView = self.viewWithTag(self.overlayViewTag) {
-            UIView.animate(withDuration: 0.25, animations: {
+            UIView.animate(withDuration: animationTimeInSeconds, animations: {
                 slideView.alpha = 0
             }, completion:
                 {

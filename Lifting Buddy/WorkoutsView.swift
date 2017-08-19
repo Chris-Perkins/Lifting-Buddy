@@ -27,11 +27,9 @@ class WorkoutsView: UIView {
                                                       y: self.frame.maxY - 100,
                                                       width: 75,
                                                       height: 75))
-            floatyButton?.backgroundColor = UIColor.niceBlue()
-            floatyButton?.setOverlayStyle(style: .BLOOM)
+            floatyButton?.setDefaultProperties()
             floatyButton?.cornerRadius = floatyButton!.frame.width / 2
             floatyButton?.shadowOpacity = 0.2
-            floatyButton?.setOverlayColor(color: UIColor.niceYellow())
             floatyButton?.setTitle("Create", for: .normal)
             floatyButton?.layer.zPosition = 90
             floatyButton?.addTarget(self, action: #selector(showCreateWorkoutView(sender:)), for: .touchUpInside)

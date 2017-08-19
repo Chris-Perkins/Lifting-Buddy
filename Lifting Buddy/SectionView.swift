@@ -106,7 +106,7 @@ class SectionView: UIView {
     
     private func setButtonProperties(button: PrettyButton) {
         button.cornerRadius = 0
-        button.setOverlayStyle(style: .BLOOM)
+        button.setOverlayStyle(style: .SLIDE)
         button.setOverlayColor(color: UIColor.white.withAlphaComponent(0.25))
         button.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
     }

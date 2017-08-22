@@ -120,9 +120,11 @@ class CreateWorkoutView: UIScrollView {
             addExerciseButton.setTitleColor(UIColor.white, for: .highlighted)
             addExerciseButton.setDefaultProperties()
             addExerciseButton.setOverlayStyle(style: .FADE)
-            addExerciseButton.backgroundColor = UIColor.white
+            addExerciseButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
             addExerciseButton.setOverlayColor(color: UIColor.niceYellow())
             addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+            // Event press for exercise button
+            addExerciseButton.addTarget(self, action: #selector(addExercisePressed(sender:)), for: .touchUpInside)
             
             /*
              * Create width and height for constraints
@@ -156,7 +158,7 @@ class CreateWorkoutView: UIScrollView {
                                                              height: 50).isActive = true
             /*
              * Center on x axis,
-             * position createWorkout Button below exerciseTableView
+             * position createWorkout Button below add exercise button
              */
             NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
                                                             belowView: addExerciseButton,
@@ -182,5 +184,13 @@ class CreateWorkoutView: UIScrollView {
     @objc func textfieldDeselected(sender: UITextField) {
         sender.backgroundColor = UIColor.white
         sender.textColor = UIColor.black
+    }
+    
+    @objc func addExercisePressed(sender: PrettyButton) {
+        let createExerciseView = CreateExerciseView(frame: CGRect(x: 0,
+                                                                  y: 0,
+                                                                  width: self.frame.width,
+                                                                  height: self.frame.height))
+        self.addSubview(createExerciseView)
     }
 }

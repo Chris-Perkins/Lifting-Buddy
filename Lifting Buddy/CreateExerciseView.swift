@@ -15,6 +15,7 @@ class CreateExerciseView: UIScrollView {
     let viewPadding: CGFloat = 20.0
     private var nameEntryLabel: UILabel
     private var nameEntryField: UITextField
+    private var loaded = false
     
     // MARK: Init overrides
     
@@ -35,49 +36,58 @@ class CreateExerciseView: UIScrollView {
     // MARK: View overrides
     
     override func layoutSubviews() {
-        // MARK: Name Entry Label
-        nameEntryLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createHeightConstraintForView(view: nameEntryLabel,
-                                                         height: 20).isActive = true
-        NSLayoutConstraint.createWidthConstraintForView(view: nameEntryLabel,
-                                                        width: self.frame.width - 40).isActive = true
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryLabel,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryLabel,
-                                                            belowView: self,
-                                                            withPadding: viewPadding).isActive = true
-        nameEntryLabel.text = "Name of New Workout"
-        nameEntryLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
-        nameEntryLabel.textAlignment = .center
-        nameEntryLabel.textColor = UIColor.niceBlue()
-        
-        // MARK: Name Entry Field
-        nameEntryField.translatesAutoresizingMaskIntoConstraints = false
-        
-        /*
-         * Center in view, place below the above frame, and give height/width of 40
-         */
-        NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
-                                                         height: 40).isActive = true
-        NSLayoutConstraint.createWidthConstraintForView(view: nameEntryField,
-                                                        width: self.frame.width - 80).isActive = true
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryField,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField,
-                                                         belowView: nameEntryLabel,
-                                                         withPadding: viewPadding / 2).isActive = true
-        
-        // View select / deselect events
-        nameEntryField.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
-        nameEntryField.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
-        
-        // View prettiness
-        nameEntryField.layer.cornerRadius = 5.0
-        nameEntryField.textAlignment = .center
-        nameEntryField.placeholder = "Name of New Workout"
-        textfieldDeselected(sender: nameEntryField)
+        if !loaded {
+            self.backgroundColor = UIColor.niceGray()
+            self.layer.zPosition = 100
+            
+            // MARK: Name Entry Label
+            nameEntryLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.createHeightConstraintForView(view: nameEntryLabel,
+                                                             height: 20).isActive = true
+            NSLayoutConstraint.createWidthConstraintForView(view: nameEntryLabel,
+                                                            width: self.frame.width - 40).isActive = true
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryLabel,
+                                                                            inView: self).isActive = true
+            NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryLabel,
+                                                                belowView: self,
+                                                                withPadding: viewPadding).isActive = true
+            nameEntryLabel.text = "Name of New Exercise"
+            nameEntryLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
+            nameEntryLabel.textAlignment = .center
+            nameEntryLabel.textColor = UIColor.niceBlue()
+            
+            // MARK: Name Entry Field
+            nameEntryField.translatesAutoresizingMaskIntoConstraints = false
+            
+            /*
+             * Center in view, place below the above frame, and give height/width of 40
+             */
+            NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
+                                                             height: 40).isActive = true
+            NSLayoutConstraint.createWidthConstraintForView(view: nameEntryField,
+                                                            width: self.frame.width - 80).isActive = true
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryField,
+                                                                            inView: self).isActive = true
+            NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField,
+                                                             belowView: nameEntryLabel,
+                                                             withPadding: viewPadding / 2).isActive = true
+            
+            // View select / deselect events
+            nameEntryField.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
+            nameEntryField.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
+            
+            // View prettiness
+            nameEntryField.layer.cornerRadius = 5.0
+            nameEntryField.textAlignment = .center
+            nameEntryField.placeholder = "Name of New Exercise"
+            textfieldDeselected(sender: nameEntryField)
+            
+            loaded = true
+        }
     }
+    
+    // MARK: Events
     
     @objc func textfieldSelected(sender: UITextField) {
         sender.backgroundColor = UIColor.niceYellow()

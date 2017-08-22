@@ -23,7 +23,7 @@ import UIKit
         }
     }
     @IBInspectable private var overlayColor: UIColor = UIColor.white.withAlphaComponent(0.25)
-    @IBInspectable private var animationTimeInSeconds: Double = 0.5
+    @IBInspectable private var animationTimeInSeconds: Double = 0.2
     
     // MARK: Properties
     

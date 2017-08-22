@@ -18,7 +18,7 @@ class SectionView: UIView {
     // Our sections
     var homeButton: PrettyButton?
     var workoutsButton: PrettyButton?
-    var statsButton: PrettyButton?
+    var exercisesButton: PrettyButton?
     var settingsButton: PrettyButton?
     
     var selectedView: PrettyButton?
@@ -29,7 +29,7 @@ class SectionView: UIView {
     public enum ContentViews {
         case HOME
         case WORKOUTS
-        case STATS
+        case EXERCISES
         case SETTINGS
     }
     
@@ -77,15 +77,15 @@ class SectionView: UIView {
         
         
         // Statistics Button
-        statsButton =
+        exercisesButton =
             PrettyButton(frame: CGRect(x: width * 2,
                                        y: 0,
                                        width: width,
                                        height: self.frame.height))
         
-        statsButton?.setTitle("stats", for: .normal)
-        setButtonProperties(button: statsButton!)
-        self.addSubview(statsButton!)
+        exercisesButton?.setTitle("exercises", for: .normal)
+        setButtonProperties(button: exercisesButton!)
+        self.addSubview(exercisesButton!)
         
         // Settings Button
         settingsButton =
@@ -106,7 +106,7 @@ class SectionView: UIView {
     
     private func setButtonProperties(button: PrettyButton) {
         button.cornerRadius = 0
-        button.setOverlayStyle(style: .SLIDE)
+        button.setOverlayStyle(style: .BLOOM)
         button.setOverlayColor(color: UIColor.white.withAlphaComponent(0.25))
         button.addTarget(self, action: #selector(self.buttonPress(sender:)), for: .touchUpInside)
     }
@@ -129,8 +129,8 @@ class SectionView: UIView {
             case (self.workoutsButton!):
                 viewType = .WORKOUTS
                 break
-            case (self.statsButton!):
-                viewType = .STATS
+            case (self.exercisesButton!):
+                viewType = .EXERCISES
                 break
             case (self.settingsButton!):
                 viewType = .SETTINGS

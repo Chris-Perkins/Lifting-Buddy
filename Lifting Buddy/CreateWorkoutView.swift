@@ -188,9 +188,16 @@ class CreateWorkoutView: UIScrollView {
     
     @objc func addExercisePressed(sender: PrettyButton) {
         let createExerciseView = CreateExerciseView(frame: CGRect(x: 0,
-                                                                  y: 0,
+                                                                  y: -self.frame.height,
                                                                   width: self.frame.width,
                                                                   height: self.frame.height))
         self.addSubview(createExerciseView)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            createExerciseView.frame = CGRect(x: 0,
+                                              y: 0,
+                                              width: self.frame.width,
+                                              height: self.frame.height)
+        })
     }
 }

@@ -166,9 +166,9 @@ class CreateWorkoutView: UIScrollView {
                                                             withPadding: viewPadding).isActive = true
             NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: createWorkoutButton,
                                                                             inView: self).isActive = true
-            
-            prevDataCount = exerciseTableView.getData().count
-        } else if prevDataCount != exerciseTableView.getData().count { // If tableview was updated
+        }
+        
+        if prevDataCount != exerciseTableView.getData().count { // If tableview was updated
             prevDataCount = exerciseTableView.getData().count
             self.contentSize.height = createWorkoutButton.frame.maxY + 20
         }

@@ -16,7 +16,8 @@ class CreateExerciseView: UIScrollView {
     private var nameEntryLabel: UILabel
     private var nameEntryField: UITextField
     private var progressionsTableView: ProgressionsTableView
-    private var loaded = false
+    private var addProgressionMethodButton: PrettyButton
+    private var prevCellCount = -1
     
     // MARK: Init overrides
     
@@ -24,12 +25,14 @@ class CreateExerciseView: UIScrollView {
         nameEntryLabel = UILabel()
         nameEntryField = UITextField()
         progressionsTableView = ProgressionsTableView()
+        addProgressionMethodButton = PrettyButton()
         
         super.init(frame: frame)
         
         self.addSubview(nameEntryLabel)
         self.addSubview(nameEntryField)
         self.addSubview(progressionsTableView)
+        self.addSubview(addProgressionMethodButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,7 +42,7 @@ class CreateExerciseView: UIScrollView {
     // MARK: View overrides
     
     override func layoutSubviews() {
-        if !loaded {
+        if prevCellCount == -1 {
             self.backgroundColor = UIColor.niceGray()
             self.layer.zPosition = 100
             
@@ -102,7 +105,38 @@ class CreateExerciseView: UIScrollView {
             
             self.addSubview(progressionsTableView)
             
-            loaded = true
+            
+            addProgressionMethodButton.translatesAutoresizingMaskIntoConstraints = false
+            addProgressionMethodButton.setDefaultProperties()
+            addProgressionMethodButton.layer.cornerRadius = 5.0
+            addProgressionMethodButton.setOverlayColor(color: UIColor.niceYellow())
+            addProgressionMethodButton.setOverlayStyle(style: .FADE)
+            addProgressionMethodButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+            addProgressionMethodButton.setTitle("Add Progression Method", for: .normal)
+            addProgressionMethodButton.setTitleColor(UIColor.niceBlue(), for: .normal)
+            addProgressionMethodButton.setTitleColor(UIColor.white, for: .highlighted)
+            
+            /*
+             * Create width and height for constraints
+             */
+            NSLayoutConstraint.createWidthConstraintForView(view: addProgressionMethodButton,
+                                                            width: progressionsTableView.frame.width).isActive = true
+            NSLayoutConstraint.createHeightConstraintForView(view: addProgressionMethodButton,
+                                                             height: 50).isActive = true
+            /*
+             * Center on x axis,
+             * position createWorkout Button below exerciseTableView
+             */
+            NSLayoutConstraint.createViewBelowViewConstraint(view: addProgressionMethodButton,
+                                                             belowView: progressionsTableView,
+                                                             withPadding: 0).isActive = true
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: addProgressionMethodButton,
+                                                                            inView: self).isActive = true
+        }
+        
+        if prevCellCount != progressionsTableView.getData().count {
+            prevCellCount = progressionsTableView.getData().count
+            //self.contentSize.height = createWorkoutButton.frame.maxY + 20
         }
     }
     

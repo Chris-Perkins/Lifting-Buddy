@@ -77,6 +77,15 @@ class CreateWorkoutView: UIScrollView {
             // MARK: Name Entry Field
             nameEntryField.translatesAutoresizingMaskIntoConstraints = false
             
+            // View select / deselect events
+            nameEntryField.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
+            nameEntryField.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
+            
+            // View prettiness
+            nameEntryField.layer.cornerRadius = 5.0
+            nameEntryField.textAlignment = .center
+            nameEntryField.placeholder = "Name of New Workout"
+            textfieldDeselected(sender: nameEntryField)
             /*
              * Center in view, place below the above frame, and give height/width of 40
              */
@@ -90,28 +99,20 @@ class CreateWorkoutView: UIScrollView {
                                                              belowView: nameEntryLabel,
                                                              withPadding: viewPadding / 2).isActive = true
             
-            // View select / deselect events
-            nameEntryField.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
-            nameEntryField.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
-            
-            // View prettiness
-            nameEntryField.layer.cornerRadius = 5.0
-            nameEntryField.textAlignment = .center
-            nameEntryField.placeholder = "Name of New Workout"
-            textfieldDeselected(sender: nameEntryField)
             
             // MARK: Exercise Table View
 
-            self.exerciseTableView = ExerciseTableView(frame: CGRect(x: 10,
-                                                                    y: 130,
-                                                                    width: self.frame.width - 20,
-                                                                    height: 0),
-                                                                    style: .plain)
+            exerciseTableView = ExerciseTableView(frame: CGRect(x: 10,
+                                                                y: 130,
+                                                                width: self.frame.width - 20,
+                                                                height: 0),
+                                                                style: .plain)
             exerciseTableView.appendDataToTableView(data: "test")
             // Prevent clipping as we can click and drag cells
             exerciseTableView.clipsToBounds = false
             exerciseTableView.isScrollEnabled = false
             exerciseTableView.backgroundColor = UIColor.clear
+            
             self.addSubview(exerciseTableView)
             
             // MARK: Add exercise button
@@ -193,7 +194,7 @@ class CreateWorkoutView: UIScrollView {
                                                                   height: self.frame.height))
         self.addSubview(createExerciseView)
         
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             createExerciseView.frame = CGRect(x: 0,
                                               y: 0,
                                               width: self.frame.width,

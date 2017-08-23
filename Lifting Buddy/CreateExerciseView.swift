@@ -15,6 +15,7 @@ class CreateExerciseView: UIScrollView {
     let viewPadding: CGFloat = 20.0
     private var nameEntryLabel: UILabel
     private var nameEntryField: UITextField
+    private var progressionsTableView: ProgressionsTableView
     private var loaded = false
     
     // MARK: Init overrides
@@ -22,11 +23,13 @@ class CreateExerciseView: UIScrollView {
     override init(frame: CGRect) {
         nameEntryLabel = UILabel()
         nameEntryField = UITextField()
+        progressionsTableView = ProgressionsTableView()
         
         super.init(frame: frame)
         
         self.addSubview(nameEntryLabel)
         self.addSubview(nameEntryField)
+        self.addSubview(progressionsTableView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,6 +85,22 @@ class CreateExerciseView: UIScrollView {
             nameEntryField.textAlignment = .center
             nameEntryField.placeholder = "Name of New Exercise"
             textfieldDeselected(sender: nameEntryField)
+            
+            // MARK: Progressions Table View
+            // MARK: Exercise Table View
+            
+            progressionsTableView = ProgressionsTableView(frame: CGRect(x: 10,
+                                                                     y: 130,
+                                                                     width: self.frame.width - 20,
+                                                                     height: 0),
+                                                                     style: .plain)
+            progressionsTableView.appendDataToTableView(data: "test")
+            // Prevent clipping as we can click and drag cells
+            progressionsTableView.clipsToBounds = false
+            progressionsTableView.isScrollEnabled = false
+            progressionsTableView.backgroundColor = UIColor.clear
+            
+            self.addSubview(progressionsTableView)
             
             loaded = true
         }

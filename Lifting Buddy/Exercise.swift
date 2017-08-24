@@ -20,24 +20,34 @@ class Exercise: RLMObject {
     // How many reps per set
     dynamic private var repCount: Int
     // Units for reps (seconds, kilos, etc)
-    dynamic private var unit: String?
+    dynamic private var measurement: String?
+    // Time between exercises (stored in seconds)
+    dynamic private var cooldownTime: Int
+    
+    public enum Measurement: String {
+        case WEIGHT = "weight"
+        case TIME = "time"
+        case DISTANCE = "distance"
+    }
     
     // MARK: Init Functions
     
     required override init() {
-        self.unit = nil
+        self.measurement = nil
         self.name = nil
         self.setCount = 0
         self.repCount = 0
+        self.cooldownTime = 0
         
         super.init()
     }
     
     required override init(value: Any, schema: RLMSchema) {
-        self.unit = nil
+        self.measurement = nil
         self.name = nil
         self.setCount = 0
         self.repCount = 0
+        self.cooldownTime = 0
         
         super.init(value: value, schema: schema)
     }
@@ -47,7 +57,6 @@ class Exercise: RLMObject {
     public func getRepCount() -> Int {
         return self.repCount
     }
-    
     public func setRepCount(repCount: Int) {
         self.repCount = repCount
     }
@@ -55,25 +64,29 @@ class Exercise: RLMObject {
     public func getSetCount() -> Int {
         return self.setCount
     }
-    
     // This variable's name is kind of funny. :)
     public func setSetCount(setCount: Int) {
         self.setCount = setCount
     }
     
-    public func getUnit() -> String? {
-        return self.unit
+    public func getMeasurement() -> String? {
+        return self.measurement
     }
-    
-    public func setUnit(unit: String?) {
-        self.unit = unit
+    public func setMeasurement(measurement: String?) {
+        self.measurement = measurement
     }
     
     public func getName() -> String? {
         return self.name
     }
-    
     public func setName(name: String?) {
         self.name = name
+    }
+    
+    public func getCooldownTime() -> Int {
+        return self.cooldownTime
+    }
+    public func setCooldownTime(cooldownTime: Int) {
+        self.cooldownTime = cooldownTime
     }
 }

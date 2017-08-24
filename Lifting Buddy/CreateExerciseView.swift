@@ -17,6 +17,7 @@ class CreateExerciseView: UIScrollView {
     private var nameEntryField: UITextField
     private var progressionsTableView: ProgressionsTableView
     private var addProgressionMethodButton: PrettyButton
+    private var createExerciseButton: PrettyButton
     private var prevCellCount = -1
     
     // MARK: Init overrides
@@ -26,6 +27,7 @@ class CreateExerciseView: UIScrollView {
         nameEntryField = UITextField()
         progressionsTableView = ProgressionsTableView()
         addProgressionMethodButton = PrettyButton()
+        createExerciseButton = PrettyButton()
         
         super.init(frame: frame)
         
@@ -33,6 +35,7 @@ class CreateExerciseView: UIScrollView {
         self.addSubview(nameEntryField)
         self.addSubview(progressionsTableView)
         self.addSubview(addProgressionMethodButton)
+        self.addSubview(createExerciseButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -105,8 +108,9 @@ class CreateExerciseView: UIScrollView {
             
             self.addSubview(progressionsTableView)
             
-            
+            // MARK: Add progression method button
             addProgressionMethodButton.translatesAutoresizingMaskIntoConstraints = false
+            
             addProgressionMethodButton.setDefaultProperties()
             addProgressionMethodButton.layer.cornerRadius = 5.0
             addProgressionMethodButton.setOverlayColor(color: UIColor.niceYellow())
@@ -132,11 +136,37 @@ class CreateExerciseView: UIScrollView {
                                                              withPadding: 0).isActive = true
             NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: addProgressionMethodButton,
                                                                             inView: self).isActive = true
-        }
-        
-        if prevCellCount != progressionsTableView.getData().count {
+            
+            // MARK: Create exercise button
+            createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            createExerciseButton.setTitle("Create Exercise", for: .normal)
+            createExerciseButton.setDefaultProperties()
+            
+            /*
+             * Create width and height for constraints
+             */
+            NSLayoutConstraint.createWidthConstraintForView(view: createExerciseButton,
+                                                            width: self.frame.width - 50).isActive = true
+            NSLayoutConstraint.createHeightConstraintForView(view: createExerciseButton,
+                                                             height: 50).isActive = true
+            /*
+             * Center on x axis,
+             * position createWorkout Button below add exercise button
+             */
+            NSLayoutConstraint.createViewBelowViewConstraint(view: createExerciseButton,
+                                                             belowView: addProgressionMethodButton,
+                                                             withPadding: viewPadding * 2).isActive = true
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: createExerciseButton,
+                                                                            inView: self).isActive = true
+            
             prevCellCount = progressionsTableView.getData().count
-            //self.contentSize.height = createWorkoutButton.frame.maxY + 20
+        }
+        // We call else if instead of just doing if so that when we come back to this view
+        // Otherwise, contentSize does not get properly updated.
+        else if prevCellCount != progressionsTableView.getData().count {
+            prevCellCount = progressionsTableView.getData().count
+            self.contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
         }
     }
     

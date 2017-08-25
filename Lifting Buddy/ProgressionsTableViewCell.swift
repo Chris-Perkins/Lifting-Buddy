@@ -62,6 +62,7 @@ class ProgressionsTableViewCell: UITableViewCell {
                                                                   width: self.frame.width * 0.75 - quarterView,
                                                                   height: self.frame.height - 10))
             self.progressionTextfield.setDefaultProperties()
+            self.progressionTextfield.placeholderText = "Name of exercise"
             self.addSubview(progressionTextfield)
             
             self.loaded = true

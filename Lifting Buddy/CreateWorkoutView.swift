@@ -135,9 +135,9 @@ class CreateWorkoutView: UIScrollView {
             
             // MARK: Create workout button
             // Give it standard default properties
+            createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
             createWorkoutButton.setTitle("Create Workout", for: .normal)
             createWorkoutButton.setDefaultProperties()
-            createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
             
             /*
              * Create width and height for constraints

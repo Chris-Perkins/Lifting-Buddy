@@ -92,6 +92,7 @@ class CreateExerciseView: UIScrollView {
             
             progressionsLabel.setDefaultProperties()
             progressionsLabel.text = "Progression Trackers"
+            
             /*
              * Center in view, place below the above frame, and give height/width of 40
              */

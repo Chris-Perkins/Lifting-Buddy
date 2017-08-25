@@ -100,7 +100,6 @@ class CreateExerciseView: UIScrollView {
                                                                      width: self.frame.width - 20,
                                                                      height: 0),
                                                                      style: .plain)
-            progressionsTableView.appendDataToTableView(data: "test")
             // Prevent clipping as we can click and drag cells
             progressionsTableView.clipsToBounds = false
             progressionsTableView.isScrollEnabled = false

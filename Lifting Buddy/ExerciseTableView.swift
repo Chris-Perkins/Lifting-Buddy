@@ -46,8 +46,6 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         // TODO: Edit / Delete dialog
         let cell: ExerciseTableViewCell = self.cellForRow(at: indexPath) as! ExerciseTableViewCell
         cell.backgroundColor = UIColor.niceBlue()
-        
-        appendDataToTableView(data: cell.label.text ?? "nothing")
     }
     
     // Data is what we use to fill in the table view

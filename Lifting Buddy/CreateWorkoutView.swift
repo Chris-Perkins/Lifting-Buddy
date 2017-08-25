@@ -107,7 +107,6 @@ class CreateWorkoutView: UIScrollView {
                                                                 width: self.frame.width - 20,
                                                                 height: 0),
                                                                 style: .plain)
-            exerciseTableView.appendDataToTableView(data: "test")
             // Prevent clipping as we can click and drag cells
             exerciseTableView.clipsToBounds = false
             exerciseTableView.isScrollEnabled = false

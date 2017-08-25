@@ -46,8 +46,6 @@ class ProgressionsTableView: LPRTableView, UITableViewDataSource,UITableViewDele
         // TODO: Edit / Delete dialog
         let cell: ProgressionsTableViewCell = self.cellForRow(at: indexPath) as! ProgressionsTableViewCell
         cell.backgroundColor = UIColor.niceBlue()
-        
-        appendDataToTableView(data: cell.label.text ?? "nothing")
     }
     
     // Data is what we use to fill in the table view

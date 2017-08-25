@@ -162,7 +162,7 @@ class CreateWorkoutView: UIScrollView {
              */
             NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
                                                             belowView: addExerciseButton,
-                                                            withPadding: viewPadding).isActive = true
+                                                            withPadding: viewPadding * 2).isActive = true
             NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: createWorkoutButton,
                                                                             inView: self).isActive = true
             

@@ -23,6 +23,10 @@ func getStatusBarHeight() -> CGFloat {
 // MARK: Extensions
 
 extension UIView {
+    func setDefaultProperties() {
+        // Override me!
+    }
+    
     // Add an array of views to a main view with equal vertical spacing
     func addSubviewsToViewWithYPadding(subviews: [UIView], spacing: CGFloat = -1) {
         var trueSpacing: CGFloat = spacing
@@ -66,6 +70,55 @@ extension UIView {
     }
 }
 
+extension PrettyButton {
+    override func setDefaultProperties() {
+        self.backgroundColor = UIColor.niceBlue()
+        self.setOverlayColor(color: UIColor.niceYellow())
+        self.setOverlayStyle(style: .BLOOM)
+        self.cornerRadius = 5.0
+    }
+}
+
+extension UITextField {
+    override func setDefaultProperties() {
+        // View select / deselect events
+        self.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
+        self.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
+        
+        // View prettiness
+        self.layer.cornerRadius = 5.0
+        self.textAlignment = .center
+        textfieldDeselected(sender: self)
+    }
+    
+    @objc func textfieldSelected(sender: UITextField) {
+        sender.backgroundColor = UIColor.niceYellow()
+        sender.textColor = UIColor.white
+    }
+    
+    @objc func textfieldDeselected(sender: UITextField) {
+        sender.backgroundColor = UIColor.white
+        sender.textColor = UIColor.black
+    }
+}
+
+extension UILabel {
+    override func setDefaultProperties() {
+        self.font = UIFont.boldSystemFont(ofSize: 18.0)
+        self.textAlignment = .center
+        self.textColor = UIColor.niceBlue()
+    }
+}
+
+extension NSDate {
+    // Get the current day of the week (in string format) ex: "Monday"
+    public func dayOfTheWeek() -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: self as Date)
+    }
+}
+
 extension UIColor {
     public static func niceGray() -> UIColor {
         return UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1)
@@ -88,15 +141,6 @@ extension UIColor {
     }
 }
 
-extension NSDate {
-    // Get the current day of the week (in string format) ex: "Monday"
-    public func dayOfTheWeek() -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        return dateFormatter.string(from: self as Date)
-    }
-}
-
 extension Results {
     // Returns array of results from Realm
     public func toArray() -> [T] {
@@ -108,15 +152,6 @@ extension RealmSwift.List {
     // Returns array of results from Realm List
     public func toArray() -> [T] {
         return self.map{$0}
-    }
-}
-
-extension PrettyButton {
-    public func setDefaultProperties() {
-        self.backgroundColor = UIColor.niceBlue()
-        self.setOverlayColor(color: UIColor.niceYellow())
-        self.setOverlayStyle(style: .BLOOM)
-        self.cornerRadius = 5.0
     }
 }
 

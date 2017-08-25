@@ -22,6 +22,7 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         
         self.delegate = self
         self.dataSource = self
+        self.allowsSelection = false
         self.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     

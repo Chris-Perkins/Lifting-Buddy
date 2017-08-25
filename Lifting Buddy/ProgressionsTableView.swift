@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProgressionsTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate {
+class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDelegate {
     
     // MARK: View properties
     
@@ -22,6 +22,7 @@ class ProgressionsTableView: LPRTableView, UITableViewDataSource,UITableViewDele
         
         self.delegate = self
         self.dataSource = self
+        self.allowsSelection = false
         self.register(ProgressionsTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     

@@ -15,8 +15,9 @@ class CreateExerciseView: UIScrollView {
     let viewPadding: CGFloat = 20.0
     private var nameEntryLabel: UILabel
     private var nameEntryField: UITextField
+    private var progressionsLabel: UILabel
     private var progressionsTableView: ProgressionsTableView
-    private var addProgressionMethodButton: PrettyButton
+    private var addProgressionTrackerButton: PrettyButton
     private var createExerciseButton: PrettyButton
     private var prevCellCount = -1
     
@@ -25,16 +26,18 @@ class CreateExerciseView: UIScrollView {
     override init(frame: CGRect) {
         nameEntryLabel = UILabel()
         nameEntryField = UITextField()
+        progressionsLabel = UILabel()
         progressionsTableView = ProgressionsTableView()
-        addProgressionMethodButton = PrettyButton()
+        addProgressionTrackerButton = PrettyButton()
         createExerciseButton = PrettyButton()
         
         super.init(frame: frame)
         
         self.addSubview(nameEntryLabel)
         self.addSubview(nameEntryField)
+        self.addSubview(progressionsLabel)
         self.addSubview(progressionsTableView)
-        self.addSubview(addProgressionMethodButton)
+        self.addSubview(addProgressionTrackerButton)
         self.addSubview(createExerciseButton)
     }
     
@@ -62,9 +65,7 @@ class CreateExerciseView: UIScrollView {
                                                                 belowView: self,
                                                                 withPadding: viewPadding).isActive = true
             nameEntryLabel.text = "Name of New Exercise"
-            nameEntryLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
-            nameEntryLabel.textAlignment = .center
-            nameEntryLabel.textColor = UIColor.niceBlue()
+            nameEntryLabel.setDefaultProperties()
             
             // MARK: Name Entry Field
             nameEntryField.translatesAutoresizingMaskIntoConstraints = false
@@ -82,21 +83,34 @@ class CreateExerciseView: UIScrollView {
                                                              belowView: nameEntryLabel,
                                                              withPadding: viewPadding / 2).isActive = true
             
-            // View select / deselect events
-            nameEntryField.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
-            nameEntryField.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
-            
             // View prettiness
-            nameEntryField.layer.cornerRadius = 5.0
-            nameEntryField.textAlignment = .center
+            nameEntryField.setDefaultProperties()
             nameEntryField.placeholder = "Name of New Exercise"
-            textfieldDeselected(sender: nameEntryField)
+            
+            // MARK: Progression Label
+            progressionsLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            progressionsLabel.setDefaultProperties()
+            progressionsLabel.text = "Progression Trackers"
+            /*
+             * Center in view, place below the above frame, and give height/width of 40
+             */
+            NSLayoutConstraint.createHeightConstraintForView(view: progressionsLabel,
+                                                             height: 40).isActive = true
+            NSLayoutConstraint.createWidthConstraintForView(view: progressionsLabel,
+                                                            width: self.frame.width - 80).isActive = true
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: progressionsLabel,
+                                                                            inView: self).isActive = true
+            NSLayoutConstraint.createViewBelowViewConstraint(view: progressionsLabel,
+                                                             belowView: nameEntryField,
+                                                             withPadding: viewPadding * 2).isActive = true
+
             
             // MARK: Progressions Table View
             // MARK: Exercise Table View
             
             progressionsTableView = ProgressionsTableView(frame: CGRect(x: 10,
-                                                                     y: 130,
+                                                                     y: 170,
                                                                      width: self.frame.width - 20,
                                                                      height: 0),
                                                                      style: .plain)
@@ -104,36 +118,37 @@ class CreateExerciseView: UIScrollView {
             progressionsTableView.clipsToBounds = false
             progressionsTableView.isScrollEnabled = false
             progressionsTableView.backgroundColor = UIColor.clear
+            progressionsTableView.appendDataToTableView(data: Exercise())
             
             self.addSubview(progressionsTableView)
             
             // MARK: Add progression method button
-            addProgressionMethodButton.translatesAutoresizingMaskIntoConstraints = false
+            addProgressionTrackerButton.translatesAutoresizingMaskIntoConstraints = false
             
-            addProgressionMethodButton.setDefaultProperties()
-            addProgressionMethodButton.layer.cornerRadius = 5.0
-            addProgressionMethodButton.setOverlayColor(color: UIColor.niceYellow())
-            addProgressionMethodButton.setOverlayStyle(style: .FADE)
-            addProgressionMethodButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-            addProgressionMethodButton.setTitle("Add Progression Method", for: .normal)
-            addProgressionMethodButton.setTitleColor(UIColor.niceBlue(), for: .normal)
-            addProgressionMethodButton.setTitleColor(UIColor.white, for: .highlighted)
+            addProgressionTrackerButton.setDefaultProperties()
+            addProgressionTrackerButton.layer.cornerRadius = 5.0
+            addProgressionTrackerButton.setOverlayColor(color: UIColor.niceYellow())
+            addProgressionTrackerButton.setOverlayStyle(style: .FADE)
+            addProgressionTrackerButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+            addProgressionTrackerButton.setTitle("Add Progression Tracker", for: .normal)
+            addProgressionTrackerButton.setTitleColor(UIColor.niceBlue(), for: .normal)
+            addProgressionTrackerButton.setTitleColor(UIColor.white, for: .highlighted)
             
             /*
              * Create width and height for constraints
              */
-            NSLayoutConstraint.createWidthConstraintForView(view: addProgressionMethodButton,
+            NSLayoutConstraint.createWidthConstraintForView(view: addProgressionTrackerButton,
                                                             width: progressionsTableView.frame.width).isActive = true
-            NSLayoutConstraint.createHeightConstraintForView(view: addProgressionMethodButton,
+            NSLayoutConstraint.createHeightConstraintForView(view: addProgressionTrackerButton,
                                                              height: 50).isActive = true
             /*
              * Center on x axis,
              * position createWorkout Button below exerciseTableView
              */
-            NSLayoutConstraint.createViewBelowViewConstraint(view: addProgressionMethodButton,
+            NSLayoutConstraint.createViewBelowViewConstraint(view: addProgressionTrackerButton,
                                                              belowView: progressionsTableView,
                                                              withPadding: 0).isActive = true
-            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: addProgressionMethodButton,
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: addProgressionTrackerButton,
                                                                             inView: self).isActive = true
             
             // MARK: Create exercise button
@@ -154,7 +169,7 @@ class CreateExerciseView: UIScrollView {
              * position createWorkout Button below add exercise button
              */
             NSLayoutConstraint.createViewBelowViewConstraint(view: createExerciseButton,
-                                                             belowView: addProgressionMethodButton,
+                                                             belowView: addProgressionTrackerButton,
                                                              withPadding: viewPadding * 2).isActive = true
             NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: createExerciseButton,
                                                                             inView: self).isActive = true
@@ -167,17 +182,5 @@ class CreateExerciseView: UIScrollView {
             prevCellCount = progressionsTableView.getData().count
             self.contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
         }
-    }
-    
-    // MARK: Events
-    
-    @objc func textfieldSelected(sender: UITextField) {
-        sender.backgroundColor = UIColor.niceYellow()
-        sender.textColor = UIColor.white
-    }
-    
-    @objc func textfieldDeselected(sender: UITextField) {
-        sender.backgroundColor = UIColor.white
-        sender.textColor = UIColor.black
     }
 }

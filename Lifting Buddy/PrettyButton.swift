@@ -93,16 +93,21 @@ import UIKit
     
     // Create overlay view with default properties
     private func createOverlayView(frame: CGRect) -> UIView {
-        // Create view that slides to bottom right on press
-        let overlayView: UIView = UIView.init(frame: frame)
-        overlayView.layer.cornerRadius = cornerRadius
-        overlayView.backgroundColor = self.overlayColor
-        // Display behind the title
-        overlayView.layer.zPosition = -1
-        // Set tag to find this view later
-        overlayView.tag = self.overlayViewTag
-        
-        return overlayView
+        if let overlayView = self.viewWithTag(self.overlayViewTag)
+        {
+            return overlayView
+        } else {
+            // Create view that slides to bottom right on press
+            let overlayView: UIView = UIView.init(frame: frame)
+            overlayView.layer.cornerRadius = cornerRadius
+            overlayView.backgroundColor = self.overlayColor
+            // Display behind the title
+            overlayView.layer.zPosition = -1
+            // Set tag to find this view later
+            overlayView.tag = self.overlayViewTag
+            
+            return overlayView
+        }
     }
     
     // Creates the sliding effect on the button's background
@@ -159,13 +164,13 @@ import UIKit
     
     private func removeOverlayView() {
         // Delete slide view on release
-        if let slideView: UIView = self.viewWithTag(self.overlayViewTag) {
+        if let overlayView: UIView = self.viewWithTag(self.overlayViewTag) {
             UIView.animate(withDuration: animationTimeInSeconds, animations: {
-                slideView.alpha = 0
+                overlayView.alpha = 0
             }, completion:
                 {
                     (finished: Bool) -> Void in
-                    slideView.removeFromSuperview()
+                    overlayView.removeFromSuperview()
                     // Set overlay color alpha to 1.0 for premature animation end
                     self.overlayColor.withAlphaComponent(1.0)
             })

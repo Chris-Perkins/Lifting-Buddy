@@ -70,22 +70,12 @@ class CreateWorkoutView: UIScrollView {
                                                                 belowView: self,
                                                                 withPadding: viewPadding).isActive = true
             nameEntryLabel.text = "Name of New Workout"
-            nameEntryLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
-            nameEntryLabel.textAlignment = .center
-            nameEntryLabel.textColor = UIColor.niceBlue()
+            nameEntryLabel.setDefaultProperties()
             
             // MARK: Name Entry Field
             nameEntryField.translatesAutoresizingMaskIntoConstraints = false
-            
-            // View select / deselect events
-            nameEntryField.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
-            nameEntryField.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
-            
-            // View prettiness
-            nameEntryField.layer.cornerRadius = 5.0
-            nameEntryField.textAlignment = .center
+            nameEntryField.setDefaultProperties()
             nameEntryField.placeholder = "Name of New Workout"
-            textfieldDeselected(sender: nameEntryField)
             /*
              * Center in view, place below the above frame, and give height/width of 40
              */
@@ -178,16 +168,6 @@ class CreateWorkoutView: UIScrollView {
     }
     
     // MARK: Event functions
-    
-    @objc func textfieldSelected(sender: UITextField) {
-        sender.backgroundColor = UIColor.niceYellow()
-        sender.textColor = UIColor.white
-    }
-    
-    @objc func textfieldDeselected(sender: UITextField) {
-        sender.backgroundColor = UIColor.white
-        sender.textColor = UIColor.black
-    }
     
     @objc func addExercisePressed(sender: PrettyButton) {
         let createExerciseView = CreateExerciseView(frame: CGRect(x: 0,

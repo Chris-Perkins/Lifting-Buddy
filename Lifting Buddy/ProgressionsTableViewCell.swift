@@ -13,14 +13,12 @@ class ProgressionsTableViewCell: UITableViewCell {
     // MARK: View properties
     private var loaded: Bool
     private var chosen: Bool
-    private var progressionLabel: UILabel
     private var progressionTextfield: UITextField
     private var pickUnitButton: PrettyButton
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.progressionLabel = UILabel()
         self.progressionTextfield = UITextField()
         self.pickUnitButton = PrettyButton()
         self.loaded = false
@@ -43,35 +41,30 @@ class ProgressionsTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         if !self.loaded {
-            // MARK: Progression Label
-            let quarterView = (self.frame.width - 10) / 4
             
-            // Create a label that's 1/4 of the view, sub an additional 5 for padding reasons.
-            self.progressionLabel = UILabel(frame: CGRect(x: 5,
-                                                          y: 5,
-                                                          width: quarterView - 5,
-                                                          height: self.frame.height - 10))
-            self.progressionLabel.text = "Name"
-            self.progressionLabel.textAlignment = .center
-            self.progressionLabel.textColor = UIColor.niceBlue()
-            self.addSubview(self.progressionLabel)
+            let quarterView = (self.frame.width) / 4
             
             // MARK: Progression Textfield
-            self.progressionTextfield = UITextField(frame: CGRect(x: quarterView,
+            
+            self.progressionTextfield = UITextField(frame: CGRect(x: 5,
                                                                   y: 5,
-                                                                  width: self.frame.width * 0.75 - quarterView,
+                                                                  width: quarterView * 2 - 7.5,
                                                                   height: self.frame.height - 10))
             self.progressionTextfield.setDefaultProperties()
             self.progressionTextfield.placeholder = "Tracker Name"
             self.addSubview(progressionTextfield)
             
+            // MARK: Pick Unit button
+            
+            self.pickUnitButton = PrettyButton(frame: CGRect(x: quarterView * 2 + 2.5,
+                                                             y: 5,
+                                                             width: quarterView * 2 - 7.5,
+                                                             height: self.frame.height - 10))
+            self.pickUnitButton.setDefaultProperties()
+            self.pickUnitButton.setTitle("Select Unit", for: .normal)
+            self.addSubview(pickUnitButton)
+            
             self.loaded = true
         }
-    }
-    
-    // MARK: Event functions
-    
-    @objc private func createNewExercise(sender: PrettyButton) {
-        print("test")
     }
 }

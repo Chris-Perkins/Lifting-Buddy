@@ -20,11 +20,11 @@ class Exercise: RLMObject {
     // How many reps per set
     dynamic private var repCount: Int
     // Units for reps (seconds, kilos, etc)
-    dynamic private var measurement: String?
+    dynamic private var unit: String?
     // Time between exercises (stored in seconds)
     dynamic private var cooldownTime: Int
     
-    public enum Measurement: String {
+    public enum Unit: String {
         case WEIGHT = "weight"
         case TIME = "time"
         case DISTANCE = "distance"
@@ -33,17 +33,17 @@ class Exercise: RLMObject {
     // MARK: Init Functions
     
     required override init() {
-        self.measurement = nil
+        self.unit = nil
         self.name = nil
-        self.setCount = 0
-        self.repCount = 0
+        self.setCount = 1
+        self.repCount = 1
         self.cooldownTime = 0
         
         super.init()
     }
     
     required override init(value: Any, schema: RLMSchema) {
-        self.measurement = nil
+        self.unit = nil
         self.name = nil
         self.setCount = 0
         self.repCount = 0
@@ -69,11 +69,11 @@ class Exercise: RLMObject {
         self.setCount = setCount
     }
     
-    public func getMeasurement() -> String? {
-        return self.measurement
+    public func getUnit() -> String? {
+        return self.unit
     }
-    public func setMeasurement(measurement: String?) {
-        self.measurement = measurement
+    public func setUnit(unit: String?) {
+        self.unit = unit
     }
     
     public func getName() -> String? {

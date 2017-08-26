@@ -33,7 +33,7 @@ class HeaderView: UIView {
                                                       y: statusBarHeight + 10,
                                                       width: self.frame.width,
                                                       height: divide - 10))
-        titleBar.text = "Lifting Buddy [ALPHA]"
+        titleBar.text = "Lifting Buddy [DEVELOPMENT]"
         titleBar.font = titleBar.font.withSize(20.0)
         titleBar.textColor = .white
         titleBar.textAlignment = .center

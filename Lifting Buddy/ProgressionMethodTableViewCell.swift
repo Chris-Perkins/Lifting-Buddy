@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProgressionsTableViewCell: UITableViewCell {
+class ProgressionMethodTableViewCell: UITableViewCell {
     
     // MARK: View properties
     private var loaded: Bool
@@ -62,9 +62,14 @@ class ProgressionsTableViewCell: UITableViewCell {
                                                              height: self.frame.height - 10))
             self.pickUnitButton.setDefaultProperties()
             self.pickUnitButton.setTitle("Select Unit", for: .normal)
+            self.pickUnitButton.addTarget(self, action: #selector(pickUnitButtonPress(sender:)), for: .touchUpInside)
             self.addSubview(pickUnitButton)
             
             self.loaded = true
         }
+    }
+    
+    @objc func pickUnitButtonPress(sender: UIButton) {
+        self.pickUnitButton.setTitle(ProgressionMethod.Unit.DISTANCE.rawValue, for: .normal)
     }
 }

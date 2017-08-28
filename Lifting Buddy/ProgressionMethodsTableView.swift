@@ -23,7 +23,7 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
         self.delegate = self
         self.dataSource = self
         self.allowsSelection = false
-        self.register(ProgressionsTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.register(ProgressionMethodTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,7 +45,7 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(data)
         // TODO: Edit / Delete dialog
-        let cell: ProgressionsTableViewCell = self.cellForRow(at: indexPath) as! ProgressionsTableViewCell
+        let cell: ProgressionMethodTableViewCell = self.cellForRow(at: indexPath) as! ProgressionMethodTableViewCell
         cell.backgroundColor = UIColor.niceBlue()
     }
     
@@ -56,9 +56,9 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
     
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ProgressionsTableViewCell =
+        let cell: ProgressionMethodTableViewCell =
             tableView.dequeueReusableCell(withIdentifier: "cell",
-                                          for: indexPath as IndexPath) as! ProgressionsTableViewCell
+                                          for: indexPath as IndexPath) as! ProgressionMethodTableViewCell
         return cell
     }
     

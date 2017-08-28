@@ -28,12 +28,12 @@ class Exercise: RLMObject {
         case WEIGHT = "weight"
         case TIME = "time"
         case DISTANCE = "distance"
+        case OTHER = "other"
     }
     
     // MARK: Init Functions
     
     required override init() {
-        self.unit = nil
         self.name = nil
         self.setCount = 1
         self.repCount = 1
@@ -43,7 +43,6 @@ class Exercise: RLMObject {
     }
     
     required override init(value: Any, schema: RLMSchema) {
-        self.unit = nil
         self.name = nil
         self.setCount = 0
         self.repCount = 0
@@ -67,13 +66,6 @@ class Exercise: RLMObject {
     // This variable's name is kind of funny. :)
     public func setSetCount(setCount: Int) {
         self.setCount = setCount
-    }
-    
-    public func getUnit() -> String? {
-        return self.unit
-    }
-    public func setUnit(unit: String?) {
-        self.unit = unit
     }
     
     public func getName() -> String? {

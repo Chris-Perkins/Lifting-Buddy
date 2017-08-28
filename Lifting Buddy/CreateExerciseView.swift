@@ -127,6 +127,7 @@ class CreateExerciseView: UIScrollView {
             addProgressionTrackerButton.translatesAutoresizingMaskIntoConstraints = false
             
             addProgressionTrackerButton.setDefaultProperties()
+            addProgressionTrackerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
             addProgressionTrackerButton.layer.cornerRadius = 5.0
             addProgressionTrackerButton.setOverlayColor(color: UIColor.niceYellow())
             addProgressionTrackerButton.setOverlayStyle(style: .FADE)
@@ -157,6 +158,7 @@ class CreateExerciseView: UIScrollView {
             
             createExerciseButton.setTitle("Create Exercise", for: .normal)
             createExerciseButton.setDefaultProperties()
+            createExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
             
             /*
              * Create width and height for constraints
@@ -182,6 +184,18 @@ class CreateExerciseView: UIScrollView {
         else if prevCellCount != progressionsTableView.getData().count {
             prevCellCount = progressionsTableView.getData().count
             self.contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
+        }
+    }
+    
+    @objc func buttonPress(sender: UIButton) {
+        switch(sender){
+        case addProgressionTrackerButton:
+            progressionsTableView.appendDataToTableView(data: Exercise())
+            break
+        case createExerciseButton:
+            break
+        default:
+            fatalError("User pressed a button that does not exist in switch?")
         }
     }
 }

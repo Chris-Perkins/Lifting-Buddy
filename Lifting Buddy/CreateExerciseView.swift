@@ -13,6 +13,7 @@ class CreateExerciseView: UIScrollView {
     
     // MARK: View properties
     let viewPadding: CGFloat = 20.0
+    public var dataDelegate: CreateExerciseViewDelegate?
     private var nameEntryLabel: UILabel
     private var nameEntryField: UITextField
     private var progressionsLabel: UILabel
@@ -119,7 +120,7 @@ class CreateExerciseView: UIScrollView {
             progressionsTableView.clipsToBounds = false
             progressionsTableView.isScrollEnabled = false
             progressionsTableView.backgroundColor = UIColor.clear
-            progressionsTableView.appendDataToTableView(data: Exercise())
+            progressionsTableView.appendDataToTableView(data: ProgressionMethod())
             
             self.addSubview(progressionsTableView)
             
@@ -190,12 +191,20 @@ class CreateExerciseView: UIScrollView {
     @objc func buttonPress(sender: UIButton) {
         switch(sender){
         case addProgressionTrackerButton:
-            progressionsTableView.appendDataToTableView(data: Exercise())
+            progressionsTableView.appendDataToTableView(data: ProgressionMethod())
             break
         case createExerciseButton:
+            self.dataDelegate?.finishedWithExercise(exercise: Exercise())
+            self.removeFromSuperview()
             break
         default:
             fatalError("User pressed a button that does not exist in switch?")
         }
     }
+}
+
+// MARK: Protocol
+
+protocol CreateExerciseViewDelegate {
+    func finishedWithExercise(exercise: Exercise)
 }

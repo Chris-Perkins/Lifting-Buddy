@@ -12,7 +12,7 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
     
     // MARK: View properties
     
-    private var data:[Workout] = [Workout].init()
+    private var data:[Exercise] = [Exercise].init()
     var cellHeight: CGFloat = 50.0
     
     // MARK: Override Init
@@ -70,14 +70,14 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
     // MARK: Custom functions
     
     // Append some data to the tableView
-    public func appendDataToTableView(data: Workout) {
+    public func appendDataToTableView(data: Exercise) {
         self.frame.size.height += cellHeight
         
         self.data.append(data)
         reloadData()
     }
     
-    public func getData() -> [Workout] {
+    public func getData() -> [Exercise] {
         return data
     }
 }

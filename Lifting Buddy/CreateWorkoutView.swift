@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateWorkoutView: UIScrollView {
+class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     
     // View properties
     
@@ -114,7 +114,7 @@ class CreateWorkoutView: UIScrollView {
             addExerciseButton.setOverlayColor(color: UIColor.niceYellow())
             addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
             // Event press for exercise button
-            addExerciseButton.addTarget(self, action: #selector(addExercisePressed(sender:)), for: .touchUpInside)
+            addExerciseButton.addTarget(self, action: #selector(addButtonPressed(sender:)), for: .touchUpInside)
             
             /*
              * Create width and height for constraints
@@ -169,18 +169,31 @@ class CreateWorkoutView: UIScrollView {
     
     // MARK: Event functions
     
-    @objc func addExercisePressed(sender: PrettyButton) {
-        let createExerciseView = CreateExerciseView(frame: CGRect(x: 0,
-                                                                  y: -self.frame.height,
-                                                                  width: self.frame.width,
-                                                                  height: self.frame.height))
-        self.addSubview(createExerciseView)
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            createExerciseView.frame = CGRect(x: 0,
-                                              y: 0,
-                                              width: self.frame.width,
-                                              height: self.frame.height)
-        })
+    @objc func addButtonPressed(sender: PrettyButton) {
+        switch (sender) {
+        case addExerciseButton:
+            let createExerciseView = CreateExerciseView(frame: CGRect(x: 0,
+                                                                      y: -self.frame.height,
+                                                                      width: self.frame.width,
+                                                                      height: self.frame.height))
+            createExerciseView.dataDelegate = self
+            self.addSubview(createExerciseView)
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                createExerciseView.frame = CGRect(x: 0,
+                                                  y: 0,
+                                                  width: self.frame.width,
+                                                  height: self.frame.height)
+            })
+            break
+        default:
+            fatalError("Button pressed was not assigned function")
+        }
     }
+    
+    // MARK: CreateExerciseView delegate
+    func finishedWithExercise(exercise: Exercise) {
+        self.exerciseTableView.appendDataToTableView(data: exercise)
+    }
+    
 }

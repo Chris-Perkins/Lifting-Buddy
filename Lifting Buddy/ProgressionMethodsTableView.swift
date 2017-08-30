@@ -12,7 +12,7 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
     
     // MARK: View properties
     
-    private var data:[Exercise] = [Exercise].init()
+    private var data:[ProgressionMethod] = [ProgressionMethod].init()
     var cellHeight: CGFloat = 50.0
     
     // MARK: Override Init
@@ -70,14 +70,14 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
     // MARK: Custom functions
     
     // Append some data to the tableView
-    public func appendDataToTableView(data: Exercise) {
+    public func appendDataToTableView(data: ProgressionMethod) {
         self.frame.size.height += cellHeight
         
         self.data.append(data)
         reloadData()
     }
     
-    public func getData() -> [Exercise] {
+    public func getData() -> [ProgressionMethod] {
         return data
     }
 }

@@ -13,7 +13,7 @@ import UIKit
 import RealmSwift
 import Realm
 
-class WorkoutsView: UIView {
+class WorkoutsView: UIView, CreateWorkoutViewDelegate {
     
     // View properties
     
@@ -24,7 +24,7 @@ class WorkoutsView: UIView {
     override func layoutSubviews() {
         if floatyButton == nil {
             floatyButton = PrettyButton(frame: CGRect(x: self.frame.maxX - 100,
-                                                      y: self.frame.maxY - 100,
+                                                      y: self.frame.maxY,
                                                       width: 75,
                                                       height: 75))
             floatyButton?.setDefaultProperties()
@@ -33,6 +33,13 @@ class WorkoutsView: UIView {
             floatyButton?.setTitle("Create", for: .normal)
             floatyButton?.layer.zPosition = 90
             floatyButton?.addTarget(self, action: #selector(showCreateWorkoutView(sender:)), for: .touchUpInside)
+            
+            UIView.animate(withDuration: 0.075, animations: {
+                self.floatyButton?.frame = CGRect(x: self.frame.maxX - 100,
+                                                  y: self.frame.maxY - 100,
+                                                  width: 75,
+                                                  height: 75)
+            })
             
             self.addSubview(floatyButton!)
         } else {
@@ -56,6 +63,7 @@ class WorkoutsView: UIView {
                                             width: self.frame.width,
                                             height: self.frame.height))
         createWorkoutView.layer.zPosition = 100
+        createWorkoutView.dataDelegate = self
         self.addSubview(createWorkoutView)
         
         UIView.animate(withDuration: 0.5, animations: {
@@ -75,5 +83,12 @@ class WorkoutsView: UIView {
         /*for exercise in (self.workout?.getExercises())! {
             
         }*/
+    }
+    
+    func finishedWithWorkout(workout: Workout) {
+        // TODO: Realm write new workout
+        
+        // Recreate floaty button
+        self.floatyButton = nil
     }
 }

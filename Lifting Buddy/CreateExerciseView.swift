@@ -194,8 +194,17 @@ class CreateExerciseView: UIScrollView {
             progressionsTableView.appendDataToTableView(data: ProgressionMethod())
             break
         case createExerciseButton:
+            // Send info to delegate, animate up then remove self
             self.dataDelegate?.finishedWithExercise(exercise: Exercise())
-            self.removeFromSuperview()
+            UIView.animate(withDuration: 0.5, animations: {
+                self.frame = CGRect(x: 0,
+                                    y: -self.frame.height,
+                                    width: self.frame.width,
+                                    height: self.frame.height)
+            }, completion: {
+                (finished:Bool) -> Void in
+                self.removeFromSuperview()
+            })
             break
         default:
             fatalError("User pressed a button that does not exist in switch?")

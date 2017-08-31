@@ -13,6 +13,9 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     // View properties
     
     let viewPadding: CGFloat = 20.0
+    
+    public var dataDelegate: CreateWorkoutViewDelegate?
+    
     // variable stating how many cells are in the exercise table view
     private var prevDataCount = -1
     
@@ -114,7 +117,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             addExerciseButton.setOverlayColor(color: UIColor.niceYellow())
             addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
             // Event press for exercise button
-            addExerciseButton.addTarget(self, action: #selector(addButtonPressed(sender:)), for: .touchUpInside)
+            addExerciseButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
             
             /*
              * Create width and height for constraints
@@ -136,6 +139,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             // MARK: Create workout button
             // Give it standard default properties
             createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
+            createWorkoutButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
             createWorkoutButton.setTitle("Create Workout", for: .normal)
             createWorkoutButton.setDefaultProperties()
             
@@ -169,9 +173,10 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     
     // MARK: Event functions
     
-    @objc func addButtonPressed(sender: PrettyButton) {
+    @objc func buttonPressed(sender: PrettyButton) {
         switch (sender) {
         case addExerciseButton:
+            // Show new view
             let createExerciseView = CreateExerciseView(frame: CGRect(x: 0,
                                                                       y: -self.frame.height,
                                                                       width: self.frame.width,
@@ -186,6 +191,18 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                   height: self.frame.height)
             })
             break
+        case createWorkoutButton:
+            // Send info to delegate, animate up then remove self
+            self.dataDelegate?.finishedWithWorkout(workout: Workout())
+            UIView.animate(withDuration: 0.5, animations: {
+                self.frame = CGRect(x: 0,
+                                    y: -self.frame.height,
+                                    width: self.frame.width,
+                                    height: self.frame.height)
+            }, completion: {
+                (finished:Bool) -> Void in
+                self.removeFromSuperview()
+            })
         default:
             fatalError("Button pressed was not assigned function")
         }
@@ -196,4 +213,8 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         self.exerciseTableView.appendDataToTableView(data: exercise)
     }
     
+}
+
+protocol CreateWorkoutViewDelegate {
+    func finishedWithWorkout(workout: Workout)
 }

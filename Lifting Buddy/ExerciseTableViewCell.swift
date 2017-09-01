@@ -72,6 +72,7 @@ class ExerciseTableViewCell: UITableViewCell {
     
     public func reloadView() {
         self.loaded = false
+        self.chosen = false
         self.removeAllSubviews()
         self.layoutSubviews()
     }

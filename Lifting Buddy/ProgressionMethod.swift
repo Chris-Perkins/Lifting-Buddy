@@ -41,11 +41,20 @@ class ProgressionMethod: RLMObject {
     
     // MARK: Encapsulated methods
     
-    public func getUnit() -> String? {
-        return self.unit
+    public func setName(name: String?) {
+        self.name = name
     }
+    
+    public func getName() -> String? {
+        return self.name
+    }
+    
     public func setUnit(unit: String?) {
         self.unit = unit
+    }
+    
+    public func getUnit() -> String? {
+        return self.unit
     }
 }
 

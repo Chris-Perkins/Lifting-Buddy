@@ -13,13 +13,13 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     // MARK: View properties
     private var loaded: Bool
     private var chosen: Bool
-    var titleEntryField: UITextField
+    var nameEntryField: UITextField
     var pickUnitButton: PrettyButton
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.titleEntryField = UITextField()
+        self.nameEntryField = UITextField()
         self.pickUnitButton = PrettyButton()
         self.loaded = false
         self.chosen = false
@@ -46,13 +46,13 @@ class ProgressionMethodTableViewCell: UITableViewCell {
             
             // MARK: Progression Textfield
             
-            self.titleEntryField = UITextField(frame: CGRect(x: 5,
+            self.nameEntryField = UITextField(frame: CGRect(x: 5,
                                                                   y: 5,
                                                                   width: quarterView * 2 - 7.5,
                                                                   height: self.frame.height - 10))
-            self.titleEntryField.setDefaultProperties()
-            self.titleEntryField.placeholder = "Required: Name"
-            self.addSubview(titleEntryField)
+            self.nameEntryField.setDefaultProperties()
+            self.nameEntryField.placeholder = "Required: Name"
+            self.addSubview(nameEntryField)
             
             // MARK: Pick Unit button
             

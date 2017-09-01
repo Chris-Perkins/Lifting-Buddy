@@ -68,6 +68,25 @@ extension UIView {
             subview.removeFromSuperview()
         }
     }
+    
+    // Removes itself from this superview by sliding up and fading out
+    func removeSelfNicelyWithAnimation() {
+        // Prevent user interaction with all subviews
+        for subview in self.subviews {
+            subview.isUserInteractionEnabled = false
+        }
+        
+        // Slide up, then remove from view
+        UIView.animate(withDuration: 0.5, animations: {
+            self.frame = CGRect(x: 0,
+                                y: -self.frame.height,
+                                width: self.frame.width,
+                                height: self.frame.height)
+        }, completion: {
+            (finished:Bool) -> Void in
+            self.removeFromSuperview()
+        })
+    }
 }
 
 extension PrettyButton {
@@ -94,9 +113,11 @@ extension UITextField {
     func isNumeric() -> Bool {
         if self.text?.characters.count == 0 { return true }
         
-        return Set(self.text!.characters).isSubset(of: Set(arrayLiteral: "1", "2", "3", "4",
-                                                                         "5", "6", "7", "8",
-                                                                         "9", "0"))
+        let setNums: Set<Character> = Set(arrayLiteral: "1", "2", "3", "4",
+                                          "5", "6", "7", "8",
+                                          "9", "0")
+        
+        return Set(self.text!.characters).isSubset(of: setNums)
     }
     
     // MARK: Textfield events

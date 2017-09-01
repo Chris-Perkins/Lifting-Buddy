@@ -11,7 +11,7 @@
 import RealmSwift
 import Realm
 
-class Exercise: RLMObject {
+class Exercise: Object {
     // Name of this exercise
     dynamic private var name: String?
     
@@ -19,8 +19,8 @@ class Exercise: RLMObject {
     dynamic private var setCount: Int
     // How many reps per set
     dynamic private var repCount: Int
-    // Units for reps (seconds, kilos, etc)
-    dynamic private var unit: String?
+    // Progression Methods attached
+    private var progressionMethods: RLMArray = RLMArray(objectClassName: "ProgressionMethod")
     // Time between exercises (stored in seconds)
     dynamic private var cooldownTime: Int
     
@@ -33,22 +33,26 @@ class Exercise: RLMObject {
     
     // MARK: Init Functions
     
-    required override init() {
+    required init() {
         self.name = nil
-        self.setCount = 1
-        self.repCount = 1
+        self.setCount = 0
+        self.repCount = 0
         self.cooldownTime = 0
         
         super.init()
     }
     
-    required override init(value: Any, schema: RLMSchema) {
+    required init(value: Any, schema: RLMSchema) {
         self.name = nil
         self.setCount = 0
         self.repCount = 0
         self.cooldownTime = 0
         
         super.init(value: value, schema: schema)
+    }
+    
+    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        fatalError("init(realm:schema:) has not been implemented")
     }
     
     // MARK: Get/Set methods for variables in this class
@@ -73,6 +77,18 @@ class Exercise: RLMObject {
     }
     public func setName(name: String?) {
         self.name = name
+    }
+    
+    public func appendProgressionMethod(progressionMethod: ProgressionMethod) {
+        let realm = try! Realm()
+        
+        try! realm.write {
+            self.progressionMethods.add(progressionMethod)
+        }
+    }
+    
+    public func getProgressionMethods() -> RLMArray<RLMObject> {
+        return self.progressionMethods
     }
     
     public func getCooldownTime() -> Int {

@@ -13,13 +13,14 @@ class ExerciseTableViewCell: UITableViewCell {
     // MARK: View properties
     private var loaded: Bool
     private var chosen: Bool
-    private var pickNewButton: PrettyButton
+    private var exerciseNameLabel: UILabel
     private var pickExistingButton: PrettyButton
+    private var exercise: Exercise?
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.pickNewButton = PrettyButton()
+        self.exerciseNameLabel = UILabel()
         self.pickExistingButton = PrettyButton()
         self.loaded = false
         self.chosen = false
@@ -41,15 +42,13 @@ class ExerciseTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         if !self.loaded && !self.chosen {
-            pickNewButton = PrettyButton(frame: CGRect(x: 5,
-                                                       y: 5,
-                                                       width: (self.frame.width - 20) / 2,
-                                                       height: self.frame.height - 10))
-            pickNewButton.setDefaultProperties()
-            pickNewButton.setOverlayStyle(style: .NONE)
-            pickNewButton.addTarget(self, action: #selector(createNewExercise(sender:)), for: .touchUpInside)
-            pickNewButton.setTitle("Create new exercise", for: .normal)
-            self.addSubview(pickNewButton)
+            exerciseNameLabel = UILabel(frame: CGRect(x: 5,
+                                                      y: 5,
+                                                      width: (self.frame.width - 20) / 2,
+                                                      height: self.frame.height - 10))
+            exerciseNameLabel.setDefaultProperties()
+            exerciseNameLabel.text = exercise?.getName()
+            self.addSubview(exerciseNameLabel)
             
             pickExistingButton = PrettyButton(frame: CGRect(x: self.frame.width / 2 + 5,
                                                             y: 5,
@@ -65,9 +64,15 @@ class ExerciseTableViewCell: UITableViewCell {
         }
     }
     
-    // MARK: Event functions
+    public func setExercise(exercise: Exercise) {
+        self.exercise = exercise
+        
+        self.reloadView()
+    }
     
-    @objc private func createNewExercise(sender: PrettyButton) {
-        print("test")
+    public func reloadView() {
+        self.loaded = false
+        self.removeAllSubviews()
+        self.layoutSubviews()
     }
 }

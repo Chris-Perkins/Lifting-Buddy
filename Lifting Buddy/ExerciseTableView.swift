@@ -39,6 +39,9 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         let destination = data[destinationIndexPath.row]
         data[sourceIndexPath.row] = destination
         data[destinationIndexPath.row] = source
+        
+        (self.cellForRow(at: sourceIndexPath) as! ExerciseTableViewCell).reloadView()
+        (self.cellForRow(at: destinationIndexPath) as! ExerciseTableViewCell).reloadView()
     }
     
     // Selected a table view cell
@@ -59,6 +62,7 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         let cell:ExerciseTableViewCell =
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! ExerciseTableViewCell
+        cell.setExercise(exercise: data[indexPath.row])
         return cell
     }
     

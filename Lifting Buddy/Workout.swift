@@ -20,14 +20,14 @@ class Workout: Object {
     // The day this exercise occurs on
     dynamic private var dayOfTheWeek: String?
     // Exercises in this workout
-    dynamic private var exercises: RLMArray<Exercise>
+    private var exercises: List<Exercise>
     
     // MARK: Init Functions
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
         self.name = nil
         self.dayOfTheWeek = nil
-        self.exercises = RLMArray(objectClassName: Exercise.className())
+        self.exercises = List<Exercise>()
         
         super.init(realm: realm, schema: schema)
     }
@@ -35,7 +35,7 @@ class Workout: Object {
     required init() {
         self.name = nil
         self.dayOfTheWeek = nil
-        self.exercises = RLMArray(objectClassName: Exercise.className())
+        self.exercises = List<Exercise>()
         
         super.init()
     }
@@ -43,7 +43,7 @@ class Workout: Object {
     required init(value: Any, schema: RLMSchema) {
         self.name = nil
         self.dayOfTheWeek = nil
-        self.exercises = RLMArray(objectClassName: Exercise.className())
+        self.exercises = List<Exercise>()
         
         super.init(value: value, schema: schema)
     }
@@ -66,20 +66,28 @@ class Workout: Object {
         self.dayOfTheWeek = day
     }
     
-    public func getExercises() -> RLMArray<Exercise> {
+    public func getExercises() -> List<Exercise> {
         return self.exercises
     }
     
     public func addExercise(exercise: Exercise) {
-        self.exercises.add(exercise)
+        let realm = try! Realm()
+        
+        try! realm.write {
+            self.exercises.append(exercise)
+        }
     }
     
     // MARK: Private functions
     
     // Remove exercise stored at an index in the int if possible
-    public func removeExerciseAtIndex(index: UInt) {
-        if index >= 0 && index < self.exercises.count {
-            exercises.removeObject(at: index)
+    public func removeExerciseAtIndex(index: Int) {
+        if index >= 0 && index < self.exercises.endIndex {
+            let realm = try! Realm()
+            
+            try! realm.write {
+                self.exercises.remove(objectAtIndex: index)
+            }
         }
     }
 }

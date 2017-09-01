@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Realm
 import RealmSwift
 
 class CreateExerciseView: UIScrollView {
@@ -163,7 +164,6 @@ class CreateExerciseView: UIScrollView {
             progressionsTableView.clipsToBounds = false
             progressionsTableView.isScrollEnabled = false
             progressionsTableView.backgroundColor = UIColor.clear
-            progressionsTableView.appendDataToTableView(data: ProgressionMethod())
             
             self.addSubview(progressionsTableView)
             
@@ -241,16 +241,17 @@ class CreateExerciseView: UIScrollView {
         case createExerciseButton:
             // Send info to delegate, animate up then remove self
             if self.requirementsFulfilled() {
-                self.dataDelegate?.finishedWithExercise(exercise: Exercise())
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.frame = CGRect(x: 0,
-                                        y: -self.frame.height,
-                                        width: self.frame.width,
-                                        height: self.frame.height)
-                }, completion: {
-                    (finished:Bool) -> Void in
-                    self.removeFromSuperview()
-                })
+                let exerciseCreated: Exercise = createExerciseFromData()
+                
+                let realm = try! Realm()
+                
+                try! realm.write {
+                    realm.add(exerciseCreated)
+                }
+                
+                // Send data to delegate
+                self.dataDelegate?.finishedWithExercise(exercise: exerciseCreated)
+                self.removeSelfNicelyWithAnimation()
             }
             break
         default:
@@ -260,6 +261,11 @@ class CreateExerciseView: UIScrollView {
     
     // MARK: Private functions
     
+    // Checks if the requirements for this exercise are fulfilled
+    // Requirements:
+    // Non-empty name
+    // Integer or empty set/rep count
+    // Non-empty name and unit for every progression method
     private func requirementsFulfilled() -> Bool {
         var fulfilled: Bool = true
         
@@ -283,10 +289,10 @@ class CreateExerciseView: UIScrollView {
         }
         for cell: ProgressionMethodTableViewCell in progressionsTableView.visibleCells as! [ProgressionMethodTableViewCell]
         {
-            if cell.titleEntryField.text?.characters.count == 0 {
+            if cell.nameEntryField.text?.characters.count == 0 {
                 fulfilled = false
                 
-                cell.titleEntryField.backgroundColor = UIColor.niceRed()
+                cell.nameEntryField.backgroundColor = UIColor.niceRed()
             }
             if cell.pickUnitButton.titleLabel?.text == "Required: Unit" {
                 fulfilled = false
@@ -295,10 +301,42 @@ class CreateExerciseView: UIScrollView {
         
         return fulfilled
     }
+    
+    // Creates an exercise object with info from this screen
+    private func createExerciseFromData() -> Exercise {
+        let createdExercise = Exercise()
+        
+        createdExercise.setName(name: nameEntryField.text!)
+        
+        // Set set and rep count
+        if setEntryField.text?.characters.count != 0 {
+            createdExercise.setSetCount(setCount: Int(setEntryField.text!)!)
+        } else {
+            createdExercise.setSetCount(setCount: 0)
+        }
+        
+        if repEntryField.text?.characters.count != 0 {
+            createdExercise.setRepCount(repCount: Int(repEntryField.text!)!)
+        } else {
+            createdExercise.setRepCount(repCount: 0)
+        }
+        
+        // Add all progression methods from this cell
+        for cell in progressionsTableView.visibleCells as! [ProgressionMethodTableViewCell] {
+            let progressionMethod = ProgressionMethod()
+            progressionMethod.setName(name: cell.nameEntryField.text!)
+            progressionMethod.setUnit(unit: cell.pickUnitButton.titleLabel!.text!)
+            
+            createdExercise.appendProgressionMethod(progressionMethod: progressionMethod)
+        }
+        
+        return createdExercise
+    }
 }
 
 // MARK: Protocol
 
 protocol CreateExerciseViewDelegate {
+    // Pass exercise result from this screen to the delegate
     func finishedWithExercise(exercise: Exercise)
 }

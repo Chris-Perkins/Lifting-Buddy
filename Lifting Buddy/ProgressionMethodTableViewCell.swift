@@ -61,7 +61,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
                                                              width: quarterView * 2 - 7.5,
                                                              height: self.frame.height - 10))
             self.pickUnitButton.setDefaultProperties()
-            self.pickUnitButton.setTitle(ProgressionMethod.Unit.OTHER.rawValue, for: .normal)
+            self.pickUnitButton.setTitle("Required: Unit", for: .normal)
             self.pickUnitButton.addTarget(self, action: #selector(pickUnitButtonPress(sender:)), for: .touchUpInside)
             self.addSubview(pickUnitButton)
             

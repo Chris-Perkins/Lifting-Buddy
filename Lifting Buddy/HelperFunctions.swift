@@ -92,7 +92,7 @@ extension UITextField {
     }
     
     func isNumeric() -> Bool {
-        if self.text?.characters.count == 0 { return false }
+        if self.text?.characters.count == 0 { return true }
         
         return Set(self.text!.characters).isSubset(of: Set(arrayLiteral: "1", "2", "3", "4",
                                                                          "5", "6", "7", "8",

@@ -69,7 +69,7 @@ import UIKit
     
     // MARK: Event functions
     
-    @objc private func startPress(sender: PrettyButton) {
+    @objc func startPress(sender: PrettyButton) {
         switch self.style {
         case Styles.NONE:
             break

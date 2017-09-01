@@ -13,8 +13,8 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     // MARK: View properties
     private var loaded: Bool
     private var chosen: Bool
-    private var progressionTextfield: UITextField
-    private var pickUnitButton: PrettyButton
+    var progressionTextfield: UITextField
+    var pickUnitButton: PrettyButton
     
     // MARK: Init overrides
     
@@ -68,6 +68,8 @@ class ProgressionMethodTableViewCell: UITableViewCell {
             self.loaded = true
         }
     }
+    
+    // MARK: Event functions
     
     @objc func pickUnitButtonPress(sender: UIButton) {
         self.pickUnitButton.setTitle(ProgressionMethod.Unit.DISTANCE.rawValue, for: .normal)

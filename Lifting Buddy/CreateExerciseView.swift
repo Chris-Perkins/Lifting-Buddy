@@ -78,7 +78,7 @@ class CreateExerciseView: UIScrollView {
             // MARK: Name Entry Field
             nameEntryField.translatesAutoresizingMaskIntoConstraints = false
             nameEntryField.setDefaultProperties()
-            nameEntryField.placeholder = "Name of New Exercise"
+            nameEntryField.placeholder = "Required: Name"
             
             /*
              * Center in view, place below the above frame, and give height/width of 40
@@ -231,6 +231,8 @@ class CreateExerciseView: UIScrollView {
         }
     }
     
+    // MARK: Event functions
+    
     @objc func buttonPress(sender: UIButton) {
         switch(sender){
         case addProgressionTrackerButton:
@@ -238,20 +240,49 @@ class CreateExerciseView: UIScrollView {
             break
         case createExerciseButton:
             // Send info to delegate, animate up then remove self
-            self.dataDelegate?.finishedWithExercise(exercise: Exercise())
-            UIView.animate(withDuration: 0.5, animations: {
-                self.frame = CGRect(x: 0,
-                                    y: -self.frame.height,
-                                    width: self.frame.width,
-                                    height: self.frame.height)
-            }, completion: {
-                (finished:Bool) -> Void in
-                self.removeFromSuperview()
-            })
+            if self.requirementsFulfilled() {
+                self.dataDelegate?.finishedWithExercise(exercise: Exercise())
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.frame = CGRect(x: 0,
+                                        y: -self.frame.height,
+                                        width: self.frame.width,
+                                        height: self.frame.height)
+                }, completion: {
+                    (finished:Bool) -> Void in
+                    self.removeFromSuperview()
+                })
+            }
             break
         default:
             fatalError("User pressed a button that does not exist in switch?")
         }
+    }
+    
+    // MARK: Private functions
+    
+    private func requirementsFulfilled() -> Bool {
+        var fulfilled: Bool = true
+        
+        if nameEntryField.text?.characters.count == 0 {
+            fulfilled = false
+            
+            nameEntryField.backgroundColor = UIColor.niceRed()
+            nameEntryField.text = ""
+        }
+        if !setEntryField.isNumeric() {
+            fulfilled = false
+            
+            setEntryField.backgroundColor = UIColor.niceRed()
+            setEntryField.text = ""
+        }
+        if !repEntryField.isNumeric() {
+            fulfilled = false
+            
+            repEntryField.backgroundColor = UIColor.niceRed()
+            repEntryField.text = ""
+        }
+        
+        return fulfilled
     }
 }
 

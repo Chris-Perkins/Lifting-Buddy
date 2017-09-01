@@ -91,6 +91,16 @@ extension UITextField {
         textfieldDeselected(sender: self)
     }
     
+    func isNumeric() -> Bool {
+        if self.text?.characters.count == 0 { return false }
+        
+        return Set(self.text!.characters).isSubset(of: Set(arrayLiteral: "1", "2", "3", "4",
+                                                                         "5", "6", "7", "8",
+                                                                         "9", "0"))
+    }
+    
+    // MARK: Textfield events
+    
     @objc func textfieldSelected(sender: UITextField) {
         sender.backgroundColor = UIColor.niceYellow()
         sender.textColor = UIColor.white
@@ -122,6 +132,10 @@ extension NSDate {
 extension UIColor {
     public static func niceGray() -> UIColor {
         return UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1)
+    }
+    
+    public static func niceRed() -> UIColor {
+        return UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1)
     }
     
     public static func niceBlue() -> UIColor {

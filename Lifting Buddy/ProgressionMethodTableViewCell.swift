@@ -13,13 +13,13 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     // MARK: View properties
     private var loaded: Bool
     private var chosen: Bool
-    var progressionTextfield: UITextField
+    var titleEntryField: UITextField
     var pickUnitButton: PrettyButton
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.progressionTextfield = UITextField()
+        self.titleEntryField = UITextField()
         self.pickUnitButton = PrettyButton()
         self.loaded = false
         self.chosen = false
@@ -46,13 +46,13 @@ class ProgressionMethodTableViewCell: UITableViewCell {
             
             // MARK: Progression Textfield
             
-            self.progressionTextfield = UITextField(frame: CGRect(x: 5,
+            self.titleEntryField = UITextField(frame: CGRect(x: 5,
                                                                   y: 5,
                                                                   width: quarterView * 2 - 7.5,
                                                                   height: self.frame.height - 10))
-            self.progressionTextfield.setDefaultProperties()
-            self.progressionTextfield.placeholder = "Tracker Name"
-            self.addSubview(progressionTextfield)
+            self.titleEntryField.setDefaultProperties()
+            self.titleEntryField.placeholder = "Required: Name"
+            self.addSubview(titleEntryField)
             
             // MARK: Pick Unit button
             
@@ -61,7 +61,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
                                                              width: quarterView * 2 - 7.5,
                                                              height: self.frame.height - 10))
             self.pickUnitButton.setDefaultProperties()
-            self.pickUnitButton.setTitle("Select Unit", for: .normal)
+            self.pickUnitButton.setTitle(ProgressionMethod.Unit.OTHER.rawValue, for: .normal)
             self.pickUnitButton.addTarget(self, action: #selector(pickUnitButtonPress(sender:)), for: .touchUpInside)
             self.addSubview(pickUnitButton)
             

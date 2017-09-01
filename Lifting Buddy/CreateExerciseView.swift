@@ -281,6 +281,13 @@ class CreateExerciseView: UIScrollView {
             repEntryField.backgroundColor = UIColor.niceRed()
             repEntryField.text = ""
         }
+        for cell: ProgressionMethodTableViewCell in progressionsTableView.visibleCells as! [ProgressionMethodTableViewCell]{
+            if cell.titleEntryField.text?.characters.count == 0 {
+                fulfilled = false
+                
+                cell.titleEntryField.backgroundColor = UIColor.niceRed()
+            }
+        }
         
         return fulfilled
     }

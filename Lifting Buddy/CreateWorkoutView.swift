@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     
@@ -193,26 +195,38 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             break
         case createWorkoutButton:
             // Send info to delegate, animate up then remove self
-            self.dataDelegate?.finishedWithWorkout(workout: Workout())
-            UIView.animate(withDuration: 0.5, animations: {
-                self.frame = CGRect(x: 0,
-                                    y: -self.frame.height,
-                                    width: self.frame.width,
-                                    height: self.frame.height)
-            }, completion: {
-                (finished:Bool) -> Void in
-                self.removeFromSuperview()
-            })
+            let createdWorkout = createWorkoutWithData()
+            
+            let realm = try! Realm()
+            try! realm.write {
+                realm.add(createdWorkout)
+            }
+            
+            self.dataDelegate?.finishedWithWorkout(workout: createdWorkout)
+            self.removeSelfNicelyWithAnimation()
+            break
         default:
             fatalError("Button pressed was not assigned function")
         }
+    }
+    
+    // MARK: Private functions
+    
+    private func createWorkoutWithData() -> Workout {
+        let createdWorkout = Workout()
+        createdWorkout.setName(name: nameEntryField.text)
+        
+        for exercise in exerciseTableView.getData() {
+            createdWorkout.addExercise(exercise: exercise)
+        }
+        
+        return createdWorkout
     }
     
     // MARK: CreateExerciseView delegate
     func finishedWithExercise(exercise: Exercise) {
         self.exerciseTableView.appendDataToTableView(data: exercise)
     }
-    
 }
 
 protocol CreateWorkoutViewDelegate {

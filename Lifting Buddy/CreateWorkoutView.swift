@@ -194,16 +194,18 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             })
             break
         case createWorkoutButton:
-            // Send info to delegate, animate up then remove self
-            let createdWorkout = createWorkoutWithData()
-            
-            let realm = try! Realm()
-            try! realm.write {
-                realm.add(createdWorkout)
+            if checkRequirementsFulfilled() {
+                // Send info to delegate, animate up then remove self
+                let createdWorkout = createWorkoutWithData()
+                
+                let realm = try! Realm()
+                try! realm.write {
+                    realm.add(createdWorkout)
+                }
+                
+                self.dataDelegate?.finishedWithWorkout(workout: createdWorkout)
+                self.removeSelfNicelyWithAnimation()
             }
-            
-            self.dataDelegate?.finishedWithWorkout(workout: createdWorkout)
-            self.removeSelfNicelyWithAnimation()
             break
         default:
             fatalError("Button pressed was not assigned function")
@@ -211,6 +213,18 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     }
     
     // MARK: Private functions
+    
+    private func checkRequirementsFulfilled() -> Bool {
+        var fulfilled = true
+        
+        if nameEntryField.text?.characters.count == 0 {
+            nameEntryField.backgroundColor = UIColor.niceRed()
+            
+            fulfilled = false
+        }
+        
+        return fulfilled
+    }
     
     private func createWorkoutWithData() -> Workout {
         let createdWorkout = Workout()

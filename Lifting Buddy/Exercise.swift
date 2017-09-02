@@ -20,7 +20,7 @@ class Exercise: Object {
     // How many reps per set
     dynamic private var repCount: Int
     // Progression Methods attached
-    private var progressionMethods: RLMArray = RLMArray(objectClassName: "ProgressionMethod")
+    private var progressionMethods: RLMArray = RLMArray(objectClassName: ProgressionMethod.className())
     // Time between exercises (stored in seconds)
     dynamic private var cooldownTime: Int
     

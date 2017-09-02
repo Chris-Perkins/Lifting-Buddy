@@ -267,7 +267,7 @@ class CreateExerciseView: UIScrollView {
     // Integer or empty set/rep count
     // Non-empty name and unit for every progression method
     private func requirementsFulfilled() -> Bool {
-        var fulfilled: Bool = true
+        var fulfilled = true
         
         if nameEntryField.text?.characters.count == 0 {
             fulfilled = false

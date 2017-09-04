@@ -53,6 +53,11 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
             })
             self.addSubview(floatyButton)
             
+            let realm = try! Realm()
+            for workout in realm.objects(Workout.self) {
+                
+            }
+            
             loaded = true
         } else {
             floatyButton.layoutSubviews()

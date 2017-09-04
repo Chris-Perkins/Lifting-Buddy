@@ -1,35 +1,32 @@
 //
-//  ExerciseButton.swift
+//  ExpandableButton.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 7/21/17.
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
-/// A button / View which displays information about an exercise
+/// A button / View which hides / shows detailed information on click
 
 import UIKit
 
 // Please create this view with a height of "50" for best results.
 // This comes into play when creating the icon view (would prefer a square).
 
-class ExerciseButton: UIView, UIGestureRecognizerDelegate {
-    private var exercise: Exercise?
+class ExpandableButton: UIView, UIGestureRecognizerDelegate {
     
-    private var exerciseTitleView: UILabel?
-    private var exerciseView: UIView?
-    private var exerciseViewOverlay: UIView?
+    private var titleView: UILabel?
+    private var mainView: UIView?
+    private var mainViewOverlay: UIView?
     
-    private var exeriseInfoDisplayed: Bool = false
+    private var dropDownDisplayed: Bool = false
     private var cornerRadius: CGFloat = 5.0
     
     private var viewsCreated: Bool = false
     
     // MARK: View Inits
     
-    init(frame: CGRect, exercise: Exercise) {
-        self.exercise = exercise
-        
+    override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
@@ -39,12 +36,12 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     
     // MARK: View overrides
     
-    // sets iconView, dividingView, and exerciseTitleView layouts
+    // sets iconView, dividingView, and titleView layouts
     override func layoutSubviews() {
         if !viewsCreated {
             addTouchEvents()
             createAndAddButtonView()
-            createAndAddExerciseInfoViews()
+            createAndAddDropDownView()
             self.viewsCreated = true
         }
         super.layoutSubviews()
@@ -68,12 +65,6 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
         overlayOverlayView.layer.shadowOpacity = 0.4
         self.addSubview(overlayOverlayView)
         
-        /* Testing Exercise to test view work */
-        
-        self.exercise = Exercise()
-        self.exercise?.setName(name: "Testing this view")
-        self.exercise?.setRepCount(repCount: 2)
-        
         
         // Add subviews to overlayView. Prevents view from going off of
         // the button (can't do this in normal overlay view or shadow won't work)
@@ -84,100 +75,93 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
         overlayView.layer.cornerRadius = 5.0
         overlayView.clipsToBounds = true
         
-        if exercise != nil {
-            // Create the title view
-            self.createTitleView(exercise: exercise!)
-            overlayView.addSubview(exerciseTitleView!)
-        }
-        
         overlayOverlayView.addSubview(overlayView)
     }
     
     // Create the title view for this exercise
-    private func createTitleView(exercise: Exercise) {
+    private func createTitleView() {
         // exerciseTitleView declaration
         // - 51 to not go out of bounds
-        exerciseTitleView = UILabel(frame: CGRect(x: 0,
+        titleView = UILabel(frame: CGRect(x: 0,
                                                   y: 0,
                                                   width: self.frame.width,
                                                   height: self.frame.height))
-        exerciseTitleView?.text = exercise.getName()
-        exerciseTitleView?.textColor = .black
-        exerciseTitleView?.textAlignment = .center
-        exerciseTitleView?.numberOfLines = 1
+        titleView?.textColor = .black
+        titleView?.textAlignment = .center
+        titleView?.numberOfLines = 1
     }
     
     // The view that appears below the button and it's overlay
-    private func createAndAddExerciseInfoViews() {
+    private func createAndAddDropDownView() {
         // Subtract corner radius * 2 so that we display the view from within the flat line
         // of the button.
         // Picture of what this means to be added
-        self.exerciseViewOverlay = UIView(frame: CGRect(x: cornerRadius,
+        self.mainViewOverlay = UIView(frame: CGRect(x: cornerRadius,
                                                         y: self.frame.height - self.cornerRadius,
                                                         width: self.frame.width - cornerRadius * 2,
                                                         height: 0))
-        self.exerciseViewOverlay?.clipsToBounds = true
-        self.exerciseViewOverlay?.layer.cornerRadius = self.cornerRadius
-        self.addSubview(self.exerciseViewOverlay!)
+        self.mainViewOverlay?.clipsToBounds = true
+        self.mainViewOverlay?.layer.cornerRadius = self.cornerRadius
+        self.addSubview(self.mainViewOverlay!)
         // Display behind button view
-        self.sendSubview(toBack: exerciseViewOverlay!)
+        self.sendSubview(toBack: mainViewOverlay!)
         
         let createHeight: CGFloat = 100.0
-        self.exerciseView = UIView(frame: CGRect(x: 0,
+        self.mainView = UIView(frame: CGRect(x: 0,
                                                  y: -createHeight,
-                                                 width: (self.exerciseViewOverlay?.frame.width)!,
+                                                 width: (self.mainViewOverlay?.frame.width)!,
                                                  height: createHeight))
-        self.exerciseView?.backgroundColor = .white
-        exerciseViewOverlay?.addSubview(self.exerciseView!)
+        self.mainView?.backgroundColor = .white
+        mainViewOverlay?.addSubview(self.mainView!)
     }
     
     // MARK: Function for button behavior
     
     // Toggle exercise info display state
-    private func toggleExerciseInfo() {
-        self.exeriseInfoDisplayed ? hideExerciseInfo() : showExerciseInfo()
+    private func toggleDropDown() {
+        self.dropDownDisplayed ? hideDropDown() : showDropDown()
     }
     
     // Show the exercise info view if it exists
-    private func showExerciseInfo() {
-        if self.exerciseView != nil && self.exerciseViewOverlay != nil {
-            self.exeriseInfoDisplayed = true
-            self.exerciseTitleView?.backgroundColor = UIColor.niceYellow()
-            self.exerciseTitleView?.textColor = UIColor.white
+    private func showDropDown() {
+        if self.mainView != nil && self.mainViewOverlay != nil {
+            self.dropDownDisplayed = false
+            self.titleView?.backgroundColor = UIColor.niceYellow()
+            self.titleView?.textColor = UIColor.white
             
             UIView.animate(withDuration: 0.25, animations: {
                 // Slide view down. This creates the illusion of the exerciseView
                 // sliding from the button.
-                self.exerciseViewOverlay?.frame = CGRect(x: self.cornerRadius,
+                self.mainViewOverlay?.frame = CGRect(x: self.cornerRadius,
                                                          y: self.frame.height - self.cornerRadius,
-                                                         width: (self.exerciseViewOverlay?.frame.width)!,
-                                                         height: (self.exerciseView?.frame.height)!)
-                self.exerciseView?.frame = CGRect(x: 0,
+                                                         width: (self.mainViewOverlay?.frame.width)!,
+                                                         height: (self.mainView?.frame.height)!)
+                self.mainView?.frame = CGRect(x: 0,
                                                   y: 0,
-                                                  width: (self.exerciseView?.frame.width)!,
-                                                  height: (self.exerciseView?.frame.height)!)
+                                                  width: (self.mainView?.frame.width)!,
+                                                  height: (self.mainView?.frame.height)!)
             })
         }
     }
     
     // Hide the exercise info view if it exists
-    private func hideExerciseInfo() {
-        if self.exerciseView != nil && self.exerciseViewOverlay != nil {
-            self.exerciseTitleView?.backgroundColor = UIColor.white
-            self.exerciseTitleView?.textColor = UIColor.black
-            self.exeriseInfoDisplayed = false
+    private func hideDropDown() {
+        if self.mainView != nil && self.mainViewOverlay != nil {
+            self.titleView?.backgroundColor = UIColor.white
+            self.titleView?.textColor = UIColor.black
+            self.dropDownDisplayed = false
             
             UIView.animate(withDuration: 0.25, animations: {
                 // Bring overlay view to height 0, main view to -height
                 // This creates the illusion of the view sliding into the button
-                self.exerciseViewOverlay?.frame = CGRect(x: self.cornerRadius,
+                self.mainViewOverlay?.frame = CGRect(x: self.cornerRadius,
                                                          y: self.frame.height - self.cornerRadius,
-                                                         width: (self.exerciseViewOverlay?.frame.width)!,
+                                                         width: (self.mainViewOverlay?.frame.width)!,
                                                          height: 1)
-                self.exerciseView?.frame = CGRect(x: 0,
-                                                  y: -(self.exerciseView?.frame.height)!,
-                                                  width: (self.exerciseView?.frame.width)!,
-                                                  height: (self.exerciseView?.frame.height)!)
+                self.mainView?.frame = CGRect(x: 0,
+                                                  y: -(self.mainView?.frame.height)!,
+                                                  width: (self.mainView?.frame.width)!,
+                                                  height: (self.mainView?.frame.height)!)
             })
         }
     }
@@ -193,6 +177,6 @@ class ExerciseButton: UIView, UIGestureRecognizerDelegate {
     
     // Handler for this view pressed
     @objc func buttonPressed(sender: UITapGestureRecognizer? = nil) {
-        toggleExerciseInfo()
+        toggleDropDown()
     }
 }

@@ -52,7 +52,12 @@ class Exercise: Object {
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        self.name = nil
+        self.setCount = 0
+        self.repCount = 0
+        self.cooldownTime = 0
+        
+        super.init(realm: realm, schema: schema)
     }
     
     // MARK: Get/Set methods for variables in this class

@@ -80,7 +80,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             // MARK: Name Entry Field
             nameEntryField.translatesAutoresizingMaskIntoConstraints = false
             nameEntryField.setDefaultProperties()
-            nameEntryField.placeholder = "Name of New Workout"
+            nameEntryField.placeholder = "Required: Name"
             /*
              * Center in view, place below the above frame, and give height/width of 40
              */

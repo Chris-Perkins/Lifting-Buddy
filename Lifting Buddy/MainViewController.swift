@@ -28,12 +28,6 @@ class MainViewController: UIViewController {
         let todayString = "TEST"
         if realm.objects(Workout.self).filter(
             NSPredicate(format: "dayOfTheWeek = %@", todayString)).count == 1 {
-        } else {
-            try! realm.write {
-                let workout: Workout = realm.create(Workout.self)
-                workout.setDayOfTheWeek(day: todayString)
-                workout.setName(name: "[WORKOUT NAME TEST]")
-            }
         }
         
         print(realm.objects(Workout.self))

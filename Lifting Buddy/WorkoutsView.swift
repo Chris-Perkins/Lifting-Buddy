@@ -81,12 +81,14 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
                                              width: self.frame.width,
                                              height: self.frame.height)
             
-            self.floatyButton.frame = CGRect(x: (self.floatyButton.frame.minX),
-                                              y: self.frame.maxY + 200,
-                                              width: 50,
-                                              height: 50)
+            self.floatyButton.frame = CGRect(x: self.floatyButton.frame.minX,
+                                             y: self.frame.maxY + 200,
+                                             width: 50,
+                                             height: 50)
         })
     }
+    
+    // MARK: CreateWorkoutViewDelegate methods
     
     func finishedWithWorkout(workout: Workout) {
         // TODO: Realm write new workout

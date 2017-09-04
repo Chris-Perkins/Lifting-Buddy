@@ -23,6 +23,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     
     // Exercise name field
     private var nameEntryLabel: UILabel
+    // Field to enter name
     private var nameEntryField: UITextField
     // Table holding all of our exercises
     private var exerciseTableView: ExerciseTableView
@@ -203,8 +204,22 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                     realm.add(createdWorkout)
                 }
                 
-                self.dataDelegate?.finishedWithWorkout(workout: createdWorkout)
-                self.removeSelfNicelyWithAnimation()
+                // Prevent user interaction with all subviews
+                for subview in self.subviews {
+                    subview.isUserInteractionEnabled = false
+                }
+                
+                // Slide up, then remove from view
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.frame = CGRect(x: 0,
+                                        y: -self.frame.height,
+                                        width: self.frame.width,
+                                        height: self.frame.height)
+                }, completion: {
+                    (finished:Bool) -> Void in
+                    self.dataDelegate?.finishedWithWorkout(workout: createdWorkout)
+                    self.removeFromSuperview()
+                })
             }
             break
         default:
@@ -214,6 +229,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     
     // MARK: Private functions
     
+    // Check if requirements per workout are completed
     private func checkRequirementsFulfilled() -> Bool {
         var fulfilled = true
         
@@ -226,6 +242,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         return fulfilled
     }
     
+    // Use data on this form to create the workout
     private func createWorkoutWithData() -> Workout {
         let createdWorkout = Workout()
         createdWorkout.setName(name: nameEntryField.text)
@@ -238,6 +255,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     }
     
     // MARK: CreateExerciseView delegate
+    
     func finishedWithExercise(exercise: Exercise) {
         self.exerciseTableView.appendDataToTableView(data: exercise)
     }

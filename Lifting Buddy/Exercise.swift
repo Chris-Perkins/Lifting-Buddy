@@ -19,10 +19,11 @@ class Exercise: Object {
     dynamic private var setCount: Int
     // How many reps per set
     dynamic private var repCount: Int
-    // Progression Methods attached
-    private var progressionMethods: RLMArray = RLMArray(objectClassName: ProgressionMethod.className())
     // Time between exercises (stored in seconds)
     dynamic private var cooldownTime: Int
+    
+    // Progression Methods attached
+    private var progressionMethods: List<ProgressionMethod>
     
     public enum Unit: String {
         case WEIGHT = "weight"
@@ -38,6 +39,7 @@ class Exercise: Object {
         self.setCount = 0
         self.repCount = 0
         self.cooldownTime = 0
+        self.progressionMethods = List<ProgressionMethod>()
         
         super.init()
     }
@@ -47,6 +49,7 @@ class Exercise: Object {
         self.setCount = 0
         self.repCount = 0
         self.cooldownTime = 0
+        self.progressionMethods = List<ProgressionMethod>()
         
         super.init(value: value, schema: schema)
     }
@@ -56,6 +59,7 @@ class Exercise: Object {
         self.setCount = 0
         self.repCount = 0
         self.cooldownTime = 0
+        self.progressionMethods = List<ProgressionMethod>()
         
         super.init(realm: realm, schema: schema)
     }
@@ -88,11 +92,11 @@ class Exercise: Object {
         let realm = try! Realm()
         
         try! realm.write {
-            self.progressionMethods.add(progressionMethod)
+            self.progressionMethods.append(progressionMethod)
         }
     }
     
-    public func getProgressionMethods() -> RLMArray<RLMObject> {
+    public func getProgressionMethods() -> List<ProgressionMethod> {
         return self.progressionMethods
     }
     

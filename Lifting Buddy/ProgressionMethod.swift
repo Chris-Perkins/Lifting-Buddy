@@ -9,7 +9,7 @@
 import RealmSwift
 import Realm
 
-class ProgressionMethod: RLMObject {
+class ProgressionMethod: Object {
     // Name of this progression method
     dynamic private var name: String?
     
@@ -25,19 +25,25 @@ class ProgressionMethod: RLMObject {
     
     // MARK: Init Functions
     
-    required override init() {
+    required init() {
         self.unit = nil
         self.name = nil
         
         super.init()
     }
     
-    required override init(value: Any, schema: RLMSchema) {
+    required init(value: Any, schema: RLMSchema) {
         self.unit = nil
         self.name = nil
         
         super.init(value: value, schema: schema)
     }
+    
+    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        self.unit = nil
+        self.name = nil
+        
+        super.init(realm: realm, schema: schema)    }
     
     // MARK: Encapsulated methods
     

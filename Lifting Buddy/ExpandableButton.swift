@@ -16,8 +16,10 @@ import UIKit
 class ExpandableButton: UIView, UIGestureRecognizerDelegate {
     
     private var titleView: UILabel?
-    private var mainView: UIView?
-    private var mainViewOverlay: UIView?
+    private var dropDownView: UIView?
+    private var dropDownViewOverlay: UIView?
+    // Height constraint for this view
+    var heightConstraint: NSLayoutConstraint?
     
     private var dropDownDisplayed: Bool = false
     private var cornerRadius: CGFloat = 5.0
@@ -44,6 +46,7 @@ class ExpandableButton: UIView, UIGestureRecognizerDelegate {
             createAndAddDropDownView()
             self.viewsCreated = true
         }
+        
         super.layoutSubviews()
     }
     
@@ -96,23 +99,23 @@ class ExpandableButton: UIView, UIGestureRecognizerDelegate {
         // Subtract corner radius * 2 so that we display the view from within the flat line
         // of the button.
         // Picture of what this means to be added
-        self.mainViewOverlay = UIView(frame: CGRect(x: cornerRadius,
+        self.dropDownViewOverlay = UIView(frame: CGRect(x: cornerRadius,
                                                         y: self.frame.height - self.cornerRadius,
                                                         width: self.frame.width - cornerRadius * 2,
                                                         height: 0))
-        self.mainViewOverlay?.clipsToBounds = true
-        self.mainViewOverlay?.layer.cornerRadius = self.cornerRadius
-        self.addSubview(self.mainViewOverlay!)
+        self.dropDownViewOverlay?.clipsToBounds = true
+        self.dropDownViewOverlay?.layer.cornerRadius = self.cornerRadius
+        self.addSubview(self.dropDownViewOverlay!)
         // Display behind button view
-        self.sendSubview(toBack: mainViewOverlay!)
+        self.sendSubview(toBack: dropDownViewOverlay!)
         
         let createHeight: CGFloat = 100.0
-        self.mainView = UIView(frame: CGRect(x: 0,
+        self.dropDownView = UIView(frame: CGRect(x: 0,
                                                  y: -createHeight,
-                                                 width: (self.mainViewOverlay?.frame.width)!,
+                                                 width: (self.dropDownViewOverlay?.frame.width)!,
                                                  height: createHeight))
-        self.mainView?.backgroundColor = .white
-        mainViewOverlay?.addSubview(self.mainView!)
+        self.dropDownView?.backgroundColor = .white
+        dropDownViewOverlay?.addSubview(self.dropDownView!)
     }
     
     // MARK: Function for button behavior
@@ -124,7 +127,7 @@ class ExpandableButton: UIView, UIGestureRecognizerDelegate {
     
     // Show the exercise info view if it exists
     private func showDropDown() {
-        if self.mainView != nil && self.mainViewOverlay != nil {
+        if self.dropDownView != nil && self.dropDownViewOverlay != nil {
             self.dropDownDisplayed = false
             self.titleView?.backgroundColor = UIColor.niceYellow()
             self.titleView?.textColor = UIColor.white
@@ -132,21 +135,22 @@ class ExpandableButton: UIView, UIGestureRecognizerDelegate {
             UIView.animate(withDuration: 0.25, animations: {
                 // Slide view down. This creates the illusion of the exerciseView
                 // sliding from the button.
-                self.mainViewOverlay?.frame = CGRect(x: self.cornerRadius,
+                self.dropDownViewOverlay?.frame = CGRect(x: self.cornerRadius,
                                                          y: self.frame.height - self.cornerRadius,
-                                                         width: (self.mainViewOverlay?.frame.width)!,
-                                                         height: (self.mainView?.frame.height)!)
-                self.mainView?.frame = CGRect(x: 0,
+                                                         width: (self.dropDownViewOverlay?.frame.width)!,
+                                                         height: (self.dropDownView?.frame.height)!)
+                self.dropDownView?.frame = CGRect(x: 0,
                                                   y: 0,
-                                                  width: (self.mainView?.frame.width)!,
-                                                  height: (self.mainView?.frame.height)!)
+                                                  width: (self.dropDownView?.frame.width)!,
+                                                  height: (self.dropDownView?.frame.height)!)
+                self.heightConstraint?.constant += (self.dropDownView?.frame.height)!
             })
         }
     }
     
     // Hide the exercise info view if it exists
     private func hideDropDown() {
-        if self.mainView != nil && self.mainViewOverlay != nil {
+        if self.dropDownView != nil && self.dropDownViewOverlay != nil {
             self.titleView?.backgroundColor = UIColor.white
             self.titleView?.textColor = UIColor.black
             self.dropDownDisplayed = false
@@ -154,15 +158,16 @@ class ExpandableButton: UIView, UIGestureRecognizerDelegate {
             UIView.animate(withDuration: 0.25, animations: {
                 // Bring overlay view to height 0, main view to -height
                 // This creates the illusion of the view sliding into the button
-                self.mainViewOverlay?.frame = CGRect(x: self.cornerRadius,
+                self.dropDownViewOverlay?.frame = CGRect(x: self.cornerRadius,
                                                          y: self.frame.height - self.cornerRadius,
-                                                         width: (self.mainViewOverlay?.frame.width)!,
+                                                         width: (self.dropDownViewOverlay?.frame.width)!,
                                                          height: 1)
-                self.mainView?.frame = CGRect(x: 0,
-                                                  y: -(self.mainView?.frame.height)!,
-                                                  width: (self.mainView?.frame.width)!,
-                                                  height: (self.mainView?.frame.height)!)
+                self.dropDownView?.frame = CGRect(x: 0,
+                                                  y: -(self.dropDownView?.frame.height)!,
+                                                  width: (self.dropDownView?.frame.width)!,
+                                                  height: (self.dropDownView?.frame.height)!)
             })
+            self.heightConstraint?.constant -= (self.dropDownView?.frame.height)!
         }
     }
     

@@ -18,10 +18,12 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
     // View properties
     
     var floatyButton: PrettyButton
+    var workoutViews: [ExpandableButton]
     var loaded = false
     
     override init(frame: CGRect) {
         floatyButton = PrettyButton()
+        workoutViews = [ExpandableButton]()
         
         super.init(frame: frame)
     }
@@ -53,9 +55,36 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
             })
             self.addSubview(floatyButton)
             
+            var previousView: ExpandableButton? = nil
             let realm = try! Realm()
-            for workout in realm.objects(Workout.self) {
+            for (index, workout) in realm.objects(Workout.self).enumerated() {
+                let workoutButton = ExpandableButton()
+                self.workoutViews.append(workoutButton)
+                self.addSubview(workoutButton)
                 
+                workoutButton.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.createWidthConstraintForView(view: workoutButton,
+                                                                width: self.frame.width - 20).isActive = true
+                NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: workoutButton,
+                                                                                inView: self).isActive = true
+                
+                // First view: constraint to top
+                if index == 0 {
+                        NSLayoutConstraint.createViewBelowViewTopConstraint(view: workoutButton,
+                                                                            belowView: self,
+                                                                            withPadding: 10).isActive = true
+                    
+                } else {
+                    NSLayoutConstraint.createViewBelowViewConstraint(view: workoutButton,
+                                                                     belowView: previousView!,
+                                                                     withPadding: 10).isActive = true
+                }
+                workoutButton.heightConstraint = NSLayoutConstraint.createHeightConstraintForView(view: workoutButton,
+                                                                                                  height: 50)
+                workoutButton.heightConstraint?.isActive = true
+                
+                
+                previousView = workoutButton
             }
             
             loaded = true

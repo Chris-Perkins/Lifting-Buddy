@@ -59,6 +59,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         let cell =
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! WorkoutTableViewCell
+        cell.setWorkout(workout: data[indexPath.row])
         return cell
     }
     

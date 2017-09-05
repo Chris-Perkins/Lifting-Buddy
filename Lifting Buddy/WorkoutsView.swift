@@ -36,6 +36,21 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
     
     override func layoutSubviews() {
         if !loaded {
+            let realm = try! Realm()
+            
+            
+            
+            let tableView = WorkoutTableView(workouts: realm.objects(Workout.self).toArray(),
+                                             frame: CGRect(x: 10,
+                                                           y: 10,
+                                                           width: self.frame.width - 20,
+                                                           height: self.frame.height - 20),
+                                             style: .plain)
+            tableView.layer.zPosition = -10
+            self.addSubview(tableView)
+            
+            // MARK: Floaty button
+            
             floatyButton = PrettyButton(frame: CGRect(x: self.frame.maxX - 100,
                                                       y: self.frame.maxY,
                                                       width: 75,
@@ -49,24 +64,15 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
             
             UIView.animate(withDuration: 0.075, animations: {
                 self.floatyButton.frame = CGRect(x: self.frame.maxX - 100,
-                                                  y: self.frame.maxY - 100,
-                                                  width: 75,
-                                                  height: 75)
+                                                 y: self.frame.maxY - 100,
+                                                 width: 75,
+                                                 height: 75)
             })
             self.addSubview(floatyButton)
             
-            let realm = try! Realm()
-            
-            let tableView = WorkoutTableView(workouts: realm.objects(Workout.self).toArray(),
-                                             frame: CGRect(x: 10,
-                                                           y: 10,
-                                                           width: self.frame.width - 20,
-                                                           height: self.frame.height - 20),
-                                             style: UITableViewStyle.plain)
-            self.addSubview(tableView)
-            
             loaded = true
         } else {
+            floatyButton.isUserInteractionEnabled = true
             floatyButton.layoutSubviews()
         }
         

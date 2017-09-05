@@ -9,7 +9,25 @@
 import UIKit
 
 class WorkoutTableViewCell: UITableViewCell {
+    
+    // MARK: View properties
+    
+    private var workout: Workout?
+    
+    // MARK: View overrides
+    
     override func layoutSubviews() {
         self.backgroundColor = UIColor.white
+        self.layer.cornerRadius = 5.0
+    }
+    
+    // MARK: Encapsulated methods
+    
+    public func setWorkout(workout: Workout) {
+        self.workout = workout
+    }
+    
+    public func getWorkout() -> Workout? {
+        return self.workout
     }
 }

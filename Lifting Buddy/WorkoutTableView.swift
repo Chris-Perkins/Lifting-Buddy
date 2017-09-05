@@ -23,6 +23,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         self.dataSource = self
         self.allowsSelection = false
         self.register(WorkoutTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.backgroundColor = UIColor.clear
     }
     
     required init?(coder aDecoder: NSCoder) {

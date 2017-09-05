@@ -55,37 +55,15 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
             })
             self.addSubview(floatyButton)
             
-            var previousView: ExpandableButton? = nil
             let realm = try! Realm()
-            for (index, workout) in realm.objects(Workout.self).enumerated() {
-                let workoutButton = ExpandableButton()
-                self.workoutViews.append(workoutButton)
-                self.addSubview(workoutButton)
-                
-                workoutButton.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.createWidthConstraintForView(view: workoutButton,
-                                                                width: self.frame.width - 20).isActive = true
-                NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: workoutButton,
-                                                                                inView: self).isActive = true
-                
-                // First view: constraint to top
-                if index == 0 {
-                        NSLayoutConstraint.createViewBelowViewTopConstraint(view: workoutButton,
-                                                                            belowView: self,
-                                                                            withPadding: 10).isActive = true
-                    
-                } else {
-                    NSLayoutConstraint.createViewBelowViewConstraint(view: workoutButton,
-                                                                     belowView: previousView!,
-                                                                     withPadding: 10).isActive = true
-                }
-                workoutButton.heightConstraint = NSLayoutConstraint.createHeightConstraintForView(view: workoutButton,
-                                                                                                  height: 50)
-                workoutButton.heightConstraint?.isActive = true
-                
-                
-                previousView = workoutButton
-            }
+            
+            let tableView = WorkoutTableView(workouts: realm.objects(Workout.self).toArray(),
+                                             frame: CGRect(x: 10,
+                                                           y: 10,
+                                                           width: self.frame.width - 20,
+                                                           height: self.frame.height - 20),
+                                             style: UITableViewStyle.plain)
+            self.addSubview(tableView)
             
             loaded = true
         } else {

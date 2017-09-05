@@ -6,4 +6,10 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class WorkoutTableViewCell: UITableViewCell {
+    override func layoutSubviews() {
+        self.backgroundColor = UIColor.white
+    }
+}

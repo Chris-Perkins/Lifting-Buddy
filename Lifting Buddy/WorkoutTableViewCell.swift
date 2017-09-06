@@ -94,7 +94,7 @@ class WorkoutTableViewCell: UITableViewCell {
         self.frame.size.height = height
     }
     
-    public func updateSelectedStatus(selected: Bool) {
-        self.expandImage.transform = CGAffineTransform(scaleX: 1, y: selected ? 1 : -1)
+    public func updateSelectedStatus() {
+        self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isSelected ? -1 : 1)
     }
 }

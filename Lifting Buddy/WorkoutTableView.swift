@@ -34,16 +34,26 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     // MARK: TableView Functions
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let cell = self.visibleCells[indexPath.row] as! WorkoutTableViewCell
-        cell.updateSelectedStatus(selected: true)
+        let cell = self.cellForRow(at: indexPath) as! WorkoutTableViewCell
         
         if self.indexPathForSelectedRow == indexPath {
             self.deselectRow(at: indexPath, animated: true)
             self.reloadData()
+            cell.updateSelectedStatus()
+            
             return nil
         } else {
+            var cell2: WorkoutTableViewCell? = nil
+            if self.indexPathForSelectedRow != nil {
+                cell2 = self.cellForRow(at: self.indexPathForSelectedRow!) as? WorkoutTableViewCell
+            }
+            
             self.selectRow(at: indexPath, animated: false, scrollPosition: .none)
             self.reloadData()
+            
+            cell2?.updateSelectedStatus()
+            cell.updateSelectedStatus()
+            
             return indexPath
         }
     }
@@ -53,7 +63,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         print(data)
         // TODO: Edit / Delete dialog
         let cell = self.cellForRow(at: indexPath) as! WorkoutTableViewCell
-        cell.updateSelectedStatus(selected: false)
+        cell.updateSelectedStatus()
     }
     
     // Moved a cell (LPRTableView requirement for drag-and-drop)

@@ -251,3 +251,21 @@ extension NSLayoutConstraint {
     }
     
 }
+
+extension UITableView {
+    
+    // Returns all cells in a uitableview
+    public func getAllCells() -> [UITableViewCell] {
+        var cells = [UITableViewCell]()
+        
+        for i in 0...self.numberOfSections - 1 {
+            for j in 0...self.numberOfRows(inSection: i) {
+                if let cell = self.cellForRow(at: IndexPath(row: j, section: i)) {
+                    cells.append(cell)
+                }
+            }
+        }
+        
+        return cells
+    }
+}

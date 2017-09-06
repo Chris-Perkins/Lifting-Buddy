@@ -287,7 +287,7 @@ class CreateExerciseView: UIScrollView {
             repEntryField.backgroundColor = UIColor.niceRed()
             repEntryField.text = ""
         }
-        for cell: ProgressionMethodTableViewCell in progressionsTableView.visibleCells as! [ProgressionMethodTableViewCell]
+        for cell in progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]
         {
             if cell.nameEntryField.text?.characters.count == 0 {
                 fulfilled = false
@@ -322,7 +322,7 @@ class CreateExerciseView: UIScrollView {
         }
         
         // Add all progression methods from this cell
-        for cell in progressionsTableView.visibleCells as! [ProgressionMethodTableViewCell] {
+        for cell in progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell] {
             let progressionMethod = ProgressionMethod()
             progressionMethod.setName(name: cell.nameEntryField.text!)
             progressionMethod.setUnit(unit: cell.pickUnitButton.titleLabel!.text!)

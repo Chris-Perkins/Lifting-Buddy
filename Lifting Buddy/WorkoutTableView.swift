@@ -50,6 +50,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
             
             self.selectRow(at: indexPath, animated: false, scrollPosition: .none)
             self.reloadData()
+            self.scrollToRow(at: indexPath, at: .none, animated: true)
             
             cell2?.updateSelectedStatus()
             cell.updateSelectedStatus()

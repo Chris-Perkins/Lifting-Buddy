@@ -40,13 +40,8 @@ class WorkoutTableViewCell: UITableViewCell {
                            attribute: .right,
                            multiplier: 1,
                            constant: -5).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: label,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 5).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: label,
+                                                         height: 40).isActive = true
     
     }
     
@@ -58,6 +53,7 @@ class WorkoutTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         self.backgroundColor = UIColor.white
+        self.clipsToBounds = true
         self.layer.cornerRadius = 5.0
         label.textAlignment = .center
         
@@ -75,5 +71,13 @@ class WorkoutTableViewCell: UITableViewCell {
     
     public func getWorkout() -> Workout? {
         return self.workout
+    }
+    
+    public func getHeight() -> CGFloat {
+        return self.frame.height
+    }
+    
+    public func setHeight(height: CGFloat) {
+        self.frame.size.height = height
     }
 }

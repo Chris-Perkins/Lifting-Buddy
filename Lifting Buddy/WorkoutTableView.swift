@@ -21,7 +21,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         
         self.delegate = self
         self.dataSource = self
-        self.allowsSelection = false
+        self.allowsSelection = true
         self.register(WorkoutTableViewCell.self, forCellReuseIdentifier: "cell")
         self.backgroundColor = UIColor.clear
     }
@@ -31,6 +31,18 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     }
     
     // MARK: TableView Functions
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if self.indexPathForSelectedRow == indexPath {
+            self.deselectRow(at: indexPath, animated: true)
+            self.reloadData()
+            return nil
+        } else {
+            self.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            self.reloadData()
+            return indexPath
+        }
+    }
     
     // Moved a cell (LPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -65,15 +77,17 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        if self.indexPathForSelectedRow != nil {
+            return self.indexPathForSelectedRow?.row == indexPath.row ? 200: 50
+        } else {
+            return 50
+        }
     }
     
     // MARK: Custom functions
     
     // Append some data to the tableView
     public func appendDataToTableView(data: Workout) {
-        self.frame.size.height += 50
-        
         self.data.append(data)
         reloadData()
     }

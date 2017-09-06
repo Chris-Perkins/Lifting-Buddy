@@ -26,8 +26,27 @@ class WorkoutTableViewCell: UITableViewCell {
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: label,
                                                             belowView: self,
                                                             withPadding: 5).isActive = true
-        NSLayoutConstraint(item: self, attribute: .left, relatedBy: .equal, toItem: label, attribute: .left, multiplier: 1, constant: -5).isActive = true
-        NSLayoutConstraint(item: self, attribute: .right, relatedBy: .equal, toItem: label, attribute: .right, multiplier: 1, constant: -5).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: label,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: -5).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: label,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: -5).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: label,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 5).isActive = true
     
     }
     
@@ -40,6 +59,7 @@ class WorkoutTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         self.backgroundColor = UIColor.white
         self.layer.cornerRadius = 5.0
+        label.textAlignment = .center
         
         super.layoutSubviews()
     }

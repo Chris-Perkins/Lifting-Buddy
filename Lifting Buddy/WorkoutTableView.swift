@@ -11,6 +11,7 @@ import UIKit
 class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
     
     var data: [Workout]
+    private let baseHeight: CGFloat = 50.0
     
     // MARK: Initializers
     
@@ -33,6 +34,9 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     // MARK: TableView Functions
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let cell = self.visibleCells[indexPath.row] as! WorkoutTableViewCell
+        cell.updateSelectedStatus(selected: true)
+        
         if self.indexPathForSelectedRow == indexPath {
             self.deselectRow(at: indexPath, animated: true)
             self.reloadData()
@@ -44,6 +48,14 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         }
     }
     
+    // Selected a table view cell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(data)
+        // TODO: Edit / Delete dialog
+        let cell = self.cellForRow(at: indexPath) as! WorkoutTableViewCell
+        cell.updateSelectedStatus(selected: false)
+    }
+    
     // Moved a cell (LPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // Modify this code as needed to support more advanced reordering, such as between sections.
@@ -51,14 +63,6 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         let destination = data[destinationIndexPath.row]
         data[sourceIndexPath.row] = destination
         data[destinationIndexPath.row] = source
-    }
-    
-    // Selected a table view cell
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(data)
-        // TODO: Edit / Delete dialog
-        let cell = self.cellForRow(at: indexPath)
-        cell?.backgroundColor = UIColor.niceBlue()
     }
     
     // Data is what we use to fill in the table view
@@ -77,11 +81,8 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if self.indexPathForSelectedRow != nil {
-            return self.indexPathForSelectedRow?.row == indexPath.row ? 200: 50
-        } else {
-            return 50
-        }
+        return self.indexPathForSelectedRow?.row == indexPath.row ?
+            baseHeight + CGFloat(data[indexPath.row].getExercises().count) * 20.0 + baseHeight: baseHeight
     }
     
     // MARK: Custom functions

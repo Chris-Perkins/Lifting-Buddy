@@ -43,7 +43,8 @@ class ProgressionMethod: Object {
         self.unit = nil
         self.name = nil
         
-        super.init(realm: realm, schema: schema)    }
+        super.init(realm: realm, schema: schema)
+    }
     
     // MARK: Encapsulated methods
     

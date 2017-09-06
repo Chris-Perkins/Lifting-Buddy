@@ -14,14 +14,18 @@ class WorkoutTableViewCell: UITableViewCell {
     
     private var label: UILabel
     private var workout: Workout?
+    private var expandImage: UIImageView
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         label = UILabel()
+        expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.addSubview(label)
+        self.addSubview(expandImage)
         
+        // MARK: Label constraints
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: label,
                                                             belowView: self,
@@ -32,16 +36,25 @@ class WorkoutTableViewCell: UITableViewCell {
                            toItem: label,
                            attribute: .left,
                            multiplier: 1,
-                           constant: -5).isActive = true
+                           constant: -10).isActive = true
+        NSLayoutConstraint.createWidthConstraintForView(view: label, width: 150).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: label,
+                                                         height: 40).isActive = true
+        
+        // MARK: Image constraints
+        expandImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createWidthConstraintForView(view: expandImage, width: 16).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: expandImage, height: 8.46).isActive = true
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: expandImage,
+                                                            belowView: self,
+                                                            withPadding: 20.77).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .right,
                            relatedBy: .equal,
-                           toItem: label,
+                           toItem: expandImage,
                            attribute: .right,
                            multiplier: 1,
-                           constant: -5).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: label,
-                                                         height: 40).isActive = true
+                           constant: 10).isActive = true
     
     }
     
@@ -55,7 +68,7 @@ class WorkoutTableViewCell: UITableViewCell {
         self.backgroundColor = UIColor.white
         self.clipsToBounds = true
         self.layer.cornerRadius = 5.0
-        label.textAlignment = .center
+        label.textAlignment = .left
         
         super.layoutSubviews()
     }
@@ -79,5 +92,9 @@ class WorkoutTableViewCell: UITableViewCell {
     
     public func setHeight(height: CGFloat) {
         self.frame.size.height = height
+    }
+    
+    public func updateSelectedStatus(selected: Bool) {
+        self.expandImage.transform = CGAffineTransform(scaleX: 1, y: selected ? 1 : -1)
     }
 }

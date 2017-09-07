@@ -12,33 +12,35 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
-    private var label: UILabel
+    private var cellTitle: UILabel
     private var workout: Workout?
     private var expandImage: UIImageView
+    private var exerciseLabels: [UILabel]
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        label = UILabel()
+        cellTitle = UILabel()
         expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
+        exerciseLabels = [UILabel]()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.addSubview(label)
+        self.addSubview(cellTitle)
         self.addSubview(expandImage)
         
         // MARK: Label constraints
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: label,
+        cellTitle.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: cellTitle,
                                                             belowView: self,
                                                             withPadding: 5).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .left,
                            relatedBy: .equal,
-                           toItem: label,
+                           toItem: cellTitle,
                            attribute: .left,
                            multiplier: 1,
                            constant: -10).isActive = true
-        NSLayoutConstraint.createWidthConstraintForView(view: label, width: 150).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: label,
+        NSLayoutConstraint.createWidthConstraintForView(view: cellTitle, width: 150).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: cellTitle,
                                                          height: 40).isActive = true
         
         // MARK: Image constraints
@@ -68,18 +70,61 @@ class WorkoutTableViewCell: UITableViewCell {
         self.backgroundColor = UIColor.white
         self.clipsToBounds = true
         self.layer.cornerRadius = 5.0
-        label.textAlignment = .left
+        cellTitle.setDefaultProperties()
+        cellTitle.textAlignment = .left
         
         super.layoutSubviews()
     }
     
     // MARK: Encapsulated methods
     
+    // Set the workout for this cell
     public func setWorkout(workout: Workout) {
-        self.workout = workout
-        
-        label.text = workout.getName()
-        label.textColor = UIColor.niceBlue()
+        // Only make changes if we need to.
+        if workout != self.workout {
+            self.workout = workout
+            
+            for label in exerciseLabels {
+                label.removeFromSuperview()
+            }
+            exerciseLabels.removeAll()
+            
+            var prevLabel: UILabel? = nil
+            
+            for (index, exercise) in workout.getExercises().enumerated() {
+                let exerLabel = UILabel()
+                exerLabel.text = exercise.getName()
+                exerLabel.textColor = UIColor.niceBlue()
+                exerLabel.textAlignment = .left
+                self.addSubview(exerLabel)
+                
+                // Constraints for this exercise label.
+                // Place 10 from left/right of the cell
+                // Place 10 below above view, height of 20
+                
+                exerLabel.translatesAutoresizingMaskIntoConstraints = false
+                
+                if index == 0 {
+                    // set to top of this view
+                   NSLayoutConstraint.createViewBelowViewConstraint(view: exerLabel,
+                                                                    belowView: cellTitle,
+                                                                    withPadding: 10).isActive = true
+                } else {
+                    NSLayoutConstraint.createViewBelowViewConstraint(view: exerLabel,
+                                                                     belowView: prevLabel!,
+                                                                     withPadding: 10).isActive = true
+                }
+                
+                NSLayoutConstraint(item: self, attribute: .left, relatedBy: .equal, toItem: exerLabel, attribute: .left, multiplier: 1, constant: -10).isActive = true
+                NSLayoutConstraint(item: self, attribute: .right, relatedBy: .equal, toItem: exerLabel, attribute: .right, multiplier: 1, constant: 10).isActive = true
+                NSLayoutConstraint.createHeightConstraintForView(view: exerLabel, height: 20).isActive = true
+                
+                self.exerciseLabels.append(exerLabel)
+                prevLabel = exerLabel
+            }
+            
+            cellTitle.text = workout.getName()
+        }
     }
     
     public func getWorkout() -> Workout? {

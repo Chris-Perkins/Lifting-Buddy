@@ -40,8 +40,8 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         data[sourceIndexPath.row] = destination
         data[destinationIndexPath.row] = source
         
-        (self.cellForRow(at: sourceIndexPath) as! ExerciseTableViewCell).reloadView()
-        (self.cellForRow(at: destinationIndexPath) as! ExerciseTableViewCell).reloadView()
+        //(self.cellForRow(at: sourceIndexPath) as! ExerciseTableViewCell).reloadView()
+        //(self.cellForRow(at: destinationIndexPath) as! ExerciseTableViewCell).reloadView()
     }
     
     // Selected a table view cell

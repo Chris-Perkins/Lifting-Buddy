@@ -11,25 +11,44 @@ import UIKit
 class ExerciseTableViewCell: UITableViewCell {
     
     // MARK: View properties
-    private var loaded: Bool
-    private var chosen: Bool
     private var exerciseNameLabel: UILabel
-    private var pickExistingButton: PrettyButton
+    private var editButton: PrettyButton
     private var exercise: Exercise?
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.exerciseNameLabel = UILabel()
-        self.pickExistingButton = PrettyButton()
-        self.loaded = false
-        self.chosen = false
+        self.editButton = PrettyButton()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.layer.cornerRadius = 5.0
-        self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        self.clipsToBounds = true
+        self.addSubview(exerciseNameLabel)
+        self.addSubview(editButton)
+        
+        
+        /*
+         * Comments for below code: Name label takes up 75% of the view
+         * starting from the left. For example: N = Name Label, E = Edit button
+         * Layout is: NNNE
+         */
+        
+        // MARK: Exercise Name label
+        
+        exerciseNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: exerciseNameLabel, attribute: .top, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: exerciseNameLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: exerciseNameLabel, attribute: .width, multiplier: 3/2, constant: 25).isActive = true
+        NSLayoutConstraint(item: self, attribute: .left, relatedBy: .equal, toItem: exerciseNameLabel, attribute: .left, multiplier: 1, constant: -10).isActive = true
+        
+        
+        // MARK: Edit button
+        
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: editButton, attribute: .top, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: editButton, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: editButton, attribute: .width, multiplier: 3, constant: 25).isActive = true
+        NSLayoutConstraint(item: self, attribute: .right, relatedBy: .equal, toItem: editButton, attribute: .right, multiplier: 1, constant: 10).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,41 +58,25 @@ class ExerciseTableViewCell: UITableViewCell {
     // MARK: View overrides
     
     override func layoutSubviews() {
-        super.layoutSubviews()
+        self.layer.cornerRadius = 5.0
+        self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        self.clipsToBounds = true
         
-        if !self.loaded && !self.chosen {
-            exerciseNameLabel = UILabel(frame: CGRect(x: 5,
-                                                      y: 5,
-                                                      width: (self.frame.width - 20) / 2,
-                                                      height: self.frame.height - 10))
-            exerciseNameLabel.setDefaultProperties()
-            exerciseNameLabel.text = exercise?.getName()
-            self.addSubview(exerciseNameLabel)
-            
-            pickExistingButton = PrettyButton(frame: CGRect(x: self.frame.width / 2 + 5,
-                                                            y: 5,
-                                                            width: (self.frame.width - 20) / 2,
-                                                            height: self.frame.height - 10))
-            pickExistingButton.setDefaultProperties()
-            
-            self.addSubview(pickExistingButton)
-            
-            chosen = true
-        } else if !self.loaded && self.chosen {
-            loaded = true
-        }
+        exerciseNameLabel.setDefaultProperties()
+        exerciseNameLabel.layer.cornerRadius = 5.0
+        exerciseNameLabel.backgroundColor = UIColor.niceGray().withAlphaComponent(0.5)
+        
+        editButton.setDefaultProperties()
+        editButton.removeOverlayView()
+        editButton.animationTimeInSeconds = 0.1
+        editButton.setOverlayStyle(style: .FADE)
+        editButton.setTitle("Edit", for: .normal)
     }
+    
+    // MARK: Public methods
     
     public func setExercise(exercise: Exercise) {
         self.exercise = exercise
-        
-        self.reloadView()
-    }
-    
-    public func reloadView() {
-        self.loaded = false
-        self.chosen = false
-        self.removeAllSubviews()
-        self.layoutSubviews()
+        self.exerciseNameLabel.text = exercise.getName()
     }
 }

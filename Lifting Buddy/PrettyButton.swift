@@ -23,7 +23,7 @@ import UIKit
         }
     }
     @IBInspectable private var overlayColor: UIColor = UIColor.white.withAlphaComponent(0.25)
-    @IBInspectable private var animationTimeInSeconds: Double = 0.2
+    @IBInspectable public var animationTimeInSeconds: Double = 0.2
     
     // MARK: Properties
     
@@ -162,7 +162,7 @@ import UIKit
         }
     }
     
-    private func removeOverlayView() {
+    public func removeOverlayView() {
         // Delete slide view on release
         if let overlayView: UIView = self.viewWithTag(self.overlayViewTag) {
             UIView.animate(withDuration: animationTimeInSeconds, animations: {

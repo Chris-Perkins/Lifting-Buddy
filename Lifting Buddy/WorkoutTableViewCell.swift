@@ -143,7 +143,7 @@ class WorkoutTableViewCell: UITableViewCell {
             editButton?.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.createViewBelowViewConstraint(view: editButton!,
                                                              belowView: prevLabel,
-                                                             withPadding: 34).isActive = true
+                                                             withPadding: 29).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: editButton!,
                                                              height: 50).isActive = true
             NSLayoutConstraint(item: self,
@@ -167,7 +167,7 @@ class WorkoutTableViewCell: UITableViewCell {
             startWorkoutButton?.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.createViewBelowViewConstraint(view: startWorkoutButton!,
                                                              belowView: prevLabel,
-                                                             withPadding: 34).isActive = true
+                                                             withPadding: 29).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: startWorkoutButton!,
                                                              height: 50).isActive = true
             NSLayoutConstraint(item: self,

@@ -61,10 +61,6 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // Selected a table view cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(data)
-        // TODO: Edit / Delete dialog
-        let cell = self.cellForRow(at: indexPath) as! WorkoutTableViewCell
-        cell.updateSelectedStatus()
     }
     
     // Moved a cell (LPRTableView requirement for drag-and-drop)
@@ -93,7 +89,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.indexPathForSelectedRow?.row == indexPath.row ?
-            baseHeight + CGFloat(data[indexPath.row].getExercises().count) * 30.0 + baseHeight: baseHeight
+            baseHeight * 2 + CGFloat(data[indexPath.row].getExercises().count) * 30.0 + 24: baseHeight
     }
     
     // MARK: Custom functions

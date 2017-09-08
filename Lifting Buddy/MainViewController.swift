@@ -20,17 +20,8 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.view.backgroundColor = UIColor.niceGray()
-        
-        // Attempt to access local storage
-        let realm = try! Realm()
-        
-        let todayString = "TEST"
-        if realm.objects(Workout.self).filter(
-            NSPredicate(format: "dayOfTheWeek = %@", todayString)).count == 1 {
-        }
-        
-        print(realm.objects(Workout.self))
     }
     
     override func viewDidLayoutSubviews() {

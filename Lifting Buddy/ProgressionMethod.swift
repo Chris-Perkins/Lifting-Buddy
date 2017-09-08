@@ -23,6 +23,8 @@ class ProgressionMethod: Object {
         case OTHER = "other"
     }
     
+    public static let unitList = ["weight", "time", "distance", "other"]
+    
     // MARK: Init Functions
     
     required init() {

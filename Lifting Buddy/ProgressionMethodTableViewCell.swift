@@ -10,6 +10,8 @@ import UIKit
 
 class ProgressionMethodTableViewCell: UITableViewCell {
     
+    private var curSelect = -1
+    
     // MARK: View properties
     private var loaded: Bool
     private var chosen: Bool
@@ -28,7 +30,6 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         
         self.layer.cornerRadius = 5.0
         self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        self.clipsToBounds = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,6 +73,8 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     // MARK: Event functions
     
     @objc func pickUnitButtonPress(sender: UIButton) {
-        self.pickUnitButton.setTitle(ProgressionMethod.Unit.DISTANCE.rawValue, for: .normal)
+        curSelect = (curSelect + 1) % ProgressionMethod.unitList.count
+        
+        pickUnitButton.setTitle(ProgressionMethod.unitList[curSelect], for: .normal)
     }
 }

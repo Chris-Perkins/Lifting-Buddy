@@ -25,8 +25,11 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     private var nameEntryLabel: UILabel
     // Field to enter name
     private var nameEntryField: UITextField
+    // Exercise Table Label
+    private var exerciseTableLabel: UILabel
     // Table holding all of our exercises
     private var exerciseTableView: ExerciseTableView
+    // button to add a new exercise to this view
     private var addExerciseButton: PrettyButton
     // Button to create our workout
     private var createWorkoutButton: PrettyButton
@@ -34,6 +37,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     override init(frame: CGRect) {
         nameEntryLabel = UILabel()
         nameEntryField = UITextField()
+        exerciseTableLabel = UILabel()
         exerciseTableView = ExerciseTableView()
         addExerciseButton = PrettyButton()
         createWorkoutButton = PrettyButton()
@@ -42,6 +46,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         
         self.addSubview(nameEntryLabel)
         self.addSubview(nameEntryField)
+        self.addSubview(exerciseTableLabel)
         self.addSubview(addExerciseButton)
         self.addSubview(createWorkoutButton)
     }
@@ -64,8 +69,11 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         if prevDataCount == -1 {
             
             // MARK: Name Entry Label
-            nameEntryLabel.translatesAutoresizingMaskIntoConstraints = false
+            nameEntryLabel.text = "Name of New Workout"
+            nameEntryLabel.setDefaultProperties()
             
+            // Center in view, place below top of this view
+            nameEntryLabel.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.createHeightConstraintForView(view: nameEntryLabel,
                                                              height: 20).isActive = true
             NSLayoutConstraint.createWidthConstraintForView(view: nameEntryLabel,
@@ -75,13 +83,12 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryLabel,
                                                                 belowView: self,
                                                                 withPadding: viewPadding).isActive = true
-            nameEntryLabel.text = "Name of New Workout"
-            nameEntryLabel.setDefaultProperties()
             
             // MARK: Name Entry Field
-            nameEntryField.translatesAutoresizingMaskIntoConstraints = false
             nameEntryField.setDefaultProperties()
             nameEntryField.placeholder = "Required: Name"
+            
+            nameEntryField.translatesAutoresizingMaskIntoConstraints = false
             /*
              * Center in view, place below the above frame, and give height/width of 40
              */
@@ -95,11 +102,27 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                              belowView: nameEntryLabel,
                                                              withPadding: viewPadding / 2).isActive = true
             
+            // MARK: Exercise Table Label
+            exerciseTableLabel.setDefaultProperties()
+            exerciseTableLabel.text = "Exercises"
+            
+            // Place below nameEntryField
+            exerciseTableLabel.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseTableLabel,
+                                                             belowView: nameEntryField,
+                                                             withPadding: viewPadding * 2).isActive = true
+            NSLayoutConstraint.createWidthConstraintForView(view: exerciseTableLabel,
+                                                            width: self.frame.width - 40).isActive = true
+            NSLayoutConstraint.createHeightConstraintForView(view: exerciseTableLabel,
+                                                             height: 20).isActive = true
+            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: exerciseTableLabel,
+                                                                            inView: self).isActive = true
+            
             
             // MARK: Exercise Table View
 
             exerciseTableView = ExerciseTableView(frame: CGRect(x: 10,
-                                                                y: 130,
+                                                                y: 4 * viewPadding + 80,
                                                                 width: self.frame.width - 20,
                                                                 height: 0),
                                                                 style: .plain)

@@ -14,6 +14,8 @@ class WorkoutTableViewCell: UITableViewCell {
     
     private var cellTitle: UILabel
     private var workout: Workout?
+    private var fireImage: UIImageView
+    private var streakLabel: UILabel
     private var expandImage: UIImageView
     private var exerciseLabels: [UILabel]
     private var editButton: PrettyButton?
@@ -21,12 +23,16 @@ class WorkoutTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         cellTitle = UILabel()
+        fireImage = UIImageView(image: #imageLiteral(resourceName: "Fire"))
+        streakLabel = UILabel()
         expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
         exerciseLabels = [UILabel]()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.addSubview(cellTitle)
+        self.addSubview(fireImage)
+        self.addSubview(streakLabel)
         self.addSubview(expandImage)
         
         // MARK: Label constraints
@@ -41,7 +47,13 @@ class WorkoutTableViewCell: UITableViewCell {
                            attribute: .left,
                            multiplier: 1,
                            constant: -10).isActive = true
-        NSLayoutConstraint.createWidthConstraintForView(view: cellTitle, width: 150).isActive = true
+        NSLayoutConstraint(item: fireImage,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: cellTitle,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 5).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: cellTitle,
                                                          height: 40).isActive = true
         
@@ -60,8 +72,39 @@ class WorkoutTableViewCell: UITableViewCell {
                            multiplier: 1,
                            constant: 10).isActive = true
         
-        // MARK: Edit button constraints
-        editButton?.translatesAutoresizingMaskIntoConstraints = false
+        // MARK: streak label constraints
+        streakLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createWidthConstraintForView(view: streakLabel,
+                                                        width: 72).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: streakLabel,
+                                                         height: 20).isActive = true
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: streakLabel,
+                                                            belowView: self,
+                                                            withPadding: 15).isActive = true
+        NSLayoutConstraint(item: expandImage,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: streakLabel,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: -10).isActive = true
+        
+        // MARK: Streak fire icon
+        fireImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createWidthConstraintForView(view: fireImage,
+                                                        width: 25).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: fireImage,
+                                                         height: 25).isActive = true
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: fireImage,
+                                                            belowView: self,
+                                                            withPadding: 12.5).isActive = true
+        NSLayoutConstraint(item: streakLabel,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: fireImage,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,15 +121,18 @@ class WorkoutTableViewCell: UITableViewCell {
         cellTitle.setDefaultProperties()
         cellTitle.textAlignment = .left
         
+        streakLabel.text = "0000"
+        streakLabel.textColor = UIColor.niceRed()
+        
         if (self.isSelected) {
             editButton?.setDefaultProperties()
             editButton?.cornerRadius = 0
-            editButton?.backgroundColor = UIColor.niceLightBlue()
+            editButton?.backgroundColor = UIColor.niceBlue().withAlphaComponent(0.75)
             editButton?.setTitle("Edit", for: .normal)
             
             startWorkoutButton?.setDefaultProperties()
             startWorkoutButton?.cornerRadius = 0
-            startWorkoutButton?.backgroundColor = UIColor.niceGreen().withAlphaComponent(0.5)
+            startWorkoutButton?.backgroundColor = UIColor.niceGreen().withAlphaComponent(0.75)
             startWorkoutButton?.setTitle("Start Workout!", for: .normal)
         }
         

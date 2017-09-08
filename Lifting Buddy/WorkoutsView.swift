@@ -17,12 +17,12 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
     
     // View properties
     
-    var floatyButton: PrettyButton
+    var createWorkoutButton: PrettyButton
     var workoutViews: [ExpandableButton]
     var loaded = false
     
     override init(frame: CGRect) {
-        floatyButton = PrettyButton()
+        createWorkoutButton = PrettyButton()
         workoutViews = [ExpandableButton]()
         
         super.init(frame: frame)
@@ -37,43 +37,57 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
     override func layoutSubviews() {
         if !loaded {
             let realm = try! Realm()
-            
-            
-            
-            let tableView = WorkoutTableView(workouts: realm.objects(Workout.self).toArray(),
+            let workouts = realm.objects(Workout.self).toArray()
+                
+            // Table view of workouts
+            let tableView = WorkoutTableView(workouts: workouts,
                                              frame: CGRect(x: 10,
                                                            y: 10,
                                                            width: self.frame.width - 20,
-                                                           height: self.frame.height - 20),
+                                                           height: self.frame.height - 70),
                                              style: .plain)
             tableView.layer.zPosition = -10
             self.addSubview(tableView)
             
-            // MARK: Floaty button
+            // MARK: create workout button
             
-            floatyButton = PrettyButton(frame: CGRect(x: self.frame.maxX - 100,
-                                                      y: self.frame.maxY,
-                                                      width: 75,
-                                                      height: 75))
-            floatyButton.setDefaultProperties()
-            floatyButton.cornerRadius = floatyButton.frame.width / 2
-            floatyButton.shadowOpacity = 0.2
-            floatyButton.setTitle("Create", for: .normal)
-            floatyButton.layer.zPosition = 90
-            floatyButton.addTarget(self, action: #selector(showCreateWorkoutView(sender:)), for: .touchUpInside)
+            createWorkoutButton = PrettyButton()
+            createWorkoutButton.setDefaultProperties()
+            createWorkoutButton.setTitle("Create New Workout", for: .normal)
+            createWorkoutButton.addTarget(self, action: #selector(showCreateWorkoutView(sender:)), for: .touchUpInside)
+            self.addSubview(createWorkoutButton)
             
-            UIView.animate(withDuration: 0.075, animations: {
-                self.floatyButton.frame = CGRect(x: self.frame.maxX - 100,
-                                                 y: self.frame.maxY - 100,
-                                                 width: 75,
-                                                 height: 75)
-            })
-            self.addSubview(floatyButton)
+            createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
+            // Place below the tableview with padding from bottom of this view
+            NSLayoutConstraint(item: self,
+                               attribute: .left,
+                               relatedBy: .equal,
+                               toItem: createWorkoutButton,
+                               attribute: .left,
+                               multiplier: 1,
+                               constant: -10).isActive = true
+            NSLayoutConstraint(item: self,
+                               attribute: .right,
+                               relatedBy: .equal,
+                               toItem: createWorkoutButton,
+                               attribute: .right,
+                               multiplier: 1,
+                               constant: 10).isActive = true
+            NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
+                                                             belowView: tableView,
+                                                             withPadding: 0).isActive = true
+            NSLayoutConstraint(item: self,
+                               attribute: .bottom,
+                               relatedBy: .equal,
+                               toItem: createWorkoutButton,
+                               attribute: .bottom,
+                               multiplier: 1,
+                               constant: 10).isActive = true
             
             loaded = true
         } else {
-            floatyButton.isUserInteractionEnabled = true
-            floatyButton.layoutSubviews()
+            createWorkoutButton.isUserInteractionEnabled = true
+            createWorkoutButton.layoutSubviews()
         }
         
         super.layoutSubviews()
@@ -82,8 +96,6 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
     // MARK: Event functions
     
     @objc func showCreateWorkoutView(sender: PrettyButton) {
-        floatyButton.isEnabled = false
-        
         let createWorkoutView: CreateWorkoutView =
             CreateWorkoutView(frame: CGRect(x: 0,
                                             y: -self.frame.height,
@@ -99,10 +111,6 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
                                              width: self.frame.width,
                                              height: self.frame.height)
             
-            self.floatyButton.frame = CGRect(x: self.floatyButton.frame.minX,
-                                             y: self.frame.maxY + 200,
-                                             width: 50,
-                                             height: 50)
         })
     }
     

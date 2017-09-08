@@ -128,10 +128,22 @@ class WorkoutTableViewCell: UITableViewCell {
                 NSLayoutConstraint.createViewBelowViewConstraint(view: exerLabel,
                                                                      belowView: prevLabel,
                                                                      withPadding: 10).isActive = true
-                
-                NSLayoutConstraint(item: self, attribute: .left, relatedBy: .equal, toItem: exerLabel, attribute: .left, multiplier: 1, constant: -10).isActive = true
-                NSLayoutConstraint(item: self, attribute: .right, relatedBy: .equal, toItem: exerLabel, attribute: .right, multiplier: 1, constant: 10).isActive = true
-                NSLayoutConstraint.createHeightConstraintForView(view: exerLabel, height: 20).isActive = true
+                NSLayoutConstraint(item: self,
+                                   attribute: .left,
+                                   relatedBy: .equal,
+                                   toItem: exerLabel,
+                                   attribute: .left,
+                                   multiplier: 1,
+                                   constant: -10).isActive = true
+                NSLayoutConstraint(item: self,
+                                   attribute: .right,
+                                   relatedBy: .equal,
+                                   toItem: exerLabel,
+                                   attribute: .right,
+                                   multiplier: 1,
+                                   constant: 10).isActive = true
+                NSLayoutConstraint.createHeightConstraintForView(view: exerLabel,
+                                                                 height: 20).isActive = true
                 
                 self.exerciseLabels.append(exerLabel)
                 prevLabel = exerLabel

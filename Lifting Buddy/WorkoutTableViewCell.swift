@@ -27,7 +27,6 @@ class WorkoutTableViewCell: UITableViewCell {
         fireImage = UIImageView(image: #imageLiteral(resourceName: "Fire"))
         streakLabel = UILabel()
         expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
-        divBar = UIView()
         exerciseLabels = [UILabel]()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -168,7 +167,6 @@ class WorkoutTableViewCell: UITableViewCell {
             editButton = PrettyButton()
             startWorkoutButton = PrettyButton()
             
-            self.addSubview(divBar!)
             self.addSubview(editButton!)
             self.addSubview(startWorkoutButton!)
             

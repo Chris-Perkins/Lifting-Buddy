@@ -32,6 +32,7 @@
 		22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E77E051F1B35310076B3DB /* HelperFunctions.swift */; };
 		22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */; };
 		22EC7FD31F5E01FE00A1E66B /* WorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */; };
+		22ECE3941F644E1A0067171A /* WorkoutStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ECE3931F644E1A0067171A /* WorkoutStartView.swift */; };
 		22EDF04E1F35860E0074E2F2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EDF04D1F35860E0074E2F2 /* SettingsView.swift */; };
 		987A120A06EF773208F02445 /* Pods_Lifting_Buddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		22E77E051F1B35310076B3DB /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableView.swift; sourceTree = "<group>"; };
 		22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewCell.swift; sourceTree = "<group>"; };
+		22ECE3931F644E1A0067171A /* WorkoutStartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutStartView.swift; sourceTree = "<group>"; };
 		22EDF04D1F35860E0074E2F2 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C522BD41578E9EFDC2DF9433 /* Pods-Lifting Buddy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.release.xcconfig"; sourceTree = "<group>"; };
 		CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lifting_Buddy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +171,7 @@
 				227981431F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift */,
 				22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */,
 				22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */,
+				22ECE3931F644E1A0067171A /* WorkoutStartView.swift */,
 			);
 			name = "Custom UI Types";
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 			files = (
 				22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */,
 				227981421F4D13BE0010DA18 /* ProgressionMethodsTableView.swift in Sources */,
+				22ECE3941F644E1A0067171A /* WorkoutStartView.swift in Sources */,
 				22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
 				22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */,

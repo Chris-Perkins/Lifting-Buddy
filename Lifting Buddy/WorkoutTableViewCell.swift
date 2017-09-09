@@ -159,7 +159,7 @@ class WorkoutTableViewCell: UITableViewCell {
             
             for exercise in workout.getExercises() {
                 let exerLabel = UILabel()
-                exerLabel.text = exercise.getName()
+                exerLabel.text = "- " + exercise.getName()!
                 exerLabel.textColor = UIColor.niceBlue()
                 exerLabel.textAlignment = .left
                 self.addSubview(exerLabel)
@@ -180,7 +180,7 @@ class WorkoutTableViewCell: UITableViewCell {
                                    toItem: exerLabel,
                                    attribute: .left,
                                    multiplier: 1,
-                                   constant: -10).isActive = true
+                                   constant: -20).isActive = true
                 NSLayoutConstraint(item: self,
                                    attribute: .right,
                                    relatedBy: .equal,

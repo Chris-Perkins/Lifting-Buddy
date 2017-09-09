@@ -118,7 +118,7 @@ class WorkoutTableViewCell: UITableViewCell {
         self.clipsToBounds = true
         self.layer.cornerRadius = 5.0
         
-        cellTitle.setDefaultProperties()
+        cellTitle.textColor = UIColor.niceBlue()
         cellTitle.textAlignment = .left
         
         streakLabel.text = "0000"
@@ -252,14 +252,7 @@ class WorkoutTableViewCell: UITableViewCell {
         return self.workout
     }
     
-    public func getHeight() -> CGFloat {
-        return self.frame.height
-    }
-    
-    public func setHeight(height: CGFloat) {
-        self.frame.size.height = height
-    }
-    
+    // Mark: view functions
     public func updateSelectedStatus() {
         self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isSelected ? -1 : 1)
         

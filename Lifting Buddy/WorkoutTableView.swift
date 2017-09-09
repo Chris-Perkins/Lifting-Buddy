@@ -11,7 +11,7 @@ import UIKit
 class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
     
     var data: [Workout]
-    private let baseCellHeight: CGFloat = 50.0
+    public static let baseCellHeight: CGFloat = 50.0
     
     // MARK: Initializers
     
@@ -88,8 +88,11 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let exerCount = CGFloat(data[indexPath.row].getExercises().count)
+        
         return self.indexPathForSelectedRow?.row == indexPath.row ?
-            baseCellHeight * 2 + CGFloat(data[indexPath.row].getExercises().count) * 30.0 + 24: baseCellHeight
+            WorkoutTableView.baseCellHeight * 2 + exerCount * 30.0 + (exerCount > 0 ? 26 : 0):
+            WorkoutTableView.baseCellHeight
     }
     
     // MARK: Custom functions

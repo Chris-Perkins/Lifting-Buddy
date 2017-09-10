@@ -28,7 +28,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     // Exercise Table Label
     private var exerciseTableLabel: UILabel
     // Table holding all of our exercises
-    private var exerciseTableView: ExerciseTableView
+    private var exerciseTableView: EditExerciseTableView
     // button to add a new exercise to this view
     private var addExerciseButton: PrettyButton
     // Button to create our workout
@@ -40,7 +40,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         nameEntryLabel = UILabel()
         nameEntryField = UITextField()
         exerciseTableLabel = UILabel()
-        exerciseTableView = ExerciseTableView()
+        exerciseTableView = EditExerciseTableView()
         addExerciseButton = PrettyButton()
         createWorkoutButton = PrettyButton()
         cancelButton = PrettyButton()

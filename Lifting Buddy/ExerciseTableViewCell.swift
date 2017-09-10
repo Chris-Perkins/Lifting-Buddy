@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExerciseTableViewCell: UITableViewCell {
+class EditExerciseTableViewCell: UITableViewCell {
     
     // MARK: View properties
     private var exerciseNameLabel: UILabel

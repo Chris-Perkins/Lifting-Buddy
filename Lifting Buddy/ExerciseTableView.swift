@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate {
+class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate {
     
     // MARK: View properties
     
@@ -25,7 +25,7 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
         self.delegate = self
         self.dataSource = self
         self.allowsSelection = false
-        self.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.register(EditExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,7 +50,7 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(data)
         // TODO: Edit / Delete dialog
-        let cell: ExerciseTableViewCell = self.cellForRow(at: indexPath) as! ExerciseTableViewCell
+        let cell: EditExerciseTableViewCell = self.cellForRow(at: indexPath) as! EditExerciseTableViewCell
         cell.backgroundColor = UIColor.niceBlue()
     }
     
@@ -61,9 +61,9 @@ class ExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate
     
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:ExerciseTableViewCell =
+        let cell: EditExerciseTableViewCell =
             tableView.dequeueReusableCell(withIdentifier: "cell",
-                                          for: indexPath as IndexPath) as! ExerciseTableViewCell
+                                          for: indexPath as IndexPath) as! EditExerciseTableViewCell
         cell.setExercise(exercise: data[indexPath.row])
         return cell
     }

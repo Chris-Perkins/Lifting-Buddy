@@ -64,7 +64,7 @@ class SectionView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.mainViewController = (self.next?.next?.next as! MainViewController)
+        self.mainViewController = (self.next?.next?.next?.next as! MainViewController)
         
         // Home Button
         homeButton.setTitle("home", for: .normal)

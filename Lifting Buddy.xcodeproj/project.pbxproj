@@ -119,8 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				22AA6D0F1F2184A400624744 /* View Controllers */,
-				225D44101F510FD700B35D80 /* Views */,
-				22AA6D0E1F21847F00624744 /* Custom UI Types */,
+				225D44101F510FD700B35D80 /* Custom UITypes */,
+				22AA6D0E1F21847F00624744 /* Content Views */,
 				224153791F1EE2C500F7B82B /* Workout Classes */,
 				22AA6D101F2184BD00624744 /* Miscellaneous */,
 				225E65D51F22A446004B3AF4 /* Supporting Files */,
@@ -132,14 +132,14 @@
 			path = "Lifting Buddy";
 			sourceTree = "<group>";
 		};
-		225D44101F510FD700B35D80 /* Views */ = {
+		225D44101F510FD700B35D80 /* Custom UITypes */ = {
 			isa = PBXGroup;
 			children = (
-				22EDF04D1F35860E0074E2F2 /* SettingsView.swift */,
-				22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */,
-				22CAA88B1F4899E600F4F42B /* CreateExerciseView.swift */,
+				22AA6D131F218AD400624744 /* SectionView.swift */,
+				22AA6D111F21851400624744 /* HeaderView.swift */,
+				224697D71F19E8060089C7CA /* PrettyButton.swift */,
 			);
-			name = Views;
+			name = "Custom UITypes";
 			sourceTree = "<group>";
 		};
 		225E65D51F22A446004B3AF4 /* Supporting Files */ = {
@@ -148,6 +148,49 @@
 				225E65D31F22A442004B3AF4 /* RLMSupport.swift */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		229D87051F65FC9E00FF05DD /* Start Workout */ = {
+			isa = PBXGroup;
+			children = (
+				22ECE3931F644E1A0067171A /* WorkoutStartView.swift */,
+				229D87011F65FC7400FF05DD /* WorkoutStartTableView.swift */,
+				229D87031F65FC8200FF05DD /* WorkoutStartTableViewCell.swift */,
+			);
+			name = "Start Workout";
+			sourceTree = "<group>";
+		};
+		229D87061F65FCAC00FF05DD /* Workouts Tab */ = {
+			isa = PBXGroup;
+			children = (
+				225E65D11F22A041004B3AF4 /* WorkoutsView.swift */,
+				22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */,
+				22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */,
+				229D87071F65FCB700FF05DD /* Create Workout */,
+				229D87051F65FC9E00FF05DD /* Start Workout */,
+			);
+			name = "Workouts Tab";
+			sourceTree = "<group>";
+		};
+		229D87071F65FCB700FF05DD /* Create Workout */ = {
+			isa = PBXGroup;
+			children = (
+				22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */,
+				22CAA88B1F4899E600F4F42B /* CreateExerciseView.swift */,
+				223590901F427D1A002BE0BF /* EditExerciseTableView.swift */,
+				22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */,
+				227981411F4D13BE0010DA18 /* ProgressionMethodsTableView.swift */,
+				227981431F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift */,
+			);
+			name = "Create Workout";
+			sourceTree = "<group>";
+		};
+		229D87081F65FD2B00FF05DD /* Settings Tab */ = {
+			isa = PBXGroup;
+			children = (
+				22EDF04D1F35860E0074E2F2 /* SettingsView.swift */,
+			);
+			name = "Settings Tab";
 			sourceTree = "<group>";
 		};
 		22A36A321F451479000DCDBF /* Libraries */ = {
@@ -159,24 +202,13 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
-		22AA6D0E1F21847F00624744 /* Custom UI Types */ = {
+		22AA6D0E1F21847F00624744 /* Content Views */ = {
 			isa = PBXGroup;
 			children = (
-				224697D71F19E8060089C7CA /* PrettyButton.swift */,
-				22AA6D111F21851400624744 /* HeaderView.swift */,
-				22AA6D131F218AD400624744 /* SectionView.swift */,
-				225E65D11F22A041004B3AF4 /* WorkoutsView.swift */,
-				223590901F427D1A002BE0BF /* EditExerciseTableView.swift */,
-				22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */,
-				227981411F4D13BE0010DA18 /* ProgressionMethodsTableView.swift */,
-				227981431F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift */,
-				22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */,
-				22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */,
-				22ECE3931F644E1A0067171A /* WorkoutStartView.swift */,
-				229D87011F65FC7400FF05DD /* WorkoutStartTableView.swift */,
-				229D87031F65FC8200FF05DD /* WorkoutStartTableViewCell.swift */,
+				229D87061F65FCAC00FF05DD /* Workouts Tab */,
+				229D87081F65FD2B00FF05DD /* Settings Tab */,
 			);
-			name = "Custom UI Types";
+			name = "Content Views";
 			sourceTree = "<group>";
 		};
 		22AA6D0F1F2184A400624744 /* View Controllers */ = {

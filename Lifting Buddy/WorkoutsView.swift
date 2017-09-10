@@ -17,15 +17,24 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     
     // View properties
     
-    var createWorkoutButton: PrettyButton
-    var workoutViews: [ExpandableButton]
+    private var createWorkoutButton: PrettyButton
+    private var workoutTableView: WorkoutTableView
     var loaded = false
     
     override init(frame: CGRect) {
+        let realm = try! Realm()
+        let workouts = realm.objects(Workout.self).toArray()
+        
+        workoutTableView = WorkoutTableView(workouts: workouts, style: UITableViewStyle.plain)
         createWorkoutButton = PrettyButton()
-        workoutViews = [ExpandableButton]()
         
         super.init(frame: frame)
+        
+        self.addSubview(workoutTableView)
+        self.addSubview(createWorkoutButton)
+        
+        self.createAndActivateWorkoutTableViewConstraints()
+        self.createCreateWorkoutButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,68 +44,14 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     // MARK: View Overrides
     
     override func layoutSubviews() {
-        if !loaded {
-            let realm = try! Realm()
-            let workouts = realm.objects(Workout.self).toArray()
-                
-            // Table view of workouts
-            let tableView = WorkoutTableView(workouts: workouts,
-                                             frame: CGRect(x: 10,
-                                                           y: 10,
-                                                           width: self.frame.width - 20,
-                                                           height: self.frame.height - 70),
-                                             style: .plain)
-            tableView.layer.zPosition = -10
-            self.addSubview(tableView)
-            
-            // MARK: create workout button
-            
-            createWorkoutButton = PrettyButton()
-            createWorkoutButton.setDefaultProperties()
-            createWorkoutButton.setTitle("Create New Workout", for: .normal)
-            createWorkoutButton.addTarget(self, action: #selector(showCreateWorkoutView(sender:)), for: .touchUpInside)
-            self.addSubview(createWorkoutButton)
-            
-            createCreateWorkoutButtonConstraints(belowView: tableView)
-            
-            loaded = true
-        } else {
-            createWorkoutButton.isUserInteractionEnabled = true
-            createWorkoutButton.layoutSubviews()
-        }
-        
+        createWorkoutButton.setDefaultProperties()
+        createWorkoutButton.setTitle("Create New Workout", for: .normal)
+        createWorkoutButton.addTarget(self,
+                                      action: #selector(showCreateWorkoutView(sender:)),
+                                      for: .touchUpInside)
+        workoutTableView.reloadData()
+
         super.layoutSubviews()
-    }
-    
-    // MARK: Constraint functions
-    
-    private func createCreateWorkoutButtonConstraints(belowView: UIView) {
-        createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
-        // Place below the tableview with padding from bottom of this view
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: createWorkoutButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: -10).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: createWorkoutButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 10).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
-                                                         belowView: belowView,
-                                                         withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: createWorkoutButton,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 10).isActive = true
     }
     
     // MARK: Event functions
@@ -107,7 +62,7 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
                                             y: -self.frame.height,
                                             width: self.frame.width,
                                             height: self.frame.height))
-        createWorkoutView.layer.zPosition = 100
+        
         createWorkoutView.dataDelegate = self
         self.addSubview(createWorkoutView)
         
@@ -123,11 +78,8 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     // MARK: CreateWorkoutViewDelegate methods
     
     func finishedWithWorkout(workout: Workout) {
-        // TODO: Realm write new workout
+        workoutTableView.appendDataToTableView(data: workout)
         
-        // Recreate floaty button
-        self.loaded = false
-        self.removeAllSubviews()
         self.layoutSubviews()
     }
     
@@ -147,5 +99,66 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
                                             width: self.frame.width,
                                             height: self.frame.height)
         })
+    }
+    
+    // MARK: Constraint functions
+    
+    // Cling to top, left, right of this view - 10, height of this view - 70
+    private func createAndActivateWorkoutTableViewConstraints() {
+        workoutTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: workoutTableView,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: -10).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: workoutTableView,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 10).isActive = true
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: workoutTableView,
+                                                            belowView: self,
+                                                            withPadding: 10).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .height,
+                           relatedBy: .equal,
+                           toItem: workoutTableView,
+                           attribute: .height,
+                           multiplier: 1, constant: 70).isActive = true
+    }
+    
+    // Cling to bottom,left,right of workouttableview, place 10 above this view's bottom
+    private func createCreateWorkoutButtonConstraints() {
+        createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: workoutTableView,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: createWorkoutButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: workoutTableView,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: createWorkoutButton,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
+                                                         belowView: workoutTableView,
+                                                         withPadding: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: createWorkoutButton,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 10).isActive = true
     }
 }

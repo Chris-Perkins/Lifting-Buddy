@@ -20,11 +20,15 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         
         super.init(frame: frame, style: style)
         
-        self.delegate = self
-        self.dataSource = self
-        self.allowsSelection = true
-        self.register(WorkoutTableViewCell.self, forCellReuseIdentifier: "cell")
-        self.backgroundColor = UIColor.clear
+        self.setupTableView()
+    }
+    
+    init(workouts: [Workout], style: UITableViewStyle) {
+        data = workouts
+        
+        super.init(frame: .zero, style: style)
+        
+        self.setupTableView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -105,8 +109,17 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         reloadData()
     }
     
+    // Retrieve workouts
     public func getData() -> [Workout] {
         return data
+    }
+    
+    private func setupTableView() {
+        self.delegate = self
+        self.dataSource = self
+        self.allowsSelection = true
+        self.register(WorkoutTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.backgroundColor = UIColor.clear
     }
     
 }

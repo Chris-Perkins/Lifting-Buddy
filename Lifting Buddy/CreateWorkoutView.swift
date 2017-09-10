@@ -197,7 +197,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         self.exerciseTableView.appendDataToTableView(data: exercise)
     }
     
-    // MARK: Create view constraint functions
+    // MARK: Constraints
     
     // Center horiz in view; place at top of view ; height of 20 ; width of this view - 80
     func createAndActivateNameEntryLabelConstraints() {

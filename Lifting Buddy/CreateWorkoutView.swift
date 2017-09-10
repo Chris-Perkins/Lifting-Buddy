@@ -47,6 +47,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         self.addSubview(nameEntryLabel)
         self.addSubview(nameEntryField)
         self.addSubview(exerciseTableLabel)
+        self.addSubview(exerciseTableView)
         self.addSubview(addExerciseButton)
         self.addSubview(createWorkoutButton)
     }
@@ -120,18 +121,32 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             
             
             // MARK: Exercise Table View
-
-            exerciseTableView = ExerciseTableView(frame: CGRect(x: 10,
-                                                                y: 4 * viewPadding + 80,
-                                                                width: self.frame.width - 20,
-                                                                height: 0),
-                                                                style: .plain)
             // Prevent clipping as we can click and drag cells
             exerciseTableView.clipsToBounds = false
             exerciseTableView.isScrollEnabled = false
             exerciseTableView.backgroundColor = UIColor.clear
             
-            self.addSubview(exerciseTableView)
+            exerciseTableView.translatesAutoresizingMaskIntoConstraints = false
+            exerciseTableView.heightConstraint =
+                NSLayoutConstraint.createHeightConstraintForView(view: exerciseTableView, height: 0)
+            exerciseTableView.heightConstraint?.isActive = true
+            NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseTableView,
+                                                             belowView: exerciseTableLabel,
+                                                             withPadding: viewPadding / 2).isActive = true
+            NSLayoutConstraint(item: exerciseTableLabel,
+                               attribute: .left,
+                               relatedBy: .equal,
+                               toItem: exerciseTableView,
+                               attribute: .left,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            NSLayoutConstraint(item: exerciseTableLabel,
+                               attribute: .right,
+                               relatedBy: .equal,
+                               toItem: exerciseTableView,
+                               attribute: .right,
+                               multiplier: 1,
+                               constant: 0).isActive = true
             
             // MARK: Add exercise button
             addExerciseButton.setTitle("Add exercise", for: .normal)
@@ -148,8 +163,6 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             /*
              * Create width and height for constraints
              */
-            NSLayoutConstraint.createWidthConstraintForView(view: addExerciseButton,
-                                                            width: exerciseTableView.frame.width).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: addExerciseButton,
                                                              height: 50).isActive = true
             /*
@@ -159,8 +172,20 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             NSLayoutConstraint.createViewBelowViewConstraint(view: addExerciseButton,
                                                              belowView: exerciseTableView,
                                                              withPadding: 0).isActive = true
-            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: addExerciseButton,
-                                                                            inView: self).isActive = true
+            NSLayoutConstraint(item: exerciseTableView,
+                               attribute: .left,
+                               relatedBy: .equal,
+                               toItem: addExerciseButton,
+                               attribute: .left,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            NSLayoutConstraint(item: exerciseTableView,
+                               attribute: .right,
+                               relatedBy: .equal,
+                               toItem: addExerciseButton,
+                               attribute: .right,
+                               multiplier: 1,
+                               constant: 0).isActive = true
             
             // MARK: Create workout button
             // Give it standard default properties

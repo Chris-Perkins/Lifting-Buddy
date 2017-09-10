@@ -93,7 +93,7 @@ extension PrettyButton {
     override func setDefaultProperties() {
         self.backgroundColor = UIColor.niceBlue()
         self.setOverlayColor(color: UIColor.niceYellow())
-        self.setOverlayStyle(style: .BLOOM)
+        self.setOverlayStyle(style: .FADE)
         self.cornerRadius = 5.0
     }
 }

@@ -25,7 +25,7 @@ class CreateExerciseView: UIScrollView {
     private var progressionsTableView: ProgressionsTableView
     private var addProgressionTrackerButton: PrettyButton
     private var createExerciseButton: PrettyButton
-    private var prevCellCount = -1
+    private var cancelButton: PrettyButton
     
     // MARK: Init overrides
     
@@ -40,6 +40,7 @@ class CreateExerciseView: UIScrollView {
         progressionsTableView = ProgressionsTableView()
         addProgressionTrackerButton = PrettyButton()
         createExerciseButton = PrettyButton()
+        cancelButton = PrettyButton()
         
         super.init(frame: frame)
         
@@ -53,6 +54,7 @@ class CreateExerciseView: UIScrollView {
         self.addSubview(progressionsTableView)
         self.addSubview(addProgressionTrackerButton)
         self.addSubview(createExerciseButton)
+        self.addSubview(cancelButton)
         
         self.createAndActivateNameEntryLabelConstraints()
         self.createAndActivateNameEntryFieldConstraints()
@@ -64,6 +66,7 @@ class CreateExerciseView: UIScrollView {
         self.createAndActivateProgressionsTableViewConstraints()
         self.createAndActivateAddProgressionTrackerButtonConstraints()
         self.createAndActivateCreateExeciseButtonConstraints()
+        self.createAndActivateCancelButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -124,6 +127,12 @@ class CreateExerciseView: UIScrollView {
         createExerciseButton.setTitle("Create Exercise", for: .normal)
         createExerciseButton.setDefaultProperties()
         createExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        
+        // Cancel Button
+        cancelButton.setDefaultProperties()
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        cancelButton.backgroundColor = UIColor.niceRed()
 
         self.contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
     }
@@ -150,6 +159,9 @@ class CreateExerciseView: UIScrollView {
                 self.dataDelegate?.finishedWithExercise(exercise: exerciseCreated)
                 self.removeSelfNicelyWithAnimation()
             }
+            break
+        case cancelButton:
+            self.removeSelfNicelyWithAnimation()
             break
         default:
             fatalError("User pressed a button that does not exist in switch?")
@@ -431,6 +443,22 @@ class CreateExerciseView: UIScrollView {
         NSLayoutConstraint.createWidthCopyConstraintForView(view: createExerciseButton,
                                                             withCopyView: self,
                                                             plusWidth: -80).isActive = true
+    }
+    
+    // center horiz in view ; place below createExerciseButton; height 30 ; width of createExerciseButton - 40
+    func createAndActivateCancelButtonConstraints() {
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: cancelButton,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: cancelButton,
+                                                         belowView: createExerciseButton,
+                                                         withPadding: viewPadding).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: cancelButton,
+                                                         height: 40).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: cancelButton,
+                                                            withCopyView: createExerciseButton,
+                                                            plusWidth: -40).isActive = true
     }
 }
 

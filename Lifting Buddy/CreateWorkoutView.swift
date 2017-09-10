@@ -199,7 +199,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     
     // MARK: Create view constraint functions
     
-    // Center horiz in view; place at top of view ; height of 20
+    // Center horiz in view; place at top of view ; height of 20 ; width of this view - 80
     func createAndActivateNameEntryLabelConstraints() {
         nameEntryLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -210,10 +210,13 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                             withPadding: viewPadding).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: nameEntryLabel,
                                                          height: 20).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryField,
+                                                            withCopyView: self,
+                                                            plusWidth: -80).isActive = true
 
     }
     
-    // Center horiz in view; place below name entry label ; height of 40 ; width of this view - 40
+    // Center horiz in view; place below name entry label ; height of 40 ; width of this view - 80
     func createAndActivateNameEntryFieldConstraints() {
         // Name entry field
         nameEntryField.translatesAutoresizingMaskIntoConstraints = false
@@ -225,17 +228,13 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                          withPadding: viewPadding / 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
                                                          height: 40).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: nameEntryField,
-                           attribute: .width,
-                           multiplier: 1,
-                           constant: 80).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryField,
+                                                            withCopyView: self,
+                                                            plusWidth: -80).isActive = true
 
     }
     
-    // Center horiz in view ; place below nameEntryField ; height of 20
+    // Center horiz in view ; place below nameEntryField ; height of 20 ; width of this view - 80
     func createAndActivateExerciseTableLabelConstraints() {
         exerciseTableLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -246,6 +245,9 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: exerciseTableLabel,
                                                          height: 20).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: exerciseTableLabel,
+                                                            withCopyView: self,
+                                                            plusWidth: -80).isActive = true
     }
     
     // Center horiz in view ; place below exerciseTableLabel ; Default height of 0 ; Width of this view - 40
@@ -263,13 +265,9 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             NSLayoutConstraint.createHeightConstraintForView(view: exerciseTableView, height: 0)
         exerciseTableView.heightConstraint?.isActive = true
         
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: exerciseTableView,
-                           attribute: .width,
-                           multiplier: 1,
-                           constant: 40).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: exerciseTableView,
+                                                            withCopyView: self,
+                                                            plusWidth: -50).isActive = true
     }
     
     // place below exercisetableview ; left/right match to exercisetableview ; height 50
@@ -308,13 +306,9 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: createWorkoutButton,
                                                          height: 50).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: createWorkoutButton,
-                           attribute: .width,
-                           multiplier: 1,
-                           constant: 50).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: createWorkoutButton,
+                                                            withCopyView: self,
+                                                            plusWidth: -50).isActive = true
     }
 }
 

@@ -22,6 +22,10 @@ class WorkoutTableViewCell: UITableViewCell {
     private var editButton: PrettyButton?
     private var startWorkoutButton: PrettyButton?
     
+    public var startWorkoutDelegate: StartWorkoutDelegate?
+    
+    // MARK: View inits
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         cellTitle = UILabel()
         fireImage = UIImageView(image: #imageLiteral(resourceName: "Fire"))
@@ -167,6 +171,8 @@ class WorkoutTableViewCell: UITableViewCell {
             editButton = PrettyButton()
             startWorkoutButton = PrettyButton()
             
+            startWorkoutButton?.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+            
             self.addSubview(editButton!)
             self.addSubview(startWorkoutButton!)
             
@@ -266,9 +272,29 @@ class WorkoutTableViewCell: UITableViewCell {
     }
     
     // Mark: view functions
+    
+    // Update selected status; v image becomes ^
     public func updateSelectedStatus() {
         self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isSelected ? -1 : 1)
         
         self.layoutSubviews()
     }
+    
+    // MARK: Event functions
+    
+    @objc func buttonPress(sender: UIButton) {
+        switch(sender) {
+        case startWorkoutButton!:
+            self.startWorkoutDelegate?.startWorkout(workout: self.workout!)
+            break
+        case editButton!:
+            break
+        default:
+            fatalError("User pressed a button that does not exist?")
+        }
+    }
+}
+
+protocol StartWorkoutDelegate {
+    func startWorkout(workout: Workout)
 }

@@ -13,7 +13,7 @@ import UIKit
 import RealmSwift
 import Realm
 
-class WorkoutsView: UIView, CreateWorkoutViewDelegate {
+class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     
     // View properties
     
@@ -57,32 +57,7 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
             createWorkoutButton.addTarget(self, action: #selector(showCreateWorkoutView(sender:)), for: .touchUpInside)
             self.addSubview(createWorkoutButton)
             
-            createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
-            // Place below the tableview with padding from bottom of this view
-            NSLayoutConstraint(item: self,
-                               attribute: .left,
-                               relatedBy: .equal,
-                               toItem: createWorkoutButton,
-                               attribute: .left,
-                               multiplier: 1,
-                               constant: -10).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .right,
-                               relatedBy: .equal,
-                               toItem: createWorkoutButton,
-                               attribute: .right,
-                               multiplier: 1,
-                               constant: 10).isActive = true
-            NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
-                                                             belowView: tableView,
-                                                             withPadding: 0).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .bottom,
-                               relatedBy: .equal,
-                               toItem: createWorkoutButton,
-                               attribute: .bottom,
-                               multiplier: 1,
-                               constant: 10).isActive = true
+            createCreateWorkoutButtonConstraints(belowView: tableView)
             
             loaded = true
         } else {
@@ -91,6 +66,37 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
         }
         
         super.layoutSubviews()
+    }
+    
+    // MARK: Constraint functions
+    
+    private func createCreateWorkoutButtonConstraints(belowView: UIView) {
+        createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
+        // Place below the tableview with padding from bottom of this view
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: createWorkoutButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: -10).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: createWorkoutButton,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 10).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
+                                                         belowView: belowView,
+                                                         withPadding: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: createWorkoutButton,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 10).isActive = true
     }
     
     // MARK: Event functions
@@ -123,5 +129,23 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate {
         self.loaded = false
         self.removeAllSubviews()
         self.layoutSubviews()
+    }
+    
+     // MARK: StartWorkoutDelegate methods
+    
+    func startWorkout(workout: Workout) {
+        let startWorkoutView = WorkoutStartView(workout: workout,
+                                                frame: CGRect(x: 0,
+                                                              y: -self.frame.height,
+                                                              width: self.frame.width,
+                                                              height: self.frame.height))
+        self.addSubview(startWorkoutView)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            startWorkoutView.frame = CGRect(x: 0,
+                                            y: 0,
+                                            width: self.frame.width,
+                                            height: self.frame.height)
+        })
     }
 }

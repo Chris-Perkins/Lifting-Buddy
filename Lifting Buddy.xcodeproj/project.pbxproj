@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		223590911F427D1A002BE0BF /* ExerciseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223590901F427D1A002BE0BF /* ExerciseTableView.swift */; };
+		223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223590901F427D1A002BE0BF /* EditExerciseTableView.swift */; };
 		224153761F1EE12B00F7B82B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153751F1EE12B00F7B82B /* Workout.swift */; };
 		224153781F1EE1F000F7B82B /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153771F1EE1F000F7B82B /* Exercise.swift */; };
 		224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697C51F19843A0089C7CA /* AppDelegate.swift */; };
@@ -21,7 +21,9 @@
 		225E65D41F22A442004B3AF4 /* RLMSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D31F22A442004B3AF4 /* RLMSupport.swift */; };
 		227981421F4D13BE0010DA18 /* ProgressionMethodsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227981411F4D13BE0010DA18 /* ProgressionMethodsTableView.swift */; };
 		227981441F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227981431F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift */; };
-		22A36A2F1F43A1F5000DCDBF /* ExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A2E1F43A1F5000DCDBF /* ExerciseTableViewCell.swift */; };
+		229D87021F65FC7400FF05DD /* WorkoutStartTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229D87011F65FC7400FF05DD /* WorkoutStartTableView.swift */; };
+		229D87041F65FC8200FF05DD /* WorkoutStartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229D87031F65FC8200FF05DD /* WorkoutStartTableViewCell.swift */; };
+		22A36A2F1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */; };
 		22A36A311F4513AD000DCDBF /* LPRTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A301F4513AD000DCDBF /* LPRTableView.swift */; };
 		22A36A341F451492000DCDBF /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 22A36A331F451492000DCDBF /* LICENSE */; };
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
@@ -38,7 +40,7 @@
 
 /* Begin PBXFileReference section */
 		07EAE38F8336E92D79D24030 /* Pods-Lifting Buddy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.debug.xcconfig"; sourceTree = "<group>"; };
-		223590901F427D1A002BE0BF /* ExerciseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseTableView.swift; sourceTree = "<group>"; };
+		223590901F427D1A002BE0BF /* EditExerciseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableView.swift; sourceTree = "<group>"; };
 		224153751F1EE12B00F7B82B /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		224153771F1EE1F000F7B82B /* Exercise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		224697C21F19843A0089C7CA /* Lifting Buddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lifting Buddy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,7 +56,9 @@
 		225E65D31F22A442004B3AF4 /* RLMSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMSupport.swift; sourceTree = "<group>"; };
 		227981411F4D13BE0010DA18 /* ProgressionMethodsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressionMethodsTableView.swift; sourceTree = "<group>"; };
 		227981431F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressionMethodTableViewCell.swift; sourceTree = "<group>"; };
-		22A36A2E1F43A1F5000DCDBF /* ExerciseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseTableViewCell.swift; sourceTree = "<group>"; };
+		229D87011F65FC7400FF05DD /* WorkoutStartTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutStartTableView.swift; sourceTree = "<group>"; };
+		229D87031F65FC8200FF05DD /* WorkoutStartTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutStartTableViewCell.swift; sourceTree = "<group>"; };
+		22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableViewCell.swift; sourceTree = "<group>"; };
 		22A36A301F4513AD000DCDBF /* LPRTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPRTableView.swift; path = "Lifting Buddy/LPRTableView.swift"; sourceTree = "<group>"; };
 		22A36A331F451492000DCDBF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
@@ -162,13 +166,15 @@
 				22AA6D111F21851400624744 /* HeaderView.swift */,
 				22AA6D131F218AD400624744 /* SectionView.swift */,
 				225E65D11F22A041004B3AF4 /* WorkoutsView.swift */,
-				223590901F427D1A002BE0BF /* ExerciseTableView.swift */,
-				22A36A2E1F43A1F5000DCDBF /* ExerciseTableViewCell.swift */,
+				223590901F427D1A002BE0BF /* EditExerciseTableView.swift */,
+				22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */,
 				227981411F4D13BE0010DA18 /* ProgressionMethodsTableView.swift */,
 				227981431F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift */,
 				22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */,
 				22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */,
 				22ECE3931F644E1A0067171A /* WorkoutStartView.swift */,
+				229D87011F65FC7400FF05DD /* WorkoutStartTableView.swift */,
+				229D87031F65FC8200FF05DD /* WorkoutStartTableViewCell.swift */,
 			);
 			name = "Custom UI Types";
 			sourceTree = "<group>";
@@ -337,21 +343,23 @@
 				22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
 				22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */,
+				229D87021F65FC7400FF05DD /* WorkoutStartTableView.swift in Sources */,
 				224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */,
 				224153761F1EE12B00F7B82B /* Workout.swift in Sources */,
 				227981441F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift in Sources */,
 				225E65D21F22A041004B3AF4 /* WorkoutsView.swift in Sources */,
-				22A36A2F1F43A1F5000DCDBF /* ExerciseTableViewCell.swift in Sources */,
+				22A36A2F1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift in Sources */,
 				22AA6D141F218AD400624744 /* SectionView.swift in Sources */,
 				224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */,
 				225E65D41F22A442004B3AF4 /* RLMSupport.swift in Sources */,
-				223590911F427D1A002BE0BF /* ExerciseTableView.swift in Sources */,
+				223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */,
 				22EC7FD31F5E01FE00A1E66B /* WorkoutTableViewCell.swift in Sources */,
 				22EDF04E1F35860E0074E2F2 /* SettingsView.swift in Sources */,
 				224153781F1EE1F000F7B82B /* Exercise.swift in Sources */,
 				22BC5AF41F3E5C2A00B150BD /* CreateWorkoutView.swift in Sources */,
 				22A36A311F4513AD000DCDBF /* LPRTableView.swift in Sources */,
 				22533B551F549B1500EE474E /* ProgressionMethod.swift in Sources */,
+				229D87041F65FC8200FF05DD /* WorkoutStartTableViewCell.swift in Sources */,
 				22AA6D121F21851400624744 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

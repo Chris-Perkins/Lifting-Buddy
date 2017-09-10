@@ -155,17 +155,33 @@ class CreateExerciseView: UIScrollView {
             // MARK: Progressions Table View
             // MARK: Exercise Table View
             
-            progressionsTableView = ProgressionsTableView(frame: CGRect(x: 10,
-                                                                        y: viewPadding * 5 + 160,
-                                                                        width: self.frame.width - 20,
-                                                                        height: 0),
-                                                                        style: .plain)
             // Prevent clipping as we can click and drag cells
             progressionsTableView.clipsToBounds = false
             progressionsTableView.isScrollEnabled = false
             progressionsTableView.backgroundColor = UIColor.clear
             
-            self.addSubview(progressionsTableView)
+            progressionsTableView.translatesAutoresizingMaskIntoConstraints = false
+            progressionsTableView.heightConstraint =
+                NSLayoutConstraint.createHeightConstraintForView(view: progressionsTableView,
+                                                                 height: 0)
+            progressionsTableView.heightConstraint?.isActive = true
+            NSLayoutConstraint.createViewBelowViewConstraint(view: progressionsTableView,
+                                                             belowView: progressionsLabel,
+                                                             withPadding: viewPadding / 2).isActive = true
+            NSLayoutConstraint(item: nameEntryLabel,
+                               attribute: .left,
+                               relatedBy: .equal,
+                               toItem: progressionsTableView,
+                               attribute: .left,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            NSLayoutConstraint(item: nameEntryLabel,
+                               attribute: .right,
+                               relatedBy: .equal,
+                               toItem: progressionsTableView,
+                               attribute: .right,
+                               multiplier: 1,
+                               constant: 0).isActive = true
             
             // MARK: Add progression method button
             addProgressionTrackerButton.translatesAutoresizingMaskIntoConstraints = false
@@ -183,19 +199,25 @@ class CreateExerciseView: UIScrollView {
             /*
              * Create width and height for constraints
              */
-            NSLayoutConstraint.createWidthConstraintForView(view: addProgressionTrackerButton,
-                                                            width: progressionsTableView.frame.width).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: addProgressionTrackerButton,
                                                              height: 50).isActive = true
-            /*
-             * Center on x axis,
-             * position createWorkout Button below exerciseTableView
-             */
             NSLayoutConstraint.createViewBelowViewConstraint(view: addProgressionTrackerButton,
                                                              belowView: progressionsTableView,
                                                              withPadding: 0).isActive = true
-            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: addProgressionTrackerButton,
-                                                                            inView: self).isActive = true
+            NSLayoutConstraint(item: progressionsTableView,
+                               attribute: .left,
+                               relatedBy: .equal,
+                               toItem: addProgressionTrackerButton,
+                               attribute: .left,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            NSLayoutConstraint(item: progressionsTableView,
+                               attribute: .right,
+                               relatedBy: .equal,
+                               toItem: addProgressionTrackerButton,
+                               attribute: .right,
+                               multiplier: 1,
+                               constant: 0).isActive = true
             
             // MARK: Create exercise button
             createExerciseButton.translatesAutoresizingMaskIntoConstraints = false

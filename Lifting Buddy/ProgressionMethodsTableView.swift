@@ -11,6 +11,7 @@ import UIKit
 class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDelegate {
     
     // MARK: View properties
+    public var heightConstraint: NSLayoutConstraint?
     
     private var data:[ProgressionMethod] = [ProgressionMethod].init()
     var cellHeight: CGFloat = 50.0
@@ -71,7 +72,7 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
     
     // Append some data to the tableView
     public func appendDataToTableView(data: ProgressionMethod) {
-        self.frame.size.height += cellHeight
+        heightConstraint?.constant += 50
         
         self.data.append(data)
         reloadData()

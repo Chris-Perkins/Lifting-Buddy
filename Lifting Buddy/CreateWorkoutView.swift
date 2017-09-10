@@ -104,7 +104,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             
             // MARK: Exercise Table Label
             exerciseTableLabel.setDefaultProperties()
-            exerciseTableLabel.text = "Exercises"
+            exerciseTableLabel.text = "Exercises (Hold + Drag to Reorder)"
             
             // Place below nameEntryField
             exerciseTableLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -15,6 +15,8 @@ class WorkoutStartView: UIView {
     private var workout: Workout
     
     private var workoutNameLabel: UILabel
+    private var exercisesLabel: UILabel
+    private var workoutStartTableView: WorkoutStartTableView
     private var completeButton: PrettyButton
     
     // MARK: Inits
@@ -23,16 +25,21 @@ class WorkoutStartView: UIView {
         self.workout = workout
         
         workoutNameLabel = UILabel()
+        exercisesLabel = UILabel()
+        workoutStartTableView = WorkoutStartTableView(workout: workout, style: .plain)
         completeButton = PrettyButton()
+        
         
         super.init(frame: frame)
         
         self.addSubview(workoutNameLabel)
+        self.addSubview(exercisesLabel)
+        self.addSubview(workoutStartTableView)
         self.addSubview(completeButton)
         
-        createWorkoutNameLabelConstraints()
-        
-        // MARK: Complete button properties
+        self.createAndActivateWorkoutNameLabelConstraints()
+        self.createAndActivateExercisesLabelConstraints()
+        self.createAndActivateWorkoutStartTableViewConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,44 +51,77 @@ class WorkoutStartView: UIView {
     override func layoutSubviews() {
         self.backgroundColor = UIColor.niceGray()
         
+        // Workout name label
         workoutNameLabel.setDefaultProperties()
         workoutNameLabel.text = workout.getName()
         
+        // Exercises label
+        exercisesLabel.setDefaultProperties()
+        exercisesLabel.text = "Exercises:"
+        
+        // Complete button
         completeButton.setDefaultProperties()
         completeButton.setTitle("Finish Workout", for: .normal)
         completeButton.backgroundColor = UIColor.niceGreen()
         
+        workoutStartTableView.backgroundColor = UIColor.black
     }
     
     // MARK: Private functions
     
     // MARK: View Constraints
     
-    private func createWorkoutNameLabelConstraints() {
+    // Center horiz in view ; place below top of this view ; height 20 ; width of this view - 80
+    private func createAndActivateWorkoutNameLabelConstraints() {
         workoutNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: self,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: workoutNameLabel,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: -10).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: workoutNameLabel,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: -10).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: workoutNameLabel,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 10).isActive = true
-        NSLayoutConstraint.createWidthConstraintForView(view: workoutNameLabel,
-                                                        width: 20).isActive = true
         
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: workoutNameLabel,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: workoutNameLabel,
+                                                            belowView: self,
+                                                            withPadding: 30).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: workoutNameLabel,
+                                                         height: 20).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: workoutNameLabel,
+                                                            withCopyView: self,
+                                                            plusWidth: -80).isActive = true
+        
+    }
+    
+    // Center horiz in view ; place below workoutNameLabel ; height 20 ; width of this view - 80
+    private func createAndActivateExercisesLabelConstraints() {
+        exercisesLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: exercisesLabel,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: exercisesLabel,
+                                                         belowView: workoutNameLabel,
+                                                         withPadding: 25).isActive = true
+
+        NSLayoutConstraint.createHeightConstraintForView(view: workoutNameLabel,
+                                                         height: 20).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: workoutNameLabel,
+                                                            withCopyView: self,
+                                                            plusWidth: -80).isActive = true
+    }
+    
+    private func createAndActivateWorkoutStartTableViewConstraints() {
+        workoutStartTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: workoutStartTableView,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: workoutStartTableView,
+                                                         belowView: exercisesLabel,
+                                                         withPadding: 15).isActive = true
+        
+        // Assign height constraint
+        workoutStartTableView.heightConstraint =
+            NSLayoutConstraint.createHeightConstraintForView(view: workoutStartTableView,
+                                                             height: 0)
+        workoutStartTableView.heightConstraint?.isActive = true
+        
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: workoutStartTableView,
+                                                            withCopyView: self,
+                                                            plusWidth: -80).isActive = true
     }
 }

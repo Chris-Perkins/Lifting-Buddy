@@ -8,14 +8,22 @@
 
 import UIKit
 
-class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
+class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSource, WorkoutStartTableViewCellDelegate {
     private var data: [Exercise]
+    private var heights: [CGFloat]
     public static let baseCellHeight: CGFloat = 50.0
+    public var heightConstraint: NSLayoutConstraint?
     
     // MARK: Initializers
     
     init(workout: Workout, frame: CGRect, style: UITableViewStyle) {
         data = workout.getExercises().toArray()
+        heights = [CGFloat]()
+        
+        for _ in data {
+            heights.append(WorkoutStartTableView.baseCellHeight)
+        }
+        self.heightConstraint?.constant = heights.reduce(0, +)
         
         super.init(frame: frame, style: style)
         
@@ -24,6 +32,11 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     init(workout: Workout, style: UITableViewStyle) {
         data = workout.getExercises().toArray()
+        heights = [CGFloat]()
+        
+        for _ in data {
+            heights.append(WorkoutStartTableView.baseCellHeight)
+        }
         
         super.init(frame: .zero, style: style)
         
@@ -34,10 +47,25 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: View overrides
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.backgroundColor = UIColor.clear
+        self.layer.cornerRadius = 5.0
+    }
+    
     // MARK: TableView Functions
     
+    override func reloadData() {
+        self.heightConstraint?.constant = heights.reduce(0, +)
+        
+        super.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let cell = self.cellForRow(at: indexPath) as! WorkoutTableViewCell
+        let cell = self.cellForRow(at: indexPath) as! WorkoutStartTableViewCell
         
         if self.indexPathForSelectedRow == indexPath {
             self.deselectRow(at: indexPath, animated: true)
@@ -46,9 +74,9 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             
             return nil
         } else {
-            var cell2: WorkoutTableViewCell? = nil
+            var cell2: WorkoutStartTableViewCell? = nil
             if self.indexPathForSelectedRow != nil {
-                cell2 = self.cellForRow(at: self.indexPathForSelectedRow!) as? WorkoutTableViewCell
+                cell2 = self.cellForRow(at: self.indexPathForSelectedRow!) as? WorkoutStartTableViewCell
             }
             
             self.selectRow(at: indexPath, animated: false, scrollPosition: .none)
@@ -86,19 +114,32 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! WorkoutStartTableViewCell
         
-            cell.setExercise(exercise: data[indexPath.row])
+        cell.delegate = self
+        cell.indexPath = indexPath
+        cell.setExercise(exercise: data[indexPath.row])
         return cell
     }
     
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return heights[indexPath.row]
+    }
+    
+    // MARK: WorkoutStartTableViewCellDelegate methods
+    
+    func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
+        self.heightConstraint?.constant += height - heights[indexPath.row]
+        heights[indexPath.row] = height
+        
+        self.reloadData()
     }
     
     // MARK: Custom functions
     
     // Append some data to the tableView
     public func appendDataToTableView(data: Exercise) {
+        heights.append(WorkoutStartTableView.baseCellHeight)
+        
         self.data.append(data)
         reloadData()
     }

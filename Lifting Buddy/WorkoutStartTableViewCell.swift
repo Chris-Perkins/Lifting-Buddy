@@ -73,20 +73,27 @@ class WorkoutStartTableViewCell: UITableViewCell {
             self.backgroundColor = UIColor.white
         }
         
+        completeButton.setTitleColor(UIColor.white, for: .normal)
         if self.isComplete {
+            self.backgroundColor = UIColor.niceGreen().withAlphaComponent(self.isSelected ? 0.65 : 0.5)
+            
+            cellTitle.textColor = UIColor.white
+            
             completeButton.setTitle("Mark Incomplete", for: .normal)
-            completeButton.backgroundColor = UIColor.niceRed()
-            self.backgroundColor = UIColor.niceGreen().withAlphaComponent(0.25)
+            completeButton.setTitleColor(UIColor.white, for: .normal)
+            completeButton.backgroundColor = UIColor.niceRed().withAlphaComponent(0.9)
         } else {
+            cellTitle.textColor = UIColor.niceBlue()
+            
             completeButton.setTitle("Complete Exercise", for: .normal)
             completeButton.backgroundColor = UIColor.niceGreen()
-            self.backgroundColor = UIColor.white
         }
         
         cellTitle.text = exercise?.getName()
-        cellTitle.textColor = UIColor.niceBlue()
         
         completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        completeButton.setOverlayStyle(style: .FADE)
+        completeButton.setOverlayColor(color: UIColor.niceYellow())
     }
     
     // MARK: View functions

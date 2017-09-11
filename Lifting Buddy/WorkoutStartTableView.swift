@@ -53,6 +53,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         super.layoutSubviews()
         
         self.backgroundColor = UIColor.clear
+        self.isScrollEnabled = false
         self.layer.cornerRadius = 5.0
     }
     

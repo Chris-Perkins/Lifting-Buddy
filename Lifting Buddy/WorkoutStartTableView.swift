@@ -13,7 +13,9 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     // MARK: View properties
     
     public static let baseCellHeight: CGFloat = 50.0
+    
     public var heightConstraint: NSLayoutConstraint?
+    public var viewDelegate: WorkoutStartTableViewDelegate?
     
     private var data: [Exercise]
     private var heights: [CGFloat]
@@ -173,12 +175,15 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     }
     
     // Check if we completed all exercises
-    private func checkComplete() {
+    public func checkComplete() {
         if self.curComplete == self.data.count {
-            self.superview!.backgroundColor = UIColor.niceLightGreen()
+            self.viewDelegate?.updateCompleteStatus(isComplete: true)
         } else {
-            self.superview!.backgroundColor = UIColor.niceGray()
+            self.viewDelegate?.updateCompleteStatus(isComplete: false)
         }
     }
+}
 
+protocol WorkoutStartTableViewDelegate {
+    func updateCompleteStatus(isComplete: Bool)
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WorkoutStartView: UIView {
+class WorkoutStartView: UIView, WorkoutStartTableViewDelegate {
     
     // MARK: View properties
     
@@ -32,6 +32,7 @@ class WorkoutStartView: UIView {
         super.init(frame: frame)
         
         self.backgroundColor = UIColor.niceGray()
+        workoutStartTableView.viewDelegate = self
         
         self.addSubview(workoutNameLabel)
         self.addSubview(exercisesLabel)
@@ -41,6 +42,8 @@ class WorkoutStartView: UIView {
         self.createAndActivateWorkoutNameLabelConstraints()
         self.createAndActivateExercisesLabelConstraints()
         self.createAndActivateWorkoutStartTableViewConstraints()
+        
+        workoutStartTableView.checkComplete()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,7 +58,7 @@ class WorkoutStartView: UIView {
         workoutNameLabel.text = workout.getName()
         
         // Exercises label
-        exercisesLabel.setDefaultProperties()
+        exercisesLabel.textColor = UIColor.niceBlue()
         exercisesLabel.text = "Exercises:"
         
         // Complete button
@@ -120,5 +123,15 @@ class WorkoutStartView: UIView {
         NSLayoutConstraint.createWidthCopyConstraintForView(view: workoutStartTableView,
                                                             withCopyView: self,
                                                             plusWidth: -80).isActive = true
+    }
+    
+    // MARK: WorkoutStartTableViewDelegate
+    
+    func updateCompleteStatus(isComplete: Bool) {
+        if isComplete {
+            self.backgroundColor = UIColor.niceLightGreen()
+        } else {
+            self.backgroundColor = UIColor.niceGray()
+        }
     }
 }

@@ -9,16 +9,22 @@
 import UIKit
 
 class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSource, WorkoutStartTableViewCellDelegate {
-    private var data: [Exercise]
-    private var heights: [CGFloat]
+    
+    // MARK: View properties
+    
     public static let baseCellHeight: CGFloat = 50.0
     public var heightConstraint: NSLayoutConstraint?
+    
+    private var data: [Exercise]
+    private var heights: [CGFloat]
+    private var curComplete: Int
     
     // MARK: Initializers
     
     init(workout: Workout, frame: CGRect, style: UITableViewStyle) {
         data = workout.getExercises().toArray()
         heights = [CGFloat]()
+        curComplete = 0
         
         for _ in data {
             heights.append(WorkoutStartTableView.baseCellHeight)
@@ -33,6 +39,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     init(workout: Workout, style: UITableViewStyle) {
         data = workout.getExercises().toArray()
         heights = [CGFloat]()
+        curComplete = 0
         
         for _ in data {
             heights.append(WorkoutStartTableView.baseCellHeight)
@@ -135,6 +142,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         self.reloadData()
     }
     
+    // Update complete count, check if we completed all exercises
+    func cellCompleteStatusChanged(complete: Bool) {
+        curComplete += complete ? 1 : -1
+        checkComplete()
+    }
+    
     // MARK: Custom functions
     
     // Append some data to the tableView
@@ -150,12 +163,22 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         return data
     }
     
+    // Setup the table view to default properties
     private func setupTableView() {
         self.delegate = self
         self.dataSource = self
         self.allowsSelection = true
         self.register(WorkoutStartTableViewCell.self, forCellReuseIdentifier: "cell")
         self.backgroundColor = UIColor.clear
+    }
+    
+    // Check if we completed all exercises
+    private func checkComplete() {
+        if self.curComplete == self.data.count {
+            self.superview!.backgroundColor = UIColor.niceLightGreen()
+        } else {
+            self.superview!.backgroundColor = UIColor.niceGray()
+        }
     }
 
 }

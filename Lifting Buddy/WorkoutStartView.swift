@@ -29,8 +29,9 @@ class WorkoutStartView: UIView {
         workoutStartTableView = WorkoutStartTableView(workout: workout, style: .plain)
         completeButton = PrettyButton()
         
-        
         super.init(frame: frame)
+        
+        self.backgroundColor = UIColor.niceGray()
         
         self.addSubview(workoutNameLabel)
         self.addSubview(exercisesLabel)
@@ -49,8 +50,6 @@ class WorkoutStartView: UIView {
     // MARK: View func overrides
     
     override func layoutSubviews() {
-        self.backgroundColor = UIColor.niceGray()
-        
         // Workout name label
         workoutNameLabel.setDefaultProperties()
         workoutNameLabel.text = workout.getName()
@@ -63,8 +62,6 @@ class WorkoutStartView: UIView {
         completeButton.setDefaultProperties()
         completeButton.setTitle("Finish Workout", for: .normal)
         completeButton.backgroundColor = UIColor.niceGreen()
-        
-        workoutStartTableView.backgroundColor = UIColor.black
     }
     
     // MARK: Private functions

@@ -74,7 +74,11 @@ class WorkoutStartTableViewCell: UITableViewCell {
         }
         
         completeButton.setTitleColor(UIColor.white, for: .normal)
+        // Different states for whether the cell is complete or not.
+        // If complete: cell turns green, title color turns white to be visible.
+        // If not complete: Cell is white
         if self.isComplete {
+            // Lighten when not selected
             self.backgroundColor = UIColor.niceGreen().withAlphaComponent(self.isSelected ? 0.65 : 0.5)
             
             cellTitle.textColor = UIColor.white
@@ -117,6 +121,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         switch(sender) {
         case completeButton:
             self.isComplete = !self.isComplete
+            delegate?.cellCompleteStatusChanged(complete: self.isComplete)
             self.layoutSubviews()
             break
         default:
@@ -184,4 +189,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
 
 protocol WorkoutStartTableViewCellDelegate {
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath)
+    
+    func cellCompleteStatusChanged(complete: Bool)
 }

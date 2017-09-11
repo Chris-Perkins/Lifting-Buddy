@@ -174,6 +174,10 @@ extension UIColor {
     public static func niceGreen() -> UIColor {
         return UIColor(red: 0.27, green: 0.66, blue: 0.3, alpha: 1)
     }
+    
+    public static func niceLightGreen() -> UIColor {
+        return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
+    }
 }
 
 extension Results {

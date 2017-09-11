@@ -6,4 +6,12 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class WorkoutStartTableViewCell: UITableViewCell {
+    private var exercise: Exercise?
+    
+    public func setExercise(exercise: Exercise) {
+        self.exercise = exercise
+    }
+}

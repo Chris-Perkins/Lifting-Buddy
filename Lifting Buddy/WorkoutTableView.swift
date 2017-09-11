@@ -10,7 +10,9 @@ import UIKit
 
 class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
     
-    var data: [Workout]
+    // MARK: View Properties
+    
+    private var data: [Workout]
     public static let baseCellHeight: CGFloat = 50.0
     
     // MARK: Initializers

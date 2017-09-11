@@ -6,4 +6,8 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class ExpandableCellTableView: UITableView, UITableViewDelegate {
+    
+}

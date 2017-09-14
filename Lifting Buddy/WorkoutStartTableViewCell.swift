@@ -25,6 +25,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private var lowestViewBesidesCompleteButton: UIView
     // Whether or not this exercise is complete
     private var isComplete: Bool
+    
     // IndexPath of this cell in the tableview
     public var indexPath: IndexPath?
     // Delegate we use to change height of cells
@@ -192,3 +193,4 @@ protocol WorkoutStartTableViewCellDelegate {
     
     func cellCompleteStatusChanged(complete: Bool)
 }
+

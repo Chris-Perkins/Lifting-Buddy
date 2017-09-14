@@ -8,8 +8,12 @@
 
 import UIKit
 
-class SetTableView: UITableView {
+class ExerciseTableView: UITableView {
     public var heightConstraint: NSLayoutConstraint?
     
-    
+    override init(frame: CGRect, style: UITableViewStyle) {
+        super.init(frame: frame, style: style)
+        
+        // todo: setup tableview here
+    }
 }

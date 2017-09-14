@@ -8,6 +8,6 @@
 
 import UIKit
 
-class SetTableViewCell: UITableViewCell {
+class ExerciseTableViewCell: UITableViewCell {
     
 }

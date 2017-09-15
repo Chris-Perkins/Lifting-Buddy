@@ -105,7 +105,6 @@ extension UITextField {
         
         // View prettiness
         self.textAlignment = .center
-        textfieldDeselected(sender: self)
     }
     
     func isNumeric() -> Bool {
@@ -121,13 +120,17 @@ extension UITextField {
     // MARK: Textfield events
     
     @objc func textfieldSelected(sender: UITextField) {
-        sender.backgroundColor = UIColor.niceYellow()
-        sender.textColor = UIColor.white
+        UIView.animate(withDuration: 0.1, animations: {
+            sender.backgroundColor = UIColor.niceYellow()
+            sender.textColor = UIColor.white
+        })
     }
     
     @objc func textfieldDeselected(sender: UITextField) {
-        sender.backgroundColor = UIColor.white
-        sender.textColor = UIColor.black
+        UIView.animate(withDuration: 0.1, animations: {
+            sender.backgroundColor = UIColor.white
+            sender.textColor = UIColor.black
+        })
     }
 }
 

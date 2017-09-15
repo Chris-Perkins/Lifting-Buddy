@@ -21,8 +21,6 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     // variable stating how many cells are in the exercise table view
     private var prevDataCount = -1
     
-    // Exercise name field
-    private var nameEntryLabel: UILabel
     // Field to enter name
     private var nameEntryField: UITextField
     // Exercise Table Label
@@ -37,7 +35,6 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     private var cancelButton: PrettyButton
     
     override init(frame: CGRect) {
-        nameEntryLabel = UILabel()
         nameEntryField = UITextField()
         exerciseTableLabel = UILabel()
         exerciseTableView = EditExerciseTableView()
@@ -46,8 +43,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         cancelButton = PrettyButton()
         
         super.init(frame: frame)
-        
-        self.addSubview(nameEntryLabel)
+
         self.addSubview(nameEntryField)
         self.addSubview(exerciseTableLabel)
         self.addSubview(exerciseTableView)
@@ -55,7 +51,6 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         self.addSubview(createWorkoutButton)
         self.addSubview(cancelButton)
         
-        self.createAndActivateNameEntryLabelConstraints()
         self.createAndActivateNameEntryFieldConstraints()
         self.createAndActivateExerciseTableLabelConstraints()
         self.createAndActivateExerciseTableViewConstraints()
@@ -78,13 +73,9 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         self.backgroundColor = UIColor.niceGray()
         self.contentSize.height = cancelButton.frame.maxY + 20
         
-        // Name Entry Label
-        nameEntryLabel.text = "Name of New Workout"
-        nameEntryLabel.setDefaultProperties()
-        
         // Name Entry Field
         nameEntryField.setDefaultProperties()
-        nameEntryField.placeholder = "Required: Name"
+        nameEntryField.placeholder = "Required: Name of Workout"
         
         // Exercise Table Label
         exerciseTableLabel.setDefaultProperties()
@@ -213,23 +204,6 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     
     // MARK: Constraints
     
-    // Center horiz in view; place at top of view ; height of 20 ; width of this view - 80
-    func createAndActivateNameEntryLabelConstraints() {
-        nameEntryLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryLabel,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryLabel,
-                                                            belowView: self,
-                                                            withPadding: viewPadding).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: nameEntryLabel,
-                                                         height: 20).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryField,
-                                                            withCopyView: self,
-                                                            plusWidth: -80).isActive = true
-
-    }
-    
     // Center horiz in view; place below name entry label ; height of 40 ; width of this view - 80
     func createAndActivateNameEntryFieldConstraints() {
         // Name entry field
@@ -237,14 +211,14 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
 
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryField,
                                                                         inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField,
-                                                         belowView: nameEntryLabel,
-                                                         withPadding: viewPadding / 2).isActive = true
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryField,
+                                                            belowView: self,
+                                                            withPadding: viewPadding / 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
                                                          height: 40).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryField,
                                                             withCopyView: self,
-                                                            plusWidth: -80).isActive = true
+                                                            plusWidth: 0).isActive = true
 
     }
     

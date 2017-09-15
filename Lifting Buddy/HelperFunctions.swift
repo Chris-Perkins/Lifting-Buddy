@@ -105,6 +105,8 @@ extension UITextField {
         
         // View prettiness
         self.textAlignment = .center
+        
+        self.textfieldDeselected(sender: self)
     }
     
     func isNumeric() -> Bool {

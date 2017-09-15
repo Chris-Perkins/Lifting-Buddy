@@ -215,7 +215,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                             belowView: self,
                                                             withPadding: viewPadding / 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
-                                                         height: 40).isActive = true
+                                                         height: 60).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryField,
                                                             withCopyView: self,
                                                             plusWidth: 0).isActive = true

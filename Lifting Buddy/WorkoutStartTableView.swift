@@ -8,7 +8,8 @@
 
 import UIKit
 
-class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSource, WorkoutStartTableViewCellDelegate {
+class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSource,
+                             WorkoutStartTableViewCellDelegate {
     
     // MARK: View properties
     

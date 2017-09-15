@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WorkoutStartTableViewCell: UITableViewCell {
+class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     
     // MARK: View properties
     
@@ -32,6 +32,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
     public var delegate: WorkoutStartTableViewCellDelegate?
     
     private var cellTitle: UILabel
+    private var exerciseTable: ExerciseTableView?
     private var completeButton: PrettyButton
     
     // MARK: Init Functions
@@ -42,7 +43,8 @@ class WorkoutStartTableViewCell: UITableViewCell {
         
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
-        curHeight = WorkoutStartTableView.baseCellHeight * 2 + viewPadding
+        // ViewPadding * 2 to take into account tableview
+        curHeight = WorkoutStartTableView.baseCellHeight * 2 + viewPadding * 2
         lowestViewBesidesCompleteButton = cellTitle
         isComplete = false
         
@@ -52,7 +54,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.addSubview(completeButton)
         
         self.createAndActivateCellTitleConstraints()
-        self.updateAndCreateCompleteButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -101,19 +102,42 @@ class WorkoutStartTableViewCell: UITableViewCell {
         completeButton.setOverlayColor(color: UIColor.niceYellow())
     }
     
+    // MARK: ExerciseStartTableViewCellMethods
+    
+    func heightChange(addHeight: CGFloat) {
+        curHeight += addHeight
+        
+        delegate?.cellHeightDidChange(height: self.getHeight(), indexPath: indexPath!)
+    }
+    
     // MARK: View functions
     
     public func setExercise(exercise: Exercise) {
         self.exercise = exercise
         
+        exerciseTable?.removeFromSuperview()
+        exerciseTable = ExerciseTableView(exercise: exercise, style: .plain, heightDelegate: self)
+        exerciseTable!.backgroundColor = UIColor.black
+        exerciseTable!.heightDelegate = self
+        self.addSubview(exerciseTable!)
+        
+        lowestViewBesidesCompleteButton = exerciseTable!
+        
         cellTitle.text = exercise.getName()
+        
+        self.createAndActivateTableViewConstraints()
+        self.updateAndCreateCompleteButtonConstraints()
     }
     
     public func updateSelectedStatus() {
         if indexPath != nil && self.exercise != nil {
-            delegate?.cellHeightDidChange(height: self.isSelected ? curHeight : WorkoutStartTableView.baseCellHeight,
+            delegate?.cellHeightDidChange(height: self.getHeight(),
                                           indexPath: indexPath!)
         }
+    }
+    
+    private func getHeight() -> CGFloat {
+        return self.isSelected ? curHeight : WorkoutStartTableView.baseCellHeight
     }
     
     // MARK: Event functions
@@ -157,6 +181,26 @@ class WorkoutStartTableViewCell: UITableViewCell {
                                                          height: WorkoutTableView.baseCellHeight).isActive = true
     }
     
+    private func createAndActivateTableViewConstraints() {
+        exerciseTable?.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: exerciseTable!,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseTable!,
+                                                         belowView: cellTitle,
+                                                         withPadding: viewPadding).isActive = true
+        // Create and assign height constraint
+        // Assign height constraint
+        exerciseTable?.heightConstraint =
+            NSLayoutConstraint.createHeightConstraintForView(view: exerciseTable!,
+                                                             height: 0)
+        exerciseTable!.heightConstraint?.isActive = true
+        
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: exerciseTable!,
+                                                            withCopyView: self,
+                                                            plusWidth: -80).isActive = true
+    }
+    
     private func updateAndCreateCompleteButtonConstraints() {
         // Remove any previous constraints from this view
         completeButton.removeFromSuperview()
@@ -193,4 +237,3 @@ protocol WorkoutStartTableViewCellDelegate {
     
     func cellCompleteStatusChanged(complete: Bool)
 }
-

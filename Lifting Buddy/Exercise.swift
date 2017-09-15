@@ -66,14 +66,14 @@ class Exercise: Object {
     
     // MARK: Get/Set methods for variables in this class
     
-    public func getRepCount() -> Int {
+    @objc public func getRepCount() -> Int {
         return self.repCount
     }
     public func setRepCount(repCount: Int) {
         self.repCount = repCount
     }
     
-    public func getSetCount() -> Int {
+    @objc public func getSetCount() -> Int {
         return self.setCount
     }
     // This variable's name is kind of funny. :)
@@ -100,10 +100,10 @@ class Exercise: Object {
         return self.progressionMethods
     }
 
-    public func getCooldownTime() -> Int {
+    @objc public func getCooldownTime() -> Int {
         return self.cooldownTime
     }
-    public func setCooldownTime(cooldownTime: Int) {
+    @objc public func setCooldownTime(cooldownTime: Int) {
         self.cooldownTime = cooldownTime
     }
 }

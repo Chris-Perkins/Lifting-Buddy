@@ -8,22 +8,32 @@
 
 import UIKit
 
-class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate, ExerciseTableViewCellDelegate {
+class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate,
+                         ExerciseTableViewCellDelegate {
     
     // MARK: View properties
     
     public var heightConstraint: NSLayoutConstraint?
+    public var indexPath: IndexPath?
+    public var heightDelegate: ExerciseTableViewDelegate
     
     private var heights: [CGFloat]
+    private var totalHeight: CGFloat
     private var exercise: Exercise
     
     // MARK: View inits
     
-    init(exercise: Exercise, style: UITableViewStyle) {
+    init(exercise: Exercise, style: UITableViewStyle, heightDelegate: ExerciseTableViewDelegate) {
         self.exercise = exercise
         self.heights  = [CGFloat]()
+        self.heightDelegate = heightDelegate
+        totalHeight = 0
         
         super.init(frame: .zero, style: style)
+        
+        for _ in [0...exercise.getSetCount()] {
+            self.createCell()
+        }
         
         setupTableView()
     }
@@ -58,6 +68,7 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
         heightConstraint?.constant += height - heights[indexPath.row]
+        heightDelegate.heightChange(addHeight: height - heights[indexPath.row])
         heights[indexPath.row] = height
     }
     
@@ -77,7 +88,15 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     }
     
     private func createCell() {
-        heights.append(CGFloat(exercise.getProgressionMethods().count) * 50.0)
+        let addHeight = CGFloat(exercise.getProgressionMethods().count) * 50.0
+        
+        heights.append(addHeight)
+        heightConstraint?.constant += addHeight
+        heightDelegate.heightChange(addHeight: addHeight)
         self.reloadData()
     }
+}
+
+protocol ExerciseTableViewDelegate {
+    func heightChange(addHeight: CGFloat)
 }

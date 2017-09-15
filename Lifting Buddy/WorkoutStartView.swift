@@ -8,14 +8,13 @@
 
 import UIKit
 
-class WorkoutStartView: UIView, WorkoutStartTableViewDelegate {
+class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     
     // MARK: View properties
     
     private var workout: Workout
     
     private var workoutNameLabel: UILabel
-    private var exercisesLabel: UILabel
     private var workoutStartTableView: WorkoutStartTableView
     private var completeButton: PrettyButton
     
@@ -25,7 +24,6 @@ class WorkoutStartView: UIView, WorkoutStartTableViewDelegate {
         self.workout = workout
         
         workoutNameLabel = UILabel()
-        exercisesLabel = UILabel()
         workoutStartTableView = WorkoutStartTableView(workout: workout, style: .plain)
         completeButton = PrettyButton()
         
@@ -35,12 +33,10 @@ class WorkoutStartView: UIView, WorkoutStartTableViewDelegate {
         workoutStartTableView.viewDelegate = self
         
         self.addSubview(workoutNameLabel)
-        self.addSubview(exercisesLabel)
         self.addSubview(workoutStartTableView)
         self.addSubview(completeButton)
         
         self.createAndActivateWorkoutNameLabelConstraints()
-        self.createAndActivateExercisesLabelConstraints()
         self.createAndActivateWorkoutStartTableViewConstraints()
         
         workoutStartTableView.checkComplete()
@@ -53,18 +49,18 @@ class WorkoutStartView: UIView, WorkoutStartTableViewDelegate {
     // MARK: View func overrides
     
     override func layoutSubviews() {
+        super.layoutSubviews()
+        
         // Workout name label
         workoutNameLabel.setDefaultProperties()
         workoutNameLabel.text = workout.getName()
-        
-        // Exercises label
-        exercisesLabel.textColor = UIColor.niceBlue()
-        exercisesLabel.text = "Exercises:"
         
         // Complete button
         completeButton.setDefaultProperties()
         completeButton.setTitle("Finish Workout", for: .normal)
         completeButton.backgroundColor = UIColor.niceGreen()
+        
+        self.contentSize = CGSize(width: self.frame.width, height: workoutStartTableView.frame.maxY)
     }
     
     // MARK: Private functions
@@ -88,30 +84,13 @@ class WorkoutStartView: UIView, WorkoutStartTableViewDelegate {
         
     }
     
-    // Center horiz in view ; place below workoutNameLabel ; height 20 ; width of this view - 80
-    private func createAndActivateExercisesLabelConstraints() {
-        exercisesLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: exercisesLabel,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: exercisesLabel,
-                                                         belowView: workoutNameLabel,
-                                                         withPadding: 25).isActive = true
-
-        NSLayoutConstraint.createHeightConstraintForView(view: workoutNameLabel,
-                                                         height: 20).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: workoutNameLabel,
-                                                            withCopyView: self,
-                                                            plusWidth: -80).isActive = true
-    }
-    
     private func createAndActivateWorkoutStartTableViewConstraints() {
         workoutStartTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: workoutStartTableView,
                                                                         inView: self).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: workoutStartTableView,
-                                                         belowView: exercisesLabel,
+                                                         belowView: workoutNameLabel,
                                                          withPadding: 15).isActive = true
         
         // Assign height constraint
@@ -122,7 +101,7 @@ class WorkoutStartView: UIView, WorkoutStartTableViewDelegate {
         
         NSLayoutConstraint.createWidthCopyConstraintForView(view: workoutStartTableView,
                                                             withCopyView: self,
-                                                            plusWidth: -80).isActive = true
+                                                            plusWidth: 0).isActive = true
     }
     
     // MARK: WorkoutStartTableViewDelegate
@@ -133,5 +112,9 @@ class WorkoutStartView: UIView, WorkoutStartTableViewDelegate {
         } else {
             self.backgroundColor = UIColor.niceGray()
         }
+    }
+    
+    func heightChange() {
+        self.layoutSubviews()
     }
 }

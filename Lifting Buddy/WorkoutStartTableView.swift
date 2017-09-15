@@ -19,6 +19,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     public var viewDelegate: WorkoutStartTableViewDelegate?
     
     private var data: [Exercise]
+    private var setExercise: [Bool]
     private var heights: [CGFloat]
     private var curComplete: Int
     
@@ -27,10 +28,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     init(workout: Workout, frame: CGRect, style: UITableViewStyle) {
         data = workout.getExercises().toArray()
         heights = [CGFloat]()
+        setExercise = [Bool]()
         curComplete = 0
         
         for _ in data {
             heights.append(WorkoutStartTableView.baseCellHeight)
+            setExercise.append(false)
         }
         self.heightConstraint?.constant = heights.reduce(0, +)
         
@@ -42,10 +45,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     init(workout: Workout, style: UITableViewStyle) {
         data = workout.getExercises().toArray()
         heights = [CGFloat]()
+        setExercise = [Bool]()
         curComplete = 0
         
         for _ in data {
             heights.append(WorkoutStartTableView.baseCellHeight)
+            setExercise.append(false)
         }
         
         super.init(frame: .zero, style: style)
@@ -64,7 +69,6 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         
         self.backgroundColor = UIColor.clear
         self.isScrollEnabled = false
-        self.layer.cornerRadius = 5.0
     }
     
     // MARK: TableView Functions
@@ -124,10 +128,13 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         let cell =
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! WorkoutStartTableViewCell
-        
-        cell.delegate = self
-        cell.indexPath = indexPath
-        cell.setExercise(exercise: data[indexPath.row])
+        if !setExercise[indexPath.row] {
+            cell.delegate = self
+            cell.indexPath = indexPath
+            cell.setExercise(exercise: data[indexPath.row])
+            
+            setExercise[indexPath.row] = true
+        }
         return cell
     }
     
@@ -143,6 +150,8 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         heights[indexPath.row] = height
         
         self.reloadData()
+        
+        viewDelegate?.heightChange()
     }
     
     // Update complete count, check if we completed all exercises
@@ -187,4 +196,6 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
 
 protocol WorkoutStartTableViewDelegate {
     func updateCompleteStatus(isComplete: Bool)
+    
+    func heightChange()
 }

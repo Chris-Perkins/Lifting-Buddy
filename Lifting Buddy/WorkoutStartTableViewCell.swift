@@ -44,7 +44,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
         // ViewPadding * 2 to take into account tableview
-        curHeight = WorkoutStartTableView.baseCellHeight * 2 + viewPadding * 2
+        curHeight = WorkoutStartTableView.baseCellHeight * 2
         lowestViewBesidesCompleteButton = cellTitle
         isComplete = false
         
@@ -65,7 +65,6 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.layer.cornerRadius = 5
         self.selectionStyle = .none
         self.clipsToBounds = true
         
@@ -119,6 +118,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         exerciseTable = ExerciseTableView(exercise: exercise, style: .plain, heightDelegate: self)
         exerciseTable!.backgroundColor = UIColor.black
         exerciseTable!.heightDelegate = self
+        
         self.addSubview(exerciseTable!)
         
         lowestViewBesidesCompleteButton = exerciseTable!
@@ -126,6 +126,11 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         cellTitle.text = exercise.getName()
         
         self.createAndActivateTableViewConstraints()
+        // do this after creating constraints so the constraint is updated properly
+        for _ in 0 ..< exercise.getSetCount() {
+            exerciseTable?.createCell()
+        }
+        
         self.updateAndCreateCompleteButtonConstraints()
     }
     
@@ -188,7 +193,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
                                                                         inView: self).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseTable!,
                                                          belowView: cellTitle,
-                                                         withPadding: viewPadding).isActive = true
+                                                         withPadding: 0).isActive = true
         // Create and assign height constraint
         // Assign height constraint
         exerciseTable?.heightConstraint =
@@ -198,7 +203,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         
         NSLayoutConstraint.createWidthCopyConstraintForView(view: exerciseTable!,
                                                             withCopyView: self,
-                                                            plusWidth: -80).isActive = true
+                                                            plusWidth: 0).isActive = true
     }
     
     private func updateAndCreateCompleteButtonConstraints() {
@@ -212,7 +217,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         
         NSLayoutConstraint.createViewBelowViewConstraint(view: completeButton,
                                                          belowView: lowestViewBesidesCompleteButton,
-                                                         withPadding: viewPadding).isActive = true
+                                                         withPadding: 0).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .right,
                            relatedBy: .equal,

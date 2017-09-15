@@ -31,10 +31,6 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         
         super.init(frame: .zero, style: style)
         
-        for _ in [0...exercise.getSetCount()] {
-            self.createCell()
-        }
-        
         setupTableView()
     }
     
@@ -83,16 +79,19 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         self.delegate = self
         self.dataSource = self
         self.allowsSelection = true
+        self.isScrollEnabled = false
         self.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
         self.backgroundColor = UIColor.clear
     }
     
-    private func createCell() {
+    public func createCell() {
         let addHeight = CGFloat(exercise.getProgressionMethods().count) * 50.0
         
         heights.append(addHeight)
         heightConstraint?.constant += addHeight
         heightDelegate.heightChange(addHeight: addHeight)
+        
+        self.backgroundColor = UIColor.black
         self.reloadData()
     }
 }

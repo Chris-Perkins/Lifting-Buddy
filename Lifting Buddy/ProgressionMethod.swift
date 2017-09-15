@@ -54,7 +54,7 @@ class ProgressionMethod: Object {
         self.name = name
     }
     
-    public func getName() -> String? {
+    @objc public func getName() -> String? {
         return self.name
     }
     
@@ -62,7 +62,7 @@ class ProgressionMethod: Object {
         self.unit = unit
     }
     
-    public func getUnit() -> String? {
+    @objc public func getUnit() -> String? {
         return self.unit
     }
 }

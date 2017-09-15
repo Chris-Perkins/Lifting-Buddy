@@ -81,7 +81,7 @@ class Exercise: Object {
         self.setCount = setCount
     }
     
-    public func getName() -> String? {
+    @objc public func getName() -> String? {
         return self.name
     }
     public func setName(name: String?) {

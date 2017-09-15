@@ -1,5 +1,5 @@
 //
-//  ExerciseTableView.swift
+//  ProgressionsMethodTableView.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 8/14/17.

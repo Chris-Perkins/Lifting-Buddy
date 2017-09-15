@@ -50,7 +50,7 @@ class Workout: Object {
     
     // MARK: Get/Set methods for variables in this class
     
-    public func getName() -> String? {
+    @objc public func getName() -> String? {
         return self.name
     }
     
@@ -58,7 +58,7 @@ class Workout: Object {
         self.name = name
     }
     
-    public func getDayOfTheWeek() -> String? {
+    @objc public func getDayOfTheWeek() -> String? {
         return self.dayOfTheWeek
     }
     

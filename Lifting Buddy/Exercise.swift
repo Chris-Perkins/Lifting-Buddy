@@ -107,3 +107,41 @@ class Exercise: Object {
         self.cooldownTime = cooldownTime
     }
 }
+
+// Get basic info for an exercise
+class ExerciseInfo {
+    
+    // MARK: View properties
+    
+    private var setCount: Int
+    private var repCount: Int
+    private var coolDownTime: Int
+    private var progressionMethods: [ProgressionMethod]
+    
+    // MARK: Class inits
+    
+    init(exercise: Exercise) {
+        self.setCount           = exercise.getSetCount()
+        self.repCount           = exercise.getRepCount()
+        self.coolDownTime       = exercise.getCooldownTime()
+        self.progressionMethods = exercise.getProgressionMethods().toArray()
+    }
+    
+    // MARK: Encapsulated Methods
+    
+    func getSetCount() -> Int {
+        return self.setCount
+    }
+    
+    func getRepCount() -> Int {
+        return self.repCount
+    }
+    
+    func getCooldownTime() -> Int {
+        return self.coolDownTime
+    }
+    
+    func getProgressionMethods() -> [ProgressionMethod] {
+        return self.progressionMethods
+    }
+}

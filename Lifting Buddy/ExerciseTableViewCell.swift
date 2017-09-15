@@ -10,4 +10,28 @@ import UIKit
 
 class ExerciseTableViewCell: UITableViewCell {
     
+    // MARK: View properties
+    
+    // IndexPath of this cell in the tableview
+    public var indexPath: IndexPath?
+    // Delegate we use to change height of cells
+    public var delegate: ExerciseTableViewCellDelegate?
+    
+    // MARK: View inits
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+// Functions for delegate (the tableview)
+protocol ExerciseTableViewCellDelegate {
+    func cellHeightDidChange(height: CGFloat, indexPath: IndexPath)
+    
+    func cellCompleteStatusChanged(complete: Bool)
 }

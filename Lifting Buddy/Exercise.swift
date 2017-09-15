@@ -99,7 +99,7 @@ class Exercise: Object {
     public func getProgressionMethods() -> List<ProgressionMethod> {
         return self.progressionMethods
     }
-    
+
     public func getCooldownTime() -> Int {
         return self.cooldownTime
     }

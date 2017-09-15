@@ -113,14 +113,14 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
                            toItem: workoutTableView,
                            attribute: .left,
                            multiplier: 1,
-                           constant: -10).isActive = true
+                           constant: 0).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .right,
                            relatedBy: .equal,
                            toItem: workoutTableView,
                            attribute: .right,
                            multiplier: 1,
-                           constant: 10).isActive = true
+                           constant: 0).isActive = true
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: workoutTableView,
                                                             belowView: self,
                                                             withPadding: 10).isActive = true

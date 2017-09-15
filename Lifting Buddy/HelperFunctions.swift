@@ -94,7 +94,6 @@ extension PrettyButton {
         self.backgroundColor = UIColor.niceBlue()
         self.setOverlayColor(color: UIColor.niceYellow())
         self.setOverlayStyle(style: .FADE)
-        self.cornerRadius = 5.0
     }
 }
 
@@ -105,7 +104,6 @@ extension UITextField {
         self.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
         
         // View prettiness
-        self.layer.cornerRadius = 5.0
         self.textAlignment = .center
         textfieldDeselected(sender: self)
     }

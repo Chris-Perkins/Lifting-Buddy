@@ -124,7 +124,6 @@ class WorkoutTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         self.backgroundColor = UIColor.white
         self.clipsToBounds = true
-        self.layer.cornerRadius = 5.0
         
         cellTitle.textColor = UIColor.niceBlue()
         cellTitle.textAlignment = .left

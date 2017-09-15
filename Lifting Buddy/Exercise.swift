@@ -13,14 +13,14 @@ import Realm
 
 class Exercise: Object {
     // Name of this exercise
-    dynamic private var name: String?
+    @objc dynamic private var name: String?
     
     // How many sets of this exercise
-    dynamic private var setCount: Int
+    @objc dynamic private var setCount: Int
     // How many reps per set
-    dynamic private var repCount: Int
+    @objc dynamic private var repCount: Int
     // Time between exercises (stored in seconds)
-    dynamic private var cooldownTime: Int
+    @objc dynamic private var cooldownTime: Int
     
     // Progression Methods attached
     private var progressionMethods: List<ProgressionMethod>

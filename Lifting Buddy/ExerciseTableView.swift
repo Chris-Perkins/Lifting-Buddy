@@ -12,7 +12,6 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     
     // MARK: View properties
     
-    public var data: [Exercise]
     public var heightConstraint: NSLayoutConstraint?
     
     private var heights: [CGFloat]
@@ -22,10 +21,11 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     
     init(exercise: Exercise, style: UITableViewStyle) {
         self.exercise = exercise
-        self.data     = [Exercise]()
         self.heights  = [CGFloat]()
         
         super.init(frame: .zero, style: style)
+        
+        setupTableView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,7 +35,7 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     // MARK: UITableViewDataSource Delegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return heights.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -74,5 +74,10 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         self.allowsSelection = true
         self.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
         self.backgroundColor = UIColor.clear
+    }
+    
+    private func createCell() {
+        heights.append(CGFloat(exercise.getProgressionMethods().count) * 50.0)
+        self.reloadData()
     }
 }

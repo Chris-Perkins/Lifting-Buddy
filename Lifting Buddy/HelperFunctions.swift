@@ -23,7 +23,7 @@ func getStatusBarHeight() -> CGFloat {
 // MARK: Extensions
 
 extension UIView {
-    func setDefaultProperties() {
+    @objc func setDefaultProperties() {
         // Override me!
     }
     

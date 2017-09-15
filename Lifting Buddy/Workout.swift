@@ -16,9 +16,9 @@ class Workout: Object {
     // MARK: View properties
     
     // Name of this workout
-    dynamic private var name: String?
+    @objc dynamic private var name: String?
     // The day this exercise occurs on
-    dynamic private var dayOfTheWeek: String?
+    @objc dynamic private var dayOfTheWeek: String?
     // Exercises in this workout
     private var exercises: List<Exercise>
     

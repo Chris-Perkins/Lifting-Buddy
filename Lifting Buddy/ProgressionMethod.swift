@@ -11,10 +11,10 @@ import Realm
 
 class ProgressionMethod: Object {
     // Name of this progression method
-    dynamic private var name: String?
+    @objc dynamic private var name: String?
     
     // Units for reps (seconds, kilos, etc)
-    dynamic private var unit: String?
+    @objc dynamic private var unit: String?
     
     public enum Unit: String {
         case WEIGHT = "weight"

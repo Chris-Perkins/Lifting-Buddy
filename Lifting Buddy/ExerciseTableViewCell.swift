@@ -23,6 +23,7 @@ class ExerciseTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = UIColor.black
+        self.selectionStyle = .none
     }
     
     required init?(coder aDecoder: NSCoder) {

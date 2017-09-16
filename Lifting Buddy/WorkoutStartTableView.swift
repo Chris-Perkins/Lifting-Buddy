@@ -22,6 +22,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     private var setExercise: [Bool]
     private var heights: [CGFloat]
     private var curComplete: Int
+    private var curToggledCell: WorkoutStartTableViewCell?
     
     // MARK: Initializers
     
@@ -79,36 +80,6 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         super.reloadData()
     }
     
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let cell = self.cellForRow(at: indexPath) as! WorkoutStartTableViewCell
-        
-        if self.indexPathForSelectedRow == indexPath {
-            self.deselectRow(at: indexPath, animated: true)
-            self.reloadData()
-            cell.updateSelectedStatus()
-            
-            return nil
-        } else {
-            var cell2: WorkoutStartTableViewCell? = nil
-            if self.indexPathForSelectedRow != nil {
-                cell2 = self.cellForRow(at: self.indexPathForSelectedRow!) as? WorkoutStartTableViewCell
-            }
-            
-            self.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-            self.reloadData()
-            self.scrollToRow(at: indexPath, at: .none, animated: true)
-            
-            cell2?.updateSelectedStatus()
-            cell.updateSelectedStatus()
-            
-            return indexPath
-        }
-    }
-    
-    // Selected a table view cell
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    }
-    
     // Moved a cell (LPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // Modify this code as needed to support more advanced reordering, such as between sections.
@@ -145,6 +116,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     // MARK: WorkoutStartTableViewCellDelegate methods
     
+    // Height of a cell changed ; update this view's height to match height change
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
         self.heightConstraint?.constant += height - heights[indexPath.row]
         heights[indexPath.row] = height
@@ -158,6 +130,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     func cellCompleteStatusChanged(complete: Bool) {
         curComplete += complete ? 1 : -1
         checkComplete()
+    }
+    
+    // A cell was toggled
+    func  cellToggled(indexPath: IndexPath) {
+        curToggledCell?.setIsToggled(toggled: false)
+        curToggledCell = cellForRow(at: indexPath) as? WorkoutStartTableViewCell
     }
     
     // MARK: Custom functions

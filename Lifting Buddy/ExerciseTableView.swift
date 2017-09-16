@@ -60,6 +60,19 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         return heights[indexPath.row]
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.cellHeightDidChange(height: 0, indexPath: indexPath)
+            self.heights.remove(at: indexPath.row)
+            self.reloadData()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
     // MARK: ExerciseTableViewCell Delegate methods
     
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {

@@ -58,12 +58,10 @@ class EditExerciseTableViewCell: UITableViewCell {
     // MARK: View overrides
     
     override func layoutSubviews() {
-        self.layer.cornerRadius = 5.0
         self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         self.clipsToBounds = true
         
         exerciseNameLabel.setDefaultProperties()
-        exerciseNameLabel.layer.cornerRadius = 5.0
         exerciseNameLabel.backgroundColor = UIColor.niceGray().withAlphaComponent(0.5)
         
         editButton.setDefaultProperties()

@@ -25,6 +25,8 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     private var lowestViewBesidesCompleteButton: UIView
     // Whether or not this exercise is complete
     private var isComplete: Bool
+    // Holds whether this view is toggled
+    private var isToggled: Bool
     
     // IndexPath of this cell in the tableview
     public var indexPath: IndexPath?
@@ -33,27 +35,34 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     
     private var cellTitle: UILabel
     private var exerciseTable: ExerciseTableView?
+    private var addSetButton: PrettyButton
     private var completeButton: PrettyButton
+    private var invisButton: PrettyButton
     
     // MARK: Init Functions
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         cellTitle = UILabel()
+        addSetButton = PrettyButton()
         completeButton = PrettyButton()
+        invisButton = PrettyButton()
         
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
-        // ViewPadding * 2 to take into account tableview
         curHeight = WorkoutStartTableView.baseCellHeight * 2
         lowestViewBesidesCompleteButton = cellTitle
         isComplete = false
+        isToggled = false
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.addSubview(cellTitle)
+        self.addSubview(invisButton)
+        self.addSubview(addSetButton)
         self.addSubview(completeButton)
         
         self.createAndActivateCellTitleConstraints()
+        self.createAndActivateInvisButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -67,6 +76,17 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         
         self.selectionStyle = .none
         self.clipsToBounds = true
+        
+        cellTitle.text = exercise?.getName()
+        
+        invisButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
+        
+        addSetButton.setDefaultProperties()
+        addSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        
+        completeButton.setDefaultProperties()
+        completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         if (self.isSelected) {
             self.backgroundColor = UIColor.niceBlue().withAlphaComponent(0.05)
@@ -93,12 +113,6 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
             completeButton.setTitle("Complete Exercise", for: .normal)
             completeButton.backgroundColor = UIColor.niceGreen()
         }
-        
-        cellTitle.text = exercise?.getName()
-        
-        completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        completeButton.setOverlayStyle(style: .FADE)
-        completeButton.setOverlayColor(color: UIColor.niceYellow())
     }
     
     // MARK: ExerciseStartTableViewCellMethods
@@ -131,7 +145,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
             exerciseTable?.createCell()
         }
         
-        self.updateAndCreateCompleteButtonConstraints()
+        self.updateAndCreateCompleteAndAddSetButtonConstraints()
     }
     
     public func updateSelectedStatus() {
@@ -142,7 +156,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     }
     
     private func getHeight() -> CGFloat {
-        return self.isSelected ? curHeight : WorkoutStartTableView.baseCellHeight
+        return self.isToggled ? curHeight : WorkoutStartTableView.baseCellHeight
     }
     
     // MARK: Event functions
@@ -154,6 +168,13 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
             delegate?.cellCompleteStatusChanged(complete: self.isComplete)
             self.layoutSubviews()
             break
+        case addSetButton:
+            exerciseTable!.createCell()
+            self.layoutSubviews()
+            break
+        case invisButton:
+            self.isToggled = !isToggled
+            self.updateSelectedStatus()
         default:
             fatalError("Button pressed did not exist?")
         }
@@ -186,6 +207,31 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
                                                          height: WorkoutTableView.baseCellHeight).isActive = true
     }
     
+    // Cling to top, left, right ; height of baseviewcell
+    private func createAndActivateInvisButtonConstraints() {
+        invisButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: invisButton,
+                                                            belowView: self,
+                                                            withPadding: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: invisButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: invisButton,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: invisButton,
+                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+    }
+    
     private func createAndActivateTableViewConstraints() {
         exerciseTable?.translatesAutoresizingMaskIntoConstraints = false
         
@@ -206,7 +252,8 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
                                                             plusWidth: 0).isActive = true
     }
     
-    private func updateAndCreateCompleteButtonConstraints() {
+    // Place below previousview, both buttons distributed equally at the bottom
+    private func updateAndCreateCompleteAndAddSetButtonConstraints() {
         // Remove any previous constraints from this view
         completeButton.removeFromSuperview()
         
@@ -226,13 +273,39 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
                            multiplier: 1,
                            constant: 0).isActive = true
         NSLayoutConstraint(item: self,
-                           attribute: .left,
+                           attribute: .width,
                            relatedBy: .equal,
                            toItem: completeButton,
+                           attribute: .width,
+                           multiplier: 2,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: completeButton,
+                                                         height: WorkoutStartTableView.baseCellHeight).isActive = true
+        
+        // add set button constraints
+        addSetButton.removeFromSuperview()
+        addSetButton = PrettyButton()
+        self.addSubview(addSetButton)
+        addSetButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewBelowViewConstraint(view: addSetButton,
+                                                         belowView: lowestViewBesidesCompleteButton,
+                                                         withPadding: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: addSetButton,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: completeButton,
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: addSetButton,
+                           attribute: .width,
+                           multiplier: 2,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: addSetButton,
                                                          height: WorkoutStartTableView.baseCellHeight).isActive = true
     }
 }

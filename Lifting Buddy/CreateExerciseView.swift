@@ -115,7 +115,6 @@ class CreateExerciseView: UIScrollView {
         // Add progression method button
         addProgressionTrackerButton.setDefaultProperties()
         addProgressionTrackerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        addProgressionTrackerButton.layer.cornerRadius = 5.0
         addProgressionTrackerButton.setOverlayColor(color: UIColor.niceYellow())
         addProgressionTrackerButton.setOverlayStyle(style: .FADE)
         addProgressionTrackerButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)

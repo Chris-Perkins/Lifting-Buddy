@@ -28,7 +28,6 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.layer.cornerRadius = 5.0
         self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
     }
     

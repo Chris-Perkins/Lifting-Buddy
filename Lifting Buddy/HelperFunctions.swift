@@ -94,6 +94,7 @@ extension PrettyButton {
         self.backgroundColor = UIColor.niceBlue()
         self.setOverlayColor(color: UIColor.niceYellow())
         self.setOverlayStyle(style: .FADE)
+        self.cornerRadius = 0
     }
 }
 

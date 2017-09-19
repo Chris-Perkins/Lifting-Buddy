@@ -49,6 +49,7 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! ExerciseTableViewCell
         
+        cell.setProgressionMethods(progressionMethods: self.exercise.getProgressionMethods().toArray())
         cell.delegate = self
         cell.indexPath = indexPath
         return cell
@@ -98,7 +99,7 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     }
     
     public func createCell() {
-        let addHeight = CGFloat(exercise.getProgressionMethods().count) * 50.0
+        let addHeight = CGFloat(exercise.getProgressionMethods().count) * 40.0 + 20
         
         heights.append(addHeight)
         heightConstraint?.constant += addHeight

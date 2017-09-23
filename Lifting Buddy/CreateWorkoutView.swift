@@ -116,6 +116,8 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     // MARK: Event functions
     
     @objc func buttonPressed(sender: PrettyButton) {
+        nameEntryField.resignFirstResponder()
+        
         switch (sender) {
         case addExerciseButton:
             // Show new view
@@ -213,9 +215,9 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                                         inView: self).isActive = true
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryField,
                                                             belowView: self,
-                                                            withPadding: viewPadding / 2).isActive = true
+                                                            withPadding: viewPadding).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
-                                                         height: 60).isActive = true
+                                                         height: 50).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryField,
                                                             withCopyView: self,
                                                             plusWidth: 0).isActive = true

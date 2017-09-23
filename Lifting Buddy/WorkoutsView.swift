@@ -123,13 +123,13 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
                            constant: 0).isActive = true
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: workoutTableView,
                                                             belowView: self,
-                                                            withPadding: 10).isActive = true
+                                                            withPadding: 0).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .height,
                            relatedBy: .equal,
                            toItem: workoutTableView,
                            attribute: .height,
-                           multiplier: 1, constant: 70).isActive = true
+                           multiplier: 1, constant: 50).isActive = true
     }
     
     // Cling to bottom,left,right of workouttableview, place 10 above this view's bottom
@@ -159,6 +159,6 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
                            toItem: createWorkoutButton,
                            attribute: .bottom,
                            multiplier: 1,
-                           constant: 10).isActive = true
+                           constant: 0).isActive = true
     }
 }

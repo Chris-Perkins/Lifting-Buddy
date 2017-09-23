@@ -17,6 +17,7 @@
 		224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */; };
 		224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697D71F19E8060089C7CA /* PrettyButton.swift */; };
 		22533B551F549B1500EE474E /* ProgressionMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22533B541F549B1500EE474E /* ProgressionMethod.swift */; };
+		225D26B61F76D6BA00F047D9 /* ToggleablePrettyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */; };
 		225E65D21F22A041004B3AF4 /* WorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D11F22A041004B3AF4 /* WorkoutsView.swift */; };
 		225E65D41F22A442004B3AF4 /* RLMSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D31F22A442004B3AF4 /* RLMSupport.swift */; };
 		22789E131F6A1885009259DD /* ExerciseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22789E121F6A1885009259DD /* ExerciseTableView.swift */; };
@@ -54,6 +55,7 @@
 		224697D11F19843A0089C7CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		224697D71F19E8060089C7CA /* PrettyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyButton.swift; sourceTree = "<group>"; };
 		22533B541F549B1500EE474E /* ProgressionMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressionMethod.swift; sourceTree = "<group>"; };
+		225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleablePrettyButton.swift; sourceTree = "<group>"; };
 		225E65D11F22A041004B3AF4 /* WorkoutsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsView.swift; sourceTree = "<group>"; };
 		225E65D31F22A442004B3AF4 /* RLMSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMSupport.swift; sourceTree = "<group>"; };
 		22789E121F6A1885009259DD /* ExerciseTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTableView.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				22AA6D131F218AD400624744 /* SectionView.swift */,
 				22AA6D111F21851400624744 /* HeaderView.swift */,
 				224697D71F19E8060089C7CA /* PrettyButton.swift */,
+				225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */,
 			);
 			name = "Custom UITypes";
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				22533B551F549B1500EE474E /* ProgressionMethod.swift in Sources */,
 				229D87041F65FC8200FF05DD /* WorkoutStartTableViewCell.swift in Sources */,
 				22AA6D121F21851400624744 /* HeaderView.swift in Sources */,
+				225D26B61F76D6BA00F047D9 /* ToggleablePrettyButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

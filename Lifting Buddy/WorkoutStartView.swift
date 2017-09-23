@@ -154,7 +154,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
         } else {
             self.backgroundColor = .niceGray()
             
-            completeButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+            completeButton.backgroundColor = UIColor.white.withAlphaComponent(0.25)
             completeButton.isEnabled = false
         }
     }

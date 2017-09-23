@@ -53,7 +53,6 @@ class ExerciseTableViewCell: UITableViewCell {
             field.placeholder = progressionMethods[index].getName()
             field.textAlignment = .left
             field.backgroundColor = UIColor.niceGray().withAlphaComponent(0.5)
-            field.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
         }
     }
     
@@ -73,8 +72,8 @@ class ExerciseTableViewCell: UITableViewCell {
     private func updateProgressionMethods() {
         var prevView: UIView = setLabel
         
-        for _ in progressionMethods {
-            let field = UITextField()
+        for method in progressionMethods {
+            let field = ProgressionMethodTextField(progressionMethod: method, frame: .zero)
             
             self.addSubview(field)
             
@@ -103,25 +102,6 @@ class ExerciseTableViewCell: UITableViewCell {
         }
     }
     
-    @objc private func textfieldDeselected(sender: UITextField) {
-        if sender.text != nil && sender.text != "" {
-            // Valid float text; we're good
-            if sender.text?.floatValue != nil {
-                sender.backgroundColor = UIColor.niceLightGreen()
-                sender.textColor = UIColor.black
-            } // Invalid text, display bad indication
-            else {
-                sender.backgroundColor = UIColor.niceRed()
-                sender.textColor = UIColor.white
-                sender.text = ""
-            }
-        } // Default indication
-        else {
-            sender.backgroundColor = UIColor.niceGray()
-            sender.textColor = UIColor.black
-        }
-    }
-    
     // MARK: View constraints
     
     // MARK: Constraint functions
@@ -147,9 +127,69 @@ class ExerciseTableViewCell: UITableViewCell {
     }
 }
 
-// Functions for delegate (the tableview)
+// MARK: Protocol Functions for delegate (the tableview)
 protocol ExerciseTableViewCellDelegate {
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath)
     
     func cellCompleteStatusChanged(complete: Bool)
+}
+
+
+// MARK: Custom Textfield for this view
+class ProgressionMethodTextField: UITextField {
+    private var progressionMethod: ProgressionMethod
+    // Float value of this cell
+    public var floatValueAsString: String?
+    
+    // MARK: Custom textfield init
+    
+    init(progressionMethod: ProgressionMethod, frame: CGRect) {
+        self.progressionMethod = progressionMethod
+        
+        super.init(frame: frame)
+        
+        self.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
+        self.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Custom textfield events
+    
+    @objc internal override func textfieldSelected(sender: UITextField) {
+        super.textfieldSelected(sender: sender)
+        
+        // Set the text back to the normal float as string
+        // Ex: "Pounds: 1232" -> "1232"
+        sender.text = floatValueAsString ?? ""
+    }
+    
+    @objc internal override func textfieldDeselected(sender: UITextField) {
+        super.textfieldDeselected(sender: sender)
+        
+        // Default say we probably didn't receive a valid float string
+        // Hope to be proved wrong later.
+        floatValueAsString = nil
+        
+        if sender.text != nil && sender.text != "" {
+            // Valid float text; we're good
+            if sender.text?.floatValue != nil {
+                sender.backgroundColor = UIColor.niceLightGreen()
+                sender.textColor = UIColor.black
+                floatValueAsString = sender.text
+                sender.text = progressionMethod.getName()! + ": " + sender.text!
+            } // Invalid text, display bad indication
+            else {
+                sender.backgroundColor = UIColor.niceRed()
+                sender.textColor = UIColor.white
+                sender.text = ""
+            }
+        } // Default indication
+        else {
+            sender.backgroundColor = UIColor.niceGray()
+            sender.textColor = UIColor.black
+        }
+    }
 }

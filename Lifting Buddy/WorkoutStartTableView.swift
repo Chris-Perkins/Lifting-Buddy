@@ -134,8 +134,10 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     // A cell was toggled
     func  cellToggled(indexPath: IndexPath) {
-        curToggledCell?.setIsToggled(toggled: false)
-        curToggledCell = cellForRow(at: indexPath) as? WorkoutStartTableViewCell
+        if curToggledCell?.indexPath != indexPath {
+            curToggledCell?.setIsToggled(toggled: false)
+            curToggledCell = cellForRow(at: indexPath) as? WorkoutStartTableViewCell
+        }
     }
     
     // MARK: Custom functions

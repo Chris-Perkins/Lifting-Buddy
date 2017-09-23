@@ -67,6 +67,8 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         self.createAndActivateInvisButtonConstraints()
         self.createAndActivateCellTitleConstraints()
         self.createAndActivateExpandImageConstraints()
+        
+        self.giveInvisButtonProperties()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,7 +85,6 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         
         cellTitle.text = exercise?.getName()
         
-        invisButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
         addSetButton.setTitle("Add Set", for: .normal)
@@ -164,7 +165,6 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
             delegate?.cellHeightDidChange(height: self.getHeight(),
                                           indexPath: indexPath!)
             self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isToggled ? -1 : 1)
-            
         }
     }
     
@@ -186,7 +186,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
             self.layoutSubviews()
             break
         case invisButton:
-            self.isToggled = !isToggled
+            self.isToggled = !self.isToggled
             
             if self.isToggled {
                 delegate?.cellToggled(indexPath: indexPath!)
@@ -350,6 +350,12 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
                            constant: 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: addSetButton,
                                                          height: WorkoutStartTableView.baseCellHeight).isActive = true
+    }
+    
+    // Mark: view properties assigned
+    
+    private func giveInvisButtonProperties() {
+        invisButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
 }
 

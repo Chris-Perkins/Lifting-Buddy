@@ -198,6 +198,12 @@ extension RealmSwift.List {
     }
 }
 
+extension String {
+    var floatValue: Float? {
+        return Float(self)
+    }
+}
+
 extension NSLayoutConstraint {
     
     // Return a constraint that will center a view inside a view

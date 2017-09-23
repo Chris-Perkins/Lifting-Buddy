@@ -41,7 +41,8 @@ class ExerciseTableViewCell: UITableViewCell {
             field.setDefaultProperties()
             field.placeholder = progressionMethods[index].getName()
             field.textAlignment = .left
-            field.backgroundColor = UIColor.niceGray().withAlphaComponent(index % 2 == 1 ? 0 : 1)
+            field.backgroundColor = UIColor.niceGray()
+            field.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
         }
     }
     
@@ -56,6 +57,8 @@ class ExerciseTableViewCell: UITableViewCell {
         }
     }
     
+    // Update progression methods associated with this view.
+    // Create new constraints based on the progression methods
     private func updateProgressionMethods() {
         var prevView: UIView = self
         
@@ -92,6 +95,25 @@ class ExerciseTableViewCell: UITableViewCell {
             self.inputFields.append(field)
             
             prevView = field
+        }
+    }
+    
+    @objc private func textfieldDeselected(sender: UITextField) {
+        if sender.text != nil && sender.text != "" {
+            // Valid float text; we're good
+            if sender.text?.floatValue != nil {
+                sender.backgroundColor = UIColor.niceLightGreen()
+                sender.textColor = UIColor.black
+            } // Invalid text, display bad indication
+            else {
+                sender.backgroundColor = UIColor.niceRed()
+                sender.textColor = UIColor.white
+                sender.text = ""
+            }
+        } // Default indication
+        else {
+            sender.backgroundColor = UIColor.niceGray()
+            sender.textColor = UIColor.black
         }
     }
 }

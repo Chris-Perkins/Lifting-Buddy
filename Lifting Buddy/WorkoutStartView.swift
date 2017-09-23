@@ -38,6 +38,9 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
         
         self.createAndActivateWorkoutNameLabelConstraints()
         self.createAndActivateWorkoutStartTableViewConstraints()
+        self.createAndActivateCompleteButtonConstraints()
+        
+        completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         workoutStartTableView.checkComplete()
     }
@@ -46,21 +49,40 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Private functions
+    
+    private func completeWorkout() {
+        // TODO: Data saving
+        
+        self.removeSelfNicelyWithAnimation()
+    }
+    
+    // MARK: Event functions
+    
+    @objc private func buttonPress(sender: UIButton) {
+        switch(sender) {
+        case completeButton:
+            // complete button functions
+            completeWorkout()
+            break
+        default:
+            fatalError("Button pressed that does not exist?")
+        }
+    }
+    
     // MARK: View func overrides
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // Workout name label
         workoutNameLabel.setDefaultProperties()
         workoutNameLabel.text = workout.getName()
         
-        // Complete button
-        completeButton.setDefaultProperties()
+        completeButton.setOverlayStyle(style: .FADE)
+        completeButton.setOverlayColor(color: .niceYellow())
         completeButton.setTitle("Finish Workout", for: .normal)
-        completeButton.backgroundColor = UIColor.niceGreen()
         
-        self.contentSize = CGSize(width: self.frame.width, height: workoutStartTableView.frame.maxY)
+        self.contentSize = CGSize(width: self.frame.width, height: completeButton.frame.maxY + 20)
     }
     
     // MARK: Private functions
@@ -84,6 +106,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
         
     }
     
+    // Center horiz in view ; below workoutNameLabel ; height 0 ; width of this view
     private func createAndActivateWorkoutStartTableViewConstraints() {
         workoutStartTableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -104,13 +127,35 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
                                                             plusWidth: 0).isActive = true
     }
     
+    // center horiz in view ; place below workoutStartTableView ; height 50 ; width of this view - 80
+    private func createAndActivateCompleteButtonConstraints() {
+        completeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: completeButton,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: completeButton,
+                                                         belowView: workoutStartTableView,
+                                                         withPadding: 25).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: completeButton,
+                                                         height: 50).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: completeButton,
+                                                            withCopyView: self,
+                                                            plusWidth: -80).isActive = true
+    }
+    
     // MARK: WorkoutStartTableViewDelegate
     
     func updateCompleteStatus(isComplete: Bool) {
         if isComplete {
-            self.backgroundColor = UIColor.niceLightGreen()
+            self.backgroundColor = .niceLightGreen()
+            
+            completeButton.backgroundColor = .niceGreen()
+            completeButton.isEnabled = true
         } else {
-            self.backgroundColor = UIColor.niceGray()
+            self.backgroundColor = .niceGray()
+            
+            completeButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+            completeButton.isEnabled = false
         }
     }
     

@@ -65,6 +65,13 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.cellHeightDidChange(height: 0, indexPath: indexPath)
+            
+            let cells = self.getAllCells()
+            
+            for index in (indexPath.row + 1)...cells.count - 1 {
+                self.moveRow(at: IndexPath(row: index, section: 0), to: IndexPath(row: index - 1, section: 0))
+            }
+            
             self.heights.remove(at: indexPath.row)
             self.reloadData()
         }
@@ -86,7 +93,7 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         // todo: do something
     }
     
-    // Private Methods
+    // MARK: Private Methods
     
     // Setup the table view to default properties
     private func setupTableView() {
@@ -99,7 +106,7 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     }
     
     public func createCell() {
-        let addHeight = CGFloat(exercise.getProgressionMethods().count) * 40.0 + 20
+        let addHeight = CGFloat(exercise.getProgressionMethods().count) * 40.0 + 50
         
         heights.append(addHeight)
         heightConstraint?.constant += addHeight

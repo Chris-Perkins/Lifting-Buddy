@@ -17,6 +17,8 @@ class ExerciseTableViewCell: UITableViewCell {
     // Delegate we use to change height of cells
     public var delegate: ExerciseTableViewCellDelegate?
     
+    // Set Count Label
+    private var setLabel: UILabel
     // Progression methods for this view
     private var progressionMethods: [ProgressionMethod] = [ProgressionMethod]()
     // Input fields
@@ -25,9 +27,15 @@ class ExerciseTableViewCell: UITableViewCell {
     // MARK: View inits
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        setLabel = UILabel()
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = .none
+        
+        self.addSubview(setLabel)
+        
+        self.createAndActivateSetLabelConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,11 +45,14 @@ class ExerciseTableViewCell: UITableViewCell {
     // MARK: View overrides
     
     override public func layoutIfNeeded() {
+        self.setLabel.setDefaultProperties()
+        self.setLabel.text = "Set " + String(indexPath!.row)
+        
         for (index, field) in inputFields.enumerated() {
             field.setDefaultProperties()
             field.placeholder = progressionMethods[index].getName()
             field.textAlignment = .left
-            field.backgroundColor = UIColor.niceGray()
+            field.backgroundColor = UIColor.niceGray().withAlphaComponent(0.5)
             field.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
         }
     }
@@ -60,7 +71,7 @@ class ExerciseTableViewCell: UITableViewCell {
     // Update progression methods associated with this view.
     // Create new constraints based on the progression methods
     private func updateProgressionMethods() {
-        var prevView: UIView = self
+        var prevView: UIView = setLabel
         
         for _ in progressionMethods {
             let field = UITextField()
@@ -69,15 +80,9 @@ class ExerciseTableViewCell: UITableViewCell {
             
             field.translatesAutoresizingMaskIntoConstraints = false
             
-            if prevView == self {
-                NSLayoutConstraint.createViewBelowViewTopConstraint(view: field,
-                                                                    belowView: self,
-                                                                    withPadding: 10).isActive = true
-            } else {
-                NSLayoutConstraint.createViewBelowViewConstraint(view: field,
-                                                                 belowView: prevView,
-                                                                 withPadding: 0).isActive = true
-            }
+            NSLayoutConstraint.createViewBelowViewConstraint(view: field,
+                                                             belowView: prevView,
+                                                             withPadding: 0).isActive = true
             NSLayoutConstraint.createWidthCopyConstraintForView(view: field,
                                                                 withCopyView: self,
                                                                 plusWidth: -10).isActive = true
@@ -115,6 +120,30 @@ class ExerciseTableViewCell: UITableViewCell {
             sender.backgroundColor = UIColor.niceGray()
             sender.textColor = UIColor.black
         }
+    }
+    
+    // MARK: View constraints
+    
+    // MARK: Constraint functions
+    
+    private func createAndActivateSetLabelConstraints() {
+        setLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: setLabel,
+                                                            belowView: self,
+                                                            withPadding: 5).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: setLabel,
+                                                         height: 30).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: setLabel,
+                                                            withCopyView: self,
+                                                            plusWidth: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: setLabel,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
 }
 

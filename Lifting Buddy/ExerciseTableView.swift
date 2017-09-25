@@ -64,16 +64,20 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            
+            self.beginUpdates()
+            self.deleteRows(at: [indexPath], with: .automatic)
+            self.endUpdates()
+            
+            //self.reloadData()
+        }
+    }
+    
+    override func deleteRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
+        super.deleteRows(at: indexPaths, with: animation)
+        for indexPath in indexPaths {
             self.cellHeightDidChange(height: 0, indexPath: indexPath)
-            
-            let cells = self.getAllCells()
-            
-            for index in (indexPath.row + 1)...cells.count - 1 {
-                self.moveRow(at: IndexPath(row: index, section: 0), to: IndexPath(row: index - 1, section: 0))
-            }
-            
             self.heights.remove(at: indexPath.row)
-            self.reloadData()
         }
     }
     

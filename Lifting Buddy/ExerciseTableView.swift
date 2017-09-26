@@ -18,7 +18,6 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     public var heightDelegate: ExerciseTableViewDelegate
     
     private var heights: [CGFloat]
-    private var identifiers: [String]
     private var totalHeight: CGFloat
     private var exercise: Exercise
     
@@ -32,7 +31,6 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     
     init(exercise: Exercise, style: UITableViewStyle, heightDelegate: ExerciseTableViewDelegate) {
         self.exercise = exercise
-        identifiers = [String]()
         self.heights  = [CGFloat]()
         self.heightDelegate = heightDelegate
         totalHeight = 0
@@ -53,18 +51,18 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row >= cells.count {
+        if indexPath.row >= self.cells.count {
             let cell = ExerciseTableViewCell(style: .default, reuseIdentifier: nil)
             
             cell.setProgressionMethods(progressionMethods: self.exercise.getProgressionMethods().toArray())
             cell.delegate = self
             cell.indexPath = indexPath
             
-            cells.append(cell)
+            self.cells.append(cell)
             
             return cell
         } else {
-            return cells[indexPath.row]
+            return self.cells[indexPath.row]
         }
     }
     

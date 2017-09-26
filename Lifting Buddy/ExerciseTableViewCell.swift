@@ -163,7 +163,7 @@ class ProgressionMethodTextField: UITextField {
         
         // Set the text back to the normal float as string
         // Ex: "Pounds: 1232" -> "1232"
-        sender.text = floatValueAsString ?? ""
+        //sender.text = floatValueAsString ?? ""
     }
     
     @objc internal override func textfieldDeselected(sender: UITextField) {
@@ -171,7 +171,7 @@ class ProgressionMethodTextField: UITextField {
         
         // Default say we probably didn't receive a valid float string
         // Hope to be proved wrong later.
-        floatValueAsString = nil
+        /*floatValueAsString = nil
         
         if sender.text != nil && sender.text != "" {
             // Valid float text; we're good
@@ -190,6 +190,6 @@ class ProgressionMethodTextField: UITextField {
         else {
             sender.backgroundColor = UIColor.niceGray()
             sender.textColor = UIColor.black
-        }
+        }*/
     }
 }

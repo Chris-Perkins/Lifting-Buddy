@@ -18,13 +18,21 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     public var heightDelegate: ExerciseTableViewDelegate
     
     private var heights: [CGFloat]
+    private var identifiers: [String]
     private var totalHeight: CGFloat
     private var exercise: Exercise
+    
+    private var lastChar: String = ""
+    private final let appendStr: String = "ETVC"
+    
+    private var cells: [ExerciseTableViewCell] = [ExerciseTableViewCell]()
+    
     
     // MARK: View inits
     
     init(exercise: Exercise, style: UITableViewStyle, heightDelegate: ExerciseTableViewDelegate) {
         self.exercise = exercise
+        identifiers = [String]()
         self.heights  = [CGFloat]()
         self.heightDelegate = heightDelegate
         totalHeight = 0
@@ -45,14 +53,19 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell =
-            tableView.dequeueReusableCell(withIdentifier: "cell",
-                                          for: indexPath as IndexPath) as! ExerciseTableViewCell
-        
-        cell.setProgressionMethods(progressionMethods: self.exercise.getProgressionMethods().toArray())
-        cell.delegate = self
-        cell.indexPath = indexPath
-        return cell
+        if indexPath.row >= cells.count {
+            let cell = ExerciseTableViewCell(style: .default, reuseIdentifier: nil)
+            
+            cell.setProgressionMethods(progressionMethods: self.exercise.getProgressionMethods().toArray())
+            cell.delegate = self
+            cell.indexPath = indexPath
+            
+            cells.append(cell)
+            
+            return cell
+        } else {
+            return cells[indexPath.row]
+        }
     }
     
     // MARK: TableView functions
@@ -76,6 +89,7 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     override func deleteRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
         super.deleteRows(at: indexPaths, with: animation)
         for indexPath in indexPaths {
+            self.cells.remove(at: indexPath.row)
             self.cellHeightDidChange(height: 0, indexPath: indexPath)
             self.heights.remove(at: indexPath.row)
         }
@@ -98,6 +112,18 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     }
     
     // MARK: Private Methods
+    
+    private func nextChar(str:String) -> String {
+        if let firstChar = str.unicodeScalars.first {
+            let nextUnicode = firstChar.value + 1
+            if let var4 = UnicodeScalar(nextUnicode) {
+                var nextString = ""
+                nextString.append(Character(UnicodeScalar(var4)))
+                return nextString
+            }
+        }
+        return ""
+    }
     
     // Setup the table view to default properties
     private func setupTableView() {

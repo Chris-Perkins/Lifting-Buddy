@@ -13,18 +13,34 @@ import RealmSwift
 class CreateExerciseView: UIScrollView {
     
     // MARK: View properties
-    let viewPadding: CGFloat = 20.0
+    
+    // delegate which receives information after creation
     public var dataDelegate: CreateExerciseViewDelegate?
+    
+    // Padding between views
+    private let viewPadding: CGFloat = 20.0
+    
+    // name entry label
     private var nameEntryLabel: UILabel
+    // where the name goes
     private var nameEntryField: UITextField
+    // set/rep label
     private var setRepLabel: UILabel
+    // field which contains setentryfield and repentryfield
     private var setRepEntryFieldView: UIView
+    // field for set count entry
     private var setEntryField: UITextField
+    // field for rep entry
     private var repEntryField: UITextField
+    // progressions label
     private var progressionsLabel: UILabel
+    // table which holds all of the progressionmethods for this exercise
     private var progressionsTableView: ProgressionsTableView
+    // adds a progression method to the tableview
     private var addProgressionTrackerButton: PrettyButton
+    // creates the exercise
     private var createExerciseButton: PrettyButton
+    // cancels creation
     private var cancelButton: PrettyButton
     
     // MARK: Init overrides
@@ -76,7 +92,11 @@ class CreateExerciseView: UIScrollView {
     // MARK: View overrides
     
     override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // self stuff
         self.backgroundColor = UIColor.niceGray()
+        self.contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
 
         // Name Entry Label
         nameEntryLabel.text = "Name of New Exercise"
@@ -84,22 +104,22 @@ class CreateExerciseView: UIScrollView {
         
         // Name Entry Field
         nameEntryField.setDefaultProperties()
-        nameEntryField.placeholder = "Required: Name"
+        nameEntryField.placeholder = "Required: Name of Exercise"
         
         
         // Set/rep entry label
         setRepLabel.setDefaultProperties()
-        setRepLabel.text = "Default sets x reps (empty for no default)"
+        setRepLabel.text = "Default sets x reps"
         
         // Set entry field
         setEntryField.setDefaultProperties()
         setEntryField.keyboardType = .numberPad
-        setEntryField.placeholder = "Number of Sets"
+        setEntryField.placeholder = "Set Count"
         
         // Rep entry field
         repEntryField.setDefaultProperties()
         repEntryField.keyboardType = .numberPad
-        repEntryField.placeholder = "Number of Reps"
+        repEntryField.placeholder = "Rep Count"
         
         
         // Progression Label
@@ -132,8 +152,6 @@ class CreateExerciseView: UIScrollView {
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         cancelButton.backgroundColor = UIColor.niceRed()
-
-        self.contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
     }
     
     // MARK: Event functions
@@ -256,10 +274,10 @@ class CreateExerciseView: UIScrollView {
                                                          height: 20).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryLabel,
                                                             withCopyView: self,
-                                                            plusWidth: -80).isActive = true
+                                                            plusWidth: 0).isActive = true
     }
     
-    // center horiz in view ; place below nameentrylabel ; height 40 ; width of this view - 80
+    // center horiz in view ; place below nameentrylabel ; height 50 ; width of this view
     func createAndActivateNameEntryFieldConstraints() {
         nameEntryField.translatesAutoresizingMaskIntoConstraints = false
         
@@ -269,10 +287,10 @@ class CreateExerciseView: UIScrollView {
                                                          belowView: nameEntryLabel,
                                                          withPadding: viewPadding / 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
-                                                         height: 40).isActive = true
+                                                         height: 50).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryField,
                                                             withCopyView: self,
-                                                            plusWidth: -80).isActive = true
+                                                            plusWidth: 0).isActive = true
     }
     
     // center horiz in view ; place below nameentryfield ; height 20 ; width of this view - 40
@@ -379,7 +397,7 @@ class CreateExerciseView: UIScrollView {
                                                          height: 20).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: progressionsLabel,
                                                             withCopyView: self,
-                                                            plusWidth: -80).isActive = true
+                                                            plusWidth: 0).isActive = true
     }
     
     // center horiz in view ; place below progressionslabel ; height default 0 ; width of this view - 40

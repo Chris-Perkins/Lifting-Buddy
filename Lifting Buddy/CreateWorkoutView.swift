@@ -21,50 +21,55 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     // variable stating how many cells are in the exercise table view
     private var prevDataCount = -1
     
+    // name entry field label
+    private var nameEntryLabel: UILabel
     // Field to enter name
     private var nameEntryField: UITextField
-    // repeat label
-    private var repeatLabel: UILabel
-    // repeat contents
-    private var repeatButton: ToggleablePrettyButton
     // Exercise Table Label
     private var exerciseTableLabel: UILabel
     // Table holding all of our exercises
     private var exerciseTableView: EditExerciseTableView
     // button to add a new exercise to this view
     private var addExerciseButton: PrettyButton
+    // repeat label
+    private var repeatLabel: UILabel
+    // repeat contents
+    private var repeatButtonView: UIView
     // Button to create our workout
     private var createWorkoutButton: PrettyButton
     // Cancel button
     private var cancelButton: PrettyButton
     
     override init(frame: CGRect) {
+        nameEntryLabel = UILabel()
         nameEntryField = UITextField()
-        repeatLabel = UILabel()
-        repeatButton = ToggleablePrettyButton()
         exerciseTableLabel = UILabel()
         exerciseTableView = EditExerciseTableView()
+        repeatLabel = UILabel()
+        repeatButtonView = UIView()
         addExerciseButton = PrettyButton()
         createWorkoutButton = PrettyButton()
         cancelButton = PrettyButton()
         
         super.init(frame: frame)
 
+        self.addSubview(nameEntryLabel)
         self.addSubview(nameEntryField)
-        self.addSubview(repeatLabel)
-        self.addSubview(repeatButton)
         self.addSubview(exerciseTableLabel)
         self.addSubview(exerciseTableView)
         self.addSubview(addExerciseButton)
+        self.addSubview(repeatLabel)
+        self.addSubview(repeatButtonView)
         self.addSubview(createWorkoutButton)
         self.addSubview(cancelButton)
         
+        self.createAndActivateNameEntryLabelConstraints()
         self.createAndActivateNameEntryFieldConstraints()
-        self.createAndActivateRepeatLabelConstraints()
-        self.createAndActivateRepeatButtonConstraints()
         self.createAndActivateExerciseTableLabelConstraints()
         self.createAndActivateExerciseTableViewConstraints()
         self.createAndActivateAddExerciseButtonConstraints()
+        self.createAndActivateRepeatLabelConstraints()
+        self.createAndActivateRepeatButtonViewConstraints()
         self.createAndActivateCreateWorkoutButtonConstraints()
         self.createAndActivateCancelButtonConstraints()
         
@@ -81,7 +86,11 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         
         // Self stuff
         self.backgroundColor = UIColor.niceGray()
-        self.contentSize.height = cancelButton.frame.maxY + 20
+        self.contentSize.height = cancelButton.frame.maxY + viewPadding
+        
+        // Name entry label
+        nameEntryLabel.setDefaultProperties()
+        nameEntryLabel.text = "Name of Workout"
         
         // Name Entry Field
         nameEntryField.setDefaultProperties()
@@ -92,12 +101,12 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         repeatLabel.text = "Repeat"
         
         // Repeat Buton
-        repeatButton.setToggleViewColor(color: .niceYellow())
+        /*repeatButton.setToggleViewColor(color: .niceYellow())
         repeatButton.setToggleTextColor(color: .white)
         repeatButton.setDefaultTextColor(color: .niceBlue())
         
         repeatButton.setTitle("S", for: .normal)
-        repeatButton.layer.cornerRadius = (repeatButton.frame.width / 2)
+        repeatButton.layer.cornerRadius = (repeatButton.frame.width / 2)*/
         
         // Exercise Table Label
         exerciseTableLabel.setDefaultProperties()
@@ -227,16 +236,31 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     
     // MARK: Constraints
     
-    // Center horiz in view; place below name entry label ; height of 40 ; width of this view - 80
-    func createAndActivateNameEntryFieldConstraints() {
+    private func createAndActivateNameEntryLabelConstraints() {
+        nameEntryLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryLabel,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryLabel,
+                                                            belowView: self,
+                                                            withPadding: viewPadding).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: nameEntryLabel,
+                                                         height: 20).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryLabel,
+                                                            withCopyView: self,
+                                                            plusWidth: 0).isActive = true
+    }
+    
+    // Center horiz in view; place below name entry label ; height of 50 ; width of this view
+    private func createAndActivateNameEntryFieldConstraints() {
         // Name entry field
         nameEntryField.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryField,
                                                                         inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryField,
-                                                            belowView: self,
-                                                            withPadding: viewPadding * 2).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField,
+                                                            belowView: nameEntryLabel,
+                                                            withPadding: viewPadding / 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
                                                          height: 50).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryField,
@@ -245,45 +269,14 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
 
     }
     
-    // center horiz in view ; place below name entry field ; height 20 ; width of this view - 20
-    func createAndActivateRepeatLabelConstraints() {
-        repeatLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: repeatLabel,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: repeatLabel,
-                                                         belowView: nameEntryField,
-                                                         withPadding: viewPadding * 2).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: repeatLabel,
-                                                         height: 20).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: repeatLabel,
-                                                            withCopyView: self,
-                                                            plusWidth: -20).isActive = true
-    }
-    
-    // center horiz in view ; place below name entry field ; height 20 ; width 20
-    func createAndActivateRepeatButtonConstraints() {
-        repeatButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: repeatButton,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: repeatButton,
-                                                         belowView: repeatLabel,
-                                                         withPadding: viewPadding / 2).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: repeatButton,
-                                                         height: 40).isActive = true
-        NSLayoutConstraint.createWidthConstraintForView(view: repeatButton,
-                                                        width: 40).isActive = true
-    }
-    
     // Center horiz in view ; place below nameEntryField ; height of 20 ; width of this view - 80
-    func createAndActivateExerciseTableLabelConstraints() {
+    private func createAndActivateExerciseTableLabelConstraints() {
         exerciseTableLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: exerciseTableLabel,
                                                                         inView: self).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseTableLabel,
-                                                         belowView: repeatButton,
+                                                         belowView: nameEntryField,
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: exerciseTableLabel,
                                                          height: 20).isActive = true
@@ -293,7 +286,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     }
     
     // Center horiz in view ; place below exerciseTableLabel ; Default height of 0 ; Width of this view - 40
-    func createAndActivateExerciseTableViewConstraints() {
+    private func createAndActivateExerciseTableViewConstraints() {
         exerciseTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: exerciseTableView,
@@ -313,7 +306,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     }
     
     // place below exercisetableview ; left/right match to exercisetableview ; height 50
-    func createAndActivateAddExerciseButtonConstraints() {
+    private func createAndActivateAddExerciseButtonConstraints() {
         addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
  
         NSLayoutConstraint.createViewBelowViewConstraint(view: addExerciseButton,
@@ -337,14 +330,46 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                          height: 50).isActive = true
     }
     
+    // center horiz in view ; place below name entry field ; height 20 ; width of this view - 20
+    private func createAndActivateRepeatLabelConstraints() {
+        repeatLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: repeatLabel,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: repeatLabel,
+                                                         belowView: addExerciseButton,
+                                                         withPadding: viewPadding * 2).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: repeatLabel,
+                                                         height: 20).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: repeatLabel,
+                                                            withCopyView: self,
+                                                            plusWidth: -20).isActive = true
+    }
+    
+    // center horiz in view ; place below name entry field ; height 20 ; width of this view - 20
+    private func createAndActivateRepeatButtonViewConstraints() {
+        repeatButtonView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: repeatButtonView,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: repeatButtonView,
+                                                         belowView: repeatLabel,
+                                                         withPadding: viewPadding / 2).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: repeatButtonView,
+                                                         height: 40).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: repeatButtonView,
+                                                            withCopyView: self,
+                                                            plusWidth: -20).isActive = true
+    }
+    
     // center horiz in view ; place below add exercise button ; height of 50 ; width of this view - 50
-    func createAndActivateCreateWorkoutButtonConstraints() {
+    private func createAndActivateCreateWorkoutButtonConstraints() {
         createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: createWorkoutButton,
                                                                         inView: self).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
-                                                         belowView: addExerciseButton,
+                                                         belowView: repeatButtonView,
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: createWorkoutButton,
                                                          height: 50).isActive = true
@@ -354,7 +379,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     }
     
     // center horiz in view ; place below createWorkoutButton; height 30 ; width of createWorkoutButton - 40
-    func createAndActivateCancelButtonConstraints() {
+    private func createAndActivateCancelButtonConstraints() {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: cancelButton,

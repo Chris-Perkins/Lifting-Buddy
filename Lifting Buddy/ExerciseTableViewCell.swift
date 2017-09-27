@@ -69,8 +69,6 @@ class ExerciseTableViewCell: UITableViewCell {
             self.progressionMethods = progressionMethods
             
             self.updateProgressionMethods()
-        } else {
-            
         }
     }
     

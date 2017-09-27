@@ -54,7 +54,6 @@ class ExerciseTableViewCell: UITableViewCell {
             field.setDefaultProperties()
             field.placeholder = progressionMethods[index].getName()
             field.textAlignment = .left
-            field.backgroundColor = UIColor.niceGray().withAlphaComponent(0.5)
         }
     }
     
@@ -146,6 +145,7 @@ class ProgressionMethodTextField: UITextField {
     private var progressionMethod: ProgressionMethod
     // Float value of this cell
     public var floatValueAsString: String?
+    public var bgDefault = UIColor.niceGray().withAlphaComponent(0.5)
     
     // MARK: Custom textfield init
     
@@ -153,10 +153,20 @@ class ProgressionMethodTextField: UITextField {
         self.progressionMethod = progressionMethod
         
         super.init(frame: frame)
+        
+        self.backgroundColor = bgDefault
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    // Reset background color
+    override func textfieldDeselected(sender: UITextField) {
+        super.textfieldDeselected(sender: sender)
+        
+        sender.backgroundColor = self.bgDefault
     }
 
 }

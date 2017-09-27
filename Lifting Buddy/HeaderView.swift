@@ -82,6 +82,7 @@ class HeaderView: UIView {
         
         
         // divide view
+        divideView.layer.zPosition = 1
         divideView.backgroundColor = .white
         divideView.alpha = 0.2
     }

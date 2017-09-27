@@ -22,7 +22,9 @@ class ExerciseTableViewCell: UITableViewCell {
     // Progression methods for this view
     private var progressionMethods: [ProgressionMethod] = [ProgressionMethod]()
     // Input fields
-    private var inputFields: [UITextField] = [UITextField]()
+    private var inputFields: [ProgressionMethodTextField] = [ProgressionMethodTextField]()
+    // Info saved in text fields (used on reload)
+    private var savedInfo: [String?] = [String?]()
     
     // MARK: View inits
     
@@ -61,9 +63,14 @@ class ExerciseTableViewCell: UITableViewCell {
     // Create progression methods
     public func setProgressionMethods(progressionMethods: [ProgressionMethod]) {
         if self.progressionMethods != progressionMethods {
+            inputFields.removeAll()
+            savedInfo.removeAll()
+            
             self.progressionMethods = progressionMethods
             
             self.updateProgressionMethods()
+        } else {
+            
         }
     }
     
@@ -97,6 +104,7 @@ class ExerciseTableViewCell: UITableViewCell {
             
             
             self.inputFields.append(field)
+            savedInfo.append(nil)
             
             prevView = field
         }
@@ -147,49 +155,10 @@ class ProgressionMethodTextField: UITextField {
         self.progressionMethod = progressionMethod
         
         super.init(frame: frame)
-        
-        self.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
-        self.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: Custom textfield events
-    
-    @objc internal override func textfieldSelected(sender: UITextField) {
-        super.textfieldSelected(sender: sender)
-        
-        // Set the text back to the normal float as string
-        // Ex: "Pounds: 1232" -> "1232"
-        //sender.text = floatValueAsString ?? ""
-    }
-    
-    @objc internal override func textfieldDeselected(sender: UITextField) {
-        super.textfieldDeselected(sender: sender)
-        
-        // Default say we probably didn't receive a valid float string
-        // Hope to be proved wrong later.
-        /*floatValueAsString = nil
-        
-        if sender.text != nil && sender.text != "" {
-            // Valid float text; we're good
-            if sender.text?.floatValue != nil {
-                sender.backgroundColor = UIColor.niceLightGreen()
-                sender.textColor = UIColor.black
-                floatValueAsString = sender.text
-                sender.text = progressionMethod.getName()! + ": " + sender.text!
-            } // Invalid text, display bad indication
-            else {
-                sender.backgroundColor = UIColor.niceRed()
-                sender.textColor = UIColor.white
-                sender.text = ""
-            }
-        } // Default indication
-        else {
-            sender.backgroundColor = UIColor.niceGray()
-            sender.textColor = UIColor.black
-        }*/
-    }
+
 }

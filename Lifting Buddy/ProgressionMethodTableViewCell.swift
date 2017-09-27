@@ -15,13 +15,13 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     // MARK: View properties
     private var loaded: Bool
     private var chosen: Bool
-    var nameEntryField: UITextField
+    var nameEntryField: PMCreationTextField
     var pickUnitButton: PrettyButton
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.nameEntryField = UITextField()
+        self.nameEntryField = PMCreationTextField()
         self.pickUnitButton = PrettyButton()
         self.loaded = false
         self.chosen = false
@@ -46,10 +46,10 @@ class ProgressionMethodTableViewCell: UITableViewCell {
             
             // MARK: Progression Textfield
             
-            self.nameEntryField = UITextField(frame: CGRect(x: 5,
-                                                                  y: 5,
-                                                                  width: quarterView * 2 - 7.5,
-                                                                  height: self.frame.height - 10))
+            self.nameEntryField = PMCreationTextField(frame: CGRect(x: 5,
+                                                                    y: 5,
+                                                                    width: quarterView * 2 - 7.5,
+                                                                    height: self.frame.height - 10))
             self.nameEntryField.setDefaultProperties()
             self.nameEntryField.placeholder = "Required: Name"
             self.addSubview(nameEntryField)
@@ -76,8 +76,58 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         
         pickUnitButton.setTitle(ProgressionMethod.unitList[curSelect], for: .normal)
         
-        if nameEntryField.text == nil || nameEntryField.text == "" {
+        // Update the name if the field has not been modified
+        if !nameEntryField.getModified() {
             nameEntryField.text = ProgressionMethod.unitList[curSelect]
+        }
+    }
+}
+
+
+// MARK: PMCreationTextField
+
+// Class signifying a ProgressionMethodCreationTextField
+class PMCreationTextField: UITextField {
+    private var modified: Bool
+    
+    // MARK: inits
+    
+    override init(frame: CGRect) {
+        self.modified = false
+        
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: View functions
+    
+    public func getModified() -> Bool {
+        return self.modified
+    }
+    
+    // MARK: Events
+    
+    override func textfieldSelected(sender: UITextField) {
+        super.textfieldSelected(sender: sender)
+        
+        if !self.modified {
+            sender.text = ""
+        }
+    }
+    
+    override func textfieldDeselected(sender: UITextField) {
+        super.textfieldDeselected(sender: sender)
+        
+        // If this
+        if sender.text == nil || sender.text == "" {
+            self.modified = false
+            self.textColor = UIColor.black.withAlphaComponent(0.25)
+        } else {
+            self.modified = true
+            self.textColor = UIColor.black
         }
     }
 }

@@ -76,7 +76,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         
         pickUnitButton.setTitle(ProgressionMethod.unitList[curSelect], for: .normal)
         
-        if nameEntryField.text == nil || nameEntryField.text == nil {
+        if nameEntryField.text == nil || nameEntryField.text == "" {
             nameEntryField.text = ProgressionMethod.unitList[curSelect]
         }
     }

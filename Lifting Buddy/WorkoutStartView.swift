@@ -12,10 +12,13 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     
     // MARK: View properties
     
+    // Workout for this view
     private var workout: Workout
-    
+    // The name label for this exercise
     private var workoutNameLabel: UILabel
+    // The tableview holding EVERYTHING!!!
     private var workoutStartTableView: WorkoutStartTableView
+    // the complete button for the exercise
     private var completeButton: PrettyButton
     
     // MARK: Inits
@@ -51,6 +54,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     
     // MARK: Private functions
     
+    // Called on completion of the workout (sent by user)
     private func completeWorkout() {
         // TODO: Data saving
         
@@ -59,6 +63,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     
     // MARK: Event functions
     
+    // Generic button press event
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
         case completeButton:
@@ -159,6 +164,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
         }
     }
     
+    // Height of this view changed
     func heightChange() {
         self.layoutSubviews()
     }

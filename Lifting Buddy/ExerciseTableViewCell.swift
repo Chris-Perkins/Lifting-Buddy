@@ -107,13 +107,19 @@ class ExerciseTableViewCell: UITableViewCell {
         }
     }
     
-    // MARK: View constraints
-    
     // MARK: Constraint functions
     
+    // cling to left ; place below setLabel ; height of 30 ; width of this view
     private func createAndActivateSetLabelConstraints() {
         setLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: setLabel,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: setLabel,
                                                             belowView: self,
                                                             withPadding: 5).isActive = true
@@ -122,13 +128,6 @@ class ExerciseTableViewCell: UITableViewCell {
         NSLayoutConstraint.createWidthCopyConstraintForView(view: setLabel,
                                                             withCopyView: self,
                                                             plusWidth: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: setLabel,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
     }
 }
 

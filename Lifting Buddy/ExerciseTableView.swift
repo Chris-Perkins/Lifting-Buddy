@@ -13,17 +13,20 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     
     // MARK: View properties
     
+    // The height of this constraint
     public var heightConstraint: NSLayoutConstraint?
+    // Index path for this view
     public var indexPath: IndexPath?
+    // Delegate that works to change the view's height
     public var heightDelegate: ExerciseTableViewDelegate
     
+    // heights per cell. Acts as "data"
     private var heights: [CGFloat]
+    // Total height of this tableview
     private var totalHeight: CGFloat
+    // Exercise for this tableview
     private var exercise: Exercise
-    
-    private var lastChar: String = ""
-    private final let appendStr: String = "ETVC"
-    
+    // Cells in this tableview
     private var cells: [ExerciseTableViewCell] = [ExerciseTableViewCell]()
     
     
@@ -99,29 +102,19 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     
     // MARK: ExerciseTableViewCell Delegate methods
     
+    // The cell's height here changed
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
         heightConstraint?.constant += height - heights[indexPath.row]
         heightDelegate.heightChange(addHeight: height - heights[indexPath.row])
         heights[indexPath.row] = height
     }
     
+    // This cell has been completed
     func cellCompleteStatusChanged(complete: Bool) {
         // todo: do something
     }
     
     // MARK: Private Methods
-    
-    private func nextChar(str:String) -> String {
-        if let firstChar = str.unicodeScalars.first {
-            let nextUnicode = firstChar.value + 1
-            if let var4 = UnicodeScalar(nextUnicode) {
-                var nextString = ""
-                nextString.append(Character(UnicodeScalar(var4)))
-                return nextString
-            }
-        }
-        return ""
-    }
     
     // Setup the table view to default properties
     private func setupTableView() {
@@ -133,6 +126,7 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         self.backgroundColor = UIColor.clear
     }
     
+    // Creates a cell in this tableview
     public func createCell() {
         let addHeight = CGFloat(exercise.getProgressionMethods().count) * 40.0 + 50
         
@@ -146,5 +140,8 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
 }
 
 protocol ExerciseTableViewDelegate {
+    /*
+     The height of this workout changed.
+     */
     func heightChange(addHeight: CGFloat)
 }

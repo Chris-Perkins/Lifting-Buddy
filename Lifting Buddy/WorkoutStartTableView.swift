@@ -13,15 +13,23 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     // MARK: View properties
     
+    // Base cell height for each tableviewcell
     public static let baseCellHeight: CGFloat = 50.0
     
+    // Height constraint for this view
     public var heightConstraint: NSLayoutConstraint?
+    // The delegate for this view
     public var viewDelegate: WorkoutStartTableViewDelegate?
     
+    // Data, holds exercises per cell
     private var data: [Exercise]
+    // Whether or not we set the exercise per cell
     private var setExercise: [Bool]
+    // Heights per cell
     private var heights: [CGFloat]
+    // Whether or not this workout is complete
     private var curComplete: Int
+    // The currently toggled cell
     private var curToggledCell: WorkoutStartTableViewCell?
     
     // MARK: Initializers
@@ -175,7 +183,13 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
 }
 
 protocol WorkoutStartTableViewDelegate {
+    /*
+     The status of the workout is being updated
+     */
     func updateCompleteStatus(isComplete: Bool)
     
+    /*
+     Height of this view changed
+     */
     func heightChange()
 }

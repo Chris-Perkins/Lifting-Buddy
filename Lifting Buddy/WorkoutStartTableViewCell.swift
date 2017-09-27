@@ -129,6 +129,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     
     // MARK: ExerciseStartTableViewCellMethods
     
+    // Height of this cell changed
     func heightChange(addHeight: CGFloat) {
         curHeight += addHeight
         
@@ -137,6 +138,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     
     // MARK: View functions
     
+    // Sets the exercise for this cell
     public func setExercise(exercise: Exercise) {
         self.exercise = exercise
         
@@ -160,6 +162,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         self.updateAndCreateCompleteAndAddSetButtonConstraints()
     }
     
+    // Changes whether or not this cell is toggled
     public func updateToggledStatus() {
         if indexPath != nil && self.exercise != nil {
             delegate?.cellHeightDidChange(height: self.getHeight(),
@@ -168,12 +171,14 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         }
     }
     
+    // Gets the height of the current cell
     private func getHeight() -> CGFloat {
         return self.isToggled ? curHeight : WorkoutStartTableView.baseCellHeight
     }
     
     // MARK: Event functions
     
+    // Generic button press event
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
         case completeButton:
@@ -275,6 +280,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
                            constant: 10).isActive = true
     }
     
+    // center horiz in view ; place below cellTitle ; height of 0 by default ; width of this view
     private func createAndActivateTableViewConstraints() {
         exerciseTable?.translatesAutoresizingMaskIntoConstraints = false
         
@@ -352,15 +358,27 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
                                                          height: WorkoutStartTableView.baseCellHeight).isActive = true
     }
     
-    // Mark: view properties assigned
+    // MARK: view properties assigned
     
+    // Gives the invisible button the properties it needs to function
     private func giveInvisButtonProperties() {
         invisButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
 }
 
 protocol WorkoutStartTableViewCellDelegate {
+    /*
+     This cell height changed
+     */
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath)
+    
+    /*
+     This cell's completion status changed
+     */
     func cellCompleteStatusChanged(complete: Bool)
+    
+    /*
+     This cell is toggled
+     */
     func cellToggled(indexPath: IndexPath)
 }

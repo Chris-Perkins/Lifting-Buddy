@@ -14,12 +14,16 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     
     // View properties
     
+    // Padding between views
     let viewPadding: CGFloat = 20.0
     
+    // Delegate that does something when workout complete
     public var dataDelegate: CreateWorkoutViewDelegate?
     
     // variable stating how many cells are in the exercise table view
     private var prevDataCount = -1
+    // holds the first char for the days of the week for repeat buttons
+    private final let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]
     
     // name entry field label
     private var nameEntryLabel: UILabel
@@ -35,6 +39,8 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     private var repeatLabel: UILabel
     // repeat contents
     private var repeatButtonView: UIView
+        // all of the repeat buttons
+        private var repeatButtons: [ToggleablePrettyButton]
     // Button to create our workout
     private var createWorkoutButton: PrettyButton
     // Cancel button
@@ -47,6 +53,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         exerciseTableView = EditExerciseTableView()
         repeatLabel = UILabel()
         repeatButtonView = UIView()
+            repeatButtons = [ToggleablePrettyButton]()
         addExerciseButton = PrettyButton()
         createWorkoutButton = PrettyButton()
         cancelButton = PrettyButton()
@@ -73,6 +80,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         self.createAndActivateCreateWorkoutButtonConstraints()
         self.createAndActivateCancelButtonConstraints()
         
+        self.createRepeatButtons(encapsulatingView: repeatButtonView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -101,12 +109,14 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         repeatLabel.text = "Repeat"
         
         // Repeat Buton
-        /*repeatButton.setToggleViewColor(color: .niceYellow())
-        repeatButton.setToggleTextColor(color: .white)
-        repeatButton.setDefaultTextColor(color: .niceBlue())
-        
-        repeatButton.setTitle("S", for: .normal)
-        repeatButton.layer.cornerRadius = (repeatButton.frame.width / 2)*/
+        for repeatButton in repeatButtons {
+            repeatButton.setToggleViewColor(color: .niceYellow())
+            repeatButton.setToggleTextColor(color: .white)
+            repeatButton.setDefaultTextColor(color: UIColor.black.withAlphaComponent(0.25))
+            repeatButton.setDefaultViewColor(color: .white)
+            
+            repeatButton.layer.cornerRadius = (repeatButton.frame.width / 2)
+        }
         
         // Exercise Table Label
         exerciseTableLabel.setDefaultProperties()
@@ -226,6 +236,52 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         }
         
         return createdWorkout
+    }
+    
+    // Creates the repeat buttons
+    private func createRepeatButtons(encapsulatingView: UIView) {
+        var prevView = encapsulatingView
+        
+        for dayChar in daysOfTheWeekChars {
+            let dayButton = ToggleablePrettyButton()
+            dayButton.setTitle(dayChar, for: .normal)
+            
+            self.addSubview(dayButton)
+            self.repeatButtons.append(dayButton)
+            
+            // MARK: dayButton constraints
+            
+            dayButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint(item: prevView,
+                               attribute: prevView == encapsulatingView ? .left : .right,
+                               relatedBy: .equal,
+                               toItem: dayButton,
+                               attribute: .left,
+                               multiplier: 1,
+                               constant: prevView == encapsulatingView ? -2.5 : -5).isActive = true
+            NSLayoutConstraint.createViewBelowViewTopConstraint(view: dayButton,
+                                                                belowView: encapsulatingView,
+                                                                withPadding: 0).isActive = true
+            NSLayoutConstraint(item: encapsulatingView,
+                               attribute: .width,
+                               relatedBy: .equal,
+                               toItem: dayButton,
+                               attribute: .width,
+                               multiplier: CGFloat(daysOfTheWeekChars.count),
+                               constant: 5 * CGFloat(daysOfTheWeekChars.count)).isActive = true
+            NSLayoutConstraint(item: dayButton,
+                               attribute: .height,
+                               relatedBy: .equal,
+                               toItem: dayButton,
+                               attribute: .width,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            
+            
+            // reset prevView to this view for constraints
+            prevView = dayButton
+        }
     }
     
     // MARK: CreateExerciseView delegate
@@ -355,8 +411,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         NSLayoutConstraint.createViewBelowViewConstraint(view: repeatButtonView,
                                                          belowView: repeatLabel,
                                                          withPadding: viewPadding / 2).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: repeatButtonView,
-                                                         height: 40).isActive = true
+        NSLayoutConstraint(item: repeatButtonView, attribute: .width, relatedBy: .equal, toItem: repeatButtonView, attribute: .height, multiplier: CGFloat(daysOfTheWeekChars.count), constant: 5 * CGFloat(daysOfTheWeekChars.count)).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: repeatButtonView,
                                                             withCopyView: self,
                                                             plusWidth: -20).isActive = true

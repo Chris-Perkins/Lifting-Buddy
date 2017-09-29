@@ -122,7 +122,6 @@ class WorkoutTableViewCell: UITableViewCell {
     // MARK: View overrides
     
     override func layoutSubviews() {
-        self.backgroundColor = UIColor.white
         self.clipsToBounds = true
         
         cellTitle.textColor = UIColor.niceBlue()
@@ -144,7 +143,7 @@ class WorkoutTableViewCell: UITableViewCell {
             
             self.backgroundColor = UIColor.niceBlue().withAlphaComponent(0.05)
         } else {
-            self.backgroundColor = UIColor.white
+            self.backgroundColor = (workout?.getIfTodayWorkout())! ? UIColor.niceLightGreen() : UIColor.white
         }
         
         super.layoutSubviews()

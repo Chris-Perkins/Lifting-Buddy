@@ -18,7 +18,7 @@ class Workout: Object {
     // Name of this workout
     @objc dynamic private var name: String?
     // The day this exercise occurs on
-    @objc dynamic private var dayOfTheWeek: String?
+    private var daysOfTheWeek: List<RLMBool>
     // Exercises in this workout
     private var exercises: List<Exercise>
     
@@ -26,7 +26,7 @@ class Workout: Object {
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
         self.name = nil
-        self.dayOfTheWeek = nil
+        self.daysOfTheWeek = List<RLMBool>()
         self.exercises = List<Exercise>()
         
         super.init(realm: realm, schema: schema)
@@ -34,7 +34,7 @@ class Workout: Object {
     
     required init() {
         self.name = nil
-        self.dayOfTheWeek = nil
+        self.daysOfTheWeek = List<RLMBool>()
         self.exercises = List<Exercise>()
         
         super.init()
@@ -42,7 +42,7 @@ class Workout: Object {
     
     required init(value: Any, schema: RLMSchema) {
         self.name = nil
-        self.dayOfTheWeek = nil
+        self.daysOfTheWeek = List<RLMBool>()
         self.exercises = List<Exercise>()
         
         super.init(value: value, schema: schema)
@@ -58,12 +58,12 @@ class Workout: Object {
         self.name = name
     }
     
-    @objc public func getDayOfTheWeek() -> String? {
-        return self.dayOfTheWeek
+    public func getsDayOfTheWeek() -> List<RLMBool> {
+        return self.daysOfTheWeek
     }
     
-    public func setDayOfTheWeek(day: String?) {
-        self.dayOfTheWeek = day
+    public func setDaysOfTheWeek(daysOfTheWeek: List<RLMBool>) {
+        self.daysOfTheWeek = daysOfTheWeek
     }
     
     public func getExercises() -> List<Exercise> {
@@ -91,3 +91,12 @@ class Workout: Object {
         }
     }
 }
+
+// Question:
+// "CHRIS?! CHRIS OH WHY DID YOU DO THIS?"
+// Answer:
+// Because realm does not support RLMArrays/Lists of primitive types.
+public class RLMBool: Object {
+    @objc public dynamic var value: Bool = false
+}
+

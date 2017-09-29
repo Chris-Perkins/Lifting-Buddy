@@ -233,6 +233,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         
         for exercise in exerciseTableView.getData() {
             createdWorkout.addExercise(exercise: exercise)
+            createdWorkout.setDaysOfTheWeek(daysOfTheWeek: self.getDaysOfTheWeek())
         }
         
         return createdWorkout
@@ -282,6 +283,18 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
             // reset prevView to this view for constraints
             prevView = dayButton
         }
+    }
+    
+    private func getDaysOfTheWeek() -> List<RLMBool> {
+        let toggledIndices = List<RLMBool>()
+        
+        for button in repeatButtons {
+            let rlmBool = RLMBool()
+            rlmBool.value = button.isToggled
+            toggledIndices.append(rlmBool)
+        }
+        
+        return toggledIndices
     }
     
     // MARK: CreateExerciseView delegate
@@ -411,7 +424,13 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         NSLayoutConstraint.createViewBelowViewConstraint(view: repeatButtonView,
                                                          belowView: repeatLabel,
                                                          withPadding: viewPadding / 2).isActive = true
-        NSLayoutConstraint(item: repeatButtonView, attribute: .width, relatedBy: .equal, toItem: repeatButtonView, attribute: .height, multiplier: CGFloat(daysOfTheWeekChars.count), constant: 5 * CGFloat(daysOfTheWeekChars.count)).isActive = true
+        NSLayoutConstraint(item: repeatButtonView,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: repeatButtonView,
+                           attribute: .height,
+                           multiplier: CGFloat(daysOfTheWeekChars.count),
+                           constant: 5 * CGFloat(daysOfTheWeekChars.count)).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: repeatButtonView,
                                                             withCopyView: self,
                                                             plusWidth: -20).isActive = true

@@ -229,11 +229,12 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     // Use data on this form to create the workout
     private func createWorkoutWithData() -> Workout {
         let createdWorkout = Workout()
+        
         createdWorkout.setName(name: nameEntryField.text)
+        createdWorkout.setDaysOfTheWeek(daysOfTheWeek: self.getDaysOfTheWeek())
         
         for exercise in exerciseTableView.getData() {
             createdWorkout.addExercise(exercise: exercise)
-            createdWorkout.setDaysOfTheWeek(daysOfTheWeek: self.getDaysOfTheWeek())
         }
         
         return createdWorkout

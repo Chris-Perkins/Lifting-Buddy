@@ -80,6 +80,17 @@ class Workout: Object {
     
     // MARK: Private functions
     
+    public func getIfTodayWorkout() -> Bool {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        if daysOfTheWeek.count == 0 {
+            return false
+        }
+        return daysOfTheWeek[NSDate().getDayOfWeek(formatter.string(from: date))! - 1].value
+    }
+    
     // Remove exercise stored at an index in the int if possible
     public func removeExerciseAtIndex(index: Int) {
         if index >= 0 && index < self.exercises.endIndex {
@@ -89,6 +100,15 @@ class Workout: Object {
                 self.exercises.remove(objectAtIndex: index)
             }
         }
+    }
+    
+    public static func getSortedWorkoutArray(workouts: [Workout]) -> [Workout] {
+        let sortedWorkouts = workouts.sorted(by: {
+            ($0.getIfTodayWorkout() && !($1.getIfTodayWorkout())) ||
+            ($0.getName())! < ($1.getName())!
+        })
+        
+        return sortedWorkouts
     }
 }
 

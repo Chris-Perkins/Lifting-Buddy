@@ -18,7 +18,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     // MARK: Initializers
     
     init(workouts: [Workout], frame: CGRect, style: UITableViewStyle) {
-        data = workouts
+        data = Workout.getSortedWorkoutArray(workouts: workouts)
         
         super.init(frame: frame, style: style)
         
@@ -26,7 +26,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     }
     
     init(workouts: [Workout], style: UITableViewStyle) {
-        data = workouts
+        data = Workout.getSortedWorkoutArray(workouts: workouts)
         
         super.init(frame: .zero, style: style)
         
@@ -108,6 +108,9 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     // Append some data to the tableView
     public func appendDataToTableView(data: Workout) {
         self.data.append(data)
+        
+        self.data = Workout.getSortedWorkoutArray(workouts: self.data)
+        
         reloadData()
     }
     
@@ -123,5 +126,4 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         self.register(WorkoutTableViewCell.self, forCellReuseIdentifier: "cell")
         self.backgroundColor = UIColor.clear
     }
-    
 }

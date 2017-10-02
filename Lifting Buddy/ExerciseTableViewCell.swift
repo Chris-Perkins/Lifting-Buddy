@@ -22,7 +22,7 @@ class ExerciseTableViewCell: UITableViewCell {
     // Progression methods for this view
     private var progressionMethods: [ProgressionMethod] = [ProgressionMethod]()
     // Input fields
-    private var inputFields: [ProgressionMethodTextField] = [ProgressionMethodTextField]()
+    private var inputFields: [UITextField] = [UITextField]()
     // Info saved in text fields (used on reload)
     private var savedInfo: [String?] = [String?]()
     
@@ -54,7 +54,6 @@ class ExerciseTableViewCell: UITableViewCell {
         
         for (index, field) in inputFields.enumerated() {
             field.setDefaultProperties()
-            field.placeholder = progressionMethods[index].getName()
             field.textAlignment = .left
         }
     }
@@ -62,51 +61,68 @@ class ExerciseTableViewCell: UITableViewCell {
     // MARK: Functions
     
     // Create progression methods
-    public func setProgressionMethods(progressionMethods: [ProgressionMethod]) {
+    public func setExercise(exercise: Exercise) {
+        let progressionMethods = exercise.getProgressionMethods().toArray()
+        
         if self.progressionMethods != progressionMethods {
             inputFields.removeAll()
             savedInfo.removeAll()
             
             self.progressionMethods = progressionMethods
             
-            self.updateProgressionMethods()
+            self.updateProgressionMethods(withRepCount: exercise.getRepCount())
         }
     }
     
     // Update progression methods associated with this view.
     // Create new constraints based on the progression methods
-    private func updateProgressionMethods() {
+    private func updateProgressionMethods(withRepCount: Int) {
         var prevView: UIView = setLabel
         
+        let repField = NamedTextField(withName: "Rep Count", frame: .zero)
+        
+        if withRepCount != 0 {
+            repField.text = String(withRepCount)
+        }
+        
+        self.addSubview(repField)
+        self.attachConstraintsToEntryView(entryView: repField, belowView: prevView)
+        
+        self.inputFields.append(repField)
+        
+        prevView = repField
+        
+        
         for method in progressionMethods {
-            let field = ProgressionMethodTextField(progressionMethod: method, frame: .zero)
+            let field = NamedTextField(withName: method.getName()!, frame: .zero)
             
             self.addSubview(field)
-            
-            field.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint.createViewBelowViewConstraint(view: field,
-                                                             belowView: prevView,
-                                                             withPadding: 0).isActive = true
-            NSLayoutConstraint.createWidthCopyConstraintForView(view: field,
-                                                                withCopyView: self,
-                                                                plusWidth: -10).isActive = true
-            NSLayoutConstraint.createHeightConstraintForView(view: field,
-                                                             height: 40).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .left,
-                               relatedBy: .equal,
-                               toItem: field,
-                               attribute: .left,
-                               multiplier: 1,
-                               constant: -5).isActive = true
-            
+            self.attachConstraintsToEntryView(entryView: field, belowView: prevView)
             
             self.inputFields.append(field)
-            savedInfo.append(nil)
             
             prevView = field
         }
+    }
+    
+    private func attachConstraintsToEntryView(entryView: UIView, belowView: UIView) {
+        entryView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewBelowViewConstraint(view: entryView,
+                                                         belowView: belowView,
+                                                         withPadding: 0).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: entryView,
+                                                            withCopyView: self,
+                                                            plusWidth: -10).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: entryView,
+                                                         height: 40).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: entryView,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: -5).isActive = true
     }
     
     // MARK: Constraint functions
@@ -142,20 +158,21 @@ protocol ExerciseTableViewCellDelegate {
 
 
 // MARK: Custom Textfield for this view
-class ProgressionMethodTextField: UITextField {
-    private var progressionMethod: ProgressionMethod
+class NamedTextField: UITextField {
+    private var name: String
     // Float value of this cell
     public var floatValueAsString: String?
     public var bgDefault = UIColor.niceGray().withAlphaComponent(0.5)
     
     // MARK: Custom textfield init
     
-    init(progressionMethod: ProgressionMethod, frame: CGRect) {
-        self.progressionMethod = progressionMethod
+    init(withName: String, frame: CGRect) {
+        self.name = withName
         
         super.init(frame: frame)
         
         self.backgroundColor = bgDefault
+        self.placeholder = withName
     }
     
     required init?(coder aDecoder: NSCoder) {

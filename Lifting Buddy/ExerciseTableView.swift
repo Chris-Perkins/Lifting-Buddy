@@ -57,7 +57,7 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         if indexPath.row >= self.cells.count {
             let cell = ExerciseTableViewCell(style: .default, reuseIdentifier: nil)
             
-            cell.setProgressionMethods(progressionMethods: self.exercise.getProgressionMethods().toArray())
+            cell.setExercise(exercise: self.exercise)
             cell.delegate = self
             cell.indexPath = indexPath
             
@@ -130,7 +130,8 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     
     // Creates a cell in this tableview
     public func createCell() {
-        let addHeight = CGFloat(exercise.getProgressionMethods().count) * 40.0 + 50
+        // + 1 as we incorporate rep count
+        let addHeight = CGFloat(exercise.getProgressionMethods().count + 1) * 40.0 + 50
         
         heights.append(addHeight)
         heightConstraint?.constant += addHeight

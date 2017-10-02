@@ -8,7 +8,7 @@ Road Map (er... table):
 
 | Process                   | Progress (Estimation) | Notes                                          |
 |---------------------------|-----------------------|------------------------------------------------|
-| Workout Creation          | 8/10                  | Add Repeat Button                              |
+| Workout Creation          | 9/10                  |                                                |
 | Exercise Creation         | 9/10                  | Add nice way to choose progression method unit |
 | Workout History Tracking  | 0/10                  |                                                |
 | Exercise History Tracking | 0/10                  |                                                |

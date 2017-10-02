@@ -50,7 +50,7 @@ class ExerciseTableViewCell: UITableViewCell {
         super.layoutIfNeeded()
         
         self.setLabel.setDefaultProperties()
-        self.setLabel.text = "Set " + String(self.indexPath!.row)
+        self.setLabel.text = "Set " + String(self.indexPath!.row + 1)
         
         for (index, field) in inputFields.enumerated() {
             field.setDefaultProperties()

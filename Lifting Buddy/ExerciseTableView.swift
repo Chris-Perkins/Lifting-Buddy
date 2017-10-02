@@ -65,6 +65,8 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
             
             return cell
         } else {
+            self.cells[indexPath.row].indexPath = indexPath
+            self.cells[indexPath.row].layoutIfNeeded()
             return self.cells[indexPath.row]
         }
     }
@@ -80,10 +82,10 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         if editingStyle == .delete {
             
             self.beginUpdates()
-            self.deleteRows(at: [indexPath], with: .automatic)
+            self.deleteRows(at: [indexPath], with: .left)
             self.endUpdates()
             
-            //self.reloadData()
+            self.reloadData()
         }
     }
     
@@ -134,7 +136,6 @@ class ExerciseTableView: UITableView, UITableViewDataSource, UITableViewDelegate
         heightConstraint?.constant += addHeight
         heightDelegate.heightChange(addHeight: addHeight)
         
-        self.backgroundColor = UIColor.black
         self.reloadData()
     }
 }

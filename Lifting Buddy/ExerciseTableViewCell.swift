@@ -47,8 +47,10 @@ class ExerciseTableViewCell: UITableViewCell {
     // MARK: View overrides
     
     override public func layoutIfNeeded() {
+        super.layoutIfNeeded()
+        
         self.setLabel.setDefaultProperties()
-        self.setLabel.text = "Set " + String(indexPath!.row)
+        self.setLabel.text = "Set " + String(self.indexPath!.row)
         
         for (index, field) in inputFields.enumerated() {
             field.setDefaultProperties()

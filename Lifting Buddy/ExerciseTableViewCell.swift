@@ -52,7 +52,7 @@ class ExerciseTableViewCell: UITableViewCell {
         self.setLabel.setDefaultProperties()
         self.setLabel.text = "Set " + String(self.indexPath!.row + 1)
         
-        for (index, field) in inputFields.enumerated() {
+        for (_, field) in inputFields.enumerated() {
             field.setDefaultProperties()
             field.textAlignment = .left
         }

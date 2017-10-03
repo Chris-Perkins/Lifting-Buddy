@@ -36,7 +36,6 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     private var invisButton: PrettyButton
     private var cellTitle: UILabel
     private var expandImage: UIImageView
-    private var exerciseTable: ExerciseTableView?
     private var addSetButton: PrettyButton
     private var completeButton: PrettyButton
     
@@ -141,23 +140,6 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     // Sets the exercise for this cell
     public func setExercise(exercise: Exercise) {
         self.exercise = exercise
-        
-        exerciseTable?.removeFromSuperview()
-        exerciseTable = ExerciseTableView(exercise: exercise, style: .plain, heightDelegate: self)
-        exerciseTable!.backgroundColor = UIColor.black
-        exerciseTable!.heightDelegate = self
-        
-        self.addSubview(exerciseTable!)
-        
-        lowestViewBesidesCompleteButton = exerciseTable!
-        
-        cellTitle.text = exercise.getName()
-        
-        self.createAndActivateTableViewConstraints()
-        // do this after creating constraints so the constraint is updated properly
-        for _ in 0 ..< exercise.getSetCount() {
-            exerciseTable?.createCell()
-        }
         
         self.updateAndCreateCompleteAndAddSetButtonConstraints()
     }
@@ -278,27 +260,6 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
                            attribute: .right,
                            multiplier: 1,
                            constant: 10).isActive = true
-    }
-    
-    // center horiz in view ; place below cellTitle ; height of 0 by default ; width of this view
-    private func createAndActivateTableViewConstraints() {
-        exerciseTable?.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: exerciseTable!,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseTable!,
-                                                         belowView: cellTitle,
-                                                         withPadding: 0).isActive = true
-        // Create and assign height constraint
-        // Assign height constraint
-        exerciseTable?.heightConstraint =
-            NSLayoutConstraint.createHeightConstraintForView(view: exerciseTable!,
-                                                             height: 0)
-        exerciseTable!.heightConstraint?.isActive = true
-        
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: exerciseTable!,
-                                                            withCopyView: self,
-                                                            plusWidth: 0).isActive = true
     }
     
     // Place below previousview, both buttons distributed equally at the bottom

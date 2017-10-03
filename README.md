@@ -4,7 +4,7 @@ To run this application, you will need to have CocoaPods installed.
 
 In the project directory, run the command "pod install".
 
-Road Map (er... table):
+## Road Map:
 
 | Process                   | Progress (Estimation) | Notes                                          |
 |---------------------------|-----------------------|------------------------------------------------|
@@ -12,11 +12,15 @@ Road Map (er... table):
 | Exercise Creation         | 9/10                  | Add nice way to choose progression method unit |
 | Workout History Tracking  | 0/10                  |                                                |
 | Exercise History Tracking | 0/10                  |                                                |
-| Workout Start             | 8/10                  | Add Rep Count Box                              |
-| Exercise Start            | 8/10                  | Figure out a nice way to display exercise name |
+| Workout Start             | 7/10                  | Add Rep Count Box                              |
+| Exercise Start            | 3/10                  | Reworking UI; will be less table-based.        |
 | App Icon                  | 0/10                  |                                                |
 | Splash Screen             | 0/10                  |                                                |
 | Home Screen               | 0/10                  |                                                |
 | Workout Screen            | 10?/10                | Not sure if finished yet, but seems complete.  |
 | Exercise Screen           | 0/10                  |                                                |
 | Settings Screen           | 0/10                  | Don't know what settings to put yet.           |
+
+
+### Future plans (?)
+Log in to sync and backup workouts

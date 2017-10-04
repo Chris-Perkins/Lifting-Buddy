@@ -75,11 +75,16 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.addSubview(invisButton)
         self.addSubview(cellTitle)
         self.addSubview(expandImage)
+        self.addSubview(previousSetButton)
+        self.addSubview(nextSetButton)
         self.addSubview(completeButton)
         
         self.createAndActivateInvisButtonConstraints()
         self.createAndActivateCellTitleConstraints()
         self.createAndActivateExpandImageConstraints()
+        self.createAndActivatePreviousButtonConstraints()
+        self.createAndActivateNextButtonConstraints()
+        self.createAndActivateCompleteButtonConstraints()
         
         self.giveInvisButtonProperties()
     }
@@ -90,8 +95,8 @@ class WorkoutStartTableViewCell: UITableViewCell {
     
     // MARK: View overrides
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
         
         self.selectionStyle = .none
         self.clipsToBounds = true
@@ -104,10 +109,16 @@ class WorkoutStartTableViewCell: UITableViewCell {
         completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         if (self.isToggled) {
-            self.backgroundColor = UIColor.niceBlue().withAlphaComponent(0.05)
+            self.backgroundColor = UIColor.niceLightGreen()
         } else {
             self.backgroundColor = UIColor.white
         }
+        
+        previousSetButton.setDefaultProperties()
+        previousSetButton.backgroundColor = UIColor.niceGreen()
+        
+        nextSetButton.setDefaultProperties()
+        nextSetButton.backgroundColor = UIColor.niceGreen()
         
         completeButton.setTitleColor(UIColor.white, for: .normal)
         // Different states for whether the cell is complete or not.
@@ -126,7 +137,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
             cellTitle.textColor = UIColor.niceBlue()
             
             completeButton.setTitle("Complete Exercise", for: .normal)
-            completeButton.backgroundColor = UIColor.niceGreen()
+            completeButton.backgroundColor = UIColor.niceBlue()
         }
     }
     
@@ -156,9 +167,13 @@ class WorkoutStartTableViewCell: UITableViewCell {
         let completeHeight = WorkoutTableView.baseCellHeight
         // content is where we input our information.
         // we add + 1 to progressionmethods to account for the repetitions we did
-        let contentHeight = viewPadding * 2.5 + CGFloat(exercise.getProgressionMethods().count + 1) * 20.0
+        let contentHeight = getContentHeight()
         
         return titleBarHeight + completeHeight + contentHeight
+    }
+    
+    private func getContentHeight() -> CGFloat {
+        return viewPadding * 2.5 + CGFloat(exercise.getProgressionMethods().count + 1) * 20.0
     }
     
     // MARK: Event functions
@@ -169,7 +184,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         case completeButton:
             self.isComplete = !self.isComplete
             delegate?.cellCompleteStatusChanged(complete: self.isComplete)
-            self.layoutSubviews()
+            self.layoutIfNeeded()
             break
         case invisButton:
             self.isToggled = !self.isToggled
@@ -259,6 +274,96 @@ class WorkoutStartTableViewCell: UITableViewCell {
                            attribute: .right,
                            multiplier: 1,
                            constant: 10).isActive = true
+    }
+    
+    // width of this view / 10 ; cling to left of this ; below invisButton ; height of contentView
+    private func createAndActivatePreviousButtonConstraints() {
+        previousSetButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: previousSetButton,
+                           attribute: .width,
+                           multiplier: 10,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: previousSetButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: invisButton,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: previousSetButton,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: previousSetButton,
+                                                         height: getContentHeight()).isActive = true
+        
+    }
+    
+    // width of this view / 10 ; cling to RIGHT of this ; below invisButton ; height of contentView
+    private func createAndActivateNextButtonConstraints() {
+        nextSetButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: nextSetButton,
+                           attribute: .width,
+                           multiplier: 10,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: nextSetButton,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: invisButton,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: nextSetButton,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: nextSetButton,
+                                                         height: getContentHeight()).isActive = true
+        
+    }
+    
+    // width of this view ; cling to left of this ; previousSet ; height of baseheight
+    private func createAndActivateCompleteButtonConstraints() {
+        completeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: completeButton,
+                           attribute: .width,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: completeButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: previousSetButton,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: completeButton,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: completeButton,
+                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+        
     }
     
     // MARK: view properties assigned

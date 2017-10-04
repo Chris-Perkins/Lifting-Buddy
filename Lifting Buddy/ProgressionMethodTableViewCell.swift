@@ -15,20 +15,29 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     // MARK: View properties
     private var loaded: Bool
     private var chosen: Bool
-    var nameEntryField: PMCreationTextField
+    var nameEntryField: TextFieldWithDefault
     var pickUnitButton: PrettyButton
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.nameEntryField = PMCreationTextField()
+        self.nameEntryField = TextFieldWithDefault(defaultString: nil, frame: .zero)
         self.pickUnitButton = PrettyButton()
         self.loaded = false
         self.chosen = false
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        self.addSubview(nameEntryField)
+        self.addSubview(pickUnitButton)
+        
+        self.createAndActivateNameEntryFieldConstraints()
+        self.createAndActivatePickUnitButtonConstraints()
+        
+        self.pickUnitButton.setTitle("Required: Unit", for: .normal)
+        self.pickUnitButton.addTarget(self,
+                                      action: #selector(pickUnitButtonPress(sender:)),
+                                      for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,36 +46,17 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     
     // MARK: View overrides
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
         
-        if !self.loaded {
-            
-            let quarterView = (self.frame.width) / 4
-            
-            // MARK: Progression Textfield
-            
-            self.nameEntryField = PMCreationTextField(frame: CGRect(x: 5,
-                                                                    y: 5,
-                                                                    width: quarterView * 2 - 7.5,
-                                                                    height: self.frame.height - 10))
-            self.nameEntryField.setDefaultProperties()
-            self.nameEntryField.placeholder = "Required: Name"
-            self.addSubview(nameEntryField)
-            
-            // MARK: Pick Unit button
-            
-            self.pickUnitButton = PrettyButton(frame: CGRect(x: quarterView * 2 + 2.5,
-                                                             y: 5,
-                                                             width: quarterView * 2 - 7.5,
-                                                             height: self.frame.height - 10))
-            self.pickUnitButton.setDefaultProperties()
-            self.pickUnitButton.setTitle("Required: Unit", for: .normal)
-            self.pickUnitButton.addTarget(self, action: #selector(pickUnitButtonPress(sender:)), for: .touchUpInside)
-            self.addSubview(pickUnitButton)
-            
-            self.loaded = true
-        }
+        self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        
+        self.nameEntryField.setDefaultProperties()
+        self.nameEntryField.placeholder = "Required: Name"
+        
+        // MARK: Pick Unit button
+        
+        self.pickUnitButton.setDefaultProperties()
     }
     
     // MARK: Event functions
@@ -76,58 +66,70 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         
         pickUnitButton.setTitle(ProgressionMethod.unitList[curSelect], for: .normal)
         
-        // Update the name if the field has not been modified
-        if !nameEntryField.getModified() {
-            nameEntryField.text = ProgressionMethod.unitList[curSelect]
-        }
+        // Update the name field's default str if the field has not been modified
+        nameEntryField.setDefaultString(defaultString: ProgressionMethod.unitList[curSelect])
     }
-}
-
-
-// MARK: PMCreationTextField
-
-// Class signifying a ProgressionMethodCreationTextField
-class PMCreationTextField: UITextField {
-    private var modified: Bool
     
-    // MARK: inits
+    // MARK: Constraints
     
-    override init(frame: CGRect) {
-        self.modified = false
+    // Cling to top, left, bottom of this view ; width of this view * 2 / 3 (66%)
+    private func createAndActivateNameEntryFieldConstraints() {
+        nameEntryField.translatesAutoresizingMaskIntoConstraints = false
         
-        super.init(frame: frame)
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryField,
+                                                            belowView: self,
+                                                            withPadding: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: nameEntryField,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: nameEntryField,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: nameEntryField,
+                           attribute: .width,
+                           multiplier: 3/2,
+                           constant: 0).isActive = true
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: View functions
-    
-    public func getModified() -> Bool {
-        return self.modified
-    }
-    
-    // MARK: Events
-    
-    override func textfieldSelected(sender: UITextField) {
-        super.textfieldSelected(sender: sender)
+    // Cling to top, right, bottom of this ; Cling to right of nameEntryField
+    // AKA: Take up whatever the nameEntryField doesn't.
+    private func createAndActivatePickUnitButtonConstraints() {
+        pickUnitButton.translatesAutoresizingMaskIntoConstraints = false
         
-        if !self.modified {
-            sender.text = ""
-        }
-    }
-    
-    override func textfieldDeselected(sender: UITextField) {
-        super.textfieldDeselected(sender: sender)
-        
-        // If this
-        if sender.text == nil || sender.text == "" {
-            self.modified = false
-            self.textColor = UIColor.black.withAlphaComponent(0.25)
-        } else {
-            self.modified = true
-            self.textColor = UIColor.black
-        }
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: pickUnitButton,
+                                                            belowView: self,
+                                                            withPadding: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: pickUnitButton,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: pickUnitButton,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: nameEntryField,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: pickUnitButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
 }

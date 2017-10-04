@@ -14,6 +14,7 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
     public var heightConstraint: NSLayoutConstraint?
     
     private var data:[ProgressionMethod] = [ProgressionMethod].init()
+    private var cells: [ProgressionMethodTableViewCell] = [ProgressionMethodTableViewCell]()
     var cellHeight: CGFloat = 50.0
     
     // MARK: Override Init
@@ -36,18 +37,15 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
     // Moved a cell (LPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // Modify this code as needed to support more advanced reordering, such as between sections.
-        let source = data[sourceIndexPath.row]
-        let destination = data[destinationIndexPath.row]
-        data[sourceIndexPath.row] = destination
-        data[destinationIndexPath.row] = source
-    }
-    
-    // Selected a table view cell
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(data)
-        // TODO: Edit / Delete dialog
-        let cell: ProgressionMethodTableViewCell = self.cellForRow(at: indexPath) as! ProgressionMethodTableViewCell
-        cell.backgroundColor = UIColor.niceBlue()
+        let sourceData = data[sourceIndexPath.row]
+        let destinationData = data[destinationIndexPath.row]
+        data[sourceIndexPath.row] = destinationData
+        data[destinationIndexPath.row] = sourceData
+        
+        let sourceCell = cells[sourceIndexPath.row]
+        let destinationCell = cells[destinationIndexPath.row]
+        cells[sourceIndexPath.row] = destinationCell
+        cells[destinationIndexPath.row] = sourceCell
     }
     
     // Data is what we use to fill in the table view
@@ -57,10 +55,13 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
     
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ProgressionMethodTableViewCell =
-            tableView.dequeueReusableCell(withIdentifier: "cell",
-                                          for: indexPath as IndexPath) as! ProgressionMethodTableViewCell
-        return cell
+        // Cell does not exist; create it.
+        if indexPath.row >= cells.count {
+            let cell = ProgressionMethodTableViewCell(style: .default, reuseIdentifier: nil)
+            cells.append(cell)
+        }
+        
+        return cells[indexPath.row]
     }
     
     // Each cell has a height of cellHeight

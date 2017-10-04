@@ -23,8 +23,8 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     // Data, holds exercises per cell
     private var data: [Exercise]
-    // Whether or not we set the exercise per cell
-    private var setExercise: [Bool]
+    // cells in this tableview
+    private var cells: [WorkoutStartTableViewCell]
     // Heights per cell
     private var heights: [CGFloat]
     // Whether or not this workout is complete
@@ -36,13 +36,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     init(workout: Workout, frame: CGRect, style: UITableViewStyle) {
         data = workout.getExercises().toArray()
+        cells = [WorkoutStartTableViewCell]()
         heights = [CGFloat]()
-        setExercise = [Bool]()
         curComplete = 0
         
         for _ in data {
             heights.append(WorkoutStartTableView.baseCellHeight)
-            setExercise.append(false)
         }
         self.heightConstraint?.constant = heights.reduce(0, +)
         
@@ -53,13 +52,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     init(workout: Workout, style: UITableViewStyle) {
         data = workout.getExercises().toArray()
+        cells = [WorkoutStartTableViewCell]()
         heights = [CGFloat]()
-        setExercise = [Bool]()
         curComplete = 0
         
         for _ in data {
             heights.append(WorkoutStartTableView.baseCellHeight)
-            setExercise.append(false)
         }
         
         super.init(frame: .zero, style: style)
@@ -91,10 +89,15 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     // Moved a cell (LPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // Modify this code as needed to support more advanced reordering, such as between sections.
-        let source = data[sourceIndexPath.row]
-        let destination = data[destinationIndexPath.row]
-        data[sourceIndexPath.row] = destination
-        data[destinationIndexPath.row] = source
+        let sourceData = data[sourceIndexPath.row]
+        let destinationData = data[destinationIndexPath.row]
+        data[sourceIndexPath.row] = destinationData
+        data[destinationIndexPath.row] = sourceData
+        
+        let sourceCell = cells[sourceIndexPath.row]
+        let destinationCell = cells[destinationIndexPath.row]
+        cells[sourceIndexPath.row] = destinationCell
+        cells[destinationIndexPath.row] = sourceCell
     }
     
     // Data is what we use to fill in the table view
@@ -104,17 +107,19 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell =
-            tableView.dequeueReusableCell(withIdentifier: "cell",
-                                          for: indexPath as IndexPath) as! WorkoutStartTableViewCell
-        if !setExercise[indexPath.row] {
+        if indexPath.row >= cells.count {
+            let cell =
+                WorkoutStartTableViewCell(exercise: data[indexPath.row],
+                                          style: .default,
+                                          reuseIdentifier: nil)
             cell.delegate = self
             cell.indexPath = indexPath
-            cell.setExercise(exercise: data[indexPath.row])
             
-            setExercise[indexPath.row] = true
+            cells.append(cell)
+            return cell
+        } else {
+            return cells[indexPath.row]
         }
-        return cell
     }
     
     // Each cell has a height of cellHeight

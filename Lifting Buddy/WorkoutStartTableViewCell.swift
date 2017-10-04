@@ -8,16 +8,12 @@
 
 import UIKit
 
-class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
+class WorkoutStartTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
     // Exercise assigned to this cell
-    private var exercise: Exercise?
-    // Height of this cell
-    private var heightConstraint: NSLayoutConstraint?
-    // Current height of the cell
-    private var curHeight: CGFloat
+    private var exercise: Exercise
     // Padding between views
     private var viewPadding: CGFloat = 25.0
     // View that is at the lowest point in the cell besides the complete button
@@ -52,23 +48,23 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     
     // MARK: Init Functions
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        invisButton = PrettyButton()
-        cellTitle = UILabel()
-        expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
+    init(exercise: Exercise, style: UITableViewCellStyle, reuseIdentifier: String?) {
+        self.invisButton = PrettyButton()
+        self.cellTitle = UILabel()
+        self.expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
+        self.exercise = exercise
         
-        previousSetButton = PrettyButton()
-        setLabel = UILabel()
-        exerciseInputFields = [UITextField]()
-        deleteSetButton = PrettyButton()
-        nextSetButton = PrettyButton()
-        completeButton = PrettyButton()
+        self.previousSetButton = PrettyButton()
+        self.setLabel = UILabel()
+        self.exerciseInputFields = [UITextField]()
+        self.deleteSetButton = PrettyButton()
+        self.nextSetButton = PrettyButton()
+        self.completeButton = PrettyButton()
         
-        data = [[Float]]()
+        self.data = [[Float]]()
         
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
-        curHeight = WorkoutStartTableView.baseCellHeight * 2
         curSet = 0
         lowestViewBesidesCompleteButton = cellTitle
         isComplete = false
@@ -100,7 +96,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         self.selectionStyle = .none
         self.clipsToBounds = true
         
-        cellTitle.text = exercise?.getName()
+        cellTitle.text = self.exercise.getName()
         
         invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
@@ -134,15 +130,6 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
         }
     }
     
-    // MARK: ExerciseStartTableViewCellMethods
-    
-    // Height of this cell changed
-    func heightChange(addHeight: CGFloat) {
-        curHeight += addHeight
-        
-        delegate?.cellHeightDidChange(height: self.getHeight(), indexPath: indexPath!)
-    }
-    
     // MARK: View functions
     
     // Sets the exercise for this cell
@@ -152,7 +139,7 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     
     // Changes whether or not this cell is toggled
     public func updateToggledStatus() {
-        if indexPath != nil && self.exercise != nil {
+        if indexPath != nil {
             delegate?.cellHeightDidChange(height: self.getHeight(),
                                           indexPath: indexPath!)
             self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isToggled ? -1 : 1)
@@ -161,7 +148,17 @@ class WorkoutStartTableViewCell: UITableViewCell, ExerciseTableViewDelegate {
     
     // Gets the height of the current cell
     private func getHeight() -> CGFloat {
-        return self.isToggled ? curHeight : WorkoutStartTableView.baseCellHeight
+        return self.isToggled ? getExpandedHeight() : WorkoutStartTableView.baseCellHeight
+    }
+
+    private func getExpandedHeight() -> CGFloat {
+        let titleBarHeight = WorkoutTableView.baseCellHeight
+        let completeHeight = WorkoutTableView.baseCellHeight
+        // content is where we input our information.
+        // we add + 1 to progressionmethods to account for the repetitions we did
+        let contentHeight = viewPadding * 2.5 + CGFloat(exercise.getProgressionMethods().count + 1) * 20.0
+        
+        return titleBarHeight + completeHeight + contentHeight
     }
     
     // MARK: Event functions

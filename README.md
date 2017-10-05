@@ -13,9 +13,9 @@ In the project directory, run the command "pod install".
 | Workout History Tracking  | 0/10                  |                                                |
 | Exercise History Tracking | 0/10                  |                                                |
 | Workout Start             | 7/10                  | Add Rep Count Box                              |
-| Exercise Start            | 3/10                  | Reworking UI; will be less table-based.        |
-| App Icon                  | 0/10                  |                                                |
-| Splash Screen             | 0/10                  |                                                |
+| Exercise Start            | 5/10                  | Reworking UI; will be less table-based.        |
+| App Icon                  | 2/10                  |  Have artist                                   |
+| Splash Screen             | 2/10                  |  Have artist                                   |
 | Home Screen               | 0/10                  |                                                |
 | Workout Screen            | 10?/10                | Not sure if finished yet, but seems complete.  |
 | Exercise Screen           | 0/10                  |                                                |

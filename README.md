@@ -4,6 +4,8 @@ To run this application, you will need to have CocoaPods installed.
 
 In the project directory, run the command "pod install".
 
+Expected / Hopeful release: December 20th
+
 ## Road Map:
 
 | Process                   | Progress (Estimation) | Notes                                          |

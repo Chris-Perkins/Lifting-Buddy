@@ -28,6 +28,7 @@ class TextFieldWithDefault: UITextField {
         super.init(frame: frame)
     }
     
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -51,7 +52,7 @@ class TextFieldWithDefault: UITextField {
     // MARK: View events
     
     // Resets text if the field is modified
-    override func textfieldSelected(sender: UITextField) {
+    @objc override func textfieldSelected(sender: UITextField) {
         super.textfieldSelected(sender: sender)
         
         self.userEditing = true
@@ -62,7 +63,7 @@ class TextFieldWithDefault: UITextField {
     }
     
     // Determines whether or not the field is modified
-    override func textfieldDeselected(sender: UITextField) {
+    @objc override func textfieldDeselected(sender: UITextField) {
         super.textfieldDeselected(sender: sender)
         
         // Determine whether this change is called by a tableview
@@ -83,6 +84,7 @@ class TextFieldWithDefault: UITextField {
             self.userEditing = false
         } else {
             if !self.modified {
+                self.text = defaultString
                 self.textColor = UIColor.black.withAlphaComponent(0.25)
             }
         }

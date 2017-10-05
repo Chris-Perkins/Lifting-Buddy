@@ -14,8 +14,12 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     
     // MARK: View properties
     private var loaded: Bool
+    // Whether or not we chose a unit
     private var chosen: Bool
+    
+    // the name entry field for this name entry field
     var nameEntryField: TextFieldWithDefault
+    // get the pick unit button
     var pickUnitButton: PrettyButton
     
     // MARK: Init overrides
@@ -98,7 +102,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
                            relatedBy: .equal,
                            toItem: nameEntryField,
                            attribute: .width,
-                           multiplier: 3/2,
+                           multiplier: 7/4,
                            constant: 0).isActive = true
     }
     

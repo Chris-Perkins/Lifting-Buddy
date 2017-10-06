@@ -38,7 +38,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private var previousSetButton: PrettyButton
     private var setLabel: UILabel
     private var inputContentView: UIView
-    private var exerciseInputFields: [UITextField]
+    private var exerciseInputFields: [TextFieldWithDefault]
     private var deleteSetButton: PrettyButton
     private var nextSetButton: PrettyButton
     private var completeButton: PrettyButton
@@ -58,7 +58,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.previousSetButton = PrettyButton()
         self.setLabel = UILabel()
         self.inputContentView = UIView()
-        self.exerciseInputFields = [UITextField]()
+        self.exerciseInputFields = [TextFieldWithDefault]()
         self.deleteSetButton = PrettyButton()
         self.nextSetButton = PrettyButton()
         self.completeButton = PrettyButton()
@@ -67,7 +67,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
-        self.curSet = 0
+        self.curSet = 1
         self.lowestViewBesidesCompleteButton = cellTitle
         self.isComplete = false
         self.isToggled = false
@@ -92,6 +92,10 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.createAndActivateCompleteButtonConstraints()
         
         self.giveInvisButtonProperties()
+        
+        self.completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        self.nextSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        self.previousSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -111,7 +115,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
         self.completeButton.setDefaultProperties()
-        self.completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         if (self.isToggled) {
             self.backgroundColor = UIColor.niceLightGreen()
@@ -145,6 +148,14 @@ class WorkoutStartTableViewCell: UITableViewCell {
             self.completeButton.setTitle("Complete Exercise", for: .normal)
             self.completeButton.backgroundColor = UIColor.niceBlue()
         }
+        
+        if self.curSet == 1 {
+            self.previousSetButton.backgroundColor = UIColor.niceGray()
+            self.previousSetButton.isUserInteractionEnabled = false
+        } else {
+            self.previousSetButton.backgroundColor = UIColor.niceGreen()
+            self.previousSetButton.isUserInteractionEnabled = true
+        }
     }
     
     // MARK: View functions
@@ -168,6 +179,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         return self.isToggled ? getExpandedHeight() : WorkoutStartTableView.baseCellHeight
     }
 
+    // gets the height of this cell when expanded
     private func getExpandedHeight() -> CGFloat {
         let titleBarHeight = WorkoutTableView.baseCellHeight
         let completeHeight = WorkoutTableView.baseCellHeight
@@ -178,8 +190,53 @@ class WorkoutStartTableViewCell: UITableViewCell {
         return titleBarHeight + completeHeight + contentHeight
     }
     
+    // gets the height of the content view
     private func getContentHeight() -> CGFloat {
         return self.viewPadding * 2 + CGFloat(self.exercise.getProgressionMethods().count + 1) * 40.0
+    }
+    
+    // saves workout data
+    // Returns true if successful
+    private func saveWorkoutDataWithSuccess() -> Bool{
+        var invalidFieldExists = false
+        
+        for (index, inputField) in self.exerciseInputFields.enumerated() {
+            if inputField.text?.floatValue != nil {
+                print(inputField.text?.floatValue ?? "EMPTY")
+                if self.data.count < self.curSet {
+                    self.data.append([Float]())
+                }
+                if self.data[curSet - 1].count <= index {
+                    self.data[curSet - 1].append(inputField.text!.floatValue!)
+                }
+            } else {
+                invalidFieldExists = true
+                inputField.backgroundColor = UIColor.niceRed()
+                inputField.text = ""
+            }
+        }
+        
+        return !invalidFieldExists
+    }
+    
+    private func loadWorkoutDataIfPossible() {
+        // If we're out of range, do nothing
+        if self.curSet < 0 || self.curSet > self.data.count {
+            for inputField in self.exerciseInputFields {
+                inputField.text = ""
+            }
+            
+            // Return, as there is no data here yet.
+            return
+        }
+        
+        for (index, inputField) in self.exerciseInputFields.enumerated() {
+            if index < self.data[curSet - 1].count {
+                // set the default string here to the previous string
+                inputField.setDefaultString(defaultString: inputField.text)
+                inputField.text = String(self.data[curSet - 1][index])
+            }
+        }
     }
     
     // MARK: Event functions
@@ -200,6 +257,33 @@ class WorkoutStartTableViewCell: UITableViewCell {
             }
             
             self.updateToggledStatus()
+        case nextSetButton:
+            // If unable to save, do nothing.
+            if !saveWorkoutDataWithSuccess() {
+                return
+            }
+            
+            // increment
+            self.curSet += 1
+            
+            self.loadWorkoutDataIfPossible()
+            self.layoutIfNeeded()
+            
+            break
+        case previousSetButton:
+            // If unable to save, do nothing.
+            if !saveWorkoutDataWithSuccess() {
+                return
+            }
+            
+            if curSet > 1 {
+                self.curSet -= 1
+            }
+            
+            self.loadWorkoutDataIfPossible()
+            self.layoutIfNeeded()
+            
+            break
         default:
             fatalError("Button pressed did not exist?")
         }
@@ -325,6 +409,8 @@ class WorkoutStartTableViewCell: UITableViewCell {
         repInput.placeholder = "Rep Count"
         repInput.backgroundColor = UIColor.white
         self.addConstraintsToInputView(view: repInput, prevView: prevView)
+        self.exerciseInputFields.append(repInput)
+        
         prevView = repInput
         
         for progressionMethod in self.exercise.getProgressionMethods().toArray() {
@@ -337,6 +423,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
             progressionInput.backgroundColor = UIColor.white
             
             self.addConstraintsToInputView(view: progressionInput, prevView: prevView)
+            self.exerciseInputFields.append(progressionInput)
             
             prevView = progressionInput
         }

@@ -19,6 +19,8 @@ class ProgressionMethod: Object {
     // Units for reps (seconds, kilos, etc)
     @objc dynamic private var unit: String?
     @objc dynamic private var defaultValue: String?
+    // The index of the progressionMethod. Denotes line color in graphs
+    @objc dynamic private var index: String?
     
     public enum Unit: String {
         case WEIGHT = "weight"
@@ -82,5 +84,20 @@ class ProgressionMethod: Object {
     
     @objc public func getDefaultValue() -> String? {
         return self.defaultValue
+    }
+    
+    public func setIndex(index: Int) {
+        self.index = String(index)
+    }
+    
+    public func getIndex() -> Int? {
+        guard let indexStr: String = self.index else {
+            print("No string set up!")
+            return nil
+        }
+        guard let indexInt = Int(indexStr) else {
+            return nil
+        }
+        return indexInt
     }
 }

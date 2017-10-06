@@ -71,7 +71,7 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
         lineModels.append(ChartLineModel(chartPoints: value,
                                          lineColors: getLineColorsForProgressionMethod(progressionMethod: key),
                                          lineWidth: 3,
-                                         animDuration: 1,
+                                         animDuration: 0,
                                          animDelay: 0))
     }
     
@@ -134,6 +134,7 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
 
 func getLineColorsForProgressionMethod(progressionMethod: ProgressionMethod) -> [UIColor] {
     var colors = [UIColor]()
+    let modCount = 10
 
     /*colors.append(UIColor(
         red: CGFloat(mod(x: progressionMethod.hashValue, m: 101))/100.0,
@@ -146,9 +147,21 @@ func getLineColorsForProgressionMethod(progressionMethod: ProgressionMethod) -> 
      * x is # of times loop runs
      * c is # of colors
      */
-    for i in 0...1 {
+    guard var index: Int = progressionMethod.getIndex() else {
+        fatalError("Proper index not assigned! Index int returned nil.")
+    }
+    
+    index += 1
+    var i = 0
+    var previousColor = -1
+    while index > 0 {
         var color: UIColor?
-        switch (mod(x: progressionMethod.hashValue / (10^^(i)), m: 10)) {
+        var colorIndex = mod(x: index, m: modCount)
+        if colorIndex == previousColor {
+            colorIndex = mod(x: colorIndex + 1, m: modCount)
+        }
+        
+        switch (colorIndex) {
         case 0:
             color = UIColor.niceRed()
         case 1:
@@ -169,14 +182,17 @@ func getLineColorsForProgressionMethod(progressionMethod: ProgressionMethod) -> 
             color = UIColor.niceMaroon()
         case 9:
             color = UIColor.niceOrange()
-            
         default:
             fatalError("Modulo returned OOB value. Check case amount in ExerciseChartCreator -> GetLineColor Method")
         }
         
+        i += 1
+        // Up this based on mod count. Should be the ceil of closest 10 to modCount
+        // Ex: modCount 9 -> 10, modCount 11 -> 100
+        index = index / 10^^i
+        previousColor = colorIndex
         colors.append(color!)
     }
-    
     return colors
 }
 

@@ -18,14 +18,14 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     private var chosen: Bool
     
     // the name entry field for this name entry field
-    var nameEntryField: TextFieldWithDefault
+    var nameEntryField: BetterTextField
     // get the pick unit button
     var pickUnitButton: PrettyButton
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.nameEntryField = TextFieldWithDefault(defaultString: nil, frame: .zero)
+        self.nameEntryField = BetterTextField(defaultString: nil, frame: .zero)
         self.pickUnitButton = PrettyButton()
         self.loaded = false
         self.chosen = false

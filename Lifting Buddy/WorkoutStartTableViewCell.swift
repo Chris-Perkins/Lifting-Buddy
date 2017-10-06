@@ -38,7 +38,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private var previousSetButton: PrettyButton
     private var setLabel: UILabel
     private var inputContentView: UIView
-    private var exerciseInputFields: [TextFieldWithDefault]
+    private var exerciseInputFields: [BetterTextField]
     private var deleteSetButton: PrettyButton
     private var nextSetButton: PrettyButton
     private var completeButton: PrettyButton
@@ -58,7 +58,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.previousSetButton = PrettyButton()
         self.setLabel = UILabel()
         self.inputContentView = UIView()
-        self.exerciseInputFields = [TextFieldWithDefault]()
+        self.exerciseInputFields = [BetterTextField]()
         self.deleteSetButton = PrettyButton()
         self.nextSetButton = PrettyButton()
         self.completeButton = PrettyButton()
@@ -398,10 +398,11 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private func createAndActivateInputFieldsConstraints() {
         var prevView = inputContentView
         
-        let repInput = TextFieldWithDefault(defaultString:
+        let repInput = BetterTextField(defaultString:
                                             (self.exercise.getRepCount() == 0 ?
                                             nil : String(self.exercise.getRepCount())),
                                             frame: .zero)
+        repInput.setLabelTitle(title: "Reps")
         repInput.setDefaultProperties()
         
         inputContentView.addSubview(repInput)
@@ -414,7 +415,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         prevView = repInput
         
         for progressionMethod in self.exercise.getProgressionMethods().toArray() {
-            let progressionInput = TextFieldWithDefault(defaultString: nil, frame: .zero)
+            let progressionInput = BetterTextField(defaultString: nil, frame: .zero)
             progressionInput.setDefaultProperties()
             
             inputContentView.addSubview(progressionInput)

@@ -1,6 +1,6 @@
 //
-//  TextFieldWithDefault.swift
-//  It's a text field that has a default value.
+//  BetterTextField.swift
+//  It's a text field that has a default value and a label.
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 10/4/17.
@@ -9,9 +9,12 @@
 
 import UIKit
 
-class TextFieldWithDefault: UITextField {
+class BetterTextField: UITextField {
     
     // MARK: View properties
+    
+    // Label for this text field
+    private var label: UILabel
     
     // default string in this textfield
     private var defaultString: String?
@@ -21,11 +24,17 @@ class TextFieldWithDefault: UITextField {
     // MARK: Inits
     
     init(defaultString: String?, frame: CGRect) {
+        self.label = UILabel()
+        
         self.defaultString = defaultString
         self.modified = false
         self.userEditing = false
         
         super.init(frame: frame)
+        
+        self.addSubview(label)
+        
+        self.createAndActivateLabelConstraints()
     }
     
     
@@ -33,7 +42,30 @@ class TextFieldWithDefault: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: View overrides
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.label.setDefaultProperties()
+        self.label.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        self.label.layer.zPosition = 1
+    }
+    
     // MARK: View functions
+    
+    // Sets the label for this view
+    
+    public func setLabelTitle(title: String?) {
+        self.label.text = title
+        
+        self.label.sizeToFit()
+        // Add some padding to our label
+        self.label.frame = CGRect(x: self.label.frame.minX,
+                                  y: self.label.frame.minY,
+                                  width: self.label.frame.width + 20,
+                                  height: self.label.frame.height)
+    }
     
     // Returns whether or not this textfield has been modified
     public func getModified() -> Bool {
@@ -88,5 +120,28 @@ class TextFieldWithDefault: UITextField {
                 self.textColor = UIColor.black.withAlphaComponent(0.25)
             }
         }
+    }
+    
+    // Cling to right, top, bottom of this view
+    private func createAndActivateLabelConstraints() {
+        self.label.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: label,
+                                                            belowView: self,
+                                                            withPadding: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: label,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: label,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
 }

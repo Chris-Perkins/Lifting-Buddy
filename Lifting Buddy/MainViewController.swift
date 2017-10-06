@@ -16,6 +16,11 @@ class MainViewController: UIViewController {
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var sectionContentView: UIView!
     
+    private var homeView: UIView? = nil
+    private var workoutView: UIView? = nil
+    private var exercisesView: UIView? = nil
+    private var settingsView: UIView? = nil
+    
     // MARK: Override functions
     
     override func viewDidLoad() {
@@ -30,10 +35,6 @@ class MainViewController: UIViewController {
     
     // MARK: View functions
     
-    // We have workouts to display
-    func addWorkoutsDisplay(workout: Workout) {
-    }
-    
     func showContentView(viewType: SectionView.ContentViews) {
         sectionContentView.removeAllSubviews()
         
@@ -44,10 +45,17 @@ class MainViewController: UIViewController {
         
         switch(viewType) {
         case SectionView.ContentViews.WORKOUTS:
-            self.sectionContentView.addSubview(WorkoutsView(frame: frame))
+            if self.workoutView == nil {
+                self.workoutView = WorkoutsView(frame: frame)
+            }
+            self.sectionContentView.addSubview(workoutView!)
             break
         case SectionView.ContentViews.SETTINGS:
-            self.sectionContentView.addSubview(SettingsView(frame: frame))
+            if self.settingsView == nil {
+                self.settingsView = SettingsView(frame: frame)
+            }
+            
+            self.sectionContentView.addSubview(settingsView!)
             break
         default:
             break

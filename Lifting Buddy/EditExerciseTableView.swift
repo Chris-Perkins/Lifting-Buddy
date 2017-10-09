@@ -56,7 +56,7 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
     
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return self.data.count
     }
     
     // Create our custom cell class

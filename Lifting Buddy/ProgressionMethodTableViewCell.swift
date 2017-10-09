@@ -66,6 +66,9 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     // MARK: Event functions
     
     @objc func pickUnitButtonPress(sender: UIButton) {
+        // reset if modified
+        pickUnitButton.setDefaultProperties()
+        
         curSelect = (curSelect + 1) % ProgressionMethod.unitList.count
         
         pickUnitButton.setTitle(ProgressionMethod.unitList[curSelect], for: .normal)

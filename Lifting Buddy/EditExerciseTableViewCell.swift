@@ -36,19 +36,66 @@ class EditExerciseTableViewCell: UITableViewCell {
         // MARK: Exercise Name label
         
         exerciseNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: exerciseNameLabel, attribute: .top, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: exerciseNameLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: exerciseNameLabel, attribute: .width, multiplier: 3/2, constant: 25).isActive = true
-        NSLayoutConstraint(item: self, attribute: .left, relatedBy: .equal, toItem: exerciseNameLabel, attribute: .left, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: self, attribute: .top,
+                           relatedBy: .equal,
+                           toItem: self.exerciseNameLabel,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: self.exerciseNameLabel,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: self.exerciseNameLabel,
+                           attribute: .width,
+                           multiplier: 3/2,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: self.exerciseNameLabel,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
         
         
         // MARK: Edit button
         
-        editButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: editButton, attribute: .top, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: editButton, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: editButton, attribute: .width, multiplier: 3, constant: 25).isActive = true
-        NSLayoutConstraint(item: self, attribute: .right, relatedBy: .equal, toItem: editButton, attribute: .right, multiplier: 1, constant: 10).isActive = true
+        self.editButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: self,
+                           attribute: .top,
+                           relatedBy: .equal,
+                           toItem: self.editButton,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: self.editButton,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self.exerciseNameLabel,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: self.editButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: self.editButton,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,7 +109,6 @@ class EditExerciseTableViewCell: UITableViewCell {
         self.clipsToBounds = true
         
         exerciseNameLabel.setDefaultProperties()
-        exerciseNameLabel.backgroundColor = UIColor.niceGray().withAlphaComponent(0.5)
         
         editButton.setDefaultProperties()
         editButton.removeOverlayView()

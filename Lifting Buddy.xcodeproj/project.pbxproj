@@ -286,6 +286,7 @@
 				TargetAttributes = {
 					224697C11F19843A0089C7CA = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = DB8SUTA9JU;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
@@ -537,9 +538,10 @@
 			baseConfigurationReference = 07EAE38F8336E92D79D24030 /* Pods-Lifting Buddy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DB8SUTA9JU;
 				INFOPLIST_FILE = "Lifting Buddy/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.temporaryID.Lifting-Buddy";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ChrisPerkins.Lifting-Buddy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -551,9 +553,10 @@
 			baseConfigurationReference = C522BD41578E9EFDC2DF9433 /* Pods-Lifting Buddy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DB8SUTA9JU;
 				INFOPLIST_FILE = "Lifting Buddy/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.temporaryID.Lifting-Buddy";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ChrisPerkins.Lifting-Buddy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;

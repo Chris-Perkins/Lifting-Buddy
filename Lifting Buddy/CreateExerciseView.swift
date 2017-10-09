@@ -222,6 +222,8 @@ class CreateExerciseView: UIScrollView {
             }
             if cell.pickUnitButton.titleLabel?.text == "Required: Unit" {
                 fulfilled = false
+                
+                cell.pickUnitButton.backgroundColor = UIColor.niceRed()
             }
         }
         

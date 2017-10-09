@@ -152,7 +152,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
             self.previousSetButton.setTitleColor(UIColor.niceGray(), for: .normal)
             self.previousSetButton.isUserInteractionEnabled = false
         } else {
-            self.previousSetButton.backgroundColor = UIColor.niceBlue()
+            self.previousSetButton.setTitleColor(UIColor.niceGray(), for: .normal)
             self.previousSetButton.isUserInteractionEnabled = true
         }
     }

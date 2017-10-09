@@ -135,7 +135,7 @@ class BetterTextField: UITextField {
                            toItem: label,
                            attribute: .right,
                            multiplier: 1,
-                           constant: 0).isActive = true
+                           constant: 20).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .bottom,
                            relatedBy: .equal,

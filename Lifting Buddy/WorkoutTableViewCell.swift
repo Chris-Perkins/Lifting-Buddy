@@ -121,7 +121,7 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // MARK: View overrides
     
-    override func layoutSubviews() {
+    override func layoutIfNeeded() {
         self.clipsToBounds = true
         
         cellTitle.textColor = UIColor.niceBlue()
@@ -275,7 +275,7 @@ class WorkoutTableViewCell: UITableViewCell {
     public func updateSelectedStatus() {
         self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isSelected ? -1 : 1)
         
-        self.layoutSubviews()
+        self.layoutIfNeeded()
     }
     
     // MARK: Event functions

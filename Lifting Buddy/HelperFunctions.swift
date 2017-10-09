@@ -308,3 +308,13 @@ extension UITableView {
         return cells
     }
 }
+
+extension UIImage {
+    public func rotateNinetyDegreesClockwise() -> UIImage {
+        return UIImage(cgImage: self.cgImage!, scale: 1, orientation: UIImageOrientation.right)
+    }
+    
+    public func rotateNinetyDegreesCounterClockwise() -> UIImage {
+        return UIImage(cgImage: self.cgImage!, scale: 1, orientation: UIImageOrientation.left)
+    }
+}

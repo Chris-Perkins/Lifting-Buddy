@@ -122,11 +122,10 @@ class WorkoutStartTableViewCell: UITableViewCell {
             self.backgroundColor = UIColor.white
         }
         
-        self.previousSetButton.setDefaultProperties()
-        self.previousSetButton.backgroundColor = UIColor.niceGreen()
+        self.previousSetButton.setTitle("Previous", for: .normal)
         
-        self.nextSetButton.setDefaultProperties()
-        self.nextSetButton.backgroundColor = UIColor.niceGreen()
+        self.nextSetButton.setTitle("Next", for: .normal)
+        self.nextSetButton.setTitleColor(UIColor.niceBlue(), for: .normal)
         
         self.completeButton.setTitleColor(UIColor.white, for: .normal)
         
@@ -150,10 +149,10 @@ class WorkoutStartTableViewCell: UITableViewCell {
         }
         
         if self.curSet == 1 {
-            self.previousSetButton.backgroundColor = UIColor.niceGray()
+            self.previousSetButton.setTitleColor(UIColor.niceGray(), for: .normal)
             self.previousSetButton.isUserInteractionEnabled = false
         } else {
-            self.previousSetButton.backgroundColor = UIColor.niceGreen()
+            self.previousSetButton.backgroundColor = UIColor.niceBlue()
             self.previousSetButton.isUserInteractionEnabled = true
         }
     }
@@ -375,14 +374,14 @@ class WorkoutStartTableViewCell: UITableViewCell {
                            toItem: inputContentView,
                            attribute: .left,
                            multiplier: 1,
-                           constant: 0).isActive = true
+                           constant: -25).isActive = true
         NSLayoutConstraint(item: nextSetButton,
                            attribute: .left,
                            relatedBy: .equal,
                            toItem: inputContentView,
                            attribute: .right,
                            multiplier: 1,
-                           constant: 0).isActive = true
+                           constant: 25).isActive = true
         NSLayoutConstraint(item: invisButton,
                            attribute: .bottom,
                            relatedBy: .equal,
@@ -463,26 +462,26 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private func createAndActivatePreviousButtonConstraints() {
         previousSetButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: previousSetButton,
-                           attribute: .width,
-                           multiplier: 10,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: previousSetButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
         NSLayoutConstraint(item: invisButton,
                            attribute: .bottom,
                            relatedBy: .equal,
                            toItem: previousSetButton,
                            attribute: .top,
                            multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: previousSetButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: previousSetButton,
+                           attribute: .width,
+                           multiplier: 10,
                            constant: 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: previousSetButton,
                                                          height: getContentHeight()).isActive = true

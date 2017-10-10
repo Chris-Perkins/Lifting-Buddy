@@ -160,7 +160,7 @@ class BetterTextField: UITextField {
                            constant: 0).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .width,
-                           relatedBy: .lessThanOrEqual,
+                           relatedBy: .equal,
                            toItem: label,
                            attribute: .width,
                            multiplier: 4,

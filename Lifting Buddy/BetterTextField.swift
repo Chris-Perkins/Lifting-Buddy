@@ -20,6 +20,7 @@ class BetterTextField: UITextField {
     private var defaultString: String?
     private var modified: Bool
     private var userEditing: Bool
+    private var isNumeric: Bool
     
     // MARK: Inits
     
@@ -29,6 +30,7 @@ class BetterTextField: UITextField {
         self.defaultString = defaultString
         self.modified = false
         self.userEditing = false
+        self.isNumeric = false
         
         super.init(frame: frame)
         
@@ -59,6 +61,18 @@ class BetterTextField: UITextField {
     
     public func setLabelTitle(title: String?) {
         self.label.text = title
+    }
+    
+    public func setIsNumeric(isNumeric: Bool) {
+        self.isNumeric = isNumeric
+    }
+    
+    public func setDefaultString(string: String) {
+        self.defaultString = string
+        
+        if !(self.modified) {
+            self.text = self.defaultString
+        }
     }
     
     // Returns whether or not this textfield has been modified
@@ -102,7 +116,8 @@ class BetterTextField: UITextField {
         // Or if it's being called by the user
         if self.userEditing {
             // If the field is empty, the field was not modified.
-            if sender.text == nil || sender.text == "" {
+            if sender.text == nil || sender.text == "" ||
+                (self.isNumeric && (self.text?.floatValue == nil || self.text?.floatValue == 0)) {
                 self.modified = false
                 // black with alpha 0.25 looks like a placeholder.
                 // that's why i chose this value.

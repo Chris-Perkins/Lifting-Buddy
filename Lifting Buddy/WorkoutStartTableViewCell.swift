@@ -354,6 +354,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
                                             frame: .zero)
         repInput.setLabelTitle(title: "Reps")
         repInput.setDefaultProperties()
+        repInput.setIsNumeric(isNumeric: true)
         
         inputContentView.addSubview(repInput)
         
@@ -371,7 +372,9 @@ class WorkoutStartTableViewCell: UITableViewCell {
             inputContentView.addSubview(progressionInput)
             
             progressionInput.placeholder = progressionMethod.getName()
+            progressionInput.setLabelTitle(title: progressionMethod.getName())
             progressionInput.backgroundColor = UIColor.white
+            progressionInput.setIsNumeric(isNumeric: true)
             
             self.addConstraintsToInputView(view: progressionInput, prevView: prevView)
             self.exerciseInputFields.append(progressionInput)

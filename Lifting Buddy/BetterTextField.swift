@@ -47,8 +47,9 @@ class BetterTextField: UITextField {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.label.setDefaultProperties()
-        self.label.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        self.label.font = UIFont.boldSystemFont(ofSize: 18.0)
+        self.label.textAlignment = .center
+        
         self.label.layer.zPosition = 1
     }
     
@@ -58,13 +59,6 @@ class BetterTextField: UITextField {
     
     public func setLabelTitle(title: String?) {
         self.label.text = title
-        
-        self.label.sizeToFit()
-        // Add some padding to our label
-        self.label.frame = CGRect(x: self.label.frame.minX,
-                                  y: self.label.frame.minY,
-                                  width: self.label.frame.width + 20,
-                                  height: self.label.frame.height)
     }
     
     // Returns whether or not this textfield has been modified
@@ -89,6 +83,9 @@ class BetterTextField: UITextField {
         
         self.userEditing = true
         
+        self.label.backgroundColor = UIColor.niceBlue()
+        self.label.textColor = UIColor.white
+        
         if !self.modified {
             self.text = ""
         }
@@ -97,6 +94,9 @@ class BetterTextField: UITextField {
     // Determines whether or not the field is modified
     @objc override func textfieldDeselected(sender: UITextField) {
         super.textfieldDeselected(sender: sender)
+        
+        self.label.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        self.label.textColor = UIColor.niceBlue()
         
         // Determine whether this change is called by a tableview
         // Or if it's being called by the user
@@ -135,13 +135,20 @@ class BetterTextField: UITextField {
                            toItem: label,
                            attribute: .right,
                            multiplier: 1,
-                           constant: 20).isActive = true
+                           constant: 0).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .bottom,
                            relatedBy: .equal,
                            toItem: label,
                            attribute: .bottom,
                            multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .lessThanOrEqual,
+                           toItem: label,
+                           attribute: .width,
+                           multiplier: 4,
                            constant: 0).isActive = true
     }
 }

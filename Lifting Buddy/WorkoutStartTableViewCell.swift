@@ -35,12 +35,10 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private var expandImage: UIImageView
     
     // Cell contents on expand
-    private var previousSetButton: PrettyButton
     private var setLabel: UILabel
     private var inputContentView: UIView
     private var exerciseInputFields: [BetterTextField]
     private var deleteSetButton: PrettyButton
-    private var nextSetButton: PrettyButton
     private var completeButton: PrettyButton
     
     private var data: [[Float]]
@@ -55,12 +53,10 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
         self.exercise = exercise
         
-        self.previousSetButton = PrettyButton()
         self.setLabel = UILabel()
         self.inputContentView = UIView()
         self.exerciseInputFields = [BetterTextField]()
         self.deleteSetButton = PrettyButton()
-        self.nextSetButton = PrettyButton()
         self.completeButton = PrettyButton()
         
         self.data = [[Float]]()
@@ -77,25 +73,19 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.addSubview(invisButton)
         self.addSubview(cellTitle)
         self.addSubview(expandImage)
-        self.addSubview(previousSetButton)
         self.addSubview(inputContentView)
-        self.addSubview(nextSetButton)
         self.addSubview(completeButton)
         
         self.createAndActivateInvisButtonConstraints()
         self.createAndActivateCellTitleConstraints()
         self.createAndActivateExpandImageConstraints()
-        self.createAndActivatePreviousButtonConstraints()
         self.createAndActivateInputContentViewConstraints()
         self.createAndActivateInputFieldsConstraints()
-        self.createAndActivateNextButtonConstraints()
         self.createAndActivateCompleteButtonConstraints()
         
         self.giveInvisButtonProperties()
         
         self.completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        self.nextSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        self.previousSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -122,11 +112,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
             self.backgroundColor = UIColor.white
         }
         
-        self.previousSetButton.setTitle("Previous", for: .normal)
-        
-        self.nextSetButton.setTitle("Next", for: .normal)
-        self.nextSetButton.setTitleColor(UIColor.niceBlue(), for: .normal)
-        
+        self.cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
         self.completeButton.setTitleColor(UIColor.white, for: .normal)
         
         // Different states for whether the cell is complete or not.
@@ -146,14 +132,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
             
             self.completeButton.setTitle("Complete Exercise", for: .normal)
             self.completeButton.backgroundColor = UIColor.niceBlue()
-        }
-        
-        if self.curSet == 1 {
-            self.previousSetButton.setTitleColor(UIColor.niceGray(), for: .normal)
-            self.previousSetButton.isUserInteractionEnabled = false
-        } else {
-            self.previousSetButton.setTitleColor(UIColor.niceGray(), for: .normal)
-            self.previousSetButton.isUserInteractionEnabled = true
         }
     }
     
@@ -256,33 +234,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
             }
             
             self.updateToggledStatus()
-        case nextSetButton:
-            // If unable to save, do nothing.
-            if !saveWorkoutDataWithSuccess() {
-                return
-            }
-            
-            // increment
-            self.curSet += 1
-            
-            self.loadWorkoutDataIfPossible()
-            self.layoutIfNeeded()
-            
-            break
-        case previousSetButton:
-            // If unable to save, do nothing.
-            if !saveWorkoutDataWithSuccess() {
-                return
-            }
-            
-            if curSet > 1 {
-                self.curSet -= 1
-            }
-            
-            self.loadWorkoutDataIfPossible()
-            self.layoutIfNeeded()
-            
-            break
         default:
             fatalError("Button pressed did not exist?")
         }
@@ -368,15 +319,15 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private func createAndActivateInputContentViewConstraints() {
         inputContentView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: previousSetButton,
-                           attribute: .right,
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
                            relatedBy: .equal,
                            toItem: inputContentView,
                            attribute: .left,
                            multiplier: 1,
                            constant: -25).isActive = true
-        NSLayoutConstraint(item: nextSetButton,
-                           attribute: .left,
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
                            relatedBy: .equal,
                            toItem: inputContentView,
                            attribute: .right,
@@ -458,66 +409,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
                                                          height: 40).isActive = true
     }
     
-    // width of this view / 10 ; cling to left of this ; below invisButton ; height of contentView
-    private func createAndActivatePreviousButtonConstraints() {
-        previousSetButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint(item: invisButton,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: previousSetButton,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: previousSetButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: previousSetButton,
-                           attribute: .width,
-                           multiplier: 10,
-                           constant: 0).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: previousSetButton,
-                                                         height: getContentHeight()).isActive = true
-        
-    }
-    
-    // width of this view / 10 ; cling to RIGHT of this ; below invisButton ; height of contentView
-    private func createAndActivateNextButtonConstraints() {
-        nextSetButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: nextSetButton,
-                           attribute: .width,
-                           multiplier: 10,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: nextSetButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: invisButton,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: nextSetButton,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: nextSetButton,
-                                                         height: getContentHeight()).isActive = true
-        
-    }
-    
     // width of this view ; cling to left of this ; previousSet ; height of baseheight
     private func createAndActivateCompleteButtonConstraints() {
         completeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -536,7 +427,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: previousSetButton,
+        NSLayoutConstraint(item: inputContentView,
                            attribute: .bottom,
                            relatedBy: .equal,
                            toItem: completeButton,

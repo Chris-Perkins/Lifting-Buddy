@@ -15,7 +15,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
     // Exercise assigned to this cell
     private var exercise: Exercise
     // Padding between views
-    private var viewPadding: CGFloat = 25.0
+    private var viewPadding: CGFloat = 15.0
     // View that is at the lowest point in the cell besides the complete button
     // Used in constraining the completebutton
     private var lowestViewBesidesCompleteButton: UIView
@@ -36,9 +36,11 @@ class WorkoutStartTableViewCell: UITableViewCell {
     
     // Cell contents on expand
     private var setLabel: UILabel
+    // view where we put the input textfields
     private var inputContentView: UIView
+    // the fields themselves in the inputcontent view
     private var exerciseInputFields: [BetterTextField]
-    private var deleteSetButton: PrettyButton
+    // a button to complete the workout
     private var completeButton: PrettyButton
     
     private var data: [[Float]]
@@ -56,7 +58,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.setLabel = UILabel()
         self.inputContentView = UIView()
         self.exerciseInputFields = [BetterTextField]()
-        self.deleteSetButton = PrettyButton()
         self.completeButton = PrettyButton()
         
         self.data = [[Float]]()

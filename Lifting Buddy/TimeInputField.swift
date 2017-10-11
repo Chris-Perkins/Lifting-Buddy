@@ -167,6 +167,7 @@ class TimeInputField: UIView {
                 DispatchQueue.main.async {
                     if (self!.secondField.text) != nil {
                         self!.secondField.text = String((self!.secondField.text?.floatValue ?? 0) + 0.1)
+                        self!.checkSecondField()
                     }
                 }
             }

@@ -59,16 +59,13 @@ class TimeInputField: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.hourField.textfield.setDefaultProperties()
+        
         self.hourField.setIsNumeric(isNumeric: true)
         self.hourField.setLabelTitle(title: "h")
         
-        self.minuteField.textfield.setDefaultProperties()
-        self.minuteField.backgroundColor = UIColor.white
         self.minuteField.setIsNumeric(isNumeric: true)
         self.minuteField.setLabelTitle(title: "m")
         
-        self.secondField.textfield.setDefaultProperties()
         self.secondField.setIsNumeric(isNumeric: true)
         self.secondField.setLabelTitle(title: "s")
         
@@ -159,6 +156,11 @@ class TimeInputField: UIView {
     // Timer functions
     
     private func startTimer() {
+        //  Make all textfields non-editable (gray to indicate)
+        self.secondField.textfield.isUserInteractionEnabled = false
+        self.minuteField.textfield.isUserInteractionEnabled = false
+        self.hourField.textfield.isUserInteractionEnabled = false
+        
         let queue = DispatchQueue(label: "com.firm.app.timer", attributes: .concurrent)
         
         timer?.cancel()        // cancel previous timer if any
@@ -185,5 +187,10 @@ class TimeInputField: UIView {
     private func stopTimer() {
         timer?.cancel()
         timer = nil
+        
+        // Make all textfields editable again (white to indicate)
+        self.secondField.textfield.isUserInteractionEnabled = true
+        self.minuteField.textfield.isUserInteractionEnabled = true
+        self.hourField.textfield.isUserInteractionEnabled = true
     }
 }

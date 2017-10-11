@@ -41,6 +41,8 @@ class BetterTextField: UIView{
         
         self.addSubview(textfield)
         self.addSubview(label)
+        
+        self.textfield.setDefaultProperties()
 
         self.createAndActivateTextfieldConstraints()
         self.createAndActivateLabelConstraints()
@@ -60,10 +62,9 @@ class BetterTextField: UIView{
         self.label.textAlignment = .center
         self.label.backgroundColor = UIColor.niceBlue()
         self.label.textColor = UIColor.white
+        self.label.layer.zPosition = 1
         
         self.textfield.textAlignment = .center
-        
-        self.label.layer.zPosition = 1
     }
     
     // MARK: View functions

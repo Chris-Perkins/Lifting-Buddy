@@ -39,7 +39,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
     // view where we put the input textfields
     private var inputContentView: UIView
     // the fields themselves in the inputcontent view
-    private var exerciseInputFields: [BetterTextField]
+    private var exerciseInputFields: [UIView]
     // a button to complete the workout
     private var completeButton: PrettyButton
     
@@ -175,46 +175,37 @@ class WorkoutStartTableViewCell: UITableViewCell {
     
     // saves workout data
     // Returns true if successful
-    private func saveWorkoutDataWithSuccess() -> Bool{
-        var invalidFieldExists = false
-        
-        for (index, inputField) in self.exerciseInputFields.enumerated() {
-            if inputField.text?.floatValue != nil {
-                print(inputField.text?.floatValue ?? "EMPTY")
-                if self.data.count < self.curSet {
-                    self.data.append([Float]())
-                }
-                if self.data[curSet - 1].count <= index {
-                    self.data[curSet - 1].append(inputField.text!.floatValue!)
-                }
-            } else {
-                invalidFieldExists = true
-                inputField.backgroundColor = UIColor.niceRed()
-                inputField.text = ""
-            }
-        }
-        
-        return !invalidFieldExists
+    private func saveWorkoutDataWithSuccess() {
+//        for inputField in self.exerciseInputFields {
+//            if let view: BetterTextField = inputField as? BetterTextField {
+//                if view.text?.floatValue != nil {
+//                    print(view.text?.floatValue ?? "EMPTY")
+//                } else {
+//                    inputField.backgroundColor = UIColor.niceRed()
+//                    view.text = ""
+//                }
+//            }
+//        }
     }
     
     private func loadWorkoutDataIfPossible() {
         // If we're out of range, do nothing
-        if self.curSet < 0 || self.curSet > self.data.count {
-            for inputField in self.exerciseInputFields {
-                inputField.text = ""
-            }
-            
-            // Return, as there is no data here yet.
-            return
-        }
-        
-        for (index, inputField) in self.exerciseInputFields.enumerated() {
-            if index < self.data[curSet - 1].count {
-                // set the default string here to the previous string
-                inputField.setDefaultString(defaultString: inputField.text)
-                inputField.text = String(self.data[curSet - 1][index])
-            }
-        }
+//        if self.curSet < 0 || self.curSet > self.data.count {
+//            for inputField in self.exerciseInputFields {
+//                inputField.text = ""
+//            }
+//
+//            // Return, as there is no data here yet.
+//            return
+//        }
+//
+//        for (index, inputField) in self.exerciseInputFields.enumerated() {
+//            if index < self.data[curSet - 1].count {
+//                // set the default string here to the previous string
+//                inputField.setDefaultString(defaultString: inputField.text)
+//                inputField.text = String(self.data[curSet - 1][index])
+//            }
+//        }
     }
     
     // MARK: Event functions
@@ -367,20 +358,30 @@ class WorkoutStartTableViewCell: UITableViewCell {
         prevView = repInput
         
         for progressionMethod in self.exercise.getProgressionMethods().toArray() {
-            let progressionInput = BetterTextField(defaultString: nil, frame: .zero)
-            progressionInput.setDefaultProperties()
-            
-            inputContentView.addSubview(progressionInput)
-            
-            progressionInput.placeholder = progressionMethod.getName()
-            progressionInput.setLabelTitle(title: progressionMethod.getName())
-            progressionInput.backgroundColor = UIColor.white
-            progressionInput.setIsNumeric(isNumeric: true)
-            
-            self.addConstraintsToInputView(view: progressionInput, prevView: prevView)
-            self.exerciseInputFields.append(progressionInput)
-            
-            prevView = progressionInput
+            if progressionMethod.getUnit() != ProgressionMethod.Unit.TIME.rawValue {
+                let progressionInput = BetterTextField(defaultString: nil, frame: .zero)
+                progressionInput.setDefaultProperties()
+                
+                inputContentView.addSubview(progressionInput)
+                
+                progressionInput.placeholder = progressionMethod.getName()
+                progressionInput.setLabelTitle(title: progressionMethod.getName())
+                progressionInput.backgroundColor = UIColor.white
+                progressionInput.setIsNumeric(isNumeric: true)
+                
+                self.addConstraintsToInputView(view: progressionInput, prevView: prevView)
+                self.exerciseInputFields.append(progressionInput)
+                
+                prevView = progressionInput
+            } else {
+                let progressionInput = TimeInputField(frame: .zero)
+                
+                self.inputContentView.addSubview(progressionInput)
+                self.addConstraintsToInputView(view: progressionInput, prevView: prevView)
+                self.exerciseInputFields.append(progressionInput)
+                
+                prevView = progressionInput
+            }
         }
     }
     

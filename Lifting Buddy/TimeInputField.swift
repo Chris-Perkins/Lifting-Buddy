@@ -43,8 +43,8 @@ class TimeInputField: UIView {
         self.views.append(secondField)
         self.views.append(timerButton)
         
-        self.minuteField.addTarget(self, action: #selector(checkMinuteField), for: .editingDidEnd)
-        self.secondField.addTarget(self, action: #selector(checkSecondField), for: .editingDidEnd)
+        self.minuteField.textfield.addTarget(self, action: #selector(checkMinuteField), for: .editingDidEnd)
+        self.secondField.textfield.addTarget(self, action: #selector(checkSecondField), for: .editingDidEnd)
         self.timerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         self.createConstraints()
@@ -59,40 +59,46 @@ class TimeInputField: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        hourField.setDefaultProperties()
-        hourField.setIsNumeric(isNumeric: true)
-        hourField.setLabelTitle(title: "h")
+        self.hourField.textfield.setDefaultProperties()
+        self.hourField.setIsNumeric(isNumeric: true)
+        self.hourField.setLabelTitle(title: "h")
         
-        minuteField.setDefaultProperties()
-        minuteField.backgroundColor = UIColor.white
-        minuteField.setIsNumeric(isNumeric: true)
-        minuteField.setLabelTitle(title: "m")
+        self.minuteField.textfield.setDefaultProperties()
+        self.minuteField.backgroundColor = UIColor.white
+        self.minuteField.setIsNumeric(isNumeric: true)
+        self.minuteField.setLabelTitle(title: "m")
         
-        secondField.setDefaultProperties()
-        secondField.setIsNumeric(isNumeric: true)
-        secondField.setLabelTitle(title: "s")
+        self.secondField.textfield.setDefaultProperties()
+        self.secondField.setIsNumeric(isNumeric: true)
+        self.secondField.setLabelTitle(title: "s")
         
         
-        timerButton.setToggleViewColor(color: UIColor.niceGreen())
-        timerButton.setDefaultViewColor(color: UIColor.niceBlue())
+        self.timerButton.setToggleViewColor(color: UIColor.niceGreen())
+        self.timerButton.setDefaultViewColor(color: UIColor.niceBlue())
     }
     
     // MARK: Events functions
     
     @objc private func checkSecondField() {
-        secondField.textfieldDeselected(sender: secondField)
+        self.secondField.textfield.textfieldDeselected(sender: secondField.textfield)
         
-        minuteField.text = String(minuteField.text!.floatValue! + floor((secondField.text?.floatValue)! / 60))
-        secondField.text = String(secondField.text!.floatValue!.truncatingRemainder(dividingBy: 60.0))
-        
-        self.checkMinuteField()
+        if self.secondField.textfield.text?.floatValue != nil {
+            minuteField.textfield.text = String((minuteField.textfield.text!.floatValue ?? 0) +
+                                                floor((secondField.textfield.text?.floatValue)! / 60))
+            secondField.textfield.text = String(secondField.textfield.text!.floatValue!.truncatingRemainder(dividingBy: 60.0))
+            
+            self.checkMinuteField()
+        }
     }
     
     @objc private func checkMinuteField() {
-        minuteField.textfieldDeselected(sender: minuteField)
+        self.minuteField.textfield.textfieldDeselected(sender: minuteField.textfield)
         
-        hourField.text = String(hourField.text!.floatValue! + floor((minuteField.text?.floatValue)! / 60))
-        minuteField.text = String(minuteField.text!.floatValue!.truncatingRemainder(dividingBy: 60.0))
+        if self.minuteField.textfield.text?.floatValue != nil {
+            self.hourField.textfield.text = String((hourField.textfield.text!.floatValue ?? 0) +
+                                                   floor((minuteField.textfield.text?.floatValue)! / 60))
+            self.minuteField.textfield.text = String(minuteField.textfield.text!.floatValue!.truncatingRemainder(dividingBy: 60.0))
+        }
     }
     
     @objc private func buttonPress(sender: UIButton) {
@@ -165,8 +171,8 @@ class TimeInputField: UIView {
             
             if self != nil {
                 DispatchQueue.main.async {
-                    if (self!.secondField.text) != nil {
-                        self!.secondField.text = String((self!.secondField.text?.floatValue ?? 0) + 0.1)
+                    if (self!.secondField.textfield.text) != nil {
+                        self!.secondField.textfield.text = String((self!.secondField.textfield.text?.floatValue ?? 0) + 0.1)
                         self!.checkSecondField()
                     }
                 }

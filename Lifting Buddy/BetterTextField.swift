@@ -9,11 +9,12 @@
 
 import UIKit
 
-class BetterTextField: UITextField {
+class BetterTextField: UIView{
     
     // MARK: View properties
     
     // Label for this text field
+    public var textfield: UITextField
     private var label: UILabel
     
     // default string in this textfield
@@ -25,6 +26,7 @@ class BetterTextField: UITextField {
     // MARK: Inits
     
     init(defaultString: String?, frame: CGRect) {
+        self.textfield = UITextField()
         self.label = UILabel()
         
         self.defaultString = defaultString
@@ -34,8 +36,13 @@ class BetterTextField: UITextField {
         
         super.init(frame: frame)
         
-        self.addSubview(label)
+        self.textfield.addTarget(self, action: #selector(editingBegin(sender:)), for: .editingDidBegin)
+        self.textfield.addTarget(self, action: #selector(editingEnd(sender:)), for: .editingDidEnd)
         
+        self.addSubview(textfield)
+        self.addSubview(label)
+
+        self.createAndActivateTextfieldConstraints()
         self.createAndActivateLabelConstraints()
     }
     
@@ -51,6 +58,10 @@ class BetterTextField: UITextField {
         
         self.label.font = UIFont.boldSystemFont(ofSize: 18.0)
         self.label.textAlignment = .center
+        self.label.backgroundColor = UIColor.niceBlue()
+        self.label.textColor = UIColor.white
+        
+        self.textfield.textAlignment = .center
         
         self.label.layer.zPosition = 1
     }
@@ -71,7 +82,7 @@ class BetterTextField: UITextField {
         self.defaultString = string
         
         if !(self.modified) {
-            self.text = self.defaultString
+            self.textfield.text = self.defaultString
         }
     }
     
@@ -84,57 +95,81 @@ class BetterTextField: UITextField {
         self.defaultString = defaultString
         
         if !self.modified {
-            self.text = self.defaultString
-            self.textColor = UIColor.black.withAlphaComponent(0.25)
+            self.textfield.text = self.defaultString
+            self.textfield.textColor = UIColor.black.withAlphaComponent(0.25)
         }
     }
     
     // MARK: View events
     
     // Resets text if the field is modified
-    @objc override func textfieldSelected(sender: UITextField) {
-        super.textfieldSelected(sender: sender)
+    @objc func editingBegin(sender: UITextField) {
+        sender.textfieldSelected(sender: sender)
         
         self.userEditing = true
         
-        self.label.backgroundColor = UIColor.niceBlue()
-        self.label.textColor = UIColor.white
-        
         if !self.modified {
-            self.text = ""
+            self.textfield.text = ""
         }
     }
     
     // Determines whether or not the field is modified
-    @objc override func textfieldDeselected(sender: UITextField) {
-        super.textfieldDeselected(sender: sender)
-        
-        self.label.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        self.label.textColor = UIColor.niceBlue()
+    @objc func editingEnd(sender: UITextField) {
+        sender.textfieldDeselected(sender: sender)
         
         // Determine whether this change is called by a tableview
         // Or if it's being called by the user
         if self.userEditing {
             // If the field is empty, the field was not modified.
             if sender.text == nil || sender.text == "" ||
-                (self.isNumeric && (self.text?.floatValue == nil || self.text?.floatValue == 0)) {
+                (self.isNumeric && (self.textfield.text?.floatValue == nil || self.textfield.text?.floatValue == 0)) {
                 self.modified = false
                 // black with alpha 0.25 looks like a placeholder.
                 // that's why i chose this value.
-                self.textColor = UIColor.black.withAlphaComponent(0.25)
-                self.text = defaultString
+                self.textfield.textColor = UIColor.black.withAlphaComponent(0.25)
+                self.textfield.text = defaultString
             } else {
                 self.modified = true
-                self.textColor = UIColor.black
+                self.textfield.textColor = UIColor.black
             }
             
             self.userEditing = false
         } else {
             if !self.modified {
-                self.text = defaultString
-                self.textColor = UIColor.black.withAlphaComponent(0.25)
+                self.textfield.text = defaultString
+                self.textfield.textColor = UIColor.black.withAlphaComponent(0.25)
             }
         }
+    }
+    
+    // cling to top, bottom, left of this view. Cling to right of label
+    private func createAndActivateTextfieldConstraints() {
+        textfield.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: self.textfield,
+                                                            belowView: self,
+                                                            withPadding: 0).isActive = true
+        NSLayoutConstraint(item: self.label,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: self.textfield,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: self.textfield,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: self.textfield,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
     
     // Cling to right, top, bottom of this view

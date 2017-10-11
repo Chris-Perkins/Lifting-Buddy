@@ -345,12 +345,12 @@ class WorkoutStartTableViewCell: UITableViewCell {
                                             nil : String(self.exercise.getRepCount())),
                                             frame: .zero)
         repInput.setLabelTitle(title: "Reps")
-        repInput.setDefaultProperties()
+        repInput.textfield.setDefaultProperties()
         repInput.setIsNumeric(isNumeric: true)
         
         inputContentView.addSubview(repInput)
         
-        repInput.placeholder = "Rep Count"
+        repInput.textfield.placeholder = "Rep Count"
         repInput.backgroundColor = UIColor.white
         self.addConstraintsToInputView(view: repInput, prevView: prevView)
         self.exerciseInputFields.append(repInput)
@@ -360,11 +360,11 @@ class WorkoutStartTableViewCell: UITableViewCell {
         for progressionMethod in self.exercise.getProgressionMethods().toArray() {
             if progressionMethod.getUnit() != ProgressionMethod.Unit.TIME.rawValue {
                 let progressionInput = BetterTextField(defaultString: nil, frame: .zero)
-                progressionInput.setDefaultProperties()
+                progressionInput.textfield.setDefaultProperties()
                 
                 inputContentView.addSubview(progressionInput)
                 
-                progressionInput.placeholder = progressionMethod.getName()
+                progressionInput.textfield.placeholder = progressionMethod.getName()
                 progressionInput.setLabelTitle(title: progressionMethod.getName())
                 progressionInput.backgroundColor = UIColor.white
                 progressionInput.setIsNumeric(isNumeric: true)

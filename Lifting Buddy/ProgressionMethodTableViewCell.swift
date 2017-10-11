@@ -55,8 +55,8 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         
         self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         
-        self.nameEntryField.setDefaultProperties()
-        self.nameEntryField.placeholder = "Required: Name"
+        self.nameEntryField.textfield.setDefaultProperties()
+        self.nameEntryField.textfield.placeholder = "Required: Name"
         
         // MARK: Pick Unit button
         

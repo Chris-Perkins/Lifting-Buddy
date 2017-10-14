@@ -124,6 +124,7 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
+				22C777BF1F92A53E00901D00 /* New Group */,
 				22AA6D0F1F2184A400624744 /* View Controllers */,
 				225D44101F510FD700B35D80 /* Custom UITypes */,
 				22AA6D0E1F21847F00624744 /* Content Views */,
@@ -235,6 +236,13 @@
 				22E77E051F1B35310076B3DB /* HelperFunctions.swift */,
 			);
 			name = Miscellaneous;
+			sourceTree = "<group>";
+		};
+		22C777BF1F92A53E00901D00 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		83E4B382E04A5660340B4E74 /* Frameworks */ = {

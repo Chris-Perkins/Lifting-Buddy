@@ -65,12 +65,15 @@ class TimeInputField: UIView {
         
         
         self.hourField.setIsNumeric(isNumeric: true)
+        self.hourField.setDefaultString(defaultString: "0")
         self.hourField.setLabelTitle(title: "h")
         
         self.minuteField.setIsNumeric(isNumeric: true)
+        self.minuteField.setDefaultString(defaultString: "0")
         self.minuteField.setLabelTitle(title: "m")
         
         self.secondField.setIsNumeric(isNumeric: true)
+        self.secondField.setDefaultString(defaultString: "0")
         self.secondField.setLabelTitle(title: "s")
         
         

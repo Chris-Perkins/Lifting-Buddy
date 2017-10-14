@@ -351,6 +351,9 @@ class WorkoutStartTableViewCell: UITableViewCell {
         inputContentView.addSubview(repInput)
         
         repInput.textfield.placeholder = "Rep Count"
+        
+        let repCount = self.exercise.getRepCount()
+        repInput.setDefaultString(defaultString: repCount == 0 ? "Rep Count" : String(repCount))
         repInput.backgroundColor = UIColor.white
         self.addConstraintsToInputView(view: repInput, prevView: prevView)
         self.exerciseInputFields.append(repInput)

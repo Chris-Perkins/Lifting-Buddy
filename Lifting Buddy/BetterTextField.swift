@@ -61,6 +61,7 @@ class BetterTextField: UIView{
         self.label.font = UIFont.boldSystemFont(ofSize: 18.0)
         self.label.textAlignment = .center
         self.label.backgroundColor = UIColor.niceBlue()
+        self.textfield.textColor = UIColor.black.withAlphaComponent(self.modified ? 1 : 0.25)
         self.label.textColor = UIColor.white
         self.label.layer.zPosition = 1
         
@@ -73,18 +74,12 @@ class BetterTextField: UIView{
     
     public func setLabelTitle(title: String?) {
         self.label.text = title
+        
+        self.createAndActivateLabelConstraints()
     }
     
     public func setIsNumeric(isNumeric: Bool) {
         self.isNumeric = isNumeric
-    }
-    
-    public func setDefaultString(string: String) {
-        self.defaultString = string
-        
-        if !(self.modified) {
-            self.textfield.text = self.defaultString
-        }
     }
     
     // Returns whether or not this textfield has been modified
@@ -97,8 +92,10 @@ class BetterTextField: UIView{
         
         if !self.modified {
             self.textfield.text = self.defaultString
-            self.textfield.textColor = UIColor.black.withAlphaComponent(0.25)
+            
         }
+        
+        self.layoutSubviews()
     }
     
     // MARK: View events
@@ -127,20 +124,19 @@ class BetterTextField: UIView{
                 self.modified = false
                 // black with alpha 0.25 looks like a placeholder.
                 // that's why i chose this value.
-                self.textfield.textColor = UIColor.black.withAlphaComponent(0.25)
                 self.textfield.text = defaultString
             } else {
                 self.modified = true
-                self.textfield.textColor = UIColor.black
             }
             
             self.userEditing = false
         } else {
             if !self.modified {
                 self.textfield.text = defaultString
-                self.textfield.textColor = UIColor.black.withAlphaComponent(0.25)
             }
         }
+        
+        self.layoutSubviews()
     }
     
     // cling to top, bottom, left of this view. Cling to right of label
@@ -175,6 +171,9 @@ class BetterTextField: UIView{
     
     // Cling to right, top, bottom of this view
     private func createAndActivateLabelConstraints() {
+        self.label.removeAllSubviews()
+        self.addSubview(label)
+        
         self.label.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: label,
@@ -194,12 +193,18 @@ class BetterTextField: UIView{
                            attribute: .bottom,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: label,
-                           attribute: .width,
-                           multiplier: 4,
-                           constant: 0).isActive = true
+        
+        if self.label.text != nil && self.label.text != "" {
+            NSLayoutConstraint(item: self,
+                               attribute: .width,
+                               relatedBy: .equal,
+                               toItem: label,
+                               attribute: .width,
+                               multiplier: 4,
+                               constant: 0).isActive = true
+        } else {
+            NSLayoutConstraint.createWidthConstraintForView(view: label,
+                                                            width: 0).isActive = true
+        }
     }
 }

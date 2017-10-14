@@ -202,9 +202,6 @@ class BetterTextField: UIView{
                                attribute: .width,
                                multiplier: 4,
                                constant: 0).isActive = true
-        } else {
-            NSLayoutConstraint.createWidthConstraintForView(view: label,
-                                                            width: 0).isActive = true
         }
     }
 }

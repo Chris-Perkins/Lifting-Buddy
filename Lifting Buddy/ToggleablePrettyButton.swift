@@ -40,6 +40,7 @@ class ToggleablePrettyButton: PrettyButton {
     
     // MARK: Encapsulated methods
     
+    // The view's color when toggled
     public func setToggleViewColor(color: UIColor) {
         self.toggleViewColor = color
         
@@ -48,6 +49,7 @@ class ToggleablePrettyButton: PrettyButton {
         }
     }
     
+    // The text's color when toggled
     public func setToggleTextColor(color: UIColor) {
         self.toggleTextColor = color
         
@@ -56,6 +58,7 @@ class ToggleablePrettyButton: PrettyButton {
         }
     }
     
+    // The view's color when not toggled
     public func setDefaultViewColor(color: UIColor) {
         self.defaultViewColor = color
         
@@ -64,6 +67,7 @@ class ToggleablePrettyButton: PrettyButton {
         }
     }
     
+    // The view's color when toggled
     public func setDefaultTextColor(color: UIColor) {
         self.defaultTextColor = color
         

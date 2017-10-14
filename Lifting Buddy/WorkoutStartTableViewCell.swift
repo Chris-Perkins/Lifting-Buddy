@@ -12,13 +12,16 @@ class WorkoutStartTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
+    // Padding between views
+    private let viewPadding: CGFloat = 15.0
+    // Table view height for expansion
+    private let tableViewHeight: CGFloat = 150.0
+    
     // Exercise assigned to this cell
     private var exercise: Exercise
-    // Padding between views
-    private var viewPadding: CGFloat = 15.0
     // View that is at the lowest point in the cell besides the complete button
     // Used in constraining the completebutton
-    private var lowestViewBesidesCompleteButton: UIView
+    private var lowestInputView: UIView
     // Whether or not this exercise is complete
     private var isComplete: Bool
     // Holds whether this view is toggled
@@ -65,7 +68,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
         self.curSet = 1
-        self.lowestViewBesidesCompleteButton = cellTitle
+        self.lowestInputView = cellTitle
         self.isComplete = false
         self.isToggled = false
         
@@ -164,8 +167,9 @@ class WorkoutStartTableViewCell: UITableViewCell {
         // content is where we input our information.
         // we add + 1 to progressionmethods to account for the repetitions we did
         let contentHeight = getContentHeight()
+        let totalTableViewHeight = self.tableViewHeight + viewPadding
         
-        return titleBarHeight + completeHeight + contentHeight
+        return titleBarHeight + completeHeight + contentHeight + totalTableViewHeight
     }
     
     // gets the height of the content view

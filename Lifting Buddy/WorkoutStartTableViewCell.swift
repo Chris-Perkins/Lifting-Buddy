@@ -43,6 +43,10 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private var inputContentView: UIView
     // the fields themselves in the inputcontent view
     private var exerciseInputFields: [UIView]
+    // add a set to the table
+    private var addSetButton: PrettyButton
+    // table view that holds the history of our exercise this go around
+    private var exerciseHistoryTableView: ExerciseHistoryTableView
     // a button to complete the workout
     private var completeButton: PrettyButton
     
@@ -61,6 +65,8 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.setLabel = UILabel()
         self.inputContentView = UIView()
         self.exerciseInputFields = [BetterTextField]()
+        self.addSetButton = PrettyButton()
+        self.exerciseHistoryTableView = ExerciseHistoryTableView()
         self.completeButton = PrettyButton()
         
         self.data = [[Float]]()
@@ -74,17 +80,21 @@ class WorkoutStartTableViewCell: UITableViewCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.addSubview(invisButton)
-        self.addSubview(cellTitle)
-        self.addSubview(expandImage)
-        self.addSubview(inputContentView)
-        self.addSubview(completeButton)
+        self.addSubview(self.invisButton)
+        self.addSubview(self.cellTitle)
+        self.addSubview(self.expandImage)
+        self.addSubview(self.inputContentView)
+        self.addSubview(self.addSetButton)
+        self.addSubview(self.exerciseHistoryTableView)
+        self.addSubview(self.completeButton)
         
         self.createAndActivateInvisButtonConstraints()
         self.createAndActivateCellTitleConstraints()
         self.createAndActivateExpandImageConstraints()
         self.createAndActivateInputContentViewConstraints()
         self.createAndActivateInputFieldsConstraints()
+        self.createAndActivateAddSetButtonConstraints()
+        self.createAndActivateExerciseHistoryTableViewConstraints()
         self.createAndActivateCompleteButtonConstraints()
         
         self.giveInvisButtonProperties()
@@ -107,6 +117,9 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.cellTitle.text = self.exercise.getName()
         
         self.invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
+        
+        self.addSetButton.setDefaultProperties()
+        self.addSetButton.setTitle("Add Set!", for: .normal)
         
         self.completeButton.setDefaultProperties()
         
@@ -162,14 +175,24 @@ class WorkoutStartTableViewCell: UITableViewCell {
 
     // gets the height of this cell when expanded
     private func getExpandedHeight() -> CGFloat {
-        let titleBarHeight = WorkoutTableView.baseCellHeight
-        let completeHeight = WorkoutTableView.baseCellHeight
-        // content is where we input our information.
-        // we add + 1 to progressionmethods to account for the repetitions we did
-        let contentHeight = getContentHeight()
-        let totalTableViewHeight = self.tableViewHeight + viewPadding
+        // total padding for this view. Incremement by one per each "cell" of this view
+        var totalPadding = 0
         
-        return titleBarHeight + completeHeight + contentHeight + totalTableViewHeight
+        let titleBarHeight = WorkoutTableView.baseCellHeight
+        let contentHeight = getContentHeight()
+        
+        let addSetButtonHeight = WorkoutTableView.baseCellHeight
+        totalPadding += 1
+        
+        let totalTableViewHeight = self.tableViewHeight + self.viewPadding
+        totalPadding += 1
+        
+        let completeButtonHeight = WorkoutTableView.baseCellHeight
+        
+        let heightTop = titleBarHeight + contentHeight + addSetButtonHeight
+        let heightBottom = totalTableViewHeight + completeButtonHeight
+        
+        return heightTop + heightBottom + CGFloat(totalPadding) * self.viewPadding
     }
     
     // gets the height of the content view
@@ -421,6 +444,53 @@ class WorkoutStartTableViewCell: UITableViewCell {
                                                          height: 40).isActive = true
     }
     
+    // Place below the input content view
+    private func createAndActivateAddSetButtonConstraints() {
+        self.addSetButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.addSetButton,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: self.addSetButton,
+                           attribute: .width,
+                           multiplier: 4/3,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self.inputContentView,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: self.addSetButton,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: -self.viewPadding).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.addSetButton,
+                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+    }
+    
+    private func createAndActivateExerciseHistoryTableViewConstraints() {
+        self.exerciseHistoryTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.exerciseHistoryTableView,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: self.exerciseHistoryTableView,
+                           attribute: .width,
+                           multiplier: 4/3,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self.addSetButton,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: self.exerciseHistoryTableView,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: -self.viewPadding).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.exerciseHistoryTableView,
+                                                         height: self.tableViewHeight).isActive = true
+    }
+    
     // width of this view ; cling to left of this ; previousSet ; height of baseheight
     private func createAndActivateCompleteButtonConstraints() {
         completeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -428,25 +498,25 @@ class WorkoutStartTableViewCell: UITableViewCell {
         NSLayoutConstraint(item: self,
                            attribute: .width,
                            relatedBy: .equal,
-                           toItem: completeButton,
+                           toItem: self.completeButton,
                            attribute: .width,
                            multiplier: 1,
                            constant: 0).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .left,
                            relatedBy: .equal,
-                           toItem: completeButton,
+                           toItem: self.completeButton,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: inputContentView,
+        NSLayoutConstraint(item: self.exerciseHistoryTableView,
                            attribute: .bottom,
                            relatedBy: .equal,
-                           toItem: completeButton,
+                           toItem: self.completeButton,
                            attribute: .top,
                            multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: completeButton,
+                           constant: -self.viewPadding).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.completeButton,
                                                          height: WorkoutTableView.baseCellHeight).isActive = true
         
     }

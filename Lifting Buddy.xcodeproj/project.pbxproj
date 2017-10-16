@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220A94251F95146400B5CF60 /* ExerciseHistoryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */; };
 		223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223590901F427D1A002BE0BF /* EditExerciseTableView.swift */; };
 		224153761F1EE12B00F7B82B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153751F1EE12B00F7B82B /* Workout.swift */; };
 		224153781F1EE1F000F7B82B /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153771F1EE1F000F7B82B /* Exercise.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		07EAE38F8336E92D79D24030 /* Pods-Lifting Buddy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.debug.xcconfig"; sourceTree = "<group>"; };
+		220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryTableView.swift; sourceTree = "<group>"; };
 		223590901F427D1A002BE0BF /* EditExerciseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableView.swift; sourceTree = "<group>"; };
 		224153751F1EE12B00F7B82B /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		224153771F1EE1F000F7B82B /* Exercise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				22ECE3931F644E1A0067171A /* WorkoutStartView.swift */,
 				229D87011F65FC7400FF05DD /* WorkoutStartTableView.swift */,
 				229D87031F65FC8200FF05DD /* WorkoutStartTableViewCell.swift */,
+				220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */,
 			);
 			name = "Start Workout";
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				228315CA1F857D23001C9324 /* BetterTextField.swift in Sources */,
 				224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */,
 				225E65D41F22A442004B3AF4 /* RLMSupport.swift in Sources */,
+				220A94251F95146400B5CF60 /* ExerciseHistoryTableView.swift in Sources */,
 				223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */,
 				22EC7FD31F5E01FE00A1E66B /* WorkoutTableViewCell.swift in Sources */,
 				22EDF04E1F35860E0074E2F2 /* SettingsView.swift in Sources */,

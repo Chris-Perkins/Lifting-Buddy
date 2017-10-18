@@ -99,6 +99,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         
         self.giveInvisButtonProperties()
         
+        self.addSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         self.completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
@@ -119,7 +120,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
         self.addSetButton.setDefaultProperties()
-        self.addSetButton.setTitle("Add Set!", for: .normal)
+        self.addSetButton.setTitle("Add Set", for: .normal)
         
         self.completeButton.setDefaultProperties()
         
@@ -213,6 +214,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
 //                }
 //            }
 //        }
+        
     }
     
     private func loadWorkoutDataIfPossible() {
@@ -240,12 +242,15 @@ class WorkoutStartTableViewCell: UITableViewCell {
     // Generic button press event
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
-        case completeButton:
+        case self.addSetButton:
+            // verify textfields here
+            break
+        case self.completeButton:
             self.isComplete = !self.isComplete
             self.delegate?.cellCompleteStatusChanged(complete: self.isComplete)
             self.layoutIfNeeded()
             break
-        case invisButton:
+        case self.invisButton:
             self.isToggled = !self.isToggled
             
             if self.isToggled {

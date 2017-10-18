@@ -36,13 +36,12 @@ class BetterTextField: UIView{
         
         super.init(frame: frame)
         
+        self.textfield.setDefaultProperties()
         self.textfield.addTarget(self, action: #selector(editingBegin(sender:)), for: .editingDidBegin)
         self.textfield.addTarget(self, action: #selector(editingEnd(sender:)), for: .editingDidEnd)
         
         self.addSubview(textfield)
         self.addSubview(label)
-        
-        self.textfield.setDefaultProperties()
 
         self.createAndActivateTextfieldConstraints()
         self.createAndActivateLabelConstraints()
@@ -60,9 +59,8 @@ class BetterTextField: UIView{
         
         self.label.font = UIFont.boldSystemFont(ofSize: 18.0)
         self.label.textAlignment = .center
-        self.label.backgroundColor = UIColor.niceBlue()
-        self.textfield.textColor = UIColor.black.withAlphaComponent(self.modified ? 1 : 0.25)
-        self.label.textColor = UIColor.white
+        self.label.backgroundColor = UIColor.white
+        self.label.textColor = UIColor.niceBlue()
         self.label.layer.zPosition = 1
         
         self.textfield.textAlignment = .center
@@ -98,6 +96,32 @@ class BetterTextField: UIView{
         self.layoutSubviews()
     }
     
+    // decides whether or not this field was modified
+    private func determineIfModified() -> Bool {
+        // If the field is empty, the field was not modified.
+        let textIsEmpty = self.textfield.text == nil || self.textfield.text == ""
+        // valid: if it's not numeric, anything goes. if it is, make sure it's not nil.
+        let textIsValid = (!self.isNumeric ||
+                            (self.textfield.text?.floatValue != nil ||
+                             self.textfield.text?.floatValue != 0))
+        
+        // this field is modified if it's not empty and if the text is valid
+        return !textIsEmpty && textIsValid
+    }
+    
+    // Sets textfield display properties based on self.modified
+    private func setTextfieldDisplayProperties() {
+        // After determining if modified, modify appropriately
+        if self.modified {
+            self.textfield.textColor = UIColor.black
+        } else {
+            self.textfield.text = defaultString
+            // black with alpha 0.25 looks like a placeholder.
+            // that's why i chose this value.
+            self.textfield.textColor = UIColor.black.withAlphaComponent(0.25)
+        }
+    }
+    
     // MARK: View events
     
     // Resets text if the field is modified
@@ -106,6 +130,7 @@ class BetterTextField: UIView{
         
         self.userEditing = true
         
+        // reset the textfield on user press if not modified
         if !self.modified {
             self.textfield.text = ""
         }
@@ -115,28 +140,14 @@ class BetterTextField: UIView{
     @objc func editingEnd(sender: UITextField) {
         sender.textfieldDeselected(sender: sender)
         
-        // Determine whether this change is called by a tableview
-        // Or if it's being called by the user
+        self.modified = self.determineIfModified()
+        
         if self.userEditing {
-            // If the field is empty, the field was not modified.
-            if sender.text == nil || sender.text == "" ||
-                (self.isNumeric && (self.textfield.text?.floatValue == nil || self.textfield.text?.floatValue == 0)) {
-                self.modified = false
-                // black with alpha 0.25 looks like a placeholder.
-                // that's why i chose this value.
-                self.textfield.text = defaultString
-            } else {
-                self.modified = true
-            }
-            
-            self.userEditing = false
-        } else {
-            if !self.modified {
-                self.textfield.text = defaultString
-            }
+            self.setTextfieldDisplayProperties()
         }
         
-        self.layoutSubviews()
+        self.userEditing = false
+        
     }
     
     // cling to top, bottom, left of this view. Cling to right of label

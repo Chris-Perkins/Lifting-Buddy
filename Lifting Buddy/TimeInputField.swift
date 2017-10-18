@@ -8,16 +8,14 @@
 
 import UIKit
 
-class TimeInputField: UIView {
+class TimeInputField: UIView, InputViewHolder {
     
     // MARK: View properties
     
-    private var inputViewContainer: UIView
-    private var hourField: BetterTextField
-    private var minuteField: BetterTextField
-    private var secondField: BetterTextField
-    
-    private var inputViews: [UIView]
+    private var timeInputView: BetterInputView
+    public var hourField: BetterTextField
+    public var minuteField: BetterTextField
+    public var secondField: BetterTextField
     
     private var timerButton: ToggleablePrettyButton
     private var timer: DispatchSourceTimer?
@@ -25,25 +23,21 @@ class TimeInputField: UIView {
     // MARK: View inits
     
     override init(frame: CGRect) {
-        self.inputViewContainer = UIView()
-        self.hourField = BetterTextField(defaultString: "0", frame: .zero)
-        self.minuteField = BetterTextField(defaultString: "0", frame: .zero)
-        self.secondField = BetterTextField(defaultString: "0", frame: .zero)
-        self.timerButton = ToggleablePrettyButton()
+        self.timeInputView = BetterInputView(args: [("h", "0", true),
+                                                    ("m", "0", true),
+                                                    ("s", "0", true)], frame: .zero)
         
-        self.inputViews = [UIView]()
+        let inputViews = timeInputView.getInputViews()
+        hourField = inputViews[0]
+        minuteField = inputViews[1]
+        secondField = inputViews[2]
+        
+        self.timerButton = ToggleablePrettyButton()
         
         super.init(frame: frame)
         
-        self.addSubview(inputViewContainer)
-            self.inputViewContainer.addSubview(hourField)
-            self.inputViewContainer.addSubview(minuteField)
-            self.inputViewContainer.addSubview(secondField)
-        self.addSubview(timerButton)
-        
-        self.inputViews.append(hourField)
-        self.inputViews.append(minuteField)
-        self.inputViews.append(secondField)
+        self.addSubview(self.timeInputView)
+        self.addSubview(self.timerButton)
         
         self.minuteField.textfield.addTarget(self, action: #selector(checkMinuteField), for: .editingDidEnd)
         self.secondField.textfield.addTarget(self, action: #selector(checkSecondField), for: .editingDidEnd)
@@ -51,7 +45,6 @@ class TimeInputField: UIView {
         
         self.createAndActivateTimerButtonConstraints()
         self.createAndActivateInputViewContainerConstraints()
-        self.createAndActivateInputConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -119,6 +112,12 @@ class TimeInputField: UIView {
         }
     }
     
+    // MARK: InputViewHolder protocol
+    
+    func getInputViews() -> [BetterTextField] {
+        return self.timeInputView.getInputViews()
+    }
+    
     // MARK: view constraints
     
     // cling to top, bottom, right. width of timer button's new height
@@ -157,77 +156,36 @@ class TimeInputField: UIView {
     
     // Take up whatever the timer button isn't
     private func createAndActivateInputViewContainerConstraints() {
-        inputViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        self.timeInputView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint(item: self,
                            attribute: .top,
                            relatedBy: .equal,
-                           toItem: self.inputViewContainer,
+                           toItem: self.timeInputView,
                            attribute: .top,
                            multiplier: 1,
                            constant: 0).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .bottom,
                            relatedBy: .equal,
-                           toItem: self.inputViewContainer,
+                           toItem: self.timeInputView,
                            attribute: .bottom,
                            multiplier: 1,
                            constant: 0).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .left,
                            relatedBy: .equal,
-                           toItem: self.inputViewContainer,
+                           toItem: self.timeInputView,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
         NSLayoutConstraint(item: self.timerButton,
                            attribute: .left,
                            relatedBy: .equal,
-                           toItem: self.inputViewContainer,
+                           toItem: self.timeInputView,
                            attribute: .right,
                            multiplier: 1,
                            constant: 0).isActive = true
-    }
-    
-    // Spread evenly across the inputView
-    private func createAndActivateInputConstraints() {
-        
-        var prevView: UIView = self.inputViewContainer
-        
-        for view in inputViews {
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint(item: self.inputViewContainer,
-                               attribute: .top,
-                               relatedBy: .equal,
-                               toItem: view,
-                               attribute: .top,
-                               multiplier: 1,
-                               constant: 0).isActive = true
-            NSLayoutConstraint(item: self.inputViewContainer,
-                               attribute: .bottom,
-                               relatedBy: .equal,
-                               toItem: view,
-                               attribute: .bottom,
-                               multiplier: 1,
-                               constant: 0).isActive = true
-            NSLayoutConstraint(item: prevView,
-                               attribute: prevView == self.inputViewContainer ? .left : .right,
-                               relatedBy: .equal,
-                               toItem: view,
-                               attribute: .left,
-                               multiplier: 1,
-                               constant: 0).isActive = true
-            NSLayoutConstraint(item: self.inputViewContainer,
-                               attribute: .width,
-                               relatedBy: .equal,
-                               toItem: view,
-                               attribute: .width,
-                               multiplier: CGFloat(inputViews.count),
-                               constant: 0).isActive = true
-            
-            prevView = view
-        }
     }
     
     // Timer functions

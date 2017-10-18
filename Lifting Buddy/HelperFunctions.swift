@@ -213,7 +213,7 @@ extension RealmSwift.List {
 
 extension String {
     var floatValue: Float? {
-        return Float(self)
+        return NumberFormatter().number(from: self)?.floatValue
     }
 }
 

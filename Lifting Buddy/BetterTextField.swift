@@ -37,8 +37,8 @@ class BetterTextField: UIView {
         super.init(frame: frame)
         
         self.textfield.setDefaultProperties()
-        self.textfield.addTarget(self, action: #selector(editingBegin(sender:)), for: .editingDidBegin)
-        self.textfield.addTarget(self, action: #selector(editingEnd(sender:)), for: .editingDidEnd)
+        
+        self.textfield.addTarget(self, action: #selector(editingDidEnd(sender:)), for: .editingDidEnd)
         
         self.addSubview(textfield)
         self.addSubview(label)
@@ -63,6 +63,8 @@ class BetterTextField: UIView {
         self.label.textColor = UIColor.niceBlue()
         self.label.layer.zPosition = 1
         
+        self.textfield.placeholder = defaultString
+        
         self.textfield.textAlignment = .center
     }
     
@@ -85,15 +87,9 @@ class BetterTextField: UIView {
         return self.modified
     }
     
+    // Sets the default string for this textfield
     public func setDefaultString(defaultString: String?) {
-        self.defaultString = defaultString
-        
-        if !self.modified {
-            self.textfield.text = self.defaultString
-            
-        }
-        
-        self.layoutSubviews()
+        self.textfield.placeholder = defaultString
     }
     
     // decides whether or not this field was modified
@@ -109,43 +105,14 @@ class BetterTextField: UIView {
         return !textIsEmpty && textIsValid
     }
     
-    // Sets textfield display properties based on self.modified
-    private func setTextfieldDisplayProperties() {
-        // After determining if modified, modify appropriately
-        if self.modified {
-            self.textfield.textColor = UIColor.black
-        } else {
-            self.textfield.text = defaultString
-            // black with alpha 0.25 looks like a placeholder.
-            // that's why i chose this value.
-            self.textfield.textColor = UIColor.black.withAlphaComponent(0.25)
+    // MARK: Event functions
+    
+    @objc func editingDidEnd(sender: UITextField) {
+        if self.isNumeric {
+            if self.textfield.text?.floatValue == nil {
+                self.textfield.text = ""
+            }
         }
-    }
-    
-    // MARK: View events
-    
-    // Resets text if the field is modified
-    @objc func editingBegin(sender: UITextField) {
-        sender.textfieldSelected(sender: sender)
-        
-        self.userEditing = true
-        
-        // reset the textfield on user press if not modified
-        if !self.modified {
-            self.textfield.text = ""
-        }
-    }
-    
-    // Determines whether or not the field is modified
-    @objc func editingEnd(sender: UITextField) {
-        sender.textfieldDeselected(sender: sender)
-        
-        self.modified = self.determineIfModified()
-        
-        self.setTextfieldDisplayProperties()
-        
-        self.userEditing = false
-        
     }
     
     // cling to top, bottom, left of this view. Cling to right of label

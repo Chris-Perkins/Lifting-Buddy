@@ -118,18 +118,25 @@ class TimeInputField: UIView, InputViewHolder {
         return self.timeInputView.getInputViews()
     }
     
+    // Returns whether not we have a valid time format
     func areFieldsValid() -> Bool {
         var returnValue = false
         
-        if !(self.hourField.textfield.text ?? "").isEmpty {
+        if (self.checkIfFieldValid(field: minuteField)) {
             returnValue = true
-        } else if !(self.minuteField.textfield.text ?? "").isEmpty {
+        } else if (self.checkIfFieldValid(field: minuteField)) {
             returnValue = true
-        } else if !(self.secondField.textfield.text ?? "").isEmpty {
+        } else if (self.checkIfFieldValid(field: secondField)) {
             returnValue = true
         }
         
         return returnValue
+    }
+    
+    private func checkIfFieldValid(field: BetterTextField) -> Bool {
+        let compareStr = field.textfield.text ?? field.textfield.placeholder ?? ""
+        
+        return compareStr.floatValue != nil
     }
     
     // MARK: view constraints

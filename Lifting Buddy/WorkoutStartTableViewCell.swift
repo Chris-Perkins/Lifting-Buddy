@@ -203,7 +203,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
     
     // saves workout data
     // Returns true if successful
-    private func saveWorkoutDataWithSuccess() {
+    private func addWorkoutDataToTableIfPossible() {
 //        for inputField in self.exerciseInputFields {
 //            if let view: BetterTextField = inputField as? BetterTextField {
 //                if view.text?.floatValue != nil {
@@ -214,7 +214,16 @@ class WorkoutStartTableViewCell: UITableViewCell {
 //                }
 //            }
 //        }
+        var canAddSet = true
+        for inputField in self.exerciseInputFields {
+            if !(inputField.areFieldsValid()) {
+                canAddSet = false
+            }
+        }
         
+        if canAddSet {
+            // todo: add to tableview
+        }
     }
     
     private func loadWorkoutDataIfPossible() {
@@ -242,14 +251,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
     // Generic button press event
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
-        case self.addSetButton:
-            // verify textfields here
-            break
-        case self.completeButton:
-            self.isComplete = !self.isComplete
-            self.delegate?.cellCompleteStatusChanged(complete: self.isComplete)
-            self.layoutIfNeeded()
-            break
         case self.invisButton:
             self.isToggled = !self.isToggled
             
@@ -258,6 +259,14 @@ class WorkoutStartTableViewCell: UITableViewCell {
             }
             
             self.updateToggledStatus()
+        case self.addSetButton:
+            self.addWorkoutDataToTableIfPossible()
+            break
+        case self.completeButton:
+            self.isComplete = !self.isComplete
+            self.delegate?.cellCompleteStatusChanged(complete: self.isComplete)
+            self.layoutIfNeeded()
+            break
         default:
             fatalError("Button pressed did not exist?")
         }

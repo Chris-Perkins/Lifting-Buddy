@@ -118,6 +118,20 @@ class TimeInputField: UIView, InputViewHolder {
         return self.timeInputView.getInputViews()
     }
     
+    func areFieldsValid() -> Bool {
+        var returnValue = false
+        
+        if !(self.hourField.textfield.text ?? "").isEmpty {
+            returnValue = true
+        } else if !(self.minuteField.textfield.text ?? "").isEmpty {
+            returnValue = true
+        } else if !(self.secondField.textfield.text ?? "").isEmpty {
+            returnValue = true
+        }
+        
+        return returnValue
+    }
+    
     // MARK: view constraints
     
     // cling to top, bottom, right. width of timer button's new height

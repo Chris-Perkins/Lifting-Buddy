@@ -153,8 +153,8 @@
 				224697D71F19E8060089C7CA /* PrettyButton.swift */,
 				225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */,
 				226B11A01F96E1750013139B /* InputViewProtocol.swift */,
-				226B119D1F96DB250013139B /* BetterInputView.swift */,
 				228315C91F857D23001C9324 /* BetterTextField.swift */,
+				226B119D1F96DB250013139B /* BetterInputView.swift */,
 				2263DF971F8DA60E00592DCB /* TimeInputField.swift */,
 			);
 			name = "Custom UITypes";

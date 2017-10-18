@@ -14,5 +14,9 @@
 import Foundation
 
 protocol InputViewHolder {
+    // get the input views for this inputviewholder
     func getInputViews() -> [BetterTextField]
+    
+    // determines if the fields are valid
+    func areFieldsValid() ->  Bool
 }

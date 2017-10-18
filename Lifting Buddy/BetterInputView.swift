@@ -47,8 +47,26 @@ class BetterInputView: UIView, InputViewHolder {
     
     // MARK: InputViewHolder protocol
     
-    public func getInputViews() -> [BetterTextField] {
+    // returns the input views
+    func getInputViews() -> [BetterTextField] {
         return self.inputViews
+    }
+    
+    // Shows which fields are invalid
+    func areFieldsValid() -> Bool {
+        var returnValue = true
+        
+        // Go through each view; check if empty
+        // if empty, set textfield to red
+        for view in self.inputViews {
+            if (view.textfield.text ?? "").isEmpty || view.textfield.text?.floatValue == nil {
+                view.textfield.backgroundColor = UIColor.niceRed()
+                
+                returnValue = false
+            }
+        }
+        
+        return returnValue
     }
     
     // MARK: Constraints

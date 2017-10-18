@@ -42,7 +42,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
     // view where we put the input textfields
     private var inputContentView: UIView
     // the fields themselves in the inputcontent view
-    private var exerciseInputFields: [UIView]
+    private var exerciseInputFields: [InputViewHolder]
     // add a set to the table
     private var addSetButton: PrettyButton
     // table view that holds the history of our exercise this go around
@@ -64,7 +64,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         
         self.setLabel = UILabel()
         self.inputContentView = UIView()
-        self.exerciseInputFields = [BetterTextField]()
+        self.exerciseInputFields = [InputViewHolder]()
         self.addSetButton = PrettyButton()
         self.exerciseHistoryTableView = ExerciseHistoryTableView()
         self.completeButton = PrettyButton()
@@ -372,21 +372,15 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private func createAndActivateInputFieldsConstraints() {
         var prevView = inputContentView
         
-        let repInput = BetterTextField(defaultString:
-                                            (self.exercise.getRepCount() == 0 ?
-                                            nil : String(self.exercise.getRepCount())),
-                                            frame: .zero)
-        repInput.setLabelTitle(title: "Reps")
-        repInput.textfield.setDefaultProperties()
-        repInput.setIsNumeric(isNumeric: true)
+        let repInput = BetterInputView(args: [(
+                                               "Reps",
+                                               String(self.exercise.getRepCount()),
+                                               true
+                                             )],
+                                             frame: .zero)
         
         inputContentView.addSubview(repInput)
         
-        repInput.textfield.placeholder = "Rep Count"
-        
-        let repCount = self.exercise.getRepCount()
-        repInput.setDefaultString(defaultString: repCount == 0 ? "Rep Count" : String(repCount))
-        repInput.backgroundColor = UIColor.white
         self.addConstraintsToInputView(view: repInput, prevView: prevView)
         self.exerciseInputFields.append(repInput)
         
@@ -394,15 +388,15 @@ class WorkoutStartTableViewCell: UITableViewCell {
         
         for progressionMethod in self.exercise.getProgressionMethods().toArray() {
             if progressionMethod.getUnit() != ProgressionMethod.Unit.TIME.rawValue {
-                let progressionInput = BetterTextField(defaultString: nil, frame: .zero)
-                progressionInput.textfield.setDefaultProperties()
+                let progressionInput = BetterInputView(args: [(
+                                                               progressionMethod.getName(),
+                                                               progressionMethod.getName(),
+                                                               true
+                                                             )], frame: .zero)
                 
                 inputContentView.addSubview(progressionInput)
                 
-                progressionInput.textfield.placeholder = progressionMethod.getName()
-                progressionInput.setLabelTitle(title: progressionMethod.getName())
                 progressionInput.backgroundColor = UIColor.white
-                progressionInput.setIsNumeric(isNumeric: true)
                 
                 self.addConstraintsToInputView(view: progressionInput, prevView: prevView)
                 self.exerciseInputFields.append(progressionInput)

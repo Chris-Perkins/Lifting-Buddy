@@ -30,6 +30,10 @@ class BetterInputView: UIView, InputViewHolder {
             let btf = BetterTextField(defaultString: arg.1, frame: .zero)
             btf.setLabelTitle(title: arg.0)
             btf.setIsNumeric(isNumeric: arg.2)
+            
+            btf.textfield.placeholder = arg.1
+            btf.textfield.setDefaultProperties()
+            
             self.inputViews.append(btf)
             self.addSubview(btf)
         }

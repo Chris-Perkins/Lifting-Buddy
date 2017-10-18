@@ -9,7 +9,7 @@
 
 import UIKit
 
-class BetterTextField: UIView{
+class BetterTextField: UIView {
     
     // MARK: View properties
     
@@ -142,9 +142,7 @@ class BetterTextField: UIView{
         
         self.modified = self.determineIfModified()
         
-        if self.userEditing {
-            self.setTextfieldDisplayProperties()
-        }
+        self.setTextfieldDisplayProperties()
         
         self.userEditing = false
         

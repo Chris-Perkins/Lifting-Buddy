@@ -121,37 +121,36 @@ class TimeInputField: UIView, InputViewHolder {
     
     // Returns whether not we have a valid time format
     internal func areFieldsValid() -> Bool {
-        var returnValue = false
+        return  checkIfFieldValid(field: secondField) &&
+                checkIfFieldValid(field: minuteField) &&
+                checkIfFieldValid(field: hourField)
+    }
+    
+    // Helper for checking if fields are valid
+    private func checkIfFieldValid(field: BetterTextField) -> Bool {
+        let returnValue = field.text != nil
         
-        if (self.checkIfFieldValid(field: minuteField)) {
-            returnValue = true
-        } else if (self.checkIfFieldValid(field: minuteField)) {
-            returnValue = true
-        } else if (self.checkIfFieldValid(field: secondField)) {
-            returnValue = true
+        if !returnValue {
+            field.backgroundColor = UIColor.niceRed()
         }
         
         return returnValue
     }
     
-    // Helper for checking if fields are valid
-    private func checkIfFieldValid(field: BetterTextField) -> Bool {
-        let compareStr = field.textfield.text ?? field.textfield.placeholder ?? ""
-        
-        return compareStr.floatValue != nil
-    }
-    
     // Returns time as a function of seconds
-    internal func getFloatValue() -> Float {
-        var totalSeconds: Float = 0
+    internal func getValue() -> String {
+        // -1 indicates something went wrong
+        var totalSeconds: Float = -1
         
         if self.areFieldsValid() {
-            totalSeconds += self.secondField.textfield.text!.floatValue!
-            totalSeconds += 60 * self.minuteField.textfield.text!.floatValue!
-            totalSeconds += 60 * 60 * self.minuteField.textfield.text!.floatValue!
+            totalSeconds = 0
+            
+            totalSeconds += self.secondField.text!.floatValue!
+            totalSeconds += 60 * self.minuteField.text!.floatValue!
+            totalSeconds += 60 * 60 * self.minuteField.text!.floatValue!
         }
         
-        return totalSeconds
+        return String(totalSeconds)
     }
     
     // MARK: view constraints

@@ -59,7 +59,7 @@ class BetterInputView: UIView, InputViewHolder {
         // Go through each view; check if empty
         // if empty, set textfield to red
         for view in self.inputViews {
-            if (view.textfield.text ?? "").isEmpty || view.textfield.text?.floatValue == nil {
+            if (view.text ?? "").isEmpty || view.text!.floatValue == nil {
                 view.textfield.backgroundColor = UIColor.niceRed()
                 
                 returnValue = false
@@ -71,18 +71,21 @@ class BetterInputView: UIView, InputViewHolder {
     
     // Just returns the sum of the float values of this field.
     // If you need to do something else, subclass this and override.
-    internal func getFloatValue() -> Float {
-        var returnValue: Float = 0
+    internal func getValue() -> String {
+        // -1 indicates something went wrong
+        var returnValue: Float = -1
         
         if areFieldsValid() {
+            returnValue = 0
+            
             for view in self.inputViews {
                 if view.getIsNumeric() {
-                    returnValue += view.textfield.text!.floatValue!
+                    returnValue += view.text!.floatValue!
                 }
             }
         }
         
-        return returnValue
+        return String(returnValue)
     }
     
     // MARK: Constraints

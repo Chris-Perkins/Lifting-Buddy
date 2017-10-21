@@ -99,6 +99,16 @@ extension PrettyButton {
 }
 
 extension UITextField {
+    var isNumeric: Bool {
+        if self.text?.characters.count == 0 { return true }
+        
+        let setNums: Set<Character> = Set(arrayLiteral: "1", "2", "3", "4",
+                                          "5", "6", "7", "8",
+                                          "9", "0")
+        
+        return Set(self.text!.characters).isSubset(of: setNums)
+    }
+    
     override func setDefaultProperties() {
         // View select / deselect events
         self.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
@@ -108,16 +118,6 @@ extension UITextField {
         self.textAlignment = .center
         
         self.textfieldDeselected(sender: self)
-    }
-    
-    func isNumeric() -> Bool {
-        if self.text?.characters.count == 0 { return true }
-        
-        let setNums: Set<Character> = Set(arrayLiteral: "1", "2", "3", "4",
-                                          "5", "6", "7", "8",
-                                          "9", "0")
-        
-        return Set(self.text!.characters).isSubset(of: setNums)
     }
     
     // MARK: Textfield events

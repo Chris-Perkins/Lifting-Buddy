@@ -21,5 +21,5 @@ protocol InputViewHolder {
     func areFieldsValid() ->  Bool
     
     // Gets the value of the input view
-    func getFloatValue() -> Float
+    func getValue() -> String
 }

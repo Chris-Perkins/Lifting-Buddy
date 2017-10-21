@@ -66,7 +66,8 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.inputContentView = UIView()
         self.exerciseInputFields = [InputViewHolder]()
         self.addSetButton = PrettyButton()
-        self.exerciseHistoryTableView = ExerciseHistoryTableView()
+        self.exerciseHistoryTableView = ExerciseHistoryTableView(forExercise: exercise,
+                                                                 style: .plain)
         self.completeButton = PrettyButton()
         
         self.data = [[Float]]()
@@ -204,16 +205,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
     // saves workout data
     // Returns true if successful
     private func addWorkoutDataToTableIfPossible() {
-//        for inputField in self.exerciseInputFields {
-//            if let view: BetterTextField = inputField as? BetterTextField {
-//                if view.text?.floatValue != nil {
-//                    print(view.text?.floatValue ?? "EMPTY")
-//                } else {
-//                    inputField.backgroundColor = UIColor.niceRed()
-//                    view.text = ""
-//                }
-//            }
-//        }
         var canAddSet = true
         for inputField in self.exerciseInputFields {
             if !(inputField.areFieldsValid()) {
@@ -222,7 +213,13 @@ class WorkoutStartTableViewCell: UITableViewCell {
         }
         
         if canAddSet {
+            var exerciseData = [String]()
             // todo: add to tableview
+            for inputField in self.exerciseInputFields {
+                exerciseData.append(inputField.getValue())
+            }
+            
+            self.exerciseHistoryTableView.appendDataToTableView(data: exerciseData)
         }
     }
     

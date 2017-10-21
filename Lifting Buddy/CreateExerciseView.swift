@@ -201,13 +201,13 @@ class CreateExerciseView: UIScrollView {
             nameEntryField.backgroundColor = UIColor.niceRed()
             nameEntryField.text = ""
         }
-        if !setEntryField.isNumeric() {
+        if !setEntryField.isNumeric {
             fulfilled = false
             
             setEntryField.backgroundColor = UIColor.niceRed()
             setEntryField.text = ""
         }
-        if !repEntryField.isNumeric() {
+        if !repEntryField.isNumeric {
             fulfilled = false
             
             repEntryField.backgroundColor = UIColor.niceRed()

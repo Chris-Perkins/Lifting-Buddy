@@ -7,26 +7,21 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: View Properties
     
-    private var data: [CGFloat]
-    public static let baseCellHeight: CGFloat = 50.0
+    private let progressionMethods: List<ProgressionMethod>
+    private var data: [[String]]
+    private var cells: [ExerciseHistoryTableViewCell] = [ExerciseHistoryTableViewCell]()
     
     // MARK: Initializers
     
-    override init(frame: CGRect, style: UITableViewStyle) {
-        self.data = [CGFloat]()
-        
-        super.init(frame: frame, style: style)
-        
-        self.setupTableView()
-    }
-    
-    init(workouts: [Workout], style: UITableViewStyle) {
-        self.data = [CGFloat]()
+    init(forExercise: Exercise, style: UITableViewStyle) {
+        self.progressionMethods = forExercise.getProgressionMethods()
+        self.data = [[String]]()
         
         super.init(frame: .zero, style: style)
         
@@ -46,29 +41,40 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell =
-            tableView.dequeueReusableCell(withIdentifier: "cell",
-                                          for: indexPath as IndexPath)
-        cell.textLabel?.text = String(describing: data[indexPath.row])
-        return cell
+        // if the row does not have data yet, create it
+        if indexPath.row >= cells.count {
+            let cell = ExerciseHistoryTableViewCell(data: data[indexPath.row],
+                                                    style: .default,
+                                                    reuseIdentifier: nil)
+            cells.append(cell)
+            cell.setLabel.text = "Set #" + String(indexPath.row + 1)
+            
+            return cell
+        } else {
+            // otherwise, we can simply return it
+            cells[indexPath.row].setLabel.text = "Set #" + String(indexPath.row + 1)
+            return cells[indexPath.row]
+        }
     }
     
-    // Each cell has a height of cellHeight
+    // Each cell's height depends on the number of progression methods, but there is a flat height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return ExerciseHistoryTableViewCell.baseHeight +
+                CGFloat(self.progressionMethods.count + 1) * // +1 for rep field
+                ExerciseHistoryTableViewCell.heightPerProgressionMethod
     }
     
     // MARK: Custom functions
     
     // Append some data to the tableView
-    public func appendDataToTableView(data: CGFloat) {
+    public func appendDataToTableView(data: [String]) {
         self.data.append(data)
         
         reloadData()
     }
     
     // Retrieve workouts
-    public func getData() -> [CGFloat] {
+    public func getData() -> [[String]] {
         return data
     }
     
@@ -76,7 +82,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         self.delegate = self
         self.dataSource = self
         self.allowsSelection = true
-        self.register(WorkoutTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.register(ExerciseHistoryTableViewCell.self, forCellReuseIdentifier: "cell")
         self.backgroundColor = UIColor.clear
     }
 }

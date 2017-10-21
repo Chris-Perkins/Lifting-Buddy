@@ -99,7 +99,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         let exerCount = CGFloat(data[indexPath.row].getExercises().count)
         
         return self.indexPathForSelectedRow?.row == indexPath.row ?
-            WorkoutTableView.baseCellHeight * 2 + exerCount * 30.0 + (exerCount > 0 ? 26 : 0):
+            WorkoutTableView.baseCellHeight * 2 + exerCount * 30.0 + (exerCount > 0 ? 26 : 0) :
             WorkoutTableView.baseCellHeight
     }
     

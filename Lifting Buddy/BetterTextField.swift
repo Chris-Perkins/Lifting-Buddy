@@ -12,6 +12,12 @@ import UIKit
 class BetterTextField: UIView {
     
     // MARK: View properties
+    public var text: String? {
+        // return the textfield text if possible; otherwise, return placeholder
+        return !(self.textfield.text ?? "").isEmpty ?
+            self.textfield.text :
+            self.textfield.placeholder
+    }
     
     // Label for this text field
     public var textfield: UITextField

@@ -115,14 +115,18 @@ import UIKit
         // If slide view does not currently exist, create it
         if self.viewWithTag(overlayViewTag) == nil {
             // Create view that slides to bottom right on press
-            let overlayView: UIView = createOverlayView(frame: CGRect(x: 0,
-                                                                y: 0,
-                                                                width: 1,
-                                                                height: self.frame.height))
+            let overlayView: UIView = createOverlayView(frame:
+                                                        CGRect(x: 0,
+                                                               y: 0,
+                                                               width: 1,
+                                                               height: self.frame.height))
             self.addSubview(overlayView)
             
             UIView.animate(withDuration: animationTimeInSeconds, animations: {
-                overlayView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+                overlayView.frame = CGRect(x: 0,
+                                           y: 0,
+                                           width: self.frame.width,
+                                           height: self.frame.height)
             })
         }
     }
@@ -132,14 +136,18 @@ import UIKit
         // If slide view does not currently exist, create it
         if self.viewWithTag(overlayViewTag) == nil {
             // Create view that slides to bottom right on press
-            let overlayView: UIView = createOverlayView(frame: CGRect(x: self.frame.width / 2,
-                                                                y: self.frame.height / 2,
-                                                                width: 0,
-                                                                height: 0))
+            let overlayView: UIView = createOverlayView(frame:
+                                                        CGRect(x: self.frame.width / 2,
+                                                               y: self.frame.height / 2,
+                                                               width: 0,
+                                                               height: 0))
             self.addSubview(overlayView)
             
             UIView.animate(withDuration: animationTimeInSeconds, animations: {
-                overlayView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+                overlayView.frame = CGRect(x: 0,
+                                           y: 0,
+                                           width: self.frame.width,
+                                           height: self.frame.height)
             })
         }
     }

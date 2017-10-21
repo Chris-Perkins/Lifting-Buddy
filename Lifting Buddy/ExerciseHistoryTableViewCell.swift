@@ -78,6 +78,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
             let newView = UILabel()
             newView.text = dataPiece
             newView.setDefaultProperties()
+            newView.font = UIFont.systemFont(ofSize: 18.0)
             
             self.addSubview(newView)
             

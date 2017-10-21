@@ -19,4 +19,7 @@ protocol InputViewHolder {
     
     // determines if the fields are valid
     func areFieldsValid() ->  Bool
+    
+    // Gets the value of the input view
+    func getFloatValue() -> Float
 }

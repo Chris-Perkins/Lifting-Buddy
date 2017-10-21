@@ -114,12 +114,13 @@ class TimeInputField: UIView, InputViewHolder {
     
     // MARK: InputViewHolder protocol
     
-    func getInputViews() -> [BetterTextField] {
+    // Returns our input views
+    internal func getInputViews() -> [BetterTextField] {
         return self.timeInputView.getInputViews()
     }
     
     // Returns whether not we have a valid time format
-    func areFieldsValid() -> Bool {
+    internal func areFieldsValid() -> Bool {
         var returnValue = false
         
         if (self.checkIfFieldValid(field: minuteField)) {
@@ -133,10 +134,24 @@ class TimeInputField: UIView, InputViewHolder {
         return returnValue
     }
     
+    // Helper for checking if fields are valid
     private func checkIfFieldValid(field: BetterTextField) -> Bool {
         let compareStr = field.textfield.text ?? field.textfield.placeholder ?? ""
         
         return compareStr.floatValue != nil
+    }
+    
+    // Returns time as a function of seconds
+    internal func getFloatValue() -> Float {
+        var totalSeconds: Float = 0
+        
+        if self.areFieldsValid() {
+            totalSeconds += self.secondField.textfield.text!.floatValue!
+            totalSeconds += 60 * self.minuteField.textfield.text!.floatValue!
+            totalSeconds += 60 * 60 * self.minuteField.textfield.text!.floatValue!
+        }
+        
+        return totalSeconds
     }
     
     // MARK: view constraints

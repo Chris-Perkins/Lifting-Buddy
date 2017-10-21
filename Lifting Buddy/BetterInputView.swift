@@ -48,12 +48,12 @@ class BetterInputView: UIView, InputViewHolder {
     // MARK: InputViewHolder protocol
     
     // returns the input views
-    func getInputViews() -> [BetterTextField] {
+    internal func getInputViews() -> [BetterTextField] {
         return self.inputViews
     }
     
     // Shows which fields are invalid
-    func areFieldsValid() -> Bool {
+    internal func areFieldsValid() -> Bool {
         var returnValue = true
         
         // Go through each view; check if empty
@@ -63,6 +63,22 @@ class BetterInputView: UIView, InputViewHolder {
                 view.textfield.backgroundColor = UIColor.niceRed()
                 
                 returnValue = false
+            }
+        }
+        
+        return returnValue
+    }
+    
+    // Just returns the sum of the float values of this field.
+    // If you need to do something else, subclass this and override.
+    internal func getFloatValue() -> Float {
+        var returnValue: Float = 0
+        
+        if areFieldsValid() {
+            for view in self.inputViews {
+                if view.getIsNumeric() {
+                    returnValue += view.textfield.text!.floatValue!
+                }
             }
         }
         

@@ -68,7 +68,7 @@ class BetterTextField: UIView {
         self.textfield.textAlignment = .center
     }
     
-    // MARK: View functions
+    // MARK: Encapsulated methods
     
     // Sets the label for this view
     
@@ -82,6 +82,11 @@ class BetterTextField: UIView {
         self.isNumeric = isNumeric
     }
     
+    public func getIsNumeric() -> Bool {
+        return self.isNumeric
+    }
+    
+    
     // Returns whether or not this textfield has been modified
     public func getModified() -> Bool {
         return self.modified
@@ -91,6 +96,8 @@ class BetterTextField: UIView {
     public func setDefaultString(defaultString: String?) {
         self.textfield.placeholder = defaultString
     }
+    
+    // MARK: View functions
     
     // decides whether or not this field was modified
     private func determineIfModified() -> Bool {

@@ -34,6 +34,17 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // MARK: Tableview functions
     
+    // allow cell deletion
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("Deleted")
+            
+            self.data.remove(at: indexPath.row)
+            self.cells.remove(at: indexPath.row)
+            self.reloadData()
+        }
+    }
+    
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
@@ -47,11 +58,15 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
                                                     style: .default,
                                                     reuseIdentifier: nil)
             cells.append(cell)
+            
+            // update the label in case of deletion
             cell.setLabel.text = "Set #" + String(indexPath.row + 1)
             
             return cell
         } else {
             // otherwise, we can simply return it
+            
+            // update the label in case of deletion
             cells[indexPath.row].setLabel.text = "Set #" + String(indexPath.row + 1)
             return cells[indexPath.row]
         }

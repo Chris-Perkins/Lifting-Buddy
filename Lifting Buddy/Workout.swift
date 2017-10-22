@@ -17,6 +17,11 @@ class Workout: Object {
     
     // Name of this workout
     @objc dynamic private var name: String?
+    // The last day this workout was done
+    @objc dynamic private var dateLastDone: Date?
+    // The current streak
+    @objc dynamic private var curStreak: Int
+    
     // The day this exercise occurs on
     private var daysOfTheWeek: List<RLMBool>
     // Exercises in this workout
@@ -26,6 +31,8 @@ class Workout: Object {
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
         self.name = nil
+        self.curStreak = 0
+        
         self.daysOfTheWeek = List<RLMBool>()
         self.exercises = List<Exercise>()
         
@@ -34,6 +41,8 @@ class Workout: Object {
     
     required init() {
         self.name = nil
+        self.curStreak = 0
+        
         self.daysOfTheWeek = List<RLMBool>()
         self.exercises = List<Exercise>()
         
@@ -42,6 +51,8 @@ class Workout: Object {
     
     required init(value: Any, schema: RLMSchema) {
         self.name = nil
+        self.curStreak = 0
+        
         self.daysOfTheWeek = List<RLMBool>()
         self.exercises = List<Exercise>()
         

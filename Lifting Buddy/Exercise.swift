@@ -14,7 +14,6 @@ import Realm
 class Exercise: Object {
     // Name of this exercise
     @objc dynamic private var name: String?
-    
     // How many sets of this exercise
     @objc dynamic private var setCount: Int
     // How many reps per set
@@ -22,6 +21,8 @@ class Exercise: Object {
     // Time between exercises (stored in seconds)
     @objc dynamic private var cooldownTime: Int
     
+    // The history attached to this exercise
+    private var exerciseHistory: List<ExerciseHistoryEntry>
     // Progression Methods attached
     private var progressionMethods: List<ProgressionMethod>
     
@@ -39,7 +40,9 @@ class Exercise: Object {
         self.setCount = 0
         self.repCount = 0
         self.cooldownTime = 0
+        
         self.progressionMethods = List<ProgressionMethod>()
+        self.exerciseHistory = List<ExerciseHistoryEntry>()
         
         super.init()
     }
@@ -50,6 +53,7 @@ class Exercise: Object {
         self.repCount = 0
         self.cooldownTime = 0
         self.progressionMethods = List<ProgressionMethod>()
+        self.exerciseHistory = List<ExerciseHistoryEntry>()
         
         super.init(value: value, schema: schema)
     }
@@ -60,11 +64,12 @@ class Exercise: Object {
         self.repCount = 0
         self.cooldownTime = 0
         self.progressionMethods = List<ProgressionMethod>()
+        self.exerciseHistory = List<ExerciseHistoryEntry>()
         
         super.init(realm: realm, schema: schema)
     }
     
-    // MARK: Get/Set methods for variables in this class
+    // MARK: Encapsulated methods
     
     @objc public func getRepCount() -> Int {
         return self.repCount
@@ -76,6 +81,7 @@ class Exercise: Object {
     @objc public func getSetCount() -> Int {
         return self.setCount
     }
+    
     // This variable's name is kind of funny. :)
     public func setSetCount(setCount: Int) {
         self.setCount = setCount
@@ -98,6 +104,14 @@ class Exercise: Object {
     
     public func getProgressionMethods() -> List<ProgressionMethod> {
         return self.progressionMethods
+    }
+    
+    public func getExerciseHistory() -> List<ExerciseHistoryEntry> {
+        return self.exerciseHistory
+    }
+    
+    public func appendExerciseHistoryEntry(exerciseHistoryEntry: ExerciseHistoryEntry) {
+        self.exerciseHistory.append(exerciseHistoryEntry)
     }
 
     @objc public func getCooldownTime() -> Int {
@@ -144,4 +158,17 @@ class ExerciseInfo {
     func getProgressionMethods() -> [ProgressionMethod] {
         return self.progressionMethods
     }
+}
+
+// Question:
+// "CHRIS?! CHRIS OH WHY DID YOU DO THIS?"
+// Answer:
+// Because realm does not support RLMArrays/Lists of primitive types.
+public class RLMString: Object {
+    @objc public dynamic var value: String = ""
+}
+
+public class ExerciseHistoryEntry: Object {
+    @objc public dynamic var date: Date?
+    public var ExerciseInfo: List<RLMString> = List<RLMString>()
 }

@@ -12,10 +12,10 @@ Expected / Hopeful release: December 20th
 |---------------------------|-----------------------|------------------------------------------------|
 | Workout Creation          | 9/10                  |                                                |
 | Exercise Creation         | 9/10                  | Add nice way to choose progression method unit |
-| Workout History Tracking  | 0/10                  |                                                |
-| Exercise History Tracking | 0/10                  |                                                |
-| Workout Start             | 7/10                  | Add Rep Count Box                              |
-| Exercise Start            | 5/10                  | Reworking UI; will be less table-based.        |
+| Workout History Tracking  | 7/10                  |                                                |
+| Exercise History Tracking | 5/10                  |                                                |
+| Workout Start             | 7/10                  |                                                |
+| Exercise Start            | 9/10                  | Reworking UI; will be less table-based.        |
 | App Icon                  | 2/10                  |  Have artist                                   |
 | Splash Screen             | 2/10                  |  Have artist                                   |
 | Home Screen               | 0/10                  |                                                |

@@ -32,6 +32,12 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Encapsulated methods
+    
+    public func getCells() -> [ExerciseHistoryTableViewCell] {
+        return self.cells
+    }
+    
     // MARK: Tableview functions
     
     // allow cell deletion
@@ -54,7 +60,16 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // if the row does not have data yet, create it
         if indexPath.row >= cells.count {
-            let cell = ExerciseHistoryTableViewCell(data: data[indexPath.row],
+            var dataToSend = [(String, String)]()
+            
+            for (index, dataPiece) in data[indexPath.row].enumerated() {
+                dataToSend.append((index == 0 ? "Reps" : progressionMethods[index - 1].getName()!,
+                                   dataPiece))
+                
+                print(dataToSend)
+            }
+            
+            let cell = ExerciseHistoryTableViewCell(data: dataToSend,
                                                     style: .default,
                                                     reuseIdentifier: nil)
             cells.append(cell)

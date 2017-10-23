@@ -223,24 +223,10 @@ class WorkoutStartTableViewCell: UITableViewCell {
         }
     }
     
-    private func loadWorkoutDataIfPossible() {
-        // If we're out of range, do nothing
-//        if self.curSet < 0 || self.curSet > self.data.count {
-//            for inputField in self.exerciseInputFields {
-//                inputField.text = ""
-//            }
-//
-//            // Return, as there is no data here yet.
-//            return
-//        }
-//
-//        for (index, inputField) in self.exerciseInputFields.enumerated() {
-//            if index < self.data[curSet - 1].count {
-//                // set the default string here to the previous string
-//                inputField.setDefaultString(defaultString: inputField.text)
-//                inputField.text = String(self.data[curSet - 1][index])
-//            }
-//        }
+    private func addWorkoutDataToHistoryIfPossible() {
+        for cell in self.exerciseHistoryTableView.getCells() {
+            
+        }
     }
     
     // MARK: Event functions

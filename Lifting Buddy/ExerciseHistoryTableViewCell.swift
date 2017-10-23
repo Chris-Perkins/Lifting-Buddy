@@ -15,13 +15,13 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     public static let heightPerProgressionMethod: CGFloat = 25
     public static let baseHeight: CGFloat = 25
     
-    private var data: [String]
+    private var data: [(String, String)]
     private var displayViews: [UIView]
     public var setLabel: UILabel
     
     // MARK: Inits
     
-    init(data: [String], style: UITableViewCellStyle, reuseIdentifier: String?) {
+    init(data: [(String, String)], style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.data = data
         self.setLabel = UILabel()
         self.displayViews = [UIView]()
@@ -76,7 +76,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
         
         for dataPiece in data {
             let newView = UILabel()
-            newView.text = dataPiece
+            newView.text = dataPiece.0 + ": " + dataPiece.1
             newView.setDefaultProperties()
             newView.font = UIFont.systemFont(ofSize: 18.0)
             

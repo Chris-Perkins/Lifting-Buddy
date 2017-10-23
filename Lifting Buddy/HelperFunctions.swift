@@ -197,20 +197,6 @@ extension UIColor {
     }
 }
 
-extension Results {
-    // Returns array of results from Realm
-    public func toArray() -> [T] {
-        return self.map{$0}
-    }
-}
-
-extension RealmSwift.List {
-    // Returns array of results from Realm List
-    public func toArray() -> [T] {
-        return self.map{$0}
-    }
-}
-
 extension String {
     var floatValue: Float? {
         return NumberFormatter().number(from: self)?.floatValue

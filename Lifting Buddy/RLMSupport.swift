@@ -21,19 +21,17 @@ extension RLMRealm {
     @nonobjc public class func schemaVersion(at url: URL, usingEncryptionKey key: Data? = nil) throws -> UInt64 {
         var error: NSError?
         let version = __schemaVersion(at: url, encryptionKey: key, error: &error)
-        guard version != RLMNotVersioned else {
-            throw error!
-        }
+        guard version != RLMNotVersioned else { throw error! }
         return version
     }
     
     #if swift(>=3.2)
     @nonobjc public func resolve<Confined>(reference: RLMThreadSafeReference<Confined>) -> Confined? {
-    return __resolve(reference as! RLMThreadSafeReference<RLMThreadConfined>) as! Confined?
+        return __resolve(reference as! RLMThreadSafeReference<RLMThreadConfined>) as! Confined?
     }
     #else
     @nonobjc public func resolve<Confined: RLMThreadConfined>(reference: RLMThreadSafeReference<Confined>) -> Confined? {
-        return __resolve(reference as! RLMThreadSafeReference<RLMThreadConfined>) as! Confined?
+    return __resolve(reference as! RLMThreadSafeReference<RLMThreadConfined>) as! Confined?
     }
     #endif
 }
@@ -41,25 +39,25 @@ extension RLMRealm {
 extension RLMObject {
     // Swift query convenience functions
     public class func objects(where predicateFormat: String, _ args: CVarArg...) -> RLMResults<RLMObject> {
-        return objects(with: NSPredicate(format: predicateFormat, arguments: getVaList(args)))
+        return objects(with: NSPredicate(format: predicateFormat, arguments: getVaList(args))) as! RLMResults<RLMObject>
     }
     
     public class func objects(in realm: RLMRealm,
                               where predicateFormat: String,
                               _ args: CVarArg...) -> RLMResults<RLMObject> {
-        return objects(in: realm, with: NSPredicate(format: predicateFormat, arguments: getVaList(args)))
+        return objects(in: realm, with: NSPredicate(format: predicateFormat, arguments: getVaList(args))) as! RLMResults<RLMObject>
     }
 }
 
-public final class RLMIterator: IteratorProtocol {
+public struct RLMIterator<T>: IteratorProtocol {
     private var iteratorBase: NSFastEnumerationIterator
     
     internal init(collection: RLMCollection) {
         iteratorBase = NSFastEnumerationIterator(collection)
     }
     
-    public func next() -> RLMObject? {
-        return iteratorBase.next() as! RLMObject?
+    public mutating func next() -> T? {
+        return iteratorBase.next() as! T?
     }
 }
 
@@ -70,7 +68,7 @@ extension RLMResults: Sequence {}
 
 extension RLMCollection {
     // Support Sequence-style enumeration
-    public func makeIterator() -> RLMIterator {
+    public func makeIterator() -> RLMIterator<RLMObject> {
         return RLMIterator(collection: self)
     }
 }
@@ -81,7 +79,60 @@ extension RLMCollection {
         return indexOfObject(with: NSPredicate(format: predicateFormat, arguments: getVaList(args)))
     }
     
-    public func objects(where predicateFormat: String, _ args: CVarArg...) -> RLMResults<RLMObject> {
-        return objects(with: NSPredicate(format: predicateFormat, arguments: getVaList(args)))
+    public func objects(where predicateFormat: String, _ args: CVarArg...) -> RLMResults<NSObject> {
+        return objects(with: NSPredicate(format: predicateFormat, arguments: getVaList(args))) as! RLMResults<NSObject>
     }
+}
+
+// MARK: - Sync-related
+extension RLMSyncManager {
+    public static var shared: RLMSyncManager {
+        return __shared()
+    }
+}
+
+extension RLMSyncUser {
+    public static var current: RLMSyncUser? {
+        return __current()
+    }
+    
+    public static var all: [String: RLMSyncUser] {
+        return __allUsers()
+    }
+    
+    @nonobjc public var errorHandler: RLMUserErrorReportingBlock? {
+        get {
+            return __errorHandler
+        }
+        set {
+            __errorHandler = newValue
+        }
+    }
+    
+    public static func logIn(with credentials: RLMSyncCredentials,
+                             server authServerURL: URL,
+                             timeout: TimeInterval = 30,
+                             callbackQueue queue: DispatchQueue = DispatchQueue.main,
+                             onCompletion completion: @escaping RLMUserCompletionBlock) {
+        return __logIn(with: credentials,
+                       authServerURL: authServerURL,
+                       timeout: timeout,
+                       callbackQueue: queue,
+                       onCompletion: completion)
+    }
+}
+
+extension RLMSyncSession {
+    public func addProgressNotification(for direction: RLMSyncProgressDirection,
+                                        mode: RLMSyncProgressMode,
+                                        block: @escaping RLMProgressNotificationBlock) -> RLMProgressNotificationToken? {
+        return __addProgressNotification(for: direction,
+                                         mode: mode,
+                                         block: block)
+    }
+}
+
+extension RLMNotificationToken {
+    @available(*, unavailable, renamed: "invalidate()")
+    @nonobjc public func stop() { fatalError() }
 }

@@ -130,7 +130,7 @@ class ExerciseInfo {
     private var setCount: Int
     private var repCount: Int
     private var coolDownTime: Int
-    private var progressionMethods: [ProgressionMethod]
+    private var progressionMethods: List<ProgressionMethod>
     
     // MARK: Class inits
     
@@ -138,7 +138,7 @@ class ExerciseInfo {
         self.setCount           = exercise.getSetCount()
         self.repCount           = exercise.getRepCount()
         self.coolDownTime       = exercise.getCooldownTime()
-        self.progressionMethods = exercise.getProgressionMethods().toArray()
+        self.progressionMethods = exercise.getProgressionMethods()
     }
     
     // MARK: Encapsulated Methods
@@ -155,7 +155,7 @@ class ExerciseInfo {
         return self.coolDownTime
     }
     
-    func getProgressionMethods() -> [ProgressionMethod] {
+    func getProgressionMethods() -> List<ProgressionMethod> {
         return self.progressionMethods
     }
 }

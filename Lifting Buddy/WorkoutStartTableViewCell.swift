@@ -392,7 +392,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         
         prevView = repInput
         
-        for progressionMethod in self.exercise.getProgressionMethods().toArray() {
+        for progressionMethod in self.exercise.getProgressionMethods() {
             if progressionMethod.getUnit() != ProgressionMethod.Unit.TIME.rawValue {
                 let progressionInput = BetterInputView(args: [(
                                                                progressionMethod.getName(),

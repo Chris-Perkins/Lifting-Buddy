@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RealmSwift
+import Realm
 
 class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
     
@@ -17,7 +19,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // MARK: Initializers
     
-    init(workouts: [Workout], frame: CGRect, style: UITableViewStyle) {
+    init(workouts: AnyRealmCollection<Workout>, frame: CGRect, style: UITableViewStyle) {
         data = Workout.getSortedWorkoutArray(workouts: workouts)
         
         super.init(frame: frame, style: style)
@@ -25,7 +27,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         self.setupTableView()
     }
     
-    init(workouts: [Workout], style: UITableViewStyle) {
+    init(workouts: AnyRealmCollection<Workout>, style: UITableViewStyle) {
         data = Workout.getSortedWorkoutArray(workouts: workouts)
         
         super.init(frame: .zero, style: style)
@@ -109,7 +111,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     public func appendDataToTableView(data: Workout) {
         self.data.append(data)
         
-        self.data = Workout.getSortedWorkoutArray(workouts: self.data)
+        //self.data = Workout.getSortedWorkoutArray(workouts: self.data)
         
         reloadData()
     }

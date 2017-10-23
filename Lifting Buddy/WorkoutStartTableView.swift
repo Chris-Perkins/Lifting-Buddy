@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSource,
                              WorkoutStartTableViewCellDelegate {
@@ -22,7 +24,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     public var viewDelegate: WorkoutStartTableViewDelegate?
     
     // Data, holds exercises per cell
-    private var data: [Exercise]
+    private var data: List<Exercise>
     // cells in this tableview
     private var cells: [WorkoutStartTableViewCell]
     // Heights per cell
@@ -35,7 +37,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     // MARK: Initializers
     
     init(workout: Workout, frame: CGRect, style: UITableViewStyle) {
-        data = workout.getExercises().toArray()
+        data = workout.getExercises()
         cells = [WorkoutStartTableViewCell]()
         heights = [CGFloat]()
         curComplete = 0
@@ -51,7 +53,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     }
     
     init(workout: Workout, style: UITableViewStyle) {
-        data = workout.getExercises().toArray()
+        data = workout.getExercises()
         cells = [WorkoutStartTableViewCell]()
         heights = [CGFloat]()
         curComplete = 0
@@ -164,7 +166,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     }
     
     // Retrieve workouts
-    public func getData() -> [Exercise] {
+    public func getData() -> List<Exercise> {
         return data
     }
     

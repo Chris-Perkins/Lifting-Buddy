@@ -108,12 +108,12 @@ class Workout: Object {
             let realm = try! Realm()
             
             try! realm.write {
-                self.exercises.remove(objectAtIndex: index)
+                self.exercises.remove(at: index)
             }
         }
     }
     
-    public static func getSortedWorkoutArray(workouts: [Workout]) -> [Workout] {
+    public static func getSortedWorkoutArray(workouts: AnyRealmCollection<Workout>) -> [Workout] {
         let sortedWorkouts = workouts.sorted(by: {
             // If #1's workout is today and #2's is not, then it's "less".
             // If #1 and #2 are both either today or not today, then determine by name.

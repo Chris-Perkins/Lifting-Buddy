@@ -33,8 +33,12 @@ class WorkoutStartTableViewCell: UITableViewCell {
     public var delegate: WorkoutStartTableViewCellDelegate?
     
     // Title bar properties
+    
+    // the button we press to toggle this cell. It's invisible (basically)
     private var invisButton: PrettyButton
+    // the title of this cell, holds the title of the exercise name
     private var cellTitle: UILabel
+    // An image that shows whether or not this cell is expanded
     private var expandImage: UIImageView
     
     // Cell contents on expand
@@ -223,6 +227,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         }
     }
     
+    // adds the workout to the table
     private func addWorkoutDataToHistoryIfPossible() {
         for cell in self.exerciseHistoryTableView.getCells() {
             
@@ -459,6 +464,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
                                                          height: WorkoutTableView.baseCellHeight).isActive = true
     }
     
+    // center horiz in view ; width of this view/1.33 ; place below add set button ; height of tableviewheight
     private func createAndActivateExerciseHistoryTableViewConstraints() {
         self.exerciseHistoryTableView.translatesAutoresizingMaskIntoConstraints = false
         

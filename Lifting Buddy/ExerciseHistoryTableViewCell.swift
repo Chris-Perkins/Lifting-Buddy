@@ -12,12 +12,17 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
+    // the height we need per progressionmethod
     public static let heightPerProgressionMethod: CGFloat = 25
+    // height for the title bar
     public static let baseHeight: CGFloat = 25
     
-    private var data: [(String, String)]
-    private var displayViews: [UIView]
+    // displays the set title
     public var setLabel: UILabel
+    // the data stored in each cell (stored as a string)
+    private var data: [(String, String)]
+    // the views we're displaying in this cell
+    private var displayViews: [UIView]
     
     // MARK: Inits
     

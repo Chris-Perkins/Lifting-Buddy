@@ -13,8 +13,11 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // MARK: View Properties
     
+    // holds the progressionmethods for this history piece
     private let progressionMethods: List<ProgressionMethod>
+    // holds all the values for data
     private var data: [[String]]
+    // holds all cells for the table
     private var cells: [ExerciseHistoryTableViewCell] = [ExerciseHistoryTableViewCell]()
     
     // MARK: Initializers
@@ -34,6 +37,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // MARK: Encapsulated methods
     
+    // returns all the cells from this table
     public func getCells() -> [ExerciseHistoryTableViewCell] {
         return self.cells
     }
@@ -62,11 +66,10 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         if indexPath.row >= cells.count {
             var dataToSend = [(String, String)]()
             
+            // The first progressionMethod will always be reps.
             for (index, dataPiece) in data[indexPath.row].enumerated() {
                 dataToSend.append((index == 0 ? "Reps" : progressionMethods[index - 1].getName()!,
                                    dataPiece))
-                
-                print(dataToSend)
             }
             
             let cell = ExerciseHistoryTableViewCell(data: dataToSend,

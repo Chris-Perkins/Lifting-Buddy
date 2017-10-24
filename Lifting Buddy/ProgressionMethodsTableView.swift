@@ -8,14 +8,17 @@
 
 import UIKit
 
-class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDelegate {
+class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableViewDelegate {
     
     // MARK: View properties
     public var heightConstraint: NSLayoutConstraint?
     
+    // the data in this tableview
     private var data:[ProgressionMethod] = [ProgressionMethod].init()
+    // the cells in this tableview
     private var cells: [ProgressionMethodTableViewCell] = [ProgressionMethodTableViewCell]()
-    var cellHeight: CGFloat = 50.0
+    // the height per cell
+    public static let cellHeight: CGFloat = 50.0
     
     // MARK: Override Init
     
@@ -66,7 +69,7 @@ class ProgressionsTableView: UITableView, UITableViewDataSource,UITableViewDeleg
     
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeight
+        return ProgressionsMethodTableView.cellHeight
     }
     
     // MARK: Custom functions

@@ -35,7 +35,7 @@ class CreateExerciseView: UIScrollView {
     // progressions label
     private var progressionsLabel: UILabel
     // table which holds all of the progressionmethods for this exercise
-    private var progressionsTableView: ProgressionsTableView
+    private var progressionsTableView: ProgressionsMethodTableView
     // adds a progression method to the tableview
     private var addProgressionTrackerButton: PrettyButton
     // creates the exercise
@@ -53,7 +53,7 @@ class CreateExerciseView: UIScrollView {
         setEntryField = UITextField()
         repEntryField = UITextField()
         progressionsLabel = UILabel()
-        progressionsTableView = ProgressionsTableView()
+        progressionsTableView = ProgressionsMethodTableView()
         addProgressionTrackerButton = PrettyButton()
         createExerciseButton = PrettyButton()
         cancelButton = PrettyButton()

@@ -12,12 +12,18 @@ class TimeInputField: UIView, InputViewHolder {
     
     // MARK: View properties
     
+    // The input view for time
     private var timeInputView: BetterInputView
+    // The hour field
     public var hourField: BetterTextField
+    // The minute field
     public var minuteField: BetterTextField
+    // The second field
     public var secondField: BetterTextField
     
+    // A timerbutton that can be pressed to increase time
     private var timerButton: ToggleablePrettyButton
+    // The timer for this view
     private var timer: DispatchSourceTimer?
     
     // MARK: View inits

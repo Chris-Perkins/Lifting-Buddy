@@ -82,6 +82,7 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
         reloadData()
     }
     
+    // Returns the data in this tableview
     public func getData() -> [ProgressionMethod] {
         return data
     }

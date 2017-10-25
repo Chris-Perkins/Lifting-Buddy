@@ -12,17 +12,26 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
+    // The title for every cell
     private var cellTitle: UILabel
+    // The workout associated with each cell
     private var workout: Workout?
+    // The fire image displayed by streak
     private var fireImage: UIImageView
+    // The label saying how many days we're on streak
     private var streakLabel: UILabel
+    // An indicator on whether or not the cell is expanded
     private var expandImage: UIImageView
+    // The labels for every exercise
     private var exerciseLabels: [UILabel]
     
-    private var editButton: PrettyButton?
-    private var startWorkoutButton: PrettyButton?
-    
+    // A delegate notified whenever we start a workout
     public var startWorkoutDelegate: StartWorkoutDelegate?
+    
+    // The button stating whether or not we want to edit this workout
+    private var editButton: PrettyButton?
+    // A button to start the workout
+    private var startWorkoutButton: PrettyButton?
     
     // MARK: View inits
     
@@ -265,6 +274,7 @@ class WorkoutTableViewCell: UITableViewCell {
         }
     }
     
+    // Returns this workout
     public func getWorkout() -> Workout? {
         return self.workout
     }
@@ -280,6 +290,7 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // MARK: Event functions
     
+    // Notified on a button press
     @objc func buttonPress(sender: UIButton) {
         switch(sender) {
         case startWorkoutButton!:
@@ -294,5 +305,8 @@ class WorkoutTableViewCell: UITableViewCell {
 }
 
 protocol StartWorkoutDelegate {
+    /*
+     * Notified when a workout is starting
+     */
     func startWorkout(workout: Workout)
 }

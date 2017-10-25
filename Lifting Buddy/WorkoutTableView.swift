@@ -14,7 +14,9 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // MARK: View Properties
     
+    // The data displayed in cells
     private var data: [Workout]
+    // The base height per cell
     public static let baseCellHeight: CGFloat = 50.0
     
     // MARK: Initializers

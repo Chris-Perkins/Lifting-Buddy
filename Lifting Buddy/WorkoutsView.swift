@@ -9,7 +9,6 @@
 /// View which shows information about a workout
 
 import UIKit
-
 import RealmSwift
 import Realm
 
@@ -17,9 +16,11 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     
     // View properties
     
-    private var createWorkoutButton: PrettyButton
+    // The workouts for this view
     private var workoutTableView: WorkoutTableView
-    var loaded = false
+    // The button to create this workout
+    private var createWorkoutButton: PrettyButton
+    
     
     override init(frame: CGRect) {
         let realm = try! Realm()

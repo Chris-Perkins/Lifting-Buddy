@@ -12,6 +12,7 @@ class BetterInputView: UIView, InputViewHolder {
     
     // MARK: View properties
     
+    // The input views in thsi input view
     private var inputViews: [BetterTextField]
     
     // MARK: View inits

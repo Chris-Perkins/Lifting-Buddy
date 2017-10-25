@@ -10,8 +10,8 @@ import UIKit
 
 class ProgressionMethodTableViewCell: UITableViewCell {
     
+    // The currently selected progressionMethod
     private var curSelect = -1
-    
     // MARK: View properties
     private var loaded: Bool
     // Whether or not we chose a unit
@@ -65,6 +65,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     
     // MARK: Event functions
     
+    // Cycles through the unit
     @objc func pickUnitButtonPress(sender: UIButton) {
         // reset if modified
         pickUnitButton.setDefaultProperties()

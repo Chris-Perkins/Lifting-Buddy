@@ -21,12 +21,16 @@ class BetterTextField: UIView {
     
     // Label for this text field
     public var textfield: UITextField
+    // The label for this view
     private var label: UILabel
     
     // default string in this textfield
     private var defaultString: String?
+    // Whether or not this field is modified
     private var modified: Bool
+    // Whether or not a user is actively editing this field
     private var userEditing: Bool
+    // Whether or not this field is numeric
     private var isNumeric: Bool
     
     // MARK: Inits
@@ -84,10 +88,12 @@ class BetterTextField: UIView {
         self.createAndActivateLabelConstraints()
     }
     
+    // Sets if this field is numeric
     public func setIsNumeric(isNumeric: Bool) {
         self.isNumeric = isNumeric
     }
     
+    // Returns if this field is numeric
     public func getIsNumeric() -> Bool {
         return self.isNumeric
     }
@@ -120,6 +126,7 @@ class BetterTextField: UIView {
     
     // MARK: Event functions
     
+    // When the user is done editing
     @objc func editingDidEnd(sender: UITextField) {
         if self.isNumeric {
             if self.textfield.text?.floatValue == nil {
@@ -127,6 +134,8 @@ class BetterTextField: UIView {
             }
         }
     }
+    
+    // MARK: Constraints
     
     // cling to top, bottom, left of this view. Cling to right of label
     private func createAndActivateTextfieldConstraints() {

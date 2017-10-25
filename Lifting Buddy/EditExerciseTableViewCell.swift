@@ -11,8 +11,12 @@ import UIKit
 class EditExerciseTableViewCell: UITableViewCell {
     
     // MARK: View properties
+    
+    // The exercise title for this cell
     private var exerciseNameLabel: UILabel
+    // The edit button for this cell
     private var editButton: PrettyButton
+    // The exercise associated with this cell
     private var exercise: Exercise?
     
     // MARK: Init overrides
@@ -105,6 +109,8 @@ class EditExerciseTableViewCell: UITableViewCell {
     // MARK: View overrides
     
     override func layoutSubviews() {
+        super.layoutSubviews()
+        
         self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         self.clipsToBounds = true
         
@@ -119,6 +125,7 @@ class EditExerciseTableViewCell: UITableViewCell {
     
     // MARK: Public methods
     
+    // Sets the exercise for this view
     public func setExercise(exercise: Exercise) {
         self.exercise = exercise
         self.exerciseNameLabel.text = exercise.getName()

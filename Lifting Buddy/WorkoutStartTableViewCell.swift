@@ -227,8 +227,8 @@ class WorkoutStartTableViewCell: UITableViewCell {
         }
     }
     
-    // adds the workout to the table
-    private func addWorkoutDataToHistoryIfPossible() {
+    // adds workout data to history
+    public func saveWorkoutData() {
         for cell in self.exerciseHistoryTableView.getCells() {
             
         }

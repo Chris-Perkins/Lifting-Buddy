@@ -89,17 +89,34 @@ class Workout: Object {
         }
     }
     
-    // MARK: Private functions
-    
+    // returns whether or not the workout is scheduled for today
     public func getIfTodayWorkout() -> Bool {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        
         if daysOfTheWeek.count == 0 {
             return false
         }
+        
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
         return daysOfTheWeek[NSDate().getDayOfWeek(formatter.string(from: date))! - 1].value
+    }
+    
+    public func setDateLastDone(date: Date?) {
+        let realm = try! Realm()
+        try! realm.write {
+            self.dateLastDone = date
+        }
+    }
+    
+    public func incrementCurStreak() {
+        let realm = try! Realm()
+        try! realm.write {
+            self.curStreak += 1
+        }
+    }
+    
+    public func getCurSteak() -> Int {
+        return self.curStreak
     }
     
     // Remove exercise stored at an index in the int if possible

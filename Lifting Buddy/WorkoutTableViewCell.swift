@@ -136,7 +136,7 @@ class WorkoutTableViewCell: UITableViewCell {
         cellTitle.textColor = UIColor.niceBlue()
         cellTitle.textAlignment = .left
         
-        streakLabel.text = "0000"
+        streakLabel.text = String(describing: workout!.getCurSteak()) ?? "000"
         streakLabel.textColor = UIColor.niceRed()
         
         if (self.isSelected) {

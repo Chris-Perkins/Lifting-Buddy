@@ -17,7 +17,7 @@ class BetterInputView: UIView, InputViewHolder {
     
     // MARK: View inits
     
-    // To initalize, pass in list of tuples as: (Label title, defaultString, isNumeric)
+    // To initialize, pass in list of tuples as: (Label title, defaultString, isNumeric)
     init(args: [(String?,   //label title
                  String?,   // default string
                  Bool       // is field numeric

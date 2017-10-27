@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     
@@ -55,10 +57,11 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     // MARK: Private functions
     
     // Called on completion of the workout (sent by user)
-    private func completeWorkout() {
-        // TODO: Data saving
+    private func saveWorkoutData() {
+        workoutStartTableView.saveWorkoutData()
         
-        self.removeSelfNicelyWithAnimation()
+        workout.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
+        workout.incrementCurStreak()
     }
     
     // MARK: Event functions
@@ -68,7 +71,8 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
         switch(sender) {
         case completeButton:
             // complete button functions
-            completeWorkout()
+            saveWorkoutData()
+            self.removeSelfNicelyWithAnimation()
             break
         default:
             fatalError("Button pressed that does not exist?")

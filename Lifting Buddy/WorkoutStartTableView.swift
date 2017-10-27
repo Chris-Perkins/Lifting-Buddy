@@ -26,7 +26,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     // Data, holds exercises per cell
     private var data: List<Exercise>
     // cells in this tableview
-    private var cells: [WorkoutStartTableViewCell]
+    public var cells: [WorkoutStartTableViewCell]
     // Heights per cell
     private var heights: [CGFloat]
     // Whether or not this workout is complete
@@ -185,6 +185,13 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             self.viewDelegate?.updateCompleteStatus(isComplete: true)
         } else {
             self.viewDelegate?.updateCompleteStatus(isComplete: false)
+        }
+    }
+    
+    // Saves the workout data
+    public func saveWorkoutData() {
+        for cell in cells {
+            cell.saveWorkoutData()
         }
     }
 }

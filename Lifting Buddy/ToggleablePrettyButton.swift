@@ -18,7 +18,9 @@ class ToggleablePrettyButton: PrettyButton {
     private var toggleViewColor: UIColor?
     // The text color when toggled
     private var toggleTextColor: UIColor?
+    // The default color (untoggled)
     private var defaultViewColor: UIColor
+    // The default text color (untoggled)
     private var defaultTextColor: UIColor
     
     // MARK: View inits

@@ -136,8 +136,18 @@ class WorkoutTableViewCell: UITableViewCell {
         cellTitle.textColor = UIColor.niceBlue()
         cellTitle.textAlignment = .left
         
-        streakLabel.text = String(describing: workout!.getCurSteak()) ?? "000"
-        streakLabel.textColor = UIColor.niceRed()
+        
+        // Don't show the streak if there is no streak
+        if workout != nil && workout!.getCurSteak() > 0 {
+            streakLabel.text = String(describing: workout!.getCurSteak())
+            streakLabel.textColor = UIColor.niceRed()
+            
+            streakLabel.alpha = 1
+            fireImage.alpha = 1
+        } else {
+            streakLabel.alpha = 0
+            fireImage.alpha = 0
+        }
         
         if (self.isSelected) {
             editButton?.setDefaultProperties()

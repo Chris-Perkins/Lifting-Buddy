@@ -15,14 +15,16 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     // MARK: View Properties
     
     // The data displayed in cells
-    private var data: [Workout]
+    private var sortedData: [Workout]
+    private var data: AnyRealmCollection<Workout>
     // The base height per cell
     public static let baseCellHeight: CGFloat = 50.0
     
     // MARK: Initializers
     
     init(workouts: AnyRealmCollection<Workout>, frame: CGRect, style: UITableViewStyle) {
-        data = Workout.getSortedWorkoutArray(workouts: workouts)
+        self.data = workouts
+        self.sortedData = Workout.getSortedWorkoutArray(workouts: data)
         
         super.init(frame: frame, style: style)
         
@@ -30,7 +32,8 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     }
     
     init(workouts: AnyRealmCollection<Workout>, style: UITableViewStyle) {
-        data = Workout.getSortedWorkoutArray(workouts: workouts)
+        self.data = workouts
+        self.sortedData = Workout.getSortedWorkoutArray(workouts: data)
         
         super.init(frame: .zero, style: style)
         
@@ -73,18 +76,9 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     
-    // Moved a cell (LPRTableView requirement for drag-and-drop)
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        // Modify this code as needed to support more advanced reordering, such as between sections.
-        let source = data[sourceIndexPath.row]
-        let destination = data[destinationIndexPath.row]
-        data[sourceIndexPath.row] = destination
-        data[destinationIndexPath.row] = source
-    }
-    
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return sortedData.count
     }
     
     // Create our custom cell class
@@ -94,7 +88,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
                                           for: indexPath as IndexPath) as! WorkoutTableViewCell
         
         cell.startWorkoutDelegate = self.superview as! WorkoutsView
-        cell.setWorkout(workout: data[indexPath.row])
+        cell.setWorkout(workout: sortedData[indexPath.row])
         return cell
     }
     
@@ -111,16 +105,17 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // Append some data to the tableView
     public func appendDataToTableView(data: Workout) {
-        self.data.append(data)
+        let realm = try! Realm()
         
-        //self.data = Workout.getSortedWorkoutArray(workouts: self.data)
+        self.data = AnyRealmCollection(realm.objects(Workout.self))
+        self.sortedData = Workout.getSortedWorkoutArray(workouts: self.data)
         
         reloadData()
     }
     
     // Retrieve workouts
-    public func getData() -> [Workout] {
-        return data
+    public func getSortedData() -> [Workout] {
+        return self.sortedData
     }
     
     private func setupTableView() {

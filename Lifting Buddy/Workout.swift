@@ -167,12 +167,13 @@ class Workout: Object {
     }
     
     public static func getSortedWorkoutArray(workouts: AnyRealmCollection<Workout>) -> [Workout] {
+        
         let sortedWorkouts = workouts.sorted(by: {
             // If #1's workout is today and #2's is not, then it's "less".
             // If #1 and #2 are both either today or not today, then determine by name.
             // Otherwise, #1 is "greater".
             ($0.getIfTodayWorkout() && !($1.getIfTodayWorkout())) ||
-            ($0.getIfTodayWorkout() == $1.getIfTodayWorkout() && ($0.getName())! < ($1.getName())!)
+                ($0.getIfTodayWorkout() == $1.getIfTodayWorkout() && ($0.getName())! < ($1.getName())!)
         })
         
         return sortedWorkouts

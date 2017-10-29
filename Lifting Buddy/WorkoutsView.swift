@@ -37,8 +37,6 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
         
         self.createAndActivateWorkoutTableViewConstraints()
         self.createCreateWorkoutButtonConstraints()
-        
-        self.updateAllStreaks()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,6 +46,12 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     // MARK: View Overrides
     
     override func layoutSubviews() {
+        /* update the streaks in case we missed one
+         * Done here rather than in init in case user never
+         * Closes the app
+         */
+        self.updateAllStreaks()
+        
         createWorkoutButton.setDefaultProperties()
         createWorkoutButton.setTitle("Create New Workout", for: .normal)
         createWorkoutButton.addTarget(self,
@@ -60,6 +64,9 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     
     // MARK: View functions
     
+    /* Updates our streak counter by resetting the streak
+     * if we missed a day of the workout.
+     */
     private func updateAllStreaks() {
         let realm = try! Realm()
         
@@ -93,6 +100,7 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     
     func finishedWithWorkout(workout: Workout) {
         workoutTableView.appendDataToTableView(data: workout)
+        self.workoutTableView.reloadData()
         
         self.layoutSubviews()
     }

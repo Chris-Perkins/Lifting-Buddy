@@ -32,6 +32,7 @@ class BetterTextField: UIView {
     private var userEditing: Bool
     // Whether or not this field is numeric
     private var isNumeric: Bool
+    private var curLabelWidthConstraint: NSLayoutConstraint?
     
     // MARK: Inits
     
@@ -171,6 +172,8 @@ class BetterTextField: UIView {
     private func createAndActivateLabelConstraints() {
         self.label.translatesAutoresizingMaskIntoConstraints = false
         
+        curLabelWidthConstraint?.isActive = false
+        
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: label,
                                                             belowView: self,
                                                             withPadding: 0).isActive = true
@@ -190,16 +193,18 @@ class BetterTextField: UIView {
                            constant: 0).isActive = true
         
         if self.label.text != nil && self.label.text != "" {
-            NSLayoutConstraint(item: self,
-                               attribute: .width,
-                               relatedBy: .equal,
-                               toItem: label,
-                               attribute: .width,
-                               multiplier: 4,
-                               constant: 0).isActive = true
+            curLabelWidthConstraint = NSLayoutConstraint(item: self,
+                                                         attribute: .width,
+                                                         relatedBy: .equal,
+                                                         toItem: label,
+                                                         attribute: .width,
+                                                         multiplier: 4,
+                                                         constant: 0)
         } else {
-            NSLayoutConstraint.createWidthConstraintForView(view: self.label,
-                                                            width: 0).isActive = true
+            curLabelWidthConstraint = NSLayoutConstraint.createWidthConstraintForView(view: self.label,
+                                                                                      width: 0)
         }
+        
+        curLabelWidthConstraint?.isActive = true
     }
 }

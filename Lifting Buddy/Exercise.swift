@@ -111,7 +111,10 @@ class Exercise: Object {
     }
     
     public func appendExerciseHistoryEntry(exerciseHistoryEntry: ExerciseHistoryEntry) {
-        self.exerciseHistory.append(exerciseHistoryEntry)
+        let realm = try! Realm()
+        try! realm.write {
+            self.exerciseHistory.append(exerciseHistoryEntry)
+        }
     }
 
     @objc public func getCooldownTime() -> Int {
@@ -172,5 +175,5 @@ public class RLMExercisePiece: Object {
 
 public class ExerciseHistoryEntry: Object {
     @objc public dynamic var date: Date?
-    public var ExerciseInfo: List<RLMExercisePiece> = List<RLMExercisePiece>()
+    public var exerciseInfo: List<RLMExercisePiece> = List<RLMExercisePiece>()
 }

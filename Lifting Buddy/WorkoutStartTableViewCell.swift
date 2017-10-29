@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class WorkoutStartTableViewCell: UITableViewCell {
     
@@ -230,7 +232,19 @@ class WorkoutStartTableViewCell: UITableViewCell {
     // adds workout data to history
     public func saveWorkoutData() {
         for exerciseHistoryCell in self.exerciseHistoryTableView.getCells() {
-            //for data in exerciseHistoryCell.dat
+            let exerciseEntry = ExerciseHistoryEntry()
+            exerciseEntry.date = Date(timeIntervalSinceNow: 0)
+            exerciseEntry.exerciseInfo = List<RLMExercisePiece>()
+            
+            for data in exerciseHistoryCell.getData() {
+                let exercisePiece = RLMExercisePiece()
+                exercisePiece.progressionMethod = data.0
+                exercisePiece.value = data.1
+                
+                exerciseEntry.exerciseInfo.append(exercisePiece)
+            }
+            
+            exercise.appendExerciseHistoryEntry(exerciseHistoryEntry: exerciseEntry)
         }
     }
     

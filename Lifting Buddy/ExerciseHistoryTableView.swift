@@ -93,7 +93,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // Each cell's height depends on the number of progression methods, but there is a flat height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return ExerciseHistoryTableViewCell.baseHeight +
-                CGFloat(self.progressionMethods.count + 1) * // +1 for rep field
+                CGFloat(self.progressionMethods.count) *
                 ExerciseHistoryTableViewCell.heightPerProgressionMethod
     }
     

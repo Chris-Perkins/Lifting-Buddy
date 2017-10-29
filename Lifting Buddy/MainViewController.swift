@@ -50,6 +50,12 @@ class MainViewController: UIViewController {
             }
             self.sectionContentView.addSubview(workoutView!)
             break
+        case SectionView.ContentViews.EXERCISES:
+            if self.exercisesView == nil {
+                self.exercisesView = ExercisesView()
+            }
+            self.sectionContentView.addSubview(exercisesView!)
+            break
         case SectionView.ContentViews.SETTINGS:
             if self.settingsView == nil {
                 self.settingsView = SettingsView(frame: frame)

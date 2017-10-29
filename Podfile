@@ -5,10 +5,13 @@ target 'Lifting Buddy' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  # Realm Install
+  # Realm for memory management
   pod 'RealmSwift'
 
-  # IQKeyboard Install
+  # IQKeyboard to prevent hiding textfields
   pod ‘IQKeyboardManagerSwift'
+
+  # SwiftCharts for graphing
+  pod 'SwiftCharts', :git => 'https://github.com/i-schuetz/SwiftCharts.git'
 
 end

@@ -53,8 +53,8 @@ class BetterTextField: UIView {
         self.addSubview(textfield)
         self.addSubview(label)
 
-        self.createAndActivateTextfieldConstraints()
         self.createAndActivateLabelConstraints()
+        self.createAndActivateTextfieldConstraints()
     }
     
     
@@ -139,7 +139,7 @@ class BetterTextField: UIView {
     
     // cling to top, bottom, left of this view. Cling to right of label
     private func createAndActivateTextfieldConstraints() {
-        textfield.translatesAutoresizingMaskIntoConstraints = false
+        self.textfield.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: self.textfield,
                                                             belowView: self,
@@ -167,11 +167,8 @@ class BetterTextField: UIView {
                            constant: 0).isActive = true
     }
     
-    // Cling to right, top, bottom of this view
+    // Cling to right, top, bottom of this view.
     private func createAndActivateLabelConstraints() {
-        self.label.removeAllSubviews()
-        self.addSubview(label)
-        
         self.label.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: label,
@@ -200,6 +197,9 @@ class BetterTextField: UIView {
                                attribute: .width,
                                multiplier: 4,
                                constant: 0).isActive = true
+        } else {
+            NSLayoutConstraint.createWidthConstraintForView(view: self.label,
+                                                            width: 0).isActive = true
         }
     }
 }

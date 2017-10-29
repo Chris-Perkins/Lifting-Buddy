@@ -20,13 +20,13 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     // displays the set title
     public var setLabel: UILabel
     // the data stored in each cell (stored as a string)
-    private var data: [(String, String)]
+    private var data: [(ProgressionMethod, String)]
     // the views we're displaying in this cell
     private var displayViews: [UIView]
     
     // MARK: Inits
     
-    init(data: [(String, String)], style: UITableViewCellStyle, reuseIdentifier: String?) {
+    init(data: [(ProgressionMethod, String)], style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.data = data
         self.setLabel = UILabel()
         self.displayViews = [UIView]()
@@ -42,6 +42,12 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Encapsulated Methods
+    
+    public func getData() -> [(ProgressionMethod, String)]{
+        return self.data
     }
     
     // MARK: Constraints
@@ -81,7 +87,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
         
         for dataPiece in data {
             let newView = UILabel()
-            newView.text = dataPiece.0 + ": " + dataPiece.1
+            newView.text = dataPiece.0.getName()! + ": " + dataPiece.1
             newView.setDefaultProperties()
             newView.font = UIFont.systemFont(ofSize: 18.0)
             

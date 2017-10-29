@@ -64,11 +64,11 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // if the row does not have data yet, create it
         if indexPath.row >= cells.count {
-            var dataToSend = [(String, String)]()
+            var dataToSend = [(ProgressionMethod, String)]()
             
             // The first progressionMethod will always be reps.
             for (index, dataPiece) in data[indexPath.row].enumerated() {
-                dataToSend.append((index == 0 ? "Reps" : progressionMethods[index - 1].getName()!,
+                dataToSend.append((progressionMethods[index],
                                    dataPiece))
             }
             

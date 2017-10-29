@@ -15,6 +15,7 @@ class ProgressionMethod: Object {
     
     // Units for reps (seconds, kilos, etc)
     @objc dynamic private var unit: String?
+    @objc dynamic private var defaultValue: String?
     
     public enum Unit: String {
         case WEIGHT = "weight"
@@ -64,6 +65,14 @@ class ProgressionMethod: Object {
     
     @objc public func getUnit() -> String? {
         return self.unit
+    }
+    
+    public func setDefaultValue(defaultValue: String?) {
+        self.defaultValue = defaultValue
+    }
+    
+    @objc public func getDefaultValue() -> String? {
+        return self.defaultValue
     }
 }
 

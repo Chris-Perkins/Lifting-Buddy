@@ -248,6 +248,12 @@ class CreateExerciseView: UIScrollView {
         } else {
             createdExercise.setRepCount(repCount: 0)
         }
+        let progressionMethodRep = ProgressionMethod()
+        progressionMethodRep.setName(name: "Reps")
+        progressionMethodRep.setUnit(unit: "Reps")
+        progressionMethodRep.setDefaultValue(defaultValue: repEntryField.text)
+        
+        createdExercise.appendProgressionMethod(progressionMethod: progressionMethodRep)
         
         // Add all progression methods from this cell
         for cell in progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell] {

@@ -229,8 +229,8 @@ class WorkoutStartTableViewCell: UITableViewCell {
     
     // adds workout data to history
     public func saveWorkoutData() {
-        for cell in self.exerciseHistoryTableView.getCells() {
-            
+        for exerciseHistoryCell in self.exerciseHistoryTableView.getCells() {
+            //for data in exerciseHistoryCell.dat
         }
     }
     
@@ -369,28 +369,13 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private func createAndActivateInputFieldsConstraints() {
         var prevView = inputContentView
         
-        let repInput = BetterInputView(args: [(
-                                               "Reps",
-                                               String(self.exercise.getRepCount()),
-                                               true
-                                             )],
-                                             frame: .zero)
-        
-        inputContentView.addSubview(repInput)
-        
-        self.addConstraintsToInputView(view: repInput, prevView: prevView)
-        self.exerciseInputFields.append(repInput)
-        
-        prevView = repInput
-        
         for progressionMethod in self.exercise.getProgressionMethods() {
             if progressionMethod.getUnit() != ProgressionMethod.Unit.TIME.rawValue {
                 let progressionInput = BetterInputView(args: [(
                                                                progressionMethod.getName(),
-                                                               progressionMethod.getName(),
+                                                               progressionMethod.getDefaultValue() ?? progressionMethod.getName(),
                                                                true
                                                              )], frame: .zero)
-                
                 inputContentView.addSubview(progressionInput)
                 
                 progressionInput.backgroundColor = UIColor.white

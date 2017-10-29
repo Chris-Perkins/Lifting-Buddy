@@ -71,10 +71,11 @@ class Workout: Object {
         // TODO: Rework how streaks are done. This is bad.
         let today = Date(timeIntervalSinceNow: 0)
         let cal = Calendar(identifier: .gregorian)
-        // Sub one because Apple thought it'd be a good idea to make these 1-indexed.
+        
+        // Sub one from below lines because Apple thought it'd be a good idea to make these 1-indexed.
         // AKA: Sunday = 1 becomes Sunday = 0
         let day = cal.component(.weekday, from: today) - 1
-        let weekdayLastDone = cal.component(.weekday, from: dateLastDone!)
+        let weekdayLastDone = cal.component(.weekday, from: dateLastDone!) - 1
         
         for i in 1...6 {
             if daysOfTheWeek[(7 + day - i) % 7].value {

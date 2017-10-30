@@ -94,7 +94,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let exerCount = CGFloat(data[indexPath.row].getExercises().count)
+        let exerCount = CGFloat(sortedData[indexPath.row].getExercises().count)
         
         return self.indexPathForSelectedRow?.row == indexPath.row ?
             WorkoutTableView.baseCellHeight * 2 + exerCount * 30.0 + (exerCount > 0 ? 26 : 0) :

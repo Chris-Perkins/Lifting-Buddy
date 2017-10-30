@@ -77,7 +77,15 @@ class Workout: Object {
         let day = cal.component(.weekday, from: today) - 1
         let weekdayLastDone = cal.component(.weekday, from: dateLastDone!) - 1
         
-        for i in 1...6 {
+        for i in 0...6 {
+            // Do not reset if we did our exercise on a non-scheduled date.
+            if cal.dateComponents(Set([Calendar.Component.day]), from: dateLastDone!, to: today).day! == i {
+                return
+            }
+            
+            // Don't check from last week if we're on 0. So, we continue.
+            if i == 0 { continue }
+            
             if daysOfTheWeek[(7 + day - i) % 7].value {
                 if cal.dateComponents(Set([Calendar.Component.day]), from: dateLastDone!, to: today).day! > 7 ||
                    weekdayLastDone != (7 + day - i) % 7 {

@@ -20,20 +20,12 @@ class CreateExerciseView: UIScrollView {
     // Padding between views
     private let viewPadding: CGFloat = 20.0
     
-    // name entry label
-    private var nameEntryLabel: UILabel
     // where the name goes
-    private var nameEntryField: UITextField
-    // set/rep label
-    private var setRepLabel: UILabel
-    // field which contains setentryfield and repentryfield
-    private var setRepEntryFieldView: UIView
+    private var nameEntryField: BetterTextField
     // field for set count entry
-    private var setEntryField: UITextField
+    private var setEntryField: BetterTextField
     // field for rep entry
-    private var repEntryField: UITextField
-    // progressions label
-    private var progressionsLabel: UILabel
+    private var repEntryField: BetterTextField
     // table which holds all of the progressionmethods for this exercise
     private var progressionsTableView: ProgressionsMethodTableView
     // adds a progression method to the tableview
@@ -46,13 +38,9 @@ class CreateExerciseView: UIScrollView {
     // MARK: Init overrides
     
     override init(frame: CGRect) {
-        nameEntryLabel = UILabel()
-        nameEntryField = UITextField()
-        setRepLabel = UILabel()
-        setRepEntryFieldView = UIView()
-        setEntryField = UITextField()
-        repEntryField = UITextField()
-        progressionsLabel = UILabel()
+        nameEntryField = BetterTextField(defaultString: "Required: Name of Exercise", frame: .zero)
+        setEntryField = BetterTextField(defaultString: "Optional: Default Set Count", frame: .zero)
+        repEntryField = BetterTextField(defaultString: "Optional: Default Rep Count", frame: .zero)
         progressionsTableView = ProgressionsMethodTableView()
         addProgressionTrackerButton = PrettyButton()
         createExerciseButton = PrettyButton()
@@ -60,25 +48,17 @@ class CreateExerciseView: UIScrollView {
         
         super.init(frame: frame)
         
-        self.addSubview(nameEntryLabel)
         self.addSubview(nameEntryField)
-        self.addSubview(setRepLabel)
-        self.addSubview(setRepEntryFieldView)
-        setRepEntryFieldView.addSubview(setEntryField)
-        setRepEntryFieldView.addSubview(repEntryField)
-        self.addSubview(progressionsLabel)
+        self.addSubview(setEntryField)
+        self.addSubview(repEntryField)
         self.addSubview(progressionsTableView)
         self.addSubview(addProgressionTrackerButton)
         self.addSubview(createExerciseButton)
         self.addSubview(cancelButton)
         
-        self.createAndActivateNameEntryLabelConstraints()
         self.createAndActivateNameEntryFieldConstraints()
-        self.createAndActivateSetRepLabelConstraints()
-        self.createAndActivateSetRepEntryFieldViewConstraints()
         self.createAndActivateSetEntryFieldConstraints()
         self.createAndActivateRepEntryFieldConstraints()
-        self.createAndActivateProgressionsLabelConstraints()
         self.createAndActivateProgressionsTableViewConstraints()
         self.createAndActivateAddProgressionTrackerButtonConstraints()
         self.createAndActivateCreateExeciseButtonConstraints()
@@ -97,34 +77,20 @@ class CreateExerciseView: UIScrollView {
         // self stuff
         self.backgroundColor = UIColor.niceGray()
         self.contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
-
-        // Name Entry Label
-        nameEntryLabel.text = "Name of New Exercise"
-        nameEntryLabel.setDefaultProperties()
         
         // Name Entry Field
         nameEntryField.setDefaultProperties()
-        nameEntryField.placeholder = "Required: Name of Exercise"
-        
-        
-        // Set/rep entry label
-        setRepLabel.setDefaultProperties()
-        setRepLabel.text = "Default sets x reps"
+        nameEntryField.setLabelTitle(title: "Name")
         
         // Set entry field
         setEntryField.setDefaultProperties()
-        setEntryField.keyboardType = .numberPad
-        setEntryField.placeholder = "Set Count"
+        setEntryField.setLabelTitle(title: "Sets")
+        setEntryField.textfield.keyboardType = .numberPad
         
         // Rep entry field
         repEntryField.setDefaultProperties()
-        repEntryField.keyboardType = .numberPad
-        repEntryField.placeholder = "Rep Count"
-        
-        
-        // Progression Label
-        progressionsLabel.setDefaultProperties()
-        progressionsLabel.text = "Progression Trackers"
+        repEntryField.setLabelTitle(title: "Reps")
+        repEntryField.textfield.keyboardType = .numberPad
         
         // Progressions Table View
         // Prevent clipping as we can click and drag cells
@@ -195,27 +161,27 @@ class CreateExerciseView: UIScrollView {
     private func requirementsFulfilled() -> Bool {
         var fulfilled = true
         
-        if nameEntryField.text?.characters.count == 0 {
+        if nameEntryField.textfield.text?.characters.count == 0 {
             fulfilled = false
             
-            nameEntryField.backgroundColor = UIColor.niceRed()
-            nameEntryField.text = ""
+            nameEntryField.textfield.backgroundColor = UIColor.niceRed()
+            nameEntryField.textfield.text = ""
         }
-        if !setEntryField.isNumeric {
+        if !setEntryField.textfield.isNumeric {
             fulfilled = false
             
-            setEntryField.backgroundColor = UIColor.niceRed()
-            setEntryField.text = ""
+            setEntryField.textfield.backgroundColor = UIColor.niceRed()
+            setEntryField.textfield.text = ""
         }
-        if !repEntryField.isNumeric {
+        if !repEntryField.textfield.isNumeric {
             fulfilled = false
             
-            repEntryField.backgroundColor = UIColor.niceRed()
-            repEntryField.text = ""
+            repEntryField.textfield.backgroundColor = UIColor.niceRed()
+            repEntryField.textfield.text = ""
         }
         for cell in progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]
         {
-            if cell.nameEntryField.textfield.text?.characters.count == 0 {
+            if cell.nameEntryField.text?.characters.count == 0 {
                 fulfilled = false
                 
                 cell.nameEntryField.backgroundColor = UIColor.niceRed()
@@ -237,14 +203,14 @@ class CreateExerciseView: UIScrollView {
         createdExercise.setName(name: nameEntryField.text!)
         
         // Set set and rep count
-        if setEntryField.text?.characters.count != 0 {
-            createdExercise.setSetCount(setCount: Int(setEntryField.text!)!)
+        if setEntryField.textfield.text?.characters.count != 0 {
+            createdExercise.setSetCount(setCount: Int(setEntryField.textfield.text!)!)
         } else {
             createdExercise.setSetCount(setCount: 0)
         }
         
-        if repEntryField.text?.characters.count != 0 {
-            createdExercise.setRepCount(repCount: Int(repEntryField.text!)!)
+        if repEntryField.textfield.text?.characters.count != 0 {
+            createdExercise.setRepCount(repCount: Int(repEntryField.textfield.text!)!)
         } else {
             createdExercise.setRepCount(repCount: 0)
         }
@@ -269,143 +235,60 @@ class CreateExerciseView: UIScrollView {
     
     // MARK: Constraints
     
-    // center horiz in view ; place below view top ; height 20 ; width of this view - 80
-    func createAndActivateNameEntryLabelConstraints() {
-        nameEntryLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryLabel,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryLabel,
-                                                            belowView: self,
-                                                            withPadding: viewPadding).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: nameEntryLabel,
-                                                         height: 20).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryLabel,
-                                                            withCopyView: self,
-                                                            plusWidth: 0).isActive = true
-    }
-    
-    // center horiz in view ; place below nameentrylabel ; height 50 ; width of this view
+    // center horiz in view ; place below nameentrylabel ; height 50 ; width of this view * 4/5
     func createAndActivateNameEntryFieldConstraints() {
         nameEntryField.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: nameEntryField,
                                                                         inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField,
-                                                         belowView: nameEntryLabel,
-                                                         withPadding: viewPadding / 2).isActive = true
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryField,
+                                                            belowView: self,
+                                                            withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
                                                          height: 50).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: nameEntryField,
                                                             withCopyView: self,
-                                                            plusWidth: 0).isActive = true
-    }
-    
-    // center horiz in view ; place below nameentryfield ; height 20 ; width of this view - 40
-    func createAndActivateSetRepLabelConstraints() {
-        setRepLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: setRepLabel,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: setRepLabel,
-                                                         belowView: nameEntryField,
-                                                         withPadding: viewPadding * 2).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: setRepLabel,
-                                                         height: 20).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: setRepLabel,
-                                                            withCopyView: self,
                                                             plusWidth: -40).isActive = true
-    }
-    
-    // center horiz in view ; place below setreplabel ; height 40 ; width of this view - 80
-    func createAndActivateSetRepEntryFieldViewConstraints() {
-        setRepEntryFieldView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: setRepEntryFieldView,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: setRepEntryFieldView,
-                                                         belowView: setRepLabel,
-                                                         withPadding: viewPadding / 2).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: setRepEntryFieldView,
-                                                         height: 40).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: setRepEntryFieldView,
-                                                            withCopyView: self, plusWidth: -40).isActive = true
     }
     
     // cling to top,bottom,left of setrepentryfieldview; width of setrepentryfieldview / 2 - 5
     func createAndActivateSetEntryFieldConstraints() {
         setEntryField.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: setEntryField,
-                                                            belowView: setRepEntryFieldView,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: setRepEntryFieldView,
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: setEntryField,
+                                                                        inView: self).isActive = true
+        NSLayoutConstraint(item: nameEntryField,
                            attribute: .bottom,
                            relatedBy: .equal,
                            toItem: setEntryField,
-                           attribute: .bottom,
+                           attribute: .top,
                            multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: setRepEntryFieldView,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: setEntryField,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: setRepEntryFieldView,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: setEntryField,
-                           attribute: .width,
-                           multiplier: 2,
-                           constant: 5).isActive = true
+                           constant: -viewPadding / 2).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: setEntryField,
+                                                            withCopyView: self,
+                                                            plusWidth: -40).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: setEntryField,
+                                                         height: 50).isActive = true
     }
     
     // cling to top,bottom,right of setrepentryfieldview; width of setrepentryfieldview / 2 - 5
     func createAndActivateRepEntryFieldConstraints() {
         repEntryField.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: repEntryField,
-                                                            belowView: setRepEntryFieldView,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: setRepEntryFieldView,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: repEntryField,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: setRepEntryFieldView,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: repEntryField,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: setRepEntryFieldView,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: repEntryField,
-                           attribute: .width,
-                           multiplier: 2,
-                           constant: 5).isActive = true
-    }
-    
-    // center horiz in view ; place below setrepentryfieldview; height 40 ; width of this view - 80
-    func createAndActivateProgressionsLabelConstraints() {
-        progressionsLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: progressionsLabel,
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: repEntryField,
                                                                         inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: progressionsLabel,
-                                                         belowView: setRepEntryFieldView,
-                                                         withPadding: viewPadding * 2).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: progressionsLabel,
-                                                         height: 20).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: progressionsLabel,
+        NSLayoutConstraint(item: setEntryField,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: repEntryField,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: -viewPadding / 2).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: repEntryField,
                                                             withCopyView: self,
-                                                            plusWidth: 0).isActive = true
+                                                            plusWidth: -40).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: repEntryField,
+                                                         height: 50).isActive = true
     }
     
     // center horiz in view ; place below progressionslabel ; height default 0 ; width of this view - 40
@@ -415,8 +298,8 @@ class CreateExerciseView: UIScrollView {
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: progressionsTableView,
                                                                         inView: self).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: progressionsTableView,
-                                                         belowView: progressionsLabel,
-                                                         withPadding: viewPadding / 2).isActive = true
+                                                         belowView: repEntryField,
+                                                         withPadding: viewPadding * 2).isActive = true
         
         // Assign table view height constraint
         progressionsTableView.heightConstraint =
@@ -480,10 +363,10 @@ class CreateExerciseView: UIScrollView {
                                                          belowView: createExerciseButton,
                                                          withPadding: viewPadding).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: cancelButton,
-                                                         height: 40).isActive = true
+                                                         height: 50).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: cancelButton,
                                                             withCopyView: createExerciseButton,
-                                                            plusWidth: -40).isActive = true
+                                                            plusWidth: -80).isActive = true
     }
 }
 

@@ -107,6 +107,8 @@ class BetterTextField: UIView {
     
     // Sets the default string for this textfield
     public func setDefaultString(defaultString: String?) {
+        self.defaultString = defaultString
+        
         self.textfield.placeholder = defaultString
     }
     

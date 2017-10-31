@@ -38,6 +38,8 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         self.createAndActivateNameEntryFieldConstraints()
         self.createAndActivatePickUnitButtonConstraints()
         
+        self.nameEntryField.setDefaultString(defaultString: "Required: Name")
+        
         self.pickUnitButton.setTitle("Required: Unit", for: .normal)
         self.pickUnitButton.addTarget(self,
                                       action: #selector(pickUnitButtonPress(sender:)),
@@ -54,9 +56,6 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         super.layoutIfNeeded()
         
         self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        
-        self.nameEntryField.textfield.setDefaultProperties()
-        self.nameEntryField.textfield.placeholder = "Required: Name"
         
         // MARK: Pick Unit button
         

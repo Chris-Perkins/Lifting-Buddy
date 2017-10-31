@@ -205,7 +205,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
     
     // gets the height of the content view
     private func getContentHeight() -> CGFloat {
-        return self.viewPadding * 2 + CGFloat(self.exercise.getProgressionMethods().count + 1) * 40.0
+        return self.viewPadding * 2 + CGFloat(self.exercise.getProgressionMethods().count) * 40.0
     }
     
     // saves workout data

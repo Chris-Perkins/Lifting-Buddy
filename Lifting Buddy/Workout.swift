@@ -186,6 +186,17 @@ class Workout: Object {
         
         return sortedWorkouts
     }
+    
+    /* Updates our streak counter by resetting the streak
+     * if we missed a day of the workout.
+     */
+    public static func updateAllStreaks() {
+        let realm = try! Realm()
+        
+        for workout in realm.objects(Workout.self) {
+            workout.checkAndUpdateStreakIfNecessary()
+        }
+    }
 }
 
 // Question:

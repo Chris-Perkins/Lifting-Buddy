@@ -50,7 +50,7 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
          * Done here rather than in init in case user never
          * Closes the app
          */
-        self.updateAllStreaks()
+        Workout.updateAllStreaks()
         
         createWorkoutButton.setDefaultProperties()
         createWorkoutButton.setTitle("Create New Workout", for: .normal)
@@ -60,19 +60,6 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
         workoutTableView.reloadData()
 
         super.layoutSubviews()
-    }
-    
-    // MARK: View functions
-    
-    /* Updates our streak counter by resetting the streak
-     * if we missed a day of the workout.
-     */
-    private func updateAllStreaks() {
-        let realm = try! Realm()
-        
-        for workout in realm.objects(Workout.self) {
-            workout.checkAndUpdateStreakIfNecessary()
-        }
     }
     
     // MARK: Event functions

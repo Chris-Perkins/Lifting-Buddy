@@ -97,14 +97,14 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         let progressionMethodCount = CGFloat(sortedData[indexPath.row].getProgressionMethods().count)
         
         return self.indexPathForSelectedRow?.row == indexPath.row ?
-            WorkoutTableView.baseCellHeight * 2 + progressionMethodCount * 30.0 + (progressionMethodCount > 0 ? 26 : 0) :
-            WorkoutTableView.baseCellHeight
+            ExercisesTableView.baseCellHeight * 2 + progressionMethodCount * 30.0 + (progressionMethodCount > 0 ? 26 : 0) :
+            ExercisesTableView.baseCellHeight
     }
     
     // MARK: Custom functions
     
     // Append some data to the tableView
-    public func appendDataToTableView(data: Workout) {
+    public func refreshData() {
         let realm = try! Realm()
         
         self.data = AnyRealmCollection(realm.objects(Exercise.self))

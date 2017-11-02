@@ -30,7 +30,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     // Exercise Table Label
     private var exerciseTableLabel: UILabel
     // Table holding all of our exercises
-    private var exerciseTableView: EditExerciseTableView
+    private var editExerciseTableView: EditExerciseTableView
     // button to add a new exercise to this view
     private var addExerciseButton: PrettyButton
     // repeat label
@@ -47,7 +47,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     override init(frame: CGRect) {
         nameEntryField = BetterTextField(defaultString: "Required: Name of Workout", frame: .zero)
         exerciseTableLabel = UILabel()
-        exerciseTableView = EditExerciseTableView()
+        editExerciseTableView = EditExerciseTableView()
         repeatLabel = UILabel()
         repeatButtonView = UIView()
             repeatButtons = [ToggleablePrettyButton]()
@@ -59,7 +59,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
 
         self.addSubview(nameEntryField)
         self.addSubview(exerciseTableLabel)
-        self.addSubview(exerciseTableView)
+        self.addSubview(editExerciseTableView)
         self.addSubview(addExerciseButton)
         self.addSubview(repeatLabel)
         self.addSubview(repeatButtonView)
@@ -68,7 +68,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         
         self.createAndActivateNameEntryFieldConstraints()
         self.createAndActivateExerciseTableLabelConstraints()
-        self.createAndActivateExerciseTableViewConstraints()
+        self.createAndActivateEditExerciseTableViewConstraints()
         self.createAndActivateAddExerciseButtonConstraints()
         self.createAndActivateRepeatLabelConstraints()
         self.createAndActivateRepeatButtonViewConstraints()
@@ -115,9 +115,9 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         
         // Exercise Table View
         // Prevent clipping as we can click and drag cells
-        exerciseTableView.clipsToBounds = false
-        exerciseTableView.isScrollEnabled = false
-        exerciseTableView.backgroundColor = UIColor.clear
+        editExerciseTableView.clipsToBounds = false
+        editExerciseTableView.isScrollEnabled = false
+        editExerciseTableView.backgroundColor = UIColor.clear
         
         // Add exercise button
         addExerciseButton.setTitle("Add exercise", for: .normal)
@@ -224,7 +224,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         createdWorkout.setName(name: nameEntryField.text)
         createdWorkout.setDaysOfTheWeek(daysOfTheWeek: self.getDaysOfTheWeek())
         
-        for exercise in exerciseTableView.getData() {
+        for exercise in editExerciseTableView.getData() {
             createdWorkout.addExercise(exercise: exercise)
         }
         
@@ -292,7 +292,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     // MARK: CreateExerciseView delegate
     
     func finishedWithExercise(exercise: Exercise) {
-        self.exerciseTableView.appendDataToTableView(data: exercise)
+        self.editExerciseTableView.appendDataToTableView(data: exercise)
     }
     
     // MARK: Constraints
@@ -332,21 +332,21 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
     }
     
     // Center horiz in view ; place below exerciseTableLabel ; Default height of 0 ; Width of this view - 40
-    private func createAndActivateExerciseTableViewConstraints() {
-        exerciseTableView.translatesAutoresizingMaskIntoConstraints = false
+    private func createAndActivateEditExerciseTableViewConstraints() {
+        editExerciseTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: exerciseTableView,
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: editExerciseTableView,
                                                                         inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseTableView,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: editExerciseTableView,
                                                          belowView: exerciseTableLabel,
                                                          withPadding: viewPadding / 2).isActive = true
         
         // Height constraint property assigning; increases based on number of cells
-        exerciseTableView.heightConstraint =
-            NSLayoutConstraint.createHeightConstraintForView(view: exerciseTableView, height: 0)
-        exerciseTableView.heightConstraint?.isActive = true
+        editExerciseTableView.heightConstraint =
+            NSLayoutConstraint.createHeightConstraintForView(view: editExerciseTableView, height: 0)
+        editExerciseTableView.heightConstraint?.isActive = true
         
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: exerciseTableView,
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: editExerciseTableView,
                                                             withCopyView: self,
                                                             plusWidth: -50).isActive = true
     }
@@ -356,16 +356,16 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
  
         NSLayoutConstraint.createViewBelowViewConstraint(view: addExerciseButton,
-                                                         belowView: exerciseTableView,
+                                                         belowView: editExerciseTableView,
                                                          withPadding: 0).isActive = true
-        NSLayoutConstraint(item: exerciseTableView,
+        NSLayoutConstraint(item: editExerciseTableView,
                            attribute: .left,
                            relatedBy: .equal,
                            toItem: addExerciseButton,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: exerciseTableView,
+        NSLayoutConstraint(item: editExerciseTableView,
                            attribute: .right,
                            relatedBy: .equal,
                            toItem: addExerciseButton,

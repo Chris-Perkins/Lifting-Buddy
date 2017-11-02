@@ -104,7 +104,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     // MARK: Custom functions
     
     // Append some data to the tableView
-    public func appendDataToTableView(data: Workout) {
+    public func refreshData() {
         let realm = try! Realm()
         
         self.data = AnyRealmCollection(realm.objects(Workout.self))

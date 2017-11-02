@@ -99,7 +99,7 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     // MARK: CreateWorkoutViewDelegate methods
     
     func finishedWithWorkout(workout: Workout) {
-        workoutTableView.appendDataToTableView(data: workout)
+        workoutTableView.refreshData()
         self.workoutTableView.reloadData()
         
         self.layoutSubviews()

@@ -9,6 +9,7 @@
 import UIKit
 
 class ExerciseTableViewCell: UITableViewCell {
+    
     // Update selected status; v image becomes ^
     public func updateSelectedStatus() {
         //self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isSelected ? -1 : 1)

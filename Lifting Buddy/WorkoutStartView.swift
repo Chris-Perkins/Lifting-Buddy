@@ -15,7 +15,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     // MARK: View properties
     
     // Workout for this view
-    private var workout: Workout
+    private var workout: Workout?
     // The name label for this exercise
     private var workoutNameLabel: UILabel
     // The tableview holding EVERYTHING!!!
@@ -25,7 +25,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     
     // MARK: Inits
     
-    init(workout: Workout, frame: CGRect) {
+    init(workout: Workout?, frame: CGRect) {
         self.workout = workout
         
         workoutNameLabel = UILabel()
@@ -60,8 +60,8 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     private func saveWorkoutData() {
         workoutStartTableView.saveWorkoutData()
         
-        workout.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
-        workout.incrementCurStreak()
+        workout?.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
+        workout?.incrementCurStreak()
     }
     
     // MARK: Event functions
@@ -85,7 +85,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
         super.layoutSubviews()
         
         workoutNameLabel.setDefaultProperties()
-        workoutNameLabel.text = workout.getName()
+        workoutNameLabel.text = workout?.getName() ?? "Custom Workout"
         
         completeButton.setOverlayStyle(style: .FADE)
         completeButton.setOverlayColor(color: .niceYellow())

@@ -442,7 +442,7 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
                                                          height: 40).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: cancelButton,
                                                             withCopyView: createWorkoutButton,
-                                                            plusWidth: -40).isActive = true
+                                                            plusWidth: 0).isActive = true
     }
 }
 

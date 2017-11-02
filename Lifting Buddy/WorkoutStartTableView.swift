@@ -36,8 +36,8 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     // MARK: Initializers
     
-    init(workout: Workout, frame: CGRect, style: UITableViewStyle) {
-        data = workout.getExercises()
+    init(workout: Workout?, frame: CGRect, style: UITableViewStyle) {
+        data = workout?.getExercises() ?? List<Exercise>()
         cells = [WorkoutStartTableViewCell]()
         heights = [CGFloat]()
         curComplete = 0
@@ -52,8 +52,8 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         self.setupTableView()
     }
     
-    init(workout: Workout, style: UITableViewStyle) {
-        data = workout.getExercises()
+    init(workout: Workout?, style: UITableViewStyle) {
+        data = workout?.getExercises() ?? List<Exercise>()
         cells = [WorkoutStartTableViewCell]()
         heights = [CGFloat]()
         curComplete = 0

@@ -52,7 +52,7 @@ class MainViewController: UIViewController {
             break
         case SectionView.ContentViews.EXERCISES:
             if self.exercisesView == nil {
-                self.exercisesView = ExercisesView()
+                self.exercisesView = ExercisesView(frame: frame)
             }
             self.sectionContentView.addSubview(exercisesView!)
             break

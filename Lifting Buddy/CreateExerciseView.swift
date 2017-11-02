@@ -351,7 +351,7 @@ class CreateExerciseView: UIScrollView {
                                                          height: 50).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: createExerciseButton,
                                                             withCopyView: self,
-                                                            plusWidth: -80).isActive = true
+                                                            plusWidth: -50).isActive = true
     }
     
     // center horiz in view ; place below createExerciseButton; height 30 ; width of createExerciseButton - 40
@@ -364,10 +364,10 @@ class CreateExerciseView: UIScrollView {
                                                          belowView: createExerciseButton,
                                                          withPadding: viewPadding).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: cancelButton,
-                                                         height: 50).isActive = true
+                                                         height: 40).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: cancelButton,
                                                             withCopyView: createExerciseButton,
-                                                            plusWidth: -80).isActive = true
+                                                            plusWidth: 0).isActive = true
     }
 }
 

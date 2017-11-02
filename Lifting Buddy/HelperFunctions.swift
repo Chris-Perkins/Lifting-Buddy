@@ -165,7 +165,7 @@ extension NSDate {
 
 extension UIColor {
     public static func niceGray() -> UIColor {
-        return UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1)
+        return UIColor(red: 0.90, green: 0.90, blue: 0.90, alpha: 1)
     }
     
     public static func niceRed() -> UIColor {

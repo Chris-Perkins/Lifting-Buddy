@@ -14,6 +14,9 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // MARK: View Properties
     
+    public var exercisePickerDelegate: ExercisePickerDelegate?
+    // Whether or not we're simply selecting an exercise
+    private var selectingExercise: Bool
     // The data displayed in cells
     private var sortedData: [Exercise]
     private var data: AnyRealmCollection<Exercise>
@@ -22,18 +25,20 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // MARK: Initializers
     
-    init(exercises: AnyRealmCollection<Exercise>, frame: CGRect, style: UITableViewStyle) {
+    init(exercises: AnyRealmCollection<Exercise>, selectingExercise: Bool, frame: CGRect, style: UITableViewStyle) {
         self.data = exercises
         self.sortedData = Exercise.getSortedExerciseArray(exercises: data)
+        self.selectingExercise = selectingExercise
         
         super.init(frame: frame, style: style)
         
         self.setupTableView()
     }
     
-    init(exercises: AnyRealmCollection<Exercise>, style: UITableViewStyle) {
+    init(exercises: AnyRealmCollection<Exercise>, selectingExercise: Bool, style: UITableViewStyle) {
         self.data = exercises
         self.sortedData = Exercise.getSortedExerciseArray(exercises: data)
+        self.selectingExercise = selectingExercise
         
         super.init(frame: .zero, style: style)
         
@@ -74,6 +79,9 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // Selected a table view cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.selectingExercise {
+            self.exercisePickerDelegate?.didSelectExercise(exercise: sortedData[indexPath.row])
+        }
     }
     
     // Data is what we use to fill in the table view

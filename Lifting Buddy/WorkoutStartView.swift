@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
+class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePickerDelegate {
     
     // MARK: View properties
     
@@ -94,6 +94,9 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
         case addExerciseButton:
+            let chooseExerciseView = ExercisesView(selectingExercise: true, frame: self.frame)
+            chooseExerciseView.exercisePickerDelegate = self
+            self.addSubview(chooseExerciseView)
             // TODO: Add exercise screen.
             break
         case completeButton:
@@ -104,6 +107,11 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
         default:
             fatalError("Button pressed that does not exist?")
         }
+    }
+    
+    // MARK: ExercisePicker Delegate methods
+    func didSelectExercise(exercise: Exercise) {
+        self.workoutStartTableView.appendDataToTableView(data: exercise)
     }
     
     // MARK: View Constraints

@@ -10,10 +10,13 @@ import UIKit
 import Realm
 import RealmSwift
 
-class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate {
+class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, ExercisePickerDelegate {
     
     // MARK: View properties
     
+    public var exercisePickerDelegate: ExercisePickerDelegate?
+    // Whether or not we're simply selecting an exercise
+    private var selectingExercise: Bool
     // The workouts for this view
     private var exerciseTableView: ExercisesTableView
     // The button to create this workout
@@ -21,12 +24,14 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate {
     
     // MARK: View inits
     
-    override init(frame: CGRect) {
+    required init(selectingExercise: Bool = false, frame: CGRect) {
+        self.selectingExercise = selectingExercise
         let realm = try! Realm()
         
         let exercises = realm.objects(Exercise.self)
         
         exerciseTableView = ExercisesTableView(exercises: AnyRealmCollection(exercises),
+                                               selectingExercise: selectingExercise,
                                                style: UITableViewStyle.plain)
         createExerciseButton = PrettyButton()
         
@@ -34,6 +39,8 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate {
         
         self.addSubview(exerciseTableView)
         self.addSubview(createExerciseButton)
+        
+        self.exerciseTableView.exercisePickerDelegate = self
         
         self.createAndActivateExerciseTableViewConstraints()
         self.createCreateExerciseButtonConstraints()
@@ -46,12 +53,6 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate {
     // MARK: View Overrides
     
     override func layoutSubviews() {
-        /* update the streaks in case we missed one
-         * Done here rather than in init in case user never
-         * Closes the app
-         */
-        Workout.updateAllStreaks()
-        
         createExerciseButton.setDefaultProperties()
         createExerciseButton.setTitle("Create New Exercise", for: .normal)
         createExerciseButton.addTarget(self,
@@ -157,7 +158,13 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate {
     // MARK: CreateExerciseViewDelegate methods
     
     func finishedWithExercise(exercise: Exercise) {
-        // do something
+        self.exerciseTableView.refreshData()
+    }
+    
+    // MARK: ExercisePickerDelegate methods
+    func didSelectExercise(exercise: Exercise) {
+        self.exercisePickerDelegate?.didSelectExercise(exercise: exercise)
+        self.removeSelfNicelyWithAnimation()
     }
     
     // MARK: Start Workout Delegate methods
@@ -179,4 +186,12 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate {
                                             height: self.frame.height)
         })
     }
+}
+
+/* A protocol that is called when we select an exercise */
+protocol ExercisePickerDelegate {
+    /*
+     * should be called whenever an exercise is selected from the tableview
+     */
+    func didSelectExercise(exercise: Exercise)
 }

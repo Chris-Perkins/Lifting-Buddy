@@ -158,11 +158,14 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     // MARK: Custom functions
     
     // Append some data to the tableView
-    public func appendDataToTableView(data: Exercise) {
-        heights.append(WorkoutStartTableView.baseCellHeight)
-        
-        self.data.append(data)
-        reloadData()
+    public func appendDataToTableView(data: Exercise?) {
+        if data != nil {
+            heights.append(WorkoutStartTableView.baseCellHeight)
+            self.data.append(data!)
+            reloadData()
+            
+            self.checkComplete()
+        }
     }
     
     // Retrieve workouts

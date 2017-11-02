@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class ExercisesView: UIView, CreateExerciseViewDelegate {
+class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate {
     
     // MARK: View properties
     
@@ -158,5 +158,25 @@ class ExercisesView: UIView, CreateExerciseViewDelegate {
     
     func finishedWithExercise(exercise: Exercise) {
         // do something
+    }
+    
+    // MARK: Start Workout Delegate methods
+    
+    func startWorkout(workout: Workout?, exercise: Exercise?) {
+        let startWorkoutView = WorkoutStartView(workout: workout,
+                                                frame: CGRect(x: 0,
+                                                              y: -self.frame.height,
+                                                              width: self.frame.width,
+                                                              height: self.frame.height))
+        self.addSubview(startWorkoutView)
+        
+        startWorkoutView.workoutStartTableView.appendDataToTableView(data: exercise)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            startWorkoutView.frame = CGRect(x: 0,
+                                            y: 0,
+                                            width: self.frame.width,
+                                            height: self.frame.height)
+        })
     }
 }

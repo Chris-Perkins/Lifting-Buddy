@@ -16,14 +16,13 @@ class ExerciseTableViewCell: UITableViewCell {
     private var cellTitle: UILabel
     // The exercise associated with each cell
     private var exercise: Exercise?
-    // The fire image displayed by streak
-    private var fireImage: UIImageView
-    // The label saying how many days we're on streak
-    private var streakLabel: UILabel
     // An indicator on whether or not the cell is expanded
     private var expandImage: UIImageView
     // The labels for every exercise
     private var progressionLabels: [UILabel]
+    
+    // delegate we call to show the workout
+    public var workoutStartDelegate: StartWorkoutDelegate?
     
     // The button that allows for exercise editing
     private var editButton: PrettyButton?
@@ -32,8 +31,6 @@ class ExerciseTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         cellTitle = UILabel()
-        fireImage = UIImageView(image: #imageLiteral(resourceName: "Fire"))
-        streakLabel = UILabel()
         expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
         progressionLabels = [UILabel]()
         
@@ -42,8 +39,6 @@ class ExerciseTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         
         self.addSubview(cellTitle)
-        self.addSubview(fireImage)
-        self.addSubview(streakLabel)
         self.addSubview(expandImage)
         
         // MARK: Label constraints
@@ -58,7 +53,7 @@ class ExerciseTableViewCell: UITableViewCell {
                            attribute: .left,
                            multiplier: 1,
                            constant: -10).isActive = true
-        NSLayoutConstraint(item: fireImage,
+        NSLayoutConstraint(item: expandImage,
                            attribute: .left,
                            relatedBy: .equal,
                            toItem: cellTitle,
@@ -82,41 +77,6 @@ class ExerciseTableViewCell: UITableViewCell {
                            attribute: .right,
                            multiplier: 1,
                            constant: 10).isActive = true
-        
-        // MARK: streak label constraints
-        streakLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createWidthConstraintForView(view: streakLabel,
-                                                        width: 72).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: streakLabel,
-                                                         height: 20).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: streakLabel,
-                                                            belowView: self,
-                                                            withPadding: 15).isActive = true
-        NSLayoutConstraint(item: expandImage,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: streakLabel,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: -10).isActive = true
-        
-        // MARK: Streak fire icon
-        fireImage.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createWidthConstraintForView(view: fireImage,
-                                                        width: 25).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: fireImage,
-                                                         height: 25).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: fireImage,
-                                                            belowView: self,
-                                                            withPadding: 12.5).isActive = true
-        NSLayoutConstraint(item: streakLabel,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: fireImage,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -171,11 +131,13 @@ class ExerciseTableViewCell: UITableViewCell {
             editButton = PrettyButton()
             startExerciseButton = PrettyButton()
             
-            //startWorkoutButton?.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+            startExerciseButton?.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
             
             self.addSubview(editButton!)
             self.addSubview(startExerciseButton!)
             
+            
+            //TODO: Move constraints somewhere else
             // Previous view
             var prevLabel: UIView = cellTitle
             
@@ -267,10 +229,25 @@ class ExerciseTableViewCell: UITableViewCell {
         }
     }
     
+    // MARK: View functions
+    
     // Update selected status; v image becomes ^
     public func updateSelectedStatus() {
         self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isSelected ? -1 : 1)
         
         self.layoutIfNeeded()
+    }
+    
+    // MARK: Event functions
+    
+    @objc private func buttonPress(sender: UIButton) {
+        switch(sender) {
+        case (startExerciseButton!):
+            workoutStartDelegate?.startWorkout(workout: nil, exercise: self.exercise)
+            break
+        default:
+            fatalError("Button press not handled in exercisestableview!")
+            break
+        }
     }
 }

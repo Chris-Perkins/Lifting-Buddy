@@ -304,7 +304,7 @@ class WorkoutTableViewCell: UITableViewCell {
     @objc func buttonPress(sender: UIButton) {
         switch(sender) {
         case startWorkoutButton!:
-            self.startWorkoutDelegate?.startWorkout(workout: self.workout!)
+            self.startWorkoutDelegate?.startWorkout(workout: self.workout, exercise: nil)
             break
         case editButton!:
             break
@@ -318,5 +318,5 @@ protocol StartWorkoutDelegate {
     /*
      * Notified when a workout is starting
      */
-    func startWorkout(workout: Workout)
+    func startWorkout(workout: Workout?, exercise: Exercise?)
 }

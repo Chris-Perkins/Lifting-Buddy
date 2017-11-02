@@ -94,13 +94,15 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     
      // MARK: StartWorkoutDelegate methods
     
-    func startWorkout(workout: Workout) {
+    func startWorkout(workout: Workout?, exercise: Exercise?) {
         let startWorkoutView = WorkoutStartView(workout: workout,
                                                 frame: CGRect(x: 0,
                                                               y: -self.frame.height,
                                                               width: self.frame.width,
                                                               height: self.frame.height))
         self.addSubview(startWorkoutView)
+        
+        startWorkoutView.workoutStartTableView.appendDataToTableView(data: exercise)
         
         UIView.animate(withDuration: 0.2, animations: {
             startWorkoutView.frame = CGRect(x: 0,

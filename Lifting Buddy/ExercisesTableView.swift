@@ -86,6 +86,7 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         let cell =
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! ExerciseTableViewCell
+        cell.workoutStartDelegate = self.superview as? StartWorkoutDelegate
         cell.setExercise(exercise: sortedData[indexPath.row])
         return cell
     }

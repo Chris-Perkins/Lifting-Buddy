@@ -19,7 +19,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate {
     // The name label for this exercise
     private var workoutNameLabel: UILabel
     // The tableview holding EVERYTHING!!!
-    private var workoutStartTableView: WorkoutStartTableView
+    public var workoutStartTableView: WorkoutStartTableView
     // the complete button for the exercise
     private var completeButton: PrettyButton
     

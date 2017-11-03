@@ -47,8 +47,6 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // allow cell deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print("Deleted")
-            
             self.data.remove(at: indexPath.row)
             self.cells.remove(at: indexPath.row)
             self.reloadData()

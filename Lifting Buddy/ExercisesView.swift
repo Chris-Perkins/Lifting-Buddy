@@ -10,7 +10,8 @@ import UIKit
 import Realm
 import RealmSwift
 
-class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, ExercisePickerDelegate {
+class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, ExercisePickerDelegate,
+EmptyTableViewOverlayDelegate {
     
     // MARK: View properties
     
@@ -94,6 +95,16 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, E
         self.exerciseTableView.reloadData()
         
         self.layoutSubviews()
+    }
+    
+    // MARK: Empty Table Overlay delegate methods
+    
+    func showViewOverlay() {
+        // show the guy
+    }
+    
+    func hideViewOverlay() {
+        // hide the guy
     }
     
     // MARK: Constraint functions

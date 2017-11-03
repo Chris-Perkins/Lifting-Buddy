@@ -14,6 +14,7 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // MARK: View Properties
     
+    public var overlayDelegate: EmptyTableViewOverlayDelegate?
     public var exercisePickerDelegate: ExercisePickerDelegate?
     // Whether or not we're simply selecting an exercise
     private var selectingExercise: Bool
@@ -86,6 +87,12 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if sortedData.count > 0 {
+            overlayDelegate?.hideViewOverlay()
+        } else {
+            overlayDelegate?.showViewOverlay()
+        }
+        
         return sortedData.count
     }
     

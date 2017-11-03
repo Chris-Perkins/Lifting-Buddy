@@ -140,14 +140,10 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     func updateCompleteStatus(isComplete: Bool) {
         if isComplete {
             self.backgroundColor = .niceLightGreen()
-            
             completeButton.backgroundColor = .niceGreen()
-            completeButton.isEnabled = true
         } else {
             self.backgroundColor = .niceGray()
-            
-            completeButton.backgroundColor = UIColor.white.withAlphaComponent(0.25)
-            completeButton.isEnabled = false
+            completeButton.backgroundColor = UIColor.niceLightBlue()
         }
     }
     

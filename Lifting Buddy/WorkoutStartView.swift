@@ -97,10 +97,27 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
         case addExerciseButton:
-            let chooseExerciseView = ExercisesView(selectingExercise: true, frame: self.frame)
+            /*
+             * We use superview here as this view is a scrollview. This could
+             * alternatively be done by having an encasing view for every workoutview.
+             * That may be considered best practice... So, TODO
+             */
+            let frame = CGRect(x: 0,
+                               y: -self.superview!.frame.height,
+                               width: self.superview!.frame.width,
+                               height: self.superview!.frame.height)
+            
+            let chooseExerciseView = ExercisesView(selectingExercise: true, frame: frame)
+            chooseExerciseView.layer.zPosition = 100
             chooseExerciseView.exercisePickerDelegate = self
-            self.addSubview(chooseExerciseView)
-            // TODO: Add exercise screen.
+            self.superview!.addSubview(chooseExerciseView)
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                chooseExerciseView.frame = CGRect(x: 0,
+                                                  y: 0,
+                                                  width: self.superview!.frame.width,
+                                                  height: self.superview!.frame.height)
+            })
             break
         case completeButton:
             // complete button functions

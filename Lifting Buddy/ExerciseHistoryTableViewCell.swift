@@ -86,40 +86,77 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
         var prevView: UIView = self.setLabel
         
         for dataPiece in data {
-            let newView = UILabel()
-            newView.text = dataPiece.0.getName()! + ": " + dataPiece.1
-            newView.setDefaultProperties()
-            newView.font = UIFont.systemFont(ofSize: 18.0)
+            let progressionMethodLabel = UILabel()
+            progressionMethodLabel.text = dataPiece.0.getName()!
+            progressionMethodLabel.setDefaultProperties()
+            progressionMethodLabel.font = UIFont.systemFont(ofSize: 18.0)
             
-            self.addSubview(newView)
+            let dataLabel = UILabel()
+            dataLabel.textColor = UIColor.black.withAlphaComponent(0.25)
+            dataLabel.text = dataPiece.1
+            dataLabel.textAlignment = .center
             
-            newView.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview(progressionMethodLabel)
+            self.addSubview(dataLabel)
+            
+            progressionMethodLabel.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint(item: self,
-                               attribute: .left,
+                               attribute: .right,
                                relatedBy: .equal,
-                               toItem: newView,
-                               attribute: .left,
+                               toItem: progressionMethodLabel,
+                               attribute: .right,
                                multiplier: 1,
                                constant: 0).isActive = true
             NSLayoutConstraint(item: self,
-                               attribute: .right,
+                               attribute: .width,
                                relatedBy: .equal,
-                               toItem: newView,
-                               attribute: .right,
-                               multiplier: 1,
+                               toItem: progressionMethodLabel,
+                               attribute: .width,
+                               multiplier: 2,
                                constant: 0).isActive = true
             NSLayoutConstraint(item: prevView,
                                attribute: .bottom,
                                relatedBy: .equal,
-                               toItem: newView,
+                               toItem: progressionMethodLabel,
                                attribute: .top,
                                multiplier: 1,
                                constant: 0).isActive = true
-            NSLayoutConstraint.createHeightConstraintForView(view: newView,
+            NSLayoutConstraint.createHeightConstraintForView(view: progressionMethodLabel,
                                                              height: ExerciseHistoryTableViewCell.heightPerProgressionMethod).isActive = true
             
-            prevView = newView
+            dataLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint(item: self,
+                               attribute: .left,
+                               relatedBy: .equal,
+                               toItem: dataLabel,
+                               attribute: .left,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            NSLayoutConstraint(item: progressionMethodLabel,
+                               attribute: .left,
+                               relatedBy: .equal,
+                               toItem: dataLabel,
+                               attribute: .right,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            NSLayoutConstraint(item: progressionMethodLabel,
+                               attribute: .top,
+                               relatedBy: .equal,
+                               toItem: dataLabel,
+                               attribute: .top,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            NSLayoutConstraint(item: progressionMethodLabel,
+                               attribute: .bottom,
+                               relatedBy: .equal,
+                               toItem: dataLabel,
+                               attribute: .bottom,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            
+            prevView = progressionMethodLabel
         }
     }
 }

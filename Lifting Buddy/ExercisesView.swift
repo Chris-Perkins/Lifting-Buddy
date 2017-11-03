@@ -57,7 +57,9 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, E
         self.backgroundColor = UIColor.niceGray()
         
         createExerciseButton.setDefaultProperties()
-        createExerciseButton.setTitle("Create New Exercise", for: .normal)
+        createExerciseButton.setTitle(self.selectingExercise ?
+                                        "Add New Exercise" :
+                                        "Create New Exercise", for: .normal)
         createExerciseButton.addTarget(self,
                                       action: #selector(showCreateExerciseView(sender:)),
                                       for: .touchUpInside)

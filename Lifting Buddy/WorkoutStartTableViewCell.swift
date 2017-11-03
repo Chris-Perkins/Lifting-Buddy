@@ -171,8 +171,9 @@ class WorkoutStartTableViewCell: UITableViewCell {
     public func updateToggledStatus() {
         if self.indexPath != nil {
             self.delegate?.cellHeightDidChange(height: self.getHeight(),
-                                          indexPath: indexPath!)
-            self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isToggled ? -1 : 1)
+                                               indexPath: indexPath!)
+            self.expandImage.transform = CGAffineTransform(scaleX: 1,
+                                                           y: self.isToggled ? -1 : 1)
         }
     }
     
@@ -236,12 +237,18 @@ class WorkoutStartTableViewCell: UITableViewCell {
             exerciseEntry.date = Date(timeIntervalSinceNow: 0)
             exerciseEntry.exerciseInfo = List<RLMExercisePiece>()
             
+            let realm = try! Realm()
+            
             for data in exerciseHistoryCell.getData() {
                 let exercisePiece = RLMExercisePiece()
                 exercisePiece.progressionMethod = data.0
                 exercisePiece.value = data.1
                 
                 exerciseEntry.exerciseInfo.append(exercisePiece)
+                
+                try! realm.write {
+                    data.0.setDefaultValue(defaultValue: "Previous: " + data.1)
+                }
             }
             
             exercise.appendExerciseHistoryEntry(exerciseHistoryEntry: exerciseEntry)

@@ -16,7 +16,6 @@ class SectionView: UIView {
     // Required view for modifying sectionContentView
     var mainViewController: MainViewController?
     // Our sections
-    private var homeButton: PrettyButton
     private var workoutsButton: PrettyButton
     private var exercisesButton: PrettyButton
     private var settingsButton: PrettyButton
@@ -27,7 +26,6 @@ class SectionView: UIView {
     // MARK: Enums
     
     public enum ContentViews {
-        case HOME
         case WORKOUTS
         case EXERCISES
         case SETTINGS
@@ -37,19 +35,16 @@ class SectionView: UIView {
     // MARK: Init functions
     
     override init(frame: CGRect) {
-        homeButton = PrettyButton()
         workoutsButton = PrettyButton()
         exercisesButton = PrettyButton()
         settingsButton = PrettyButton()
         
         super.init(frame: frame)
         
-        self.addSubview(homeButton)
         self.addSubview(workoutsButton)
         self.addSubview(exercisesButton)
         self.addSubview(settingsButton)
         
-        self.createAndActivateHomeButtonConstraints()
         self.createAndActivateWorkoutsButtonConstraints()
         self.createAndActivateExercisesButtonConstraints()
         self.createAndActivateSettingsButtonConstraints()
@@ -64,11 +59,8 @@ class SectionView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        // TODO:... FIX THIS ABOMINATION. if possible.
         self.mainViewController = (self.next?.next?.next?.next as! MainViewController)
-        
-        // Home Button
-        homeButton.setTitle("home", for: .normal)
-        setButtonProperties(button: homeButton)
         
         // Workouts Button
         workoutsButton.setTitle("workouts", for: .normal)
@@ -83,8 +75,8 @@ class SectionView: UIView {
         settingsButton.setTitle("settings", for: .normal)
         setButtonProperties(button: settingsButton)
         
-        // Start on the today button
-        buttonPress(sender: homeButton)
+        // Start on the workout screen
+        buttonPress(sender: workoutsButton)
     }
     
     // MARK: Private functions
@@ -107,9 +99,6 @@ class SectionView: UIView {
             var viewType: SectionView.ContentViews? = nil
             
             switch(sender) {
-            case (self.homeButton):
-                viewType = .HOME
-                break
             case (self.workoutsButton):
                 viewType = .WORKOUTS
                 break
@@ -133,59 +122,25 @@ class SectionView: UIView {
     
     // Mark: Constraint functions
     
-    // Cling to top, left ; height of this view ; width of this view / 4
-    func createAndActivateHomeButtonConstraints() {
-        homeButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint(item: self,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: homeButton,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: homeButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .height,
-                           relatedBy: .equal,
-                           toItem: homeButton,
-                           attribute: .height,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: homeButton,
-                           attribute: .width,
-                           multiplier: 4,
-                           constant: 0).isActive = true
-    }
-    
     // cling to top of view, right of homeButton ; height of this homebutton ; width of this view / 4
     func createAndActivateWorkoutsButtonConstraints() {
         workoutsButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: homeButton,
+        NSLayoutConstraint(item: self,
                            attribute: .top,
                            relatedBy: .equal,
                            toItem: workoutsButton,
                            attribute: .top,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: homeButton,
-                           attribute: .right,
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
                            relatedBy: .equal,
                            toItem: workoutsButton,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: homeButton,
+        NSLayoutConstraint(item: self,
                            attribute: .height,
                            relatedBy: .equal,
                            toItem: workoutsButton,
@@ -197,7 +152,7 @@ class SectionView: UIView {
                            relatedBy: .equal,
                            toItem: workoutsButton,
                            attribute: .width,
-                           multiplier: 4,
+                           multiplier: 3,
                            constant: 0).isActive = true
     }
     
@@ -206,7 +161,7 @@ class SectionView: UIView {
     func createAndActivateExercisesButtonConstraints() {
         exercisesButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: homeButton,
+        NSLayoutConstraint(item: workoutsButton,
                            attribute: .top,
                            relatedBy: .equal,
                            toItem: exercisesButton,
@@ -220,7 +175,7 @@ class SectionView: UIView {
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: homeButton,
+        NSLayoutConstraint(item: workoutsButton,
                            attribute: .height,
                            relatedBy: .equal,
                            toItem: exercisesButton,
@@ -232,7 +187,7 @@ class SectionView: UIView {
                            relatedBy: .equal,
                            toItem: exercisesButton,
                            attribute: .width,
-                           multiplier: 4,
+                           multiplier: 3,
                            constant: 0).isActive = true
     }
     
@@ -241,7 +196,7 @@ class SectionView: UIView {
     func createAndActivateSettingsButtonConstraints() {
         settingsButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: homeButton,
+        NSLayoutConstraint(item: workoutsButton,
                            attribute: .top,
                            relatedBy: .equal,
                            toItem: settingsButton,
@@ -255,7 +210,7 @@ class SectionView: UIView {
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: homeButton,
+        NSLayoutConstraint(item: workoutsButton,
                            attribute: .height,
                            relatedBy: .equal,
                            toItem: settingsButton,
@@ -267,7 +222,7 @@ class SectionView: UIView {
                            relatedBy: .equal,
                            toItem: settingsButton,
                            attribute: .width,
-                           multiplier: 4,
+                           multiplier: 3,
                            constant: 0).isActive = true
     }
 }

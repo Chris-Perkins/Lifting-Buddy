@@ -36,6 +36,7 @@
 		22A36A2F1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */; };
 		22A36A311F4513AD000DCDBF /* LPRTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A301F4513AD000DCDBF /* LPRTableView.swift */; };
 		22A36A341F451492000DCDBF /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 22A36A331F451492000DCDBF /* LICENSE */; };
+		22A3F3EB1FACCC8E00BEAB97 /* TableOverlayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A3F3EA1FACCC8E00BEAB97 /* TableOverlayProtocol.swift */; };
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
 		22AA6D141F218AD400624744 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D131F218AD400624744 /* SectionView.swift */; };
 		22BC5AF41F3E5C2A00B150BD /* CreateWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */; };
@@ -81,6 +82,7 @@
 		22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableViewCell.swift; sourceTree = "<group>"; };
 		22A36A301F4513AD000DCDBF /* LPRTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPRTableView.swift; path = "Lifting Buddy/LPRTableView.swift"; sourceTree = "<group>"; };
 		22A36A331F451492000DCDBF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		22A3F3EA1FACCC8E00BEAB97 /* TableOverlayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableOverlayProtocol.swift; sourceTree = "<group>"; };
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		22AA6D131F218AD400624744 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWorkoutView.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				228315C91F857D23001C9324 /* BetterTextField.swift */,
 				226B119D1F96DB250013139B /* BetterInputView.swift */,
 				2263DF971F8DA60E00592DCB /* TimeInputField.swift */,
+				22A3F3EA1FACCC8E00BEAB97 /* TableOverlayProtocol.swift */,
 			);
 			name = "Custom UITypes";
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				224153761F1EE12B00F7B82B /* Workout.swift in Sources */,
 				227981441F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift in Sources */,
 				225E65D21F22A041004B3AF4 /* WorkoutsView.swift in Sources */,
+				22A3F3EB1FACCC8E00BEAB97 /* TableOverlayProtocol.swift in Sources */,
 				22A36A2F1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift in Sources */,
 				22AA6D141F218AD400624744 /* SectionView.swift in Sources */,
 				228315CA1F857D23001C9324 /* BetterTextField.swift in Sources */,

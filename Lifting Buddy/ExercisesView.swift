@@ -53,14 +53,15 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, E
     // MARK: View Overrides
     
     override func layoutSubviews() {
+        super.layoutSubviews()
+        self.backgroundColor = UIColor.niceGray()
+        
         createExerciseButton.setDefaultProperties()
         createExerciseButton.setTitle("Create New Exercise", for: .normal)
         createExerciseButton.addTarget(self,
                                       action: #selector(showCreateExerciseView(sender:)),
                                       for: .touchUpInside)
         exerciseTableView.reloadData()
-        
-        super.layoutSubviews()
     }
     
     // MARK: Event functions
@@ -158,7 +159,13 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, E
     // MARK: CreateExerciseViewDelegate methods
     
     func finishedWithExercise(exercise: Exercise) {
-        self.exerciseTableView.refreshData()
+        // if we're selecting an exercise, return the one we just made.
+        if self.selectingExercise {
+            self.exercisePickerDelegate?.didSelectExercise(exercise: exercise)
+            self.removeSelfNicelyWithAnimation()
+        } else {
+            self.exerciseTableView.refreshData()
+        }
     }
     
     // MARK: ExercisePickerDelegate methods
@@ -175,6 +182,7 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, E
                                                               y: -self.frame.height,
                                                               width: self.frame.width,
                                                               height: self.frame.height))
+        startWorkoutView.workoutStartDelegate = self
         self.addSubview(startWorkoutView)
         
         startWorkoutView.workoutStartTableView.appendDataToTableView(data: exercise)
@@ -185,6 +193,11 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, E
                                             width: self.frame.width,
                                             height: self.frame.height)
         })
+    }
+    
+    // We must refresh in case a new exercise was created mid-workout
+    func endWorkout() {
+        self.exerciseTableView.refreshData()
     }
 }
 

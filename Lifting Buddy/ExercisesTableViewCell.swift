@@ -110,6 +110,10 @@ class ExerciseTableViewCell: UITableViewCell {
         super.layoutSubviews()
     }
     
+    public func setExpandable(expandable: Bool) {
+        self.expandImage.alpha = expandable ? 1 : 0
+    }
+    
     // MARK: Encapsulated methods
     
     // Set the exercise for this cell

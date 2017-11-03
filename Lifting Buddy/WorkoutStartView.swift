@@ -25,6 +25,9 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     // the complete button for the exercise
     private var completeButton: PrettyButton
     
+    // Delegate to notify on workout start
+    public var workoutStartDelegate: StartWorkoutDelegate?
+    
     // MARK: Inits
     
     init(workout: Workout?, frame: CGRect) {
@@ -101,6 +104,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
             break
         case completeButton:
             // complete button functions
+            self.workoutStartDelegate?.endWorkout!()
             saveWorkoutData()
             self.removeSelfNicelyWithAnimation()
             break
@@ -112,6 +116,27 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     // MARK: ExercisePicker Delegate methods
     func didSelectExercise(exercise: Exercise) {
         self.workoutStartTableView.appendDataToTableView(data: exercise)
+    }
+    
+    // MARK: WorkoutStartTableViewDelegate
+    
+    func updateCompleteStatus(isComplete: Bool) {
+        if isComplete {
+            self.backgroundColor = .niceLightGreen()
+            
+            completeButton.backgroundColor = .niceGreen()
+            completeButton.isEnabled = true
+        } else {
+            self.backgroundColor = .niceGray()
+            
+            completeButton.backgroundColor = UIColor.white.withAlphaComponent(0.25)
+            completeButton.isEnabled = false
+        }
+    }
+    
+    // Height of this view changed
+    func heightChange() {
+        self.layoutSubviews()
     }
     
     // MARK: View Constraints
@@ -193,26 +218,5 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         NSLayoutConstraint.createWidthCopyConstraintForView(view: completeButton,
                                                             withCopyView: self,
                                                             plusWidth: -80).isActive = true
-    }
-    
-    // MARK: WorkoutStartTableViewDelegate
-    
-    func updateCompleteStatus(isComplete: Bool) {
-        if isComplete {
-            self.backgroundColor = .niceLightGreen()
-            
-            completeButton.backgroundColor = .niceGreen()
-            completeButton.isEnabled = true
-        } else {
-            self.backgroundColor = .niceGray()
-            
-            completeButton.backgroundColor = UIColor.white.withAlphaComponent(0.25)
-            completeButton.isEnabled = false
-        }
-    }
-    
-    // Height of this view changed
-    func heightChange() {
-        self.layoutSubviews()
     }
 }

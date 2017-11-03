@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class WorkoutTableViewCell: UITableViewCell {
     
@@ -32,6 +34,7 @@ class WorkoutTableViewCell: UITableViewCell {
     private var editButton: PrettyButton?
     // A button to start the workout
     private var startWorkoutButton: PrettyButton?
+    private var exercises = List<Exercise>()
     
     // MARK: View inits
     
@@ -173,115 +176,117 @@ class WorkoutTableViewCell: UITableViewCell {
     // Set the workout for this cell
     public func setWorkout(workout: Workout) {
         // Only make changes if we need to.
-        if workout != self.workout {
-            cellTitle.text = workout.getName()
+        // TODO: Determine when a change is made so we don't have to be dumb in checking.
+        //if workout != self.workout {
+        cellTitle.text = workout.getName()
+        
+        self.workout = workout
+        
+        for label in exerciseLabels {
+            label.removeFromSuperview()
+        }
+        exerciseLabels.removeAll()
+        editButton?.removeFromSuperview()
+        startWorkoutButton?.removeFromSuperview()
+        
+        editButton = PrettyButton()
+        startWorkoutButton = PrettyButton()
+        
+        startWorkoutButton?.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        
+        self.addSubview(editButton!)
+        self.addSubview(startWorkoutButton!)
+        
+        // Previous view
+        var prevLabel: UIView = cellTitle
+        
+        self.exercises = workout.getExercises()
+        for exercise in self.exercises {
+            let exerLabel = UILabel()
+            exerLabel.text = "- " + exercise.getName()!
+            exerLabel.textColor = UIColor.niceBlue()
+            exerLabel.textAlignment = .left
+            self.addSubview(exerLabel)
             
-            self.workout = workout
+            // Constraints for this exercise label.
+            // Place 10 from left/right of the cell
+            // Place 10 below above view, height of 20
             
-            for label in exerciseLabels {
-                label.removeFromSuperview()
-            }
-            exerciseLabels.removeAll()
-            editButton?.removeFromSuperview()
-            startWorkoutButton?.removeFromSuperview()
+            exerLabel.translatesAutoresizingMaskIntoConstraints = false
             
-            editButton = PrettyButton()
-            startWorkoutButton = PrettyButton()
-            
-            startWorkoutButton?.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-            
-            self.addSubview(editButton!)
-            self.addSubview(startWorkoutButton!)
-            
-            // Previous view
-            var prevLabel: UIView = cellTitle
-            
-            for exercise in workout.getExercises() {
-                let exerLabel = UILabel()
-                exerLabel.text = "- " + exercise.getName()!
-                exerLabel.textColor = UIColor.niceBlue()
-                exerLabel.textAlignment = .left
-                self.addSubview(exerLabel)
-                
-                // Constraints for this exercise label.
-                // Place 10 from left/right of the cell
-                // Place 10 below above view, height of 20
-                
-                exerLabel.translatesAutoresizingMaskIntoConstraints = false
-                
 
-                NSLayoutConstraint.createViewBelowViewConstraint(view: exerLabel,
-                                                                     belowView: prevLabel,
-                                                                     withPadding: 10).isActive = true
-                NSLayoutConstraint(item: self,
-                                   attribute: .left,
-                                   relatedBy: .equal,
-                                   toItem: exerLabel,
-                                   attribute: .left,
-                                   multiplier: 1,
-                                   constant: -20).isActive = true
-                NSLayoutConstraint(item: self,
-                                   attribute: .right,
-                                   relatedBy: .equal,
-                                   toItem: exerLabel,
-                                   attribute: .right,
-                                   multiplier: 1,
-                                   constant: 10).isActive = true
-                NSLayoutConstraint.createHeightConstraintForView(view: exerLabel,
-                                                                 height: 20).isActive = true
-                
-                self.exerciseLabels.append(exerLabel)
-                prevLabel = exerLabel
-            }
-            
-            
-            // MARK: Edit Button Constraints
-            editButton?.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.createViewBelowViewConstraint(view: editButton!,
-                                                             belowView: prevLabel,
-                                                             withPadding: prevLabel == cellTitle ?
-                                                                0 : 26).isActive = true
-            NSLayoutConstraint.createHeightConstraintForView(view: editButton!,
-                                                             height: WorkoutTableView.baseCellHeight).isActive = true
+            NSLayoutConstraint.createViewBelowViewConstraint(view: exerLabel,
+                                                                 belowView: prevLabel,
+                                                                 withPadding: 10).isActive = true
             NSLayoutConstraint(item: self,
                                attribute: .left,
                                relatedBy: .equal,
-                               toItem: editButton,
+                               toItem: exerLabel,
                                attribute: .left,
-                               multiplier: 1, constant: 0).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .width,
-                               relatedBy: .equal,
-                               toItem: editButton,
-                               attribute: .width,
-                               multiplier: 2,
-                               constant: 0).isActive = true
-            
-            
-            // MARK: Start workout button constraints
-            
-            startWorkoutButton?.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.createViewBelowViewConstraint(view: startWorkoutButton!,
-                                                             belowView: prevLabel,
-                                                             withPadding: prevLabel == cellTitle ?
-                                                             0 : 26).isActive = true
-            NSLayoutConstraint.createHeightConstraintForView(view: startWorkoutButton!,
-                                                             height: WorkoutTableView.baseCellHeight).isActive = true
+                               multiplier: 1,
+                               constant: -20).isActive = true
             NSLayoutConstraint(item: self,
                                attribute: .right,
                                relatedBy: .equal,
-                               toItem: startWorkoutButton,
+                               toItem: exerLabel,
                                attribute: .right,
                                multiplier: 1,
-                               constant: 0).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .width,
-                               relatedBy: .equal,
-                               toItem: startWorkoutButton,
-                               attribute: .width,
-                               multiplier: 2,
-                               constant: 0).isActive = true
+                               constant: 10).isActive = true
+            NSLayoutConstraint.createHeightConstraintForView(view: exerLabel,
+                                                             height: 20).isActive = true
+            
+            self.exerciseLabels.append(exerLabel)
+            prevLabel = exerLabel
         }
+        
+        
+        // MARK: Edit Button Constraints
+        editButton?.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createViewBelowViewConstraint(view: editButton!,
+                                                         belowView: prevLabel,
+                                                         withPadding: prevLabel == cellTitle ?
+                                                            0 : 26).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: editButton!,
+                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: editButton,
+                           attribute: .left,
+                           multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: editButton,
+                           attribute: .width,
+                           multiplier: 2,
+                           constant: 0).isActive = true
+        
+        
+        // MARK: Start workout button constraints
+        
+        startWorkoutButton?.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createViewBelowViewConstraint(view: startWorkoutButton!,
+                                                         belowView: prevLabel,
+                                                         withPadding: prevLabel == cellTitle ?
+                                                         0 : 26).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: startWorkoutButton!,
+                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: startWorkoutButton,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: startWorkoutButton,
+                           attribute: .width,
+                           multiplier: 2,
+                           constant: 0).isActive = true
+        //}
     }
     
     // Returns this workout
@@ -314,9 +319,13 @@ class WorkoutTableViewCell: UITableViewCell {
     }
 }
 
-protocol StartWorkoutDelegate {
+@objc protocol StartWorkoutDelegate {
     /*
      * Notified when a workout is starting
      */
     func startWorkout(workout: Workout?, exercise: Exercise?)
+    /*
+     * Notified when a workout is ending
+     */
+    @objc optional func endWorkout()
 }

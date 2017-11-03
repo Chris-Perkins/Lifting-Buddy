@@ -126,14 +126,13 @@ class Exercise: Object {
     
     // MARK: Static Methods
     
+    // Returns a list of sorted exercises by name
     public static func getSortedExerciseArray(exercises: AnyRealmCollection<Exercise>) -> [Exercise] {
         let sortedExercises = exercises.sorted(by: {
             // If #1's workout is today and #2's is not, then it's "less".
             // If #1 and #2 are both either today or not today, then determine by name.
             // Otherwise, #1 is "greater".
-            (($0.getName() != $1.getName() && ($0.getName())! < ($1.getName())!) ||
-             $0.getProgressionMethods().count < $1.getProgressionMethods().count
-            )
+            ($0.getName() != $1.getName() && ($0.getName())! < ($1.getName())!)
         })
         
         return sortedExercises

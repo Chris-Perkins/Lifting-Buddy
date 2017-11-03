@@ -22,8 +22,9 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // MARK: Initializers
     
-    init(workouts: AnyRealmCollection<Workout>, frame: CGRect, style: UITableViewStyle) {
-        self.data = workouts
+    override init(frame: CGRect, style: UITableViewStyle) {
+        let realm = try! Realm()
+        self.data = AnyRealmCollection(realm.objects(Workout.self))
         self.sortedData = Workout.getSortedWorkoutArray(workouts: data)
         
         super.init(frame: frame, style: style)
@@ -31,8 +32,9 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         self.setupTableView()
     }
     
-    init(workouts: AnyRealmCollection<Workout>, style: UITableViewStyle) {
-        self.data = workouts
+    init(style: UITableViewStyle) {
+        let realm = try! Realm()
+        self.data = AnyRealmCollection(realm.objects(Workout.self))
         self.sortedData = Workout.getSortedWorkoutArray(workouts: data)
         
         super.init(frame: .zero, style: style)

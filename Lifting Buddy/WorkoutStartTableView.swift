@@ -161,7 +161,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     public func appendDataToTableView(data: Exercise?) {
         if data != nil {
             heights.append(WorkoutStartTableView.baseCellHeight)
-            self.data.append(data!)
+            
+            let realm = try! Realm()
+            try! realm.write {
+                self.data.append(data!)
+            }
+            
             reloadData()
             
             self.checkComplete()

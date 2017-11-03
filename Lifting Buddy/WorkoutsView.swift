@@ -23,11 +23,7 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     
     
     override init(frame: CGRect) {
-        let realm = try! Realm()
-        
-        let workouts = realm.objects(Workout.self)
-        
-        workoutTableView = WorkoutTableView(workouts: AnyRealmCollection(workouts), style: UITableViewStyle.plain)
+        workoutTableView = WorkoutTableView(style: UITableViewStyle.plain)
         createWorkoutButton = PrettyButton()
         
         super.init(frame: frame)

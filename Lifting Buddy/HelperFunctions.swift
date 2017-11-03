@@ -100,7 +100,7 @@ extension PrettyButton {
 
 extension UITextField {
     var isNumeric: Bool {
-        if self.text?.characters.count == 0 { return true }
+        if self.text?.count == 0 { return true }
         
         let setNums: Set<Character> = Set(arrayLiteral: "1", "2", "3", "4",
                                           "5", "6", "7", "8",

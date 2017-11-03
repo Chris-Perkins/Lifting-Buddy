@@ -161,7 +161,7 @@ class CreateExerciseView: UIScrollView {
     private func requirementsFulfilled() -> Bool {
         var fulfilled = true
         
-        if nameEntryField.textfield.text?.characters.count == 0 {
+        if nameEntryField.textfield.text?.count == 0 {
             fulfilled = false
             
             nameEntryField.textfield.backgroundColor = UIColor.niceRed()
@@ -181,7 +181,7 @@ class CreateExerciseView: UIScrollView {
         }
         for cell in progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]
         {
-            if cell.nameEntryField.text?.characters.count == 0 {
+            if cell.nameEntryField.text?.count == 0 {
                 fulfilled = false
                 
                 cell.nameEntryField.backgroundColor = UIColor.niceRed()
@@ -203,13 +203,13 @@ class CreateExerciseView: UIScrollView {
         createdExercise.setName(name: nameEntryField.text!)
         
         // Set set and rep count
-        if setEntryField.textfield.text?.characters.count != 0 {
+        if setEntryField.textfield.text?.count != 0 {
             createdExercise.setSetCount(setCount: Int(setEntryField.textfield.text!)!)
         } else {
             createdExercise.setSetCount(setCount: 0)
         }
         
-        if repEntryField.textfield.text?.characters.count != 0 {
+        if repEntryField.textfield.text?.count != 0 {
             createdExercise.setRepCount(repCount: Int(repEntryField.textfield.text!)!)
         } else {
             createdExercise.setRepCount(repCount: 0)

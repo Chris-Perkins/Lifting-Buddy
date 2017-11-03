@@ -213,8 +213,8 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
     private func checkRequirementsFulfilled() -> Bool {
         var fulfilled = true
         
-        if nameEntryField.text?.characters.count == 0 {
-            nameEntryField.backgroundColor = UIColor.niceRed()
+        if nameEntryField.textfield.text?.count == 0 {
+            nameEntryField.textfield.backgroundColor = UIColor.niceRed()
             
             fulfilled = false
         }

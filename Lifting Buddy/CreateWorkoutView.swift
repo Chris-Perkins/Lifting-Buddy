@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
+class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
     
     // View properties
     
@@ -151,19 +151,24 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         
         switch (sender) {
         case addExerciseButton:
-            // Show new view
-            let createExerciseView = CreateExerciseView(frame: CGRect(x: 0,
-                                                                      y: -self.frame.height,
-                                                                      width: self.frame.width,
-                                                                      height: self.frame.height))
-            createExerciseView.dataDelegate = self
-            self.addSubview(createExerciseView)
+            /*
+             * We use superview here as this view is a scrollview. This could
+             * alternatively be done by having an encasing view for every workoutview.
+             * That may be considered best practice... So, TODO
+             */
+            let exercisePickerView = ExercisesView(selectingExercise: true,
+                                                   frame: CGRect(x: 0,
+                                                                 y: -self.superview!.frame.height,
+                                                                 width: self.superview!.frame.width,
+                                                                 height: self.superview!.frame.height))
+            exercisePickerView.exercisePickerDelegate = self
+            self.superview!.addSubview(exercisePickerView)
             
             UIView.animate(withDuration: 0.5, animations: {
-                createExerciseView.frame = CGRect(x: 0,
+                exercisePickerView.frame = CGRect(x: 0,
                                                   y: 0,
-                                                  width: self.frame.width,
-                                                  height: self.frame.height)
+                                                  width: self.superview!.frame.width,
+                                                  height: self.superview!.frame.height)
             })
             break
         case createWorkoutButton:
@@ -289,9 +294,9 @@ class CreateWorkoutView: UIScrollView, CreateExerciseViewDelegate {
         return toggledIndices
     }
     
-    // MARK: CreateExerciseView delegate
+    // MARK: ExercisePickerDelegate Methods
     
-    func finishedWithExercise(exercise: Exercise) {
+    func didSelectExercise(exercise: Exercise) {
         self.editExerciseTableView.appendDataToTableView(data: exercise)
     }
     

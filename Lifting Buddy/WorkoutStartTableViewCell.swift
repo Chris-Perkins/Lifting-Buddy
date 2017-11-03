@@ -171,8 +171,9 @@ class WorkoutStartTableViewCell: UITableViewCell {
     public func updateToggledStatus() {
         if self.indexPath != nil {
             self.delegate?.cellHeightDidChange(height: self.getHeight(),
-                                          indexPath: indexPath!)
-            self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isToggled ? -1 : 1)
+                                               indexPath: indexPath!)
+            self.expandImage.transform = CGAffineTransform(scaleX: 1,
+                                                           y: self.isToggled ? -1 : 1)
         }
     }
     

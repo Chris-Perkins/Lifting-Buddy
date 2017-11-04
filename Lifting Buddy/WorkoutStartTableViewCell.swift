@@ -83,7 +83,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.curSet = 1
         self.lowestInputView = cellTitle
         self.isComplete = false
-        self.isToggled = false
+        self.isToggled = true
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -262,11 +262,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
         switch(sender) {
         case self.invisButton:
             self.isToggled = !self.isToggled
-            
-            if self.isToggled {
-                self.delegate?.cellToggled(indexPath: indexPath!)
-            }
-            
             self.updateToggledStatus()
         case self.addSetButton:
             self.addWorkoutDataToTableIfPossible()
@@ -542,9 +537,4 @@ protocol WorkoutStartTableViewCellDelegate {
      This cell's completion status changed
      */
     func cellCompleteStatusChanged(complete: Bool)
-    
-    /*
-     This cell is toggled
-     */
-    func cellToggled(indexPath: IndexPath)
 }

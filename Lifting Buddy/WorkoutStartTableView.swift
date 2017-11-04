@@ -31,8 +31,6 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     private var heights: [CGFloat]
     // Whether or not this workout is complete
     private var curComplete: Int
-    // The currently toggled cell
-    private var curToggledCell: WorkoutStartTableViewCell?
     
     // MARK: Initializers
     
@@ -116,6 +114,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
                                           reuseIdentifier: nil)
             cell.delegate = self
             cell.indexPath = indexPath
+            cell.updateToggledStatus()
             
             cells.append(cell)
             return cell
@@ -145,14 +144,6 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     func cellCompleteStatusChanged(complete: Bool) {
         curComplete += complete ? 1 : -1
         checkComplete()
-    }
-    
-    // A cell was toggled
-    func  cellToggled(indexPath: IndexPath) {
-        if curToggledCell?.indexPath != indexPath {
-            curToggledCell?.setIsToggled(toggled: false)
-            curToggledCell = cellForRow(at: indexPath) as? WorkoutStartTableViewCell
-        }
     }
     
     // MARK: Custom functions

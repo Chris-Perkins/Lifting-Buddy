@@ -91,6 +91,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         
         cell.startWorkoutDelegate = self.superview as? StartWorkoutDelegate
         cell.setWorkout(workout: sortedData[indexPath.row])
+        cell.updateSelectedStatus()
         return cell
     }
     

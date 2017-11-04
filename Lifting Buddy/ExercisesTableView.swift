@@ -104,6 +104,7 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         cell.workoutStartDelegate = self.superview as? StartWorkoutDelegate
         cell.setExercise(exercise: sortedData[indexPath.row])
         cell.setExpandable(expandable: !self.selectingExercise)
+        cell.updateSelectedStatus()
         
         return cell
     }

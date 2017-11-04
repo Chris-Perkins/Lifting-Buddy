@@ -16,7 +16,7 @@ Expected / Hopeful release: December 20th
 | Exercise History Tracking | 9/10                  | Need to implement graphs/history viewing       |
 | Workout Start             | 9/10                  |                                                |
 | Exercise Start            | 9/10                  | Reworking UI; will be less table-based.        |
-| App Icon                  | 2/10                  |  Have artist                                   |
+| App Icon                  | 10/10                 |                                                |
 | Splash Screen             | 2/10                  |  Have artist                                   |
 | Home Screen               | 0/10                  |                                                |
 | Workout Screen            | 7/10                  | Need search/filter bar.                        |

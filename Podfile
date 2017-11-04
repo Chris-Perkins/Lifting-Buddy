@@ -12,6 +12,6 @@ target 'Lifting Buddy' do
   pod ‘IQKeyboardManagerSwift'
 
   # For graphing
-  pod 'BEMSimpleLineGraph'
+  pod 'SwiftCharts', :git => 'https://github.com/i-schuetz/SwiftCharts.git'
 
 end

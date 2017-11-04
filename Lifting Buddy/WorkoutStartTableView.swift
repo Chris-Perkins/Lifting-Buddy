@@ -96,10 +96,31 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         
         let sourceCell = cells[sourceIndexPath.row]
         let destinationCell = cells[destinationIndexPath.row]
+        
+        sourceCell.indexPath = destinationIndexPath
+        destinationCell.indexPath = sourceIndexPath
+        
         cells[sourceIndexPath.row] = destinationCell
         cells[destinationIndexPath.row] = sourceCell
     }
     
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let realm = try! Realm()
+            
+            // remove from the workout (realm data)
+            try! realm.write {
+                self.data.remove(at: indexPath.row)
+            }
+            
+            self.heights.remove(at: indexPath.row)
+            self.cells.remove(at: indexPath.row)
+            
+            self.checkComplete()
+            self.reloadData()
+        }
+    }
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
@@ -119,6 +140,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             cells.append(cell)
             return cell
         } else {
+            cells[indexPath.row].indexPath = indexPath
             return cells[indexPath.row]
         }
     }

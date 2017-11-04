@@ -104,7 +104,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         cells[destinationIndexPath.row] = sourceCell
     }
     
-    
+    // Deletion methods
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let realm = try! Realm()
@@ -121,6 +121,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             self.reloadData()
         }
     }
+    
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count

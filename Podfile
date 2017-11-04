@@ -11,7 +11,7 @@ target 'Lifting Buddy' do
   # IQKeyboard to prevent hiding textfields
   pod ‘IQKeyboardManagerSwift'
 
-  # SwiftCharts for graphing
-  pod 'SwiftCharts', :git => 'https://github.com/i-schuetz/SwiftCharts.git'
+  # For graphing
+  pod 'BEMSimpleLineGraph'
 
 end

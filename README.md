@@ -17,8 +17,8 @@ Expected / Hopeful release: December 20th
 | Workout Start             | 9/10                  |                                                |
 | Exercise Start            | 9/10                  | Reworking UI; will be less table-based.        |
 | App Icon                  | 10/10                 |                                                |
-| Splash Screen             | 2/10                  |  Have artist                                   |
-| Home Screen               | 0/10                  |                                                |
+| Splash Screen             | 10/10                 |                                                |
+| Home Screen               | 10/10                 |                                                |
 | Workout Screen            | 7/10                  | Need search/filter bar.                        |
 | Exercise Screen           | 7/10                  | Need to implement graph history                |
 | Settings Screen           | 0/10                  | Don't know what settings to put yet.           |

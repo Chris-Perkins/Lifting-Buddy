@@ -16,7 +16,7 @@ class SettingsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18))
+        let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18), fontColor: UIColor.niceBlue())
         
         let chartFrame = frame
         
@@ -90,16 +90,16 @@ class SettingsView: UIView {
             createDateAxisValue("21.10.2015", readFormatter: readFormatter, displayFormatter: displayFormatter)
         ]
         
-        let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "Axis title", settings: labelSettings))
-        let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: "Axis title", settings: labelSettings.defaultVertical()))
+        let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "Date", settings: labelSettings))
+        let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: "Value", settings: labelSettings.defaultVertical()))
         
         let coordsSpace = ChartCoordsSpaceLeftBottomSingleAxis(chartSettings: chartSettings, chartFrame: chartFrame, xModel: xModel, yModel: yModel)
         let (xAxisLayer, yAxisLayer, innerFrame) = (coordsSpace.xAxisLayer, coordsSpace.yAxisLayer, coordsSpace.chartInnerFrame)
         
-        let lineModel = ChartLineModel(chartPoints: chartPoints, lineColor: UIColor.purple, lineWidth: 2, animDuration: 1, animDelay: 0)
+        let lineModel = ChartLineModel(chartPoints: chartPoints, lineColor: UIColor.niceYellow(), lineWidth: 3, animDuration: 1, animDelay: 0)
         let chartPointsLineLayer = ChartPointsLineLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, lineModels: [lineModel]) // || CubicLinePathGenerator
         
-        let settings = ChartGuideLinesDottedLayerSettings(linesColor: UIColor.black, linesWidth: 1)
+        let settings = ChartGuideLinesDottedLayerSettings(linesColor: UIColor.niceLightBlue(), linesWidth: 1)
         let guidelinesLayer = ChartGuideLinesDottedLayer(xAxisLayer: xAxisLayer, yAxisLayer: yAxisLayer, settings: settings)
         
         self.chart = Chart(
@@ -123,7 +123,7 @@ class SettingsView: UIView {
     
     func createDateAxisValue(_ dateStr: String, readFormatter: DateFormatter, displayFormatter: DateFormatter) -> ChartAxisValue {
         let date = readFormatter.date(from: dateStr)!
-        let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18), rotation: 90, rotationKeep: .top)
+        let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18), fontColor: UIColor.niceBlue(), rotation: 90, rotationKeep: .top)
         return ChartAxisValueDate(date: date, formatter: displayFormatter, labelSettings: labelSettings)
     }
     

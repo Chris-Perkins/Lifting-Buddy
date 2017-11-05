@@ -21,6 +21,10 @@ class Workout: Object {
     @objc dynamic private var dateLastDone: Date?
     // The current streak
     @objc dynamic private var curStreak: Int
+    // The maximum streak a user obtained on this exercise
+    @objc dynamic private var maxStreak: Int
+    // The number of times we completed this workout
+    @objc dynamic private var completedCount: Int
     
     // The day this exercise occurs on
     private var daysOfTheWeek: List<RLMBool>
@@ -32,6 +36,8 @@ class Workout: Object {
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
         self.name = nil
         self.curStreak = 0
+        self.maxStreak = 0
+        self.completedCount = 0
         
         self.daysOfTheWeek = List<RLMBool>()
         self.exercises = List<Exercise>()
@@ -42,6 +48,8 @@ class Workout: Object {
     required init() {
         self.name = nil
         self.curStreak = 0
+        self.maxStreak = 0
+        self.completedCount = 0
         
         self.daysOfTheWeek = List<RLMBool>()
         self.exercises = List<Exercise>()
@@ -52,6 +60,8 @@ class Workout: Object {
     required init(value: Any, schema: RLMSchema) {
         self.name = nil
         self.curStreak = 0
+        self.maxStreak = 0
+        self.completedCount = 0
         
         self.daysOfTheWeek = List<RLMBool>()
         self.exercises = List<Exercise>()
@@ -140,8 +150,7 @@ class Workout: Object {
         }
         
         let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        let formatter = NSDate.getDateFormatter()
         return daysOfTheWeek[NSDate().getDayOfWeek(formatter.string(from: date))! - 1].value
     }
     
@@ -152,10 +161,18 @@ class Workout: Object {
         }
     }
     
-    public func incrementCurStreak() {
+    // Increases the number of times we've done this workout.
+    // Also increases the streak count and checks if we hit a new streak
+    public func incrementWorkoutCount() {
         let realm = try! Realm()
         try! realm.write {
             self.curStreak += 1
+            self.completedCount += 1
+            
+            // check if we've increases the maximum streak
+            if self.curStreak > self.maxStreak {
+                self.maxStreak = self.curStreak
+            }
         }
     }
     

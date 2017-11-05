@@ -88,7 +88,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         workoutStartTableView.saveWorkoutData()
         
         workout?.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
-        workout?.incrementCurStreak()
+        workout?.incrementWorkoutCount()
     }
     
     // MARK: Event functions

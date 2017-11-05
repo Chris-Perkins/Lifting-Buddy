@@ -19,7 +19,7 @@ class SettingsView: UIView {
         super.init(frame: frame)
         
         let realm = try! Realm()
-        let chart = createChartFromExerciseHistory(exerciseHistory: realm.objects(Exercise.self).first!.getExerciseHistory(), frame: frame)
+        let chart = createChartFromExerciseHistory(exerciseHistory: realm.objects(Exercise.self).first!.getExerciseHistory(), timeAmount: TimeAmount.ALLTIME, frame: frame)
         self.chart = chart
         self.addSubview(chart.view)
     }

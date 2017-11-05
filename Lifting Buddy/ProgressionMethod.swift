@@ -75,4 +75,3 @@ class ProgressionMethod: Object {
         return self.defaultValue
     }
 }
-

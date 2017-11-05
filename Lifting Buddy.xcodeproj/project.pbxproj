@@ -162,7 +162,6 @@
 			children = (
 				226B119D1F96DB250013139B /* BetterInputView.swift */,
 				228315C91F857D23001C9324 /* BetterTextField.swift */,
-				2289D4441FAF9B7700A2DF9D /* ExerciseChartCreator.swift */,
 				22AA6D111F21851400624744 /* HeaderView.swift */,
 				226B11A01F96E1750013139B /* InputViewProtocol.swift */,
 				224697D71F19E8060089C7CA /* PrettyButton.swift */,
@@ -267,6 +266,7 @@
 		22AA6D101F2184BD00624744 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
+				2289D4441FAF9B7700A2DF9D /* ExerciseChartCreator.swift */,
 				224697C51F19843A0089C7CA /* AppDelegate.swift */,
 				22E77E051F1B35310076B3DB /* HelperFunctions.swift */,
 			);

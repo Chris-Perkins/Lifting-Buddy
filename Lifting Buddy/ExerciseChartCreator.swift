@@ -67,9 +67,9 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
         }
     }
     
-    for (_, value) in pointDictionary {
+    for (key, value) in pointDictionary {
         lineModels.append(ChartLineModel(chartPoints: value,
-                                         lineColor: UIColor.niceYellow(),
+                                         lineColor: getLineColorForProgressionMethod(progressionMethod: key),
                                          lineWidth: 3,
                                          animDuration: 1,
                                          animDelay: 0))
@@ -113,11 +113,7 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     
     let coordsSpace = ChartCoordsSpaceLeftBottomSingleAxis(chartSettings: chartSettings, chartFrame: chartFrame, xModel: xModel, yModel: yModel)
     let (xAxisLayer, yAxisLayer, innerFrame) = (coordsSpace.xAxisLayer, coordsSpace.yAxisLayer, coordsSpace.chartInnerFrame)
-    
-    //let lineModel = ChartLineModel(chartPoints: chartPoints, lineColor: UIColor.niceYellow(), lineWidth: 3, animDuration: 1, animDelay: 0)
-    /*let lineModel2 = ChartLineModel(chartPoints: [
-        createChartPoint(dateStr: "24-12-2014", percent: 23, readFormatter: readFormatter, displayFormatter: displayFormatter),
-        createChartPoint(dateStr: "04-06-2015", percent: 51, readFormatter: readFormatter, displayFormatter: displayFormatter)], lineColor: UIColor.niceRed(), lineWidth: 3, animDuration: 1, animDelay: 0)*/
+
     let chartPointsLineLayer = ChartPointsLineLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, lineModels: lineModels) // || CubicLinePathGenerator
     
     let settings = ChartGuideLinesDottedLayerSettings(linesColor: UIColor.niceLightBlue(), linesWidth: 1)
@@ -136,8 +132,33 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     )
 }
 
-public func getLineColorForIndex(index: Int) {
+func getLineColorForProgressionMethod(progressionMethod: ProgressionMethod) -> UIColor {
+    var color: UIColor?
     
+    switch ((progressionMethod.hashValue + 6) % 6) {
+    case 0:
+        color = UIColor.niceRed()
+        break
+    case 1:
+        color = UIColor.niceBlue()
+        break
+    case 2:
+        color = UIColor.niceGreen()
+        break
+    case 3:
+        color = UIColor.niceYellow()
+        break
+    case 4:
+        color = UIColor.niceLightBlue()
+        break
+    case 5:
+        color = UIColor.niceLightGreen()
+        break
+    default:
+        fatalError("MODULO FAILED? Check addition in ExerciseChartCreator -> GetLineColor Method")
+    }
+    
+    return color!.withAlphaComponent(CGFloat((progressionMethod.hashValue + 25) % 25) / 100.0 + 0.75)
 }
 
 private func createChartPoint(date: Date, value: Float, displayFormatter: DateFormatter) -> ChartPoint {

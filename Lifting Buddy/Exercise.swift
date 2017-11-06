@@ -12,6 +12,11 @@ import RealmSwift
 import Realm
 
 class Exercise: Object {
+    // MARK: View properties
+    
+    // Assign UUID to this object
+    @objc dynamic private var identifier: String = UUID().uuidString
+    
     // Name of this exercise
     @objc dynamic private var name: String?
     // How many sets of this exercise
@@ -67,6 +72,12 @@ class Exercise: Object {
         self.exerciseHistory = List<ExerciseHistoryEntry>()
         
         super.init(realm: realm, schema: schema)
+    }
+    
+    // MARK: Primary key set up
+    
+    override static func primaryKey() -> String? {
+        return "identifier"
     }
     
     // MARK: Encapsulated methods

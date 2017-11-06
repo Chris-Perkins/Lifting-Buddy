@@ -10,6 +10,9 @@ import RealmSwift
 import Realm
 
 class ProgressionMethod: Object {
+    // Assign UUID to this object
+    @objc dynamic private var identifier: String = UUID().uuidString
+    
     // Name of this progression method
     @objc dynamic private var name: String?
     
@@ -47,6 +50,12 @@ class ProgressionMethod: Object {
         self.name = nil
         
         super.init(realm: realm, schema: schema)
+    }
+    
+    // MARK: Primary key set up
+    
+    override static func primaryKey() -> String? {
+        return "identifier"
     }
     
     // MARK: Encapsulated methods

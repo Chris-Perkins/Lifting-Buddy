@@ -15,6 +15,9 @@ import Realm
 class Workout: Object {
     // MARK: View properties
     
+    // Assign UUID to this object
+    @objc dynamic private var identifier: String = UUID().uuidString
+    
     // Name of this workout
     @objc dynamic private var name: String?
     // The last day this workout was done
@@ -67,6 +70,12 @@ class Workout: Object {
         self.exercises = List<Exercise>()
         
         super.init(value: value, schema: schema)
+    }
+    
+    // MARK: Primary key set up
+    
+    override static func primaryKey() -> String? {
+        return "identifier"
     }
     
     // MARK: Information Functions

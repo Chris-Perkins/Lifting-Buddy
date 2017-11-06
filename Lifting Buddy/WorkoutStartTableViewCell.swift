@@ -247,7 +247,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
                 exerciseEntry.exerciseInfo.append(exercisePiece)
                 
                 try! realm.write {
-                    data.0.setDefaultValue(defaultValue: "Previous: " + data.1)
+                    data.0.setDefaultValue(defaultValue: data.1)
                 }
             }
             

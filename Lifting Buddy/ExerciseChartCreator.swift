@@ -55,15 +55,15 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                               value: maxPerProgressionMethod[key]!,
                                               displayFormatter: displayFormatter)
             
-            if var chartPoints = pointDictionary[key] {
-                chartPoints.append(chartPoint)
+            if var _ = pointDictionary[key] {
+                pointDictionary[key]!.append(chartPoint)
             } else {
                 pointDictionary[key] = [chartPoint]
             }
         }
     }
     
-    for (key, value) in pointDictionary {
+    for (_, value) in pointDictionary {
         lineModels.append(ChartLineModel(chartPoints: value,
                                          lineColor: UIColor.niceYellow(),
                                          lineWidth: 3,

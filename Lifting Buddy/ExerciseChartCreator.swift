@@ -27,26 +27,30 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     let chartFrame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
     let chartSettings = ChartSettings.getDefaultSettings()
     
-    var readFormatter = NSDate.getDateFormatter()
-    var displayFormatter = NSDate.getDateFormatter()
+    let displayFormatter = NSDate.getDateFormatter()
     
-    let date = {(str: String) -> Date in
-        return readFormatter.date(from: str)!
-    }
-    
-    let calendar = Calendar.current
-    
+    // the lines we're drawing
     var lineModels = [ChartLineModel]()
+    // the points associated per progression method (for drawing lines)
     var pointDictionary = Dictionary<ProgressionMethod, [ChartPoint]>()
     
+    // the minimum date we've encountered (used in displaying all-time)
+    var minimumDate = Date.init(timeIntervalSinceNow: 0)
+    
+    
     for exerciseHistoryEntry in exerciseHistory {
+        // Update the minimum date
+        minimumDate = min(minimumDate, exerciseHistoryEntry.date!)
+        
         // Gets the max per progression method to be displayed
         var maxPerProgressionMethod = Dictionary<ProgressionMethod, Float>()
         for exercisePiece in exerciseHistoryEntry.exerciseInfo {
-            if let val = maxPerProgressionMethod[exercisePiece.progressionMethod!] {
-                maxPerProgressionMethod[exercisePiece.progressionMethod!] = max(val, exercisePiece.value!.floatValue!)
-            } else {
-                maxPerProgressionMethod[exercisePiece.progressionMethod!] = exercisePiece.value!.floatValue!
+            if !filterProgressionMethods.contains(exercisePiece.progressionMethod!) {
+                if let val = maxPerProgressionMethod[exercisePiece.progressionMethod!] {
+                    maxPerProgressionMethod[exercisePiece.progressionMethod!] = max(val, exercisePiece.value!.floatValue!)
+                } else {
+                    maxPerProgressionMethod[exercisePiece.progressionMethod!] = exercisePiece.value!.floatValue!
+                }
             }
         }
         
@@ -73,10 +77,36 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     
     let yValues = stride(from: 0, through: 200, by: 20).map {ChartAxisValueDouble($0, labelSettings: labelSettings)}
     
-    let xValues = [
-        createDateAxisValue(readFormatter.date(from: "10-10-2017")!, displayFormatter: displayFormatter),
-        createDateAxisValue(readFormatter.date(from: "30-12-2017")!, displayFormatter: displayFormatter)
-    ]
+    var xValues = [ChartAxisValue]()
+    
+    switch (timeAmount) {
+    case TimeAmount.MONTH:
+        for i in -10...0 {
+            xValues.append(createDateAxisValue(Calendar.current.date(byAdding: .day,
+                                                                     value: 3 * i,
+                                                                     to: Date(timeIntervalSinceNow: 0))!,
+                                               displayFormatter: displayFormatter))
+        }
+    break
+    case TimeAmount.YEAR:
+        for i in -12...0 {
+            xValues.append(createDateAxisValue(Calendar.current.date(byAdding: .month,
+                                                                     value: i,
+                                                                     to: Date(timeIntervalSinceNow: 0))!,
+                                               displayFormatter: displayFormatter))
+        }
+    break
+    case TimeAmount.ALLTIME:
+        let distanceBetweenMinAndToday = Date.init(timeIntervalSinceNow: 0).timeIntervalSince(minimumDate)
+        
+        for i in -10...0 {
+            xValues.append(
+                createDateAxisValue(Date.init(timeIntervalSinceNow: Double(i)/10.0 * distanceBetweenMinAndToday),
+                                               displayFormatter: displayFormatter))
+        }
+    default:
+        fatalError("GRAPH FOR IMPLEMENTED TIMEAMOUNT NOT YET IMPLEMENTED")
+    }
     
     let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "Date", settings: labelSettings))
     let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: "Value", settings: labelSettings.defaultVertical()))
@@ -104,6 +134,10 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
             chartPointsLineLayer
         ]
     )
+}
+
+public func getLineColorForIndex(index: Int) {
+    
 }
 
 private func createChartPoint(date: Date, value: Float, displayFormatter: DateFormatter) -> ChartPoint {

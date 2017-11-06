@@ -47,6 +47,8 @@ extension ChartSettings {
         chartSettings.spacingBetweenAxesX = 8
         chartSettings.spacingBetweenAxesY = 8
         chartSettings.labelsSpacing = 0
+        chartSettings.zoomPan.zoomEnabled = true
+        chartSettings.zoomPan.panEnabled = true
         
         return chartSettings
     }

@@ -75,23 +75,23 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                          animDelay: 0))
     }
     
-    let yValues = stride(from: 0, through: 20, by: 1).map {ChartAxisValueDouble($0, labelSettings: labelSettings)}
+    let yValues = stride(from: 0, through: 20, by: 5).map {ChartAxisValueDouble($0, labelSettings: labelSettings)}
     
     var xValues = [ChartAxisValue]()
     
     switch (timeAmount) {
     case TimeAmount.MONTH:
-        for i in -10...0 {
+        for i in -5...0 {
             xValues.append(createDateAxisValue(Calendar.current.date(byAdding: .day,
-                                                                     value: 3 * i,
+                                                                     value: 6 * i,
                                                                      to: Date(timeIntervalSinceNow: 0))!,
                                                displayFormatter: displayFormatter))
         }
     break
     case TimeAmount.YEAR:
-        for i in -12...0 {
+        for i in -6...0 {
             xValues.append(createDateAxisValue(Calendar.current.date(byAdding: .month,
-                                                                     value: i,
+                                                                     value: i * 2,
                                                                      to: Date(timeIntervalSinceNow: 0))!,
                                                displayFormatter: displayFormatter))
         }
@@ -99,9 +99,9 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     case TimeAmount.ALLTIME:
         let distanceBetweenMinAndToday = Date.init(timeIntervalSinceNow: 0).timeIntervalSince(minimumDate)
         
-        for i in -10...0 {
+        for i in -4...0 {
             xValues.append(
-                createDateAxisValue(Date.init(timeIntervalSinceNow: Double(i)/10.0 * distanceBetweenMinAndToday),
+                createDateAxisValue(Date.init(timeIntervalSinceNow: Double(i) / 4.0 * distanceBetweenMinAndToday),
                                                displayFormatter: displayFormatter))
         }
     default:

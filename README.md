@@ -10,17 +10,17 @@ Expected / Hopeful release: December 20th
 
 | Process                   | Progress (Estimation) | Notes                                          |
 |---------------------------|-----------------------|------------------------------------------------|
-| Workout Creation          | 9/10                  |                                                |
+| Workout Creation          | 9/10                  | Need to be able to delete progression methods  |
 | Exercise Creation         | 9/10                  | Add nice way to choose progression method unit |
-| Workout History Tracking  | 9/10                  |                                                |
+| Workout History Tracking  | 10/10                 |                                                |
 | Exercise History Tracking | 9/10                  | Need to implement graphs/history viewing       |
-| Workout Start             | 9/10                  |                                                |
+| Workout Start             | 10/10                 |                                                |
 | Exercise Start            | 9/10                  | Reworking UI; will be less table-based.        |
-| App Icon                  | 10/10                 |                                                |
+| App Icon                  | 10/10                 |                                                |
 | Splash Screen             | 10/10                 |                                                |
 | Home Screen               | 10/10                 |                                                |
 | Workout Screen            | 7/10                  | Need search/filter bar.                        |
-| Exercise Screen           | 7/10                  | Need to implement graph history                |
+| Exercise Screen           | 9/10                  | Need to implement graph history                |
 | Settings Screen           | 0/10                  | Don't know what settings to put yet.           |
 
 

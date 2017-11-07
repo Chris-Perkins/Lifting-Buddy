@@ -27,3 +27,5 @@ Expected / Hopeful release: December 20th
 ### Future plans (?)
 Log in to sync and backup workouts
 
+#### Special Thanks
+Alex Bridgeman - For giving me the idea for this application. Also created the splash screen and launch screen!

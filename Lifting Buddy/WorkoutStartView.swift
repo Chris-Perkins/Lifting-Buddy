@@ -24,6 +24,8 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     private var addExerciseButton: PrettyButton
     // the complete button for the exercise
     private var completeButton: PrettyButton
+    // Whether or not the workout is complete
+    private var isComplete: Bool = false
     
     // Delegate to notify on workout start
     public var workoutStartDelegate: StartWorkoutDelegate?
@@ -91,6 +93,13 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         workout?.incrementWorkoutCount()
     }
     
+    // Completes this workout, dismisses the view.
+    private func completeWorkout() {
+        self.workoutStartDelegate?.endWorkout!()
+        saveWorkoutData()
+        self.removeSelfNicelyWithAnimation()
+    }
+    
     // MARK: Event functions
     
     // Generic button press event
@@ -120,11 +129,28 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
             })
             break
         case completeButton:
-            // complete button functions
-            self.workoutStartDelegate?.endWorkout!()
-            saveWorkoutData()
-            self.removeSelfNicelyWithAnimation()
-            break
+            if self.isComplete {
+                // If complete, we can just complete.
+                self.completeWorkout()
+            } else {
+                // Otherwise, prompt for confirmation that we want to complete the workout.
+                let alert = UIAlertController(title: "Complete Workout Prematurely?",
+                                              message: "Not all workouts are complete.\nDo you really want to finish this workout?",
+                                              preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel",
+                                                 style: .cancel,
+                                                 handler: nil)
+                let okAction = UIAlertAction(title: "Ok",
+                                             style: .default,
+                                             handler: {(UIAlertAction) -> Void in
+                                                            self.completeWorkout()
+                                                      })
+                
+                alert.addAction(cancelAction)
+                alert.addAction(okAction)
+                
+                self.viewController()!.present(alert, animated: true, completion: nil)
+            }
         default:
             fatalError("Button pressed that does not exist?")
         }
@@ -138,6 +164,8 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     // MARK: WorkoutStartTableViewDelegate
     
     func updateCompleteStatus(isComplete: Bool) {
+        self.isComplete = isComplete
+        
         if isComplete {
             self.backgroundColor = .niceLightGreen()
             completeButton.backgroundColor = .niceGreen()

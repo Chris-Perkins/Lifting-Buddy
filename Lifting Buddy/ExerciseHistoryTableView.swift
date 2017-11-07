@@ -18,7 +18,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // holds all the values for data
     private var data: [[String]]
     // holds all cells for the table
-    private var cells: [ExerciseHistoryTableViewCell] = [ExerciseHistoryTableViewCell]()
+    public var cells: [ExerciseHistoryTableViewCell] = [ExerciseHistoryTableViewCell]()
     
     // MARK: Initializers
     

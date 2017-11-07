@@ -137,6 +137,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             cell.delegate = self
             cell.indexPath = indexPath
             cell.updateToggledStatus()
+            cell.updateCompleteStatus()
             
             cells.append(cell)
             return cell

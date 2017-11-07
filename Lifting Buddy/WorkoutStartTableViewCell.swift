@@ -21,9 +21,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
     
     // Exercise assigned to this cell
     private var exercise: Exercise
-    // View that is at the lowest point in the cell besides the complete button
-    // Used in constraining the completebutton
-    private var lowestInputView: UIView
     // Whether or not this exercise is complete
     private var isComplete: Bool
     // Holds whether this view is toggled
@@ -53,8 +50,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
     private var addSetButton: PrettyButton
     // table view that holds the history of our exercise this go around
     private var exerciseHistoryTableView: ExerciseHistoryTableView
-    // a button to complete the workout
-    private var completeButton: PrettyButton
     
     private var data: [[Float]]
     
@@ -74,14 +69,12 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.addSetButton = PrettyButton()
         self.exerciseHistoryTableView = ExerciseHistoryTableView(forExercise: exercise,
                                                                  style: .plain)
-        self.completeButton = PrettyButton()
         
         self.data = [[Float]]()
         
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
         self.curSet = 1
-        self.lowestInputView = cellTitle
         self.isComplete = false
         self.isToggled = true
         
@@ -93,7 +86,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.addSubview(self.inputContentView)
         self.addSubview(self.addSetButton)
         self.addSubview(self.exerciseHistoryTableView)
-        self.addSubview(self.completeButton)
         
         self.createAndActivateInvisButtonConstraints()
         self.createAndActivateCellTitleConstraints()
@@ -102,12 +94,10 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.createAndActivateInputFieldsConstraints()
         self.createAndActivateAddSetButtonConstraints()
         self.createAndActivateExerciseHistoryTableViewConstraints()
-        self.createAndActivateCompleteButtonConstraints()
         
         self.giveInvisButtonProperties()
         
         self.addSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        self.completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -122,41 +112,27 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         self.clipsToBounds = true
         
-        self.cellTitle.text = self.exercise.getName()
+        self.cellTitle.text = self.exercise.getName()! + " " + String(self.exerciseHistoryTableView.cells.count)
         
         self.invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
         self.addSetButton.setDefaultProperties()
         self.addSetButton.setTitle("Add Set", for: .normal)
         
-        self.completeButton.setDefaultProperties()
-        
-        if (self.isToggled) {
-            self.backgroundColor = UIColor.niceLightGreen()
-        } else {
-            self.backgroundColor = UIColor.white
-        }
-        
         self.cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
-        self.completeButton.setTitleColor(UIColor.white, for: .normal)
         
         // Different states for whether the cell is complete or not.
         // If complete: cell turns green, title color turns white to be visible.
         // If not complete: Cell is white
         if self.isComplete {
             // Lighten when not selected
-            self.backgroundColor = UIColor.niceGreen().withAlphaComponent(self.isSelected ? 0.65 : 0.5)
+            self.backgroundColor = UIColor.niceGreen().withAlphaComponent(self.isToggled ? 0.65 : 0.5)
             
             self.cellTitle.textColor = UIColor.white
-            
-            self.completeButton.setTitle("Mark Incomplete", for: .normal)
-            self.completeButton.setTitleColor(UIColor.white, for: .normal)
-            self.completeButton.backgroundColor = UIColor.niceRed().withAlphaComponent(0.9)
         } else {
-            self.cellTitle.textColor = UIColor.niceBlue()
+            self.backgroundColor = self.isToggled ? UIColor.niceLightGreen() : UIColor.white
             
-            self.completeButton.setTitle("Complete Exercise", for: .normal)
-            self.completeButton.backgroundColor = UIColor.niceBlue()
+            self.cellTitle.textColor = UIColor.niceBlue()
         }
     }
     
@@ -196,10 +172,9 @@ class WorkoutStartTableViewCell: UITableViewCell {
         let totalTableViewHeight = self.tableViewHeight + self.viewPadding
         totalPadding += 1
         
-        let completeButtonHeight = WorkoutTableView.baseCellHeight
-        
+        // Swift compiler doesn't like if we do too much addition at once. :-)
         let heightTop = titleBarHeight + contentHeight + addSetButtonHeight
-        let heightBottom = totalTableViewHeight + completeButtonHeight
+        let heightBottom = totalTableViewHeight
         
         return heightTop + heightBottom + CGFloat(totalPadding) * self.viewPadding
     }
@@ -228,6 +203,11 @@ class WorkoutStartTableViewCell: UITableViewCell {
             
             self.exerciseHistoryTableView.appendDataToTableView(data: exerciseData)
         }
+    }
+    
+    public func updateCompleteStatus() {
+        self.isComplete = self.exerciseHistoryTableView.cells.count >= self.exercise.getSetCount()
+        self.delegate?.cellCompleteStatusChanged(complete: self.isComplete)
     }
     
     // adds workout data to history
@@ -265,12 +245,8 @@ class WorkoutStartTableViewCell: UITableViewCell {
             self.updateToggledStatus()
         case self.addSetButton:
             self.addWorkoutDataToTableIfPossible()
-            break
-        case self.completeButton:
-            self.isComplete = !self.isComplete
-            self.delegate?.cellCompleteStatusChanged(complete: self.isComplete)
+            self.updateCompleteStatus()
             self.layoutIfNeeded()
-            break
         default:
             fatalError("Button pressed did not exist?")
         }
@@ -487,36 +463,6 @@ class WorkoutStartTableViewCell: UITableViewCell {
                            constant: -self.viewPadding).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.exerciseHistoryTableView,
                                                          height: self.tableViewHeight).isActive = true
-    }
-    
-    // width of this view ; cling to left of this ; previousSet ; height of baseheight
-    private func createAndActivateCompleteButtonConstraints() {
-        completeButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.completeButton,
-                           attribute: .width,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.completeButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self.exerciseHistoryTableView,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.completeButton,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: -self.viewPadding).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.completeButton,
-                                                         height: WorkoutTableView.baseCellHeight).isActive = true
-        
     }
     
     // MARK: view properties assigned

@@ -81,6 +81,10 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
         self.createAndActivateCancelButtonConstraints()
         
         self.createRepeatButtons(encapsulatingView: repeatButtonView)
+        
+        self.addExerciseButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
+        self.createWorkoutButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
+        self.cancelButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -129,34 +133,24 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
         self.editExerciseTableView.backgroundColor = UIColor.clear
         
         // Add exercise button
-        self.addExerciseButton.setTitle("Add exercise", for: .normal)
-        self.addExerciseButton.setTitleColor(UIColor.niceBlue(), for: .normal)
-        self.addExerciseButton.setTitleColor(UIColor.white, for: .highlighted)
         self.addExerciseButton.setDefaultProperties()
-        self.addExerciseButton.setOverlayStyle(style: .FADE)
-        self.addExerciseButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        self.addExerciseButton.setOverlayColor(color: UIColor.niceYellow())
-        // Event press for exercise button
-        self.addExerciseButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
-        
+        self.addExerciseButton.setTitle("Add exercise", for: .normal)
         
         // Create workout button
         // Give it standard default properties
         self.createWorkoutButton.setDefaultProperties()
         self.createWorkoutButton.setTitle("Create Workout", for: .normal)
-        self.createWorkoutButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
         
         // Cancel Button
         self.cancelButton.setDefaultProperties()
         self.cancelButton.setTitle("Cancel", for: .normal)
-        self.cancelButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
         self.cancelButton.backgroundColor = UIColor.niceRed()
     }
     
     // MARK: Event functions
     
     @objc func buttonPressed(sender: PrettyButton) {
-        nameEntryField.resignFirstResponder()
+        self.nameEntryField.textfield.resignFirstResponder()
         
         switch (sender) {
         case addExerciseButton:

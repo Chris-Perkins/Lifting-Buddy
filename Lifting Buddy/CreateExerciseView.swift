@@ -68,6 +68,10 @@ class CreateExerciseView: UIScrollView {
         self.createAndActivateAddProgressionTrackerButtonConstraints()
         self.createAndActivateCreateExeciseButtonConstraints()
         self.createAndActivateCancelButtonConstraints()
+        
+        self.addProgressionTrackerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        self.createExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        self.cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -109,23 +113,15 @@ class CreateExerciseView: UIScrollView {
         
         // Add progression method button
         self.addProgressionTrackerButton.setDefaultProperties()
-        self.addProgressionTrackerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        self.addProgressionTrackerButton.setOverlayColor(color: UIColor.niceYellow())
-        self.addProgressionTrackerButton.setOverlayStyle(style: .FADE)
-        self.addProgressionTrackerButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         self.addProgressionTrackerButton.setTitle("Add Progression Tracker", for: .normal)
-        self.addProgressionTrackerButton.setTitleColor(UIColor.niceBlue(), for: .normal)
-        self.addProgressionTrackerButton.setTitleColor(UIColor.white, for: .highlighted)
         
         // Create exercise button
         self.createExerciseButton.setTitle("Create Exercise", for: .normal)
         self.createExerciseButton.setDefaultProperties()
-        self.createExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         // Cancel Button
         self.cancelButton.setDefaultProperties()
         self.cancelButton.setTitle("Cancel", for: .normal)
-        self.cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         self.cancelButton.backgroundColor = UIColor.niceRed()
     }
     

@@ -48,7 +48,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
     
     override init(frame: CGRect) {
         self.createWorkoutLabel = UILabel()
-        self.nameEntryField = BetterTextField(defaultString: "Required: Name of Workout", frame: .zero)
+        self.nameEntryField = BetterTextField(defaultString: "Required: Name", frame: .zero)
         self.exerciseTableLabel = UILabel()
         self.editExerciseTableView = EditExerciseTableView()
         self.repeatLabel = UILabel()

@@ -38,7 +38,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         self.createAndActivateNameEntryFieldConstraints()
         self.createAndActivatePickUnitButtonConstraints()
         
-        self.nameEntryField.setDefaultString(defaultString: "Required: Name")
+        self.nameEntryField.setDefaultString(defaultString: "Name")
         
         self.pickUnitButton.setTitle("Required: Unit", for: .normal)
         self.pickUnitButton.addTarget(self,

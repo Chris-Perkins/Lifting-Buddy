@@ -20,6 +20,7 @@ class CreateExerciseView: UIScrollView {
     // Padding between views
     private let viewPadding: CGFloat = 20.0
     
+    // Labels the view
     private var createExerciseLabel: UILabel
     // where the name goes
     private var nameEntryField: BetterTextField
@@ -246,19 +247,20 @@ class CreateExerciseView: UIScrollView {
     
     // MARK: Constraints
     
+    // center horiz in view; cling to top; width of this view ; height 30
     private func createAndActivateCreateExerciseLabelConstraints() {
         self.createExerciseLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.createExerciseLabel,
+                                                                        inView: self).isActive = true
         NSLayoutConstraint.createViewBelowViewTopConstraint(view: self.createExerciseLabel,
                                                             belowView: self,
                                                             withPadding: viewPadding).isActive = true
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.createExerciseLabel,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.createExerciseLabel,
-                                                         height: 30).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: self.createExerciseLabel,
                                                             withCopyView: self,
                                                             plusWidth: 0).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.createExerciseLabel,
+                                                         height: 30).isActive = true
     }
     
     // center horiz in view ; place below nameentrylabel ; height 50 ; width of this view * 4/5

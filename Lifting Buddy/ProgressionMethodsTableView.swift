@@ -61,7 +61,9 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.data.remove(at: indexPath.row)
-            self.cells.remove(at: indexPath.row)
+            if indexPath.row < self.cells.count {
+                self.cells.remove(at: indexPath.row)
+            }
             
             heightConstraint?.constant -= 50
             self.reloadData()

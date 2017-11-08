@@ -109,9 +109,13 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         if editingStyle == .delete {
             let realm = try! Realm()
             
-            /* if this cell was complete, make sure that we remove it from isComplete int! */
-            if cells[indexPath.row].getIsComplete() {
-                self.curComplete -= 1
+            if indexPath.row < self.cells.count {
+                self.cells.remove(at: indexPath.row)
+                
+                if cells[indexPath.row].getIsComplete() {
+                    /* if this cell was complete, make sure that we remove it from curComplete int! */
+                    self.curComplete -= 1
+                }
             }
             
             // remove from the workout (realm data)
@@ -122,8 +126,9 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             self.heights.remove(at: indexPath.row)
             self.cells.remove(at: indexPath.row)
             
-            self.checkComplete()
             self.reloadData()
+            self.checkComplete()
+            self.layoutIfNeeded()
         }
     }
     

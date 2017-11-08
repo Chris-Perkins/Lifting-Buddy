@@ -20,8 +20,6 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     private let progressionMethods: List<ProgressionMethod>
     // holds all the values for data
     private var data: [[String]]
-    // holds all cells for the table
-    private var cells: [ExerciseHistoryTableViewCell] = [ExerciseHistoryTableViewCell]()
     
     // MARK: Initializers
     
@@ -38,22 +36,15 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Encapsulated methods
-    
-    // returns all the cells from this table
-    public func getCells() -> [ExerciseHistoryTableViewCell] {
-        return self.cells
-    }
-    
     // MARK: Tableview functions
     
     // allow cell deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.data.remove(at: indexPath.row)
-            self.cells.remove(at: indexPath.row)
-            self.reloadData()
             self.tableViewDelegate?.cellDeleted()
+            self.reloadData()
+            self.reloadInputViews()
         }
     }
     
@@ -64,32 +55,21 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // if the row does not have data yet, create it
-        if indexPath.row >= cells.count {
-            var dataToSend = [(ProgressionMethod, String)]()
-            
-            // The first progressionMethod will always be reps.
-            for (index, dataPiece) in data[indexPath.row].enumerated() {
-                dataToSend.append((progressionMethods[index],
-                                   dataPiece))
-            }
-            
-            let cell = ExerciseHistoryTableViewCell(data: dataToSend,
-                                                    style: .default,
-                                                    reuseIdentifier: nil)
-            cells.append(cell)
-            
-            // update the label in case of deletion
-            cell.setLabel.text = "Set #" + String(indexPath.row + 1)
-            
-            return cell
-        } else {
-            // otherwise, we can simply return it
-            
-            // update the label in case of deletion
-            cells[indexPath.row].setLabel.text = "Set #" + String(indexPath.row + 1)
-            return cells[indexPath.row]
+        var dataToSend = [(ProgressionMethod, String)]()
+        
+        // The first progressionMethod will always be reps.
+        for (index, dataPiece) in data[indexPath.row].enumerated() {
+            dataToSend.append((progressionMethods[index],
+                               dataPiece))
         }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ExerciseHistoryTableViewCell
+        
+        // update the label in case of deletion
+        cell.setLabel.text = "Set #" + String(indexPath.row + 1)
+        cell.setData(data: dataToSend)
+        
+        return cell
     }
     
     // Each cell's height depends on the number of progression methods, but there is a flat height
@@ -105,7 +85,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     public func appendDataToTableView(data: [String]) {
         self.data.append(data)
         
-        reloadData()
+        self.reloadData()
     }
     
     // Retrieve workouts

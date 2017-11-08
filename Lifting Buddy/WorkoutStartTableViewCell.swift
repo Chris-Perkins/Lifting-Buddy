@@ -113,7 +113,7 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
         self.selectionStyle = .none
         self.clipsToBounds = true
         
-        let curSetCount: Int = self.exerciseHistoryTableView.getCells().count
+        let curSetCount: Int = self.exerciseHistoryTableView.getData().count
         let reqSetCount: Int = self.exercise.getSetCount()
         self.cellTitle.text = reqSetCount > 0 ?
                                 "\(self.exercise.getName()!) [\(curSetCount)/\(reqSetCount)]":
@@ -211,7 +211,7 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Update the complete status (call when some value changed)
     public func updateCompleteStatus() {
-        let newComplete = self.exerciseHistoryTableView.getCells().count >= self.exercise.getSetCount()
+        let newComplete = self.exerciseHistoryTableView.getData().count >= self.exercise.getSetCount()
         
         // We updated our completed status! So inform the delegate.
         if newComplete != self.isComplete {
@@ -222,7 +222,7 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
     
     // adds workout data to history
     public func saveWorkoutData() {
-        for exerciseHistoryCell in self.exerciseHistoryTableView.getCells() {
+        for exerciseHistoryCell in self.exerciseHistoryTableView.getAllCells() as! [ExerciseHistoryTableViewCell] {
             let exerciseEntry = ExerciseHistoryEntry()
             exerciseEntry.date = Date(timeIntervalSinceNow: 0)
             exerciseEntry.exerciseInfo = List<RLMExercisePiece>()

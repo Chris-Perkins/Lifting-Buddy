@@ -225,6 +225,10 @@ extension UIColor {
     public static func niceOrange() -> UIColor {
         return UIColor(red: 1, green: 0.4118, blue: 0.1569, alpha: 1.0)
     }
+    
+    public static func niceLightGray() -> UIColor {
+        return UIColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1.0)
+    }
 }
 
 extension UIImage {

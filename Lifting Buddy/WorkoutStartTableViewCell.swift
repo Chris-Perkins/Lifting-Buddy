@@ -110,9 +110,13 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
     override func layoutIfNeeded() {
         super.layoutIfNeeded()
         
+        // Self stuff
+        
         self.selectionStyle = .none
         self.clipsToBounds = true
         
+        
+        // Cell Title
         let curSetCount: Int = self.exerciseHistoryTableView.getData().count
         let reqSetCount: Int = self.exercise.getSetCount()
         self.cellTitle.text = reqSetCount > 0 ?
@@ -120,8 +124,11 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
                                 "\(self.exercise.getName()!) [\(curSetCount)]"
         self.cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
         
+        // Invisible Button has to be "visible" to be pressed. So, 0.001
         self.invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
+        
+        // Add Set button
         self.addSetButton.setDefaultProperties()
         self.addSetButton.setTitle("Add Set", for: .normal)
         
@@ -129,13 +136,10 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
         // If complete: cell turns green, title color turns white to be visible.
         // If not complete: Cell is white
         if self.isComplete {
-            // Lighten when not selected
             self.backgroundColor = UIColor.niceGreen().withAlphaComponent(self.isToggled ? 0.65 : 0.5)
-            
             self.cellTitle.textColor = UIColor.white
         } else {
             self.backgroundColor = self.isToggled ? UIColor.niceLightGreen() : UIColor.white
-            
             self.cellTitle.textColor = UIColor.niceBlue()
         }
     }
@@ -217,6 +221,7 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
         if newComplete != self.isComplete {
             self.isComplete = newComplete
             self.delegate?.cellCompleteStatusChanged(complete: self.isComplete)
+            self.layoutIfNeeded()
         }
     }
     

@@ -128,7 +128,6 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             
             self.reloadData()
             self.checkComplete()
-            self.layoutIfNeeded()
         }
     }
     

@@ -67,6 +67,17 @@ import UIKit
         super.init(coder: aDecoder)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        let touch: UITouch? = touches.first
+        
+        if touch?.view != self {
+            self.removeOverlayView()
+            self.layoutSubviews()
+        }
+    }
+    
     // MARK: Event functions
     
     @objc func startPress(sender: PrettyButton) {

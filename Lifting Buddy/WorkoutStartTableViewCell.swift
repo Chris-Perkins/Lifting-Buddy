@@ -272,12 +272,16 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
         self.updateToggledStatus()
     }
     
+    public func getIsComplete() -> Bool {
+        return self.isComplete
+    }
+    
     // MARK: TableViewDelegate Functions
     
     // Called when a cell is deleted
     func cellDeleted() {
-        self.updateCompleteStatus()
         self.layoutIfNeeded()
+        self.updateCompleteStatus()
     }
     
     // MARK: Constraints
@@ -496,12 +500,12 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
 
 protocol WorkoutStartTableViewCellDelegate {
     /*
-     This cell height changed
+     * This cell height changed
      */
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath)
     
     /*
-     This cell's completion status changed
+     * This cell's completion status changed
      */
     func cellCompleteStatusChanged(complete: Bool)
 }

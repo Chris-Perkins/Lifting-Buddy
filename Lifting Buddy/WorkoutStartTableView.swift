@@ -109,6 +109,11 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         if editingStyle == .delete {
             let realm = try! Realm()
             
+            /* if this cell was complete, make sure that we remove it from isComplete int! */
+            if cells[indexPath.row].getIsComplete() {
+                self.curComplete -= 1
+            }
+            
             // remove from the workout (realm data)
             try! realm.write {
                 self.data.remove(at: indexPath.row)

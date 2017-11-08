@@ -25,6 +25,7 @@ Expected / Hopeful release: December 20th
 
 
 ### Future plans (?)
+Work around Apple Tableview Crash ( https://forums.developer.apple.com/thread/88190 )
 Log in to sync and backup workouts
 
 #### Special Thanks

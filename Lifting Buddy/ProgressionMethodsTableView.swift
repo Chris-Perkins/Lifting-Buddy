@@ -59,6 +59,7 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     
     // Deletion methods
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
         if editingStyle == .delete {
             self.data.remove(at: indexPath.row)
             if indexPath.row < self.cells.count {

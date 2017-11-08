@@ -44,7 +44,6 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
             self.data.remove(at: indexPath.row)
             self.tableViewDelegate?.cellDeleted()
             self.reloadData()
-            self.reloadInputViews()
         }
     }
     

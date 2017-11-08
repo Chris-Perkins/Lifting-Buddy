@@ -22,6 +22,8 @@ EmptyTableViewOverlayDelegate {
     private var exerciseTableView: ExercisesTableView
     // The button to create this workout
     private var createExerciseButton: PrettyButton
+    // A button to cancel this view (only visible if selecting exercise)
+    private var cancelButton: PrettyButton
     
     // MARK: View inits
     
@@ -31,20 +33,31 @@ EmptyTableViewOverlayDelegate {
         
         let exercises = realm.objects(Exercise.self)
         
-        exerciseTableView = ExercisesTableView(exercises: AnyRealmCollection(exercises),
-                                               selectingExercise: selectingExercise,
-                                               style: UITableViewStyle.plain)
-        createExerciseButton = PrettyButton()
+        self.exerciseTableView = ExercisesTableView(exercises: AnyRealmCollection(exercises),
+                                                    selectingExercise: selectingExercise,
+                                                    style: UITableViewStyle.plain)
+        self.createExerciseButton = PrettyButton()
+        self.cancelButton = PrettyButton()
+        
         
         super.init(frame: frame)
         
         self.addSubview(exerciseTableView)
         self.addSubview(createExerciseButton)
+        self.addSubview(cancelButton)
+        
+        self.createAndActivateCancelButtonConstraints()
+        self.createCreateExerciseButtonConstraints()
+        self.createAndActivateExerciseTableViewConstraints()
+        
         
         self.exerciseTableView.exercisePickerDelegate = self
-        
-        self.createAndActivateExerciseTableViewConstraints()
-        self.createCreateExerciseButtonConstraints()
+        createExerciseButton.addTarget(self,
+                                       action: #selector(showCreateExerciseView(sender:)),
+                                       for: .touchUpInside)
+        cancelButton.addTarget(self,
+                               action: #selector(removeSelf),
+                               for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,15 +68,22 @@ EmptyTableViewOverlayDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
         self.backgroundColor = UIColor.niceGray()
         
         createExerciseButton.setDefaultProperties()
         createExerciseButton.setTitle(self.selectingExercise ?
                                         "Add New Exercise" :
                                         "Create New Exercise", for: .normal)
-        createExerciseButton.addTarget(self,
-                                      action: #selector(showCreateExerciseView(sender:)),
-                                      for: .touchUpInside)
+        
+        if self.selectingExercise {
+            cancelButton.setDefaultProperties()
+            cancelButton.backgroundColor = UIColor.niceRed()
+            cancelButton.setTitle("Cancel", for: .normal)
+        } else {
+            cancelButton.alpha = 0
+        }
+        
         exerciseTableView.reloadData()
     }
     
@@ -107,68 +127,6 @@ EmptyTableViewOverlayDelegate {
         // hide the guy
     }
     
-    // MARK: Constraint functions
-    
-    // Cling to top, left, right of this view - 10, height of this view - 70
-    private func createAndActivateExerciseTableViewConstraints() {
-        exerciseTableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: exerciseTableView,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: exerciseTableView,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: exerciseTableView,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .height,
-                           relatedBy: .equal,
-                           toItem: exerciseTableView,
-                           attribute: .height,
-                           multiplier: 1,
-                           constant: 50).isActive = true
-    }
-    
-    // Cling to bottom,left,right of workouttableview, place 10 above this view's bottom
-    private func createCreateExerciseButtonConstraints() {
-        createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint(item: exerciseTableView,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: createExerciseButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: exerciseTableView,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: createExerciseButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: createExerciseButton,
-                                                         belowView: exerciseTableView,
-                                                         withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: createExerciseButton,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-    }
-    
     // MARK: CreateExerciseViewDelegate methods
     
     func finishedWithExercise(exercise: Exercise) {
@@ -208,9 +166,104 @@ EmptyTableViewOverlayDelegate {
         })
     }
     
+    @objc func removeSelf() {
+        self.removeSelfNicelyWithAnimation()
+    }
+    
     // We must refresh in case a new exercise was created mid-workout
     func endWorkout() {
         self.exerciseTableView.refreshData()
+    }
+    
+    // MARK: Constraint functions
+    
+    // Cling to top, left, right of this view ; bottom of this view @ createButton
+    private func createAndActivateExerciseTableViewConstraints() {
+        exerciseTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: self.exerciseTableView,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: self.exerciseTableView,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: self.exerciseTableView,
+                                                            belowView: self,
+                                                            withPadding: 0).isActive = true
+        NSLayoutConstraint(item: self.createExerciseButton,
+                           attribute: .top,
+                           relatedBy: .equal,
+                           toItem: self.exerciseTableView,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+    }
+    
+    // Cling to left,right of this view ; place above cancel button ; height 50
+    private func createCreateExerciseButtonConstraints() {
+        createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: self.createExerciseButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: self.createExerciseButton,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self.cancelButton,
+                           attribute: .top,
+                           relatedBy: .equal,
+                           toItem: self.createExerciseButton,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.createExerciseButton,
+                                                         height: 50).isActive = true
+    }
+    
+    // cling to left, right, bottom of this view ; height of 0 or 50 (depends on selecting exercise)
+    private func createAndActivateCancelButtonConstraints() {
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: self,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: self.cancelButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: self.cancelButton,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: self.cancelButton,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        // make this button basically invisible if we're not selecting an exercise
+        NSLayoutConstraint.createHeightConstraintForView(view: self.cancelButton,
+                                                         height: self.selectingExercise ? 45 : 0).isActive = true
     }
 }
 

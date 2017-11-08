@@ -201,7 +201,7 @@ class BetterTextField: UIView {
                                                          relatedBy: .equal,
                                                          toItem: label,
                                                          attribute: .width,
-                                                         multiplier: 4,
+                                                         multiplier: 3,
                                                          constant: 0)
         } else {
             curLabelWidthConstraint = NSLayoutConstraint.createWidthConstraintForView(view: self.label,

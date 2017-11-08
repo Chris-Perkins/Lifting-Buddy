@@ -105,7 +105,7 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                                displayFormatter: displayFormatter))
         }
     default:
-        fatalError("GRAPH FOR IMPLEMENTED TIMEAMOUNT NOT YET IMPLEMENTED")
+        fatalError("GRAPH FOR TIMEAMOUNT TYPE NOT YET IMPLEMENTED")
     }
     
     let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "Date", settings: labelSettings))

@@ -153,7 +153,7 @@ class TimeInputField: UIView, InputViewHolder {
             
             totalSeconds += self.secondField.text!.floatValue!
             totalSeconds += 60 * self.minuteField.text!.floatValue!
-            totalSeconds += 60 * 60 * self.minuteField.text!.floatValue!
+            totalSeconds += 60 * 60 * self.hourField.text!.floatValue!
         }
         
         return String(totalSeconds)

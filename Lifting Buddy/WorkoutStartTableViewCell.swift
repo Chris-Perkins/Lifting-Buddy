@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class WorkoutStartTableViewCell: UITableViewCell {
+class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
     
     // MARK: View properties
     
@@ -97,6 +97,7 @@ class WorkoutStartTableViewCell: UITableViewCell {
         
         self.giveInvisButtonProperties()
         
+        self.exerciseHistoryTableView.tableViewDelegate = self
         self.addSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
@@ -112,14 +113,17 @@ class WorkoutStartTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         self.clipsToBounds = true
         
-        self.cellTitle.text = self.exercise.getName()! + " " + String(self.exerciseHistoryTableView.cells.count)
+        let curSetCount: Int = self.exerciseHistoryTableView.getCells().count
+        let reqSetCount: Int = self.exercise.getSetCount()
+        self.cellTitle.text = reqSetCount > 0 ?
+                                "\(self.exercise.getName()!) [\(curSetCount)/\(reqSetCount)]":
+                                "\(self.exercise.getName()!) [\(curSetCount)]"
+        self.cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
         
         self.invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
         self.addSetButton.setDefaultProperties()
         self.addSetButton.setTitle("Add Set", for: .normal)
-        
-        self.cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
         
         // Different states for whether the cell is complete or not.
         // If complete: cell turns green, title color turns white to be visible.
@@ -205,9 +209,15 @@ class WorkoutStartTableViewCell: UITableViewCell {
         }
     }
     
+    // Update the complete status (call when some value changed)
     public func updateCompleteStatus() {
-        self.isComplete = self.exerciseHistoryTableView.cells.count >= self.exercise.getSetCount()
-        self.delegate?.cellCompleteStatusChanged(complete: self.isComplete)
+        let newComplete = self.exerciseHistoryTableView.getCells().count >= self.exercise.getSetCount()
+        
+        // We updated our completed status! So inform the delegate.
+        if newComplete != self.isComplete {
+            self.isComplete = newComplete
+            self.delegate?.cellCompleteStatusChanged(complete: self.isComplete)
+        }
     }
     
     // adds workout data to history
@@ -245,6 +255,8 @@ class WorkoutStartTableViewCell: UITableViewCell {
             self.updateToggledStatus()
         case self.addSetButton:
             self.addWorkoutDataToTableIfPossible()
+            self.exerciseHistoryTableView.layoutIfNeeded()
+            self.exerciseHistoryTableView.reloadData()
             self.updateCompleteStatus()
             self.layoutIfNeeded()
         default:
@@ -254,9 +266,18 @@ class WorkoutStartTableViewCell: UITableViewCell {
     
     // MARK: Encapsulated methods
     
+    // Set whether or not this cell is toggled
     public func setIsToggled(toggled: Bool) {
         self.isToggled = toggled
         self.updateToggledStatus()
+    }
+    
+    // MARK: TableViewDelegate Functions
+    
+    // Called when a cell is deleted
+    func cellDeleted() {
+        self.updateCompleteStatus()
+        self.layoutIfNeeded()
     }
     
     // MARK: Constraints

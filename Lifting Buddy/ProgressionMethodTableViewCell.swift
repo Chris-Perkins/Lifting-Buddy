@@ -55,6 +55,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     override func layoutIfNeeded() {
         super.layoutIfNeeded()
         
+        self.clipsToBounds = true
         self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         
         // MARK: Pick Unit button

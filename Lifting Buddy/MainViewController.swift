@@ -63,8 +63,6 @@ class MainViewController: UIViewController {
             
             self.sectionContentView.addSubview(settingsView!)
             break
-        default:
-            break
         }
     }
 }

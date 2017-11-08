@@ -28,6 +28,7 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
         self.delegate = self
         self.dataSource = self
         self.allowsSelection = false
+        self.clipsToBounds = true
         self.register(ProgressionMethodTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
@@ -54,6 +55,17 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
+    }
+    
+    // Deletion methods
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.data.remove(at: indexPath.row)
+            self.cells.remove(at: indexPath.row)
+            
+            heightConstraint?.constant -= 50
+            self.reloadData()
+        }
     }
     
     // Create our custom cell class

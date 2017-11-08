@@ -13,12 +13,15 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // MARK: View Properties
     
+    // A delegate to inform for tableview actions
+    public var tableViewDelegate: TableViewDelegate?
+    
     // holds the progressionmethods for this history piece
     private let progressionMethods: List<ProgressionMethod>
     // holds all the values for data
     private var data: [[String]]
     // holds all cells for the table
-    public var cells: [ExerciseHistoryTableViewCell] = [ExerciseHistoryTableViewCell]()
+    private var cells: [ExerciseHistoryTableViewCell] = [ExerciseHistoryTableViewCell]()
     
     // MARK: Initializers
     
@@ -50,6 +53,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
             self.data.remove(at: indexPath.row)
             self.cells.remove(at: indexPath.row)
             self.reloadData()
+            self.tableViewDelegate?.cellDeleted()
         }
     }
     
@@ -116,4 +120,11 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         self.register(ExerciseHistoryTableViewCell.self, forCellReuseIdentifier: "cell")
         self.backgroundColor = UIColor.clear
     }
+}
+
+protocol TableViewDelegate {
+    /*
+     * Inform when a cell is deleted
+     */
+    func cellDeleted()
 }

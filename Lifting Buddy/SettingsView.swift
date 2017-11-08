@@ -18,10 +18,10 @@ class SettingsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let realm = try! Realm()
+        /*let realm = try! Realm()
         let chart = createChartFromExerciseHistory(exerciseHistory: realm.objects(Exercise.self).first!.getExerciseHistory(), timeAmount: TimeAmount.ALLTIME, frame: frame)
         self.chart = chart
-        self.addSubview(chart.view)
+        self.addSubview(chart.view)*/
     }
     
     required init?(coder aDecoder: NSCoder) {

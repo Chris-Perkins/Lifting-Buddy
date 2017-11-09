@@ -107,8 +107,6 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     // Deletion methods
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let realm = try! Realm()
-            
             if indexPath.row < self.cells.count {
                 if cells[indexPath.row].getIsComplete() {
                     /* if this cell was complete, make sure that we remove it from curComplete int! */
@@ -119,15 +117,14 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             }
             
             // remove from the workout (realm data)
+            let realm = try! Realm()
             try! realm.write {
                 self.data.remove(at: indexPath.row)
             }
             
             self.heights.remove(at: indexPath.row)
-            self.cells.remove(at: indexPath.row)
-            
-            self.reloadData()
             self.checkComplete()
+            self.reloadData()
         }
     }
     

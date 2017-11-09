@@ -59,6 +59,7 @@ import UIKit
         self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchDragExit)
         self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchUpOutside)
+        self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchCancel)
     }
     
     required init?(coder aDecoder: NSCoder) {

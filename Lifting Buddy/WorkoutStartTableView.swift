@@ -110,12 +110,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
             let realm = try! Realm()
             
             if indexPath.row < self.cells.count {
-                self.cells.remove(at: indexPath.row)
-                
                 if cells[indexPath.row].getIsComplete() {
                     /* if this cell was complete, make sure that we remove it from curComplete int! */
                     self.curComplete -= 1
                 }
+                
+                self.cells.remove(at: indexPath.row)
             }
             
             // remove from the workout (realm data)

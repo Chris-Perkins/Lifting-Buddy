@@ -28,7 +28,7 @@ class WorkoutTableViewCell: UITableViewCell {
     private var exerciseLabels: [UILabel]
     
     // A delegate notified whenever we start a workout
-    public var startWorkoutDelegate: StartWorkoutDelegate?
+    public var workoutCellDelegate: WorkoutCellDelegate?
     
     // The button stating whether or not we want to edit this workout
     private var editButton: PrettyButton?
@@ -154,16 +154,15 @@ class WorkoutTableViewCell: UITableViewCell {
         
         if (self.isSelected) {
             editButton?.setDefaultProperties()
-            editButton?.cornerRadius = 0
-            editButton?.backgroundColor = UIColor.niceBlue().withAlphaComponent(0.75)
+            editButton?.backgroundColor = UIColor.niceBlue()
             editButton?.setTitle("Edit", for: .normal)
             
             startWorkoutButton?.setDefaultProperties()
             startWorkoutButton?.cornerRadius = 0
-            startWorkoutButton?.backgroundColor = UIColor.niceGreen().withAlphaComponent(0.75)
+            startWorkoutButton?.backgroundColor = UIColor.niceGreen()
             startWorkoutButton?.setTitle("Start Workout!", for: .normal)
             
-            self.backgroundColor = UIColor.niceBlue().withAlphaComponent(0.05)
+            self.backgroundColor = UIColor.niceLightGray()
         } else {
             self.backgroundColor = (workout?.getIfTodayWorkout())! ? UIColor.niceLightGreen() : UIColor.white
         }
@@ -178,21 +177,22 @@ class WorkoutTableViewCell: UITableViewCell {
         // Only make changes if we need to.
         // TODO: Determine when a change is made so we don't have to be dumb in checking.
         //if workout != self.workout {
-        cellTitle.text = workout.getName()
+        self.cellTitle.text = workout.getName()
         
         self.workout = workout
         
         for label in exerciseLabels {
             label.removeFromSuperview()
         }
-        exerciseLabels.removeAll()
-        editButton?.removeFromSuperview()
-        startWorkoutButton?.removeFromSuperview()
+        self.exerciseLabels.removeAll()
+        self.editButton?.removeFromSuperview()
+        self.startWorkoutButton?.removeFromSuperview()
         
-        editButton = PrettyButton()
-        startWorkoutButton = PrettyButton()
+        self.editButton = PrettyButton()
+        self.startWorkoutButton = PrettyButton()
         
-        startWorkoutButton?.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        self.editButton?.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        self.startWorkoutButton?.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         self.addSubview(editButton!)
         self.addSubview(startWorkoutButton!)
@@ -309,9 +309,10 @@ class WorkoutTableViewCell: UITableViewCell {
     @objc func buttonPress(sender: UIButton) {
         switch(sender) {
         case startWorkoutButton!:
-            self.startWorkoutDelegate?.startWorkout(workout: self.workout, exercise: nil)
+            self.workoutCellDelegate?.startWorkout(workout: self.workout, exercise: nil)
             break
         case editButton!:
+            self.workoutCellDelegate?.editWorkout?(workout: self.workout!)
             break
         default:
             fatalError("User pressed a button that does not exist?")
@@ -319,11 +320,15 @@ class WorkoutTableViewCell: UITableViewCell {
     }
 }
 
-@objc protocol StartWorkoutDelegate {
+@objc protocol WorkoutCellDelegate {
     /*
      * Notified when a workout is starting
      */
     func startWorkout(workout: Workout?, exercise: Exercise?)
+    /*
+     * Edit workout view appear
+     */
+    @objc optional func editWorkout(workout: Workout)
     /*
      * Notified when a workout is ending
      */

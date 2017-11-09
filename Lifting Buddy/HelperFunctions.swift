@@ -362,7 +362,7 @@ extension UIView {
         }
         
         // Slide up, then remove from view
-        UIView.animate(withDuration: 0.5,
+        UIView.animate(withDuration: 0.2,
                        animations: {
                             self.frame = CGRect(x: 0,
                                                 y: -self.frame.height,

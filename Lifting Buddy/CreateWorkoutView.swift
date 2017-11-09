@@ -20,10 +20,12 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
     // Delegate that does something when workout complete
     public var dataDelegate: CreateWorkoutViewDelegate?
     
-    // variable stating how many cells are in the exercise table view
-    private var prevDataCount = -1
     // holds the first char for the days of the week for repeat buttons
     private final let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]
+    // variable stating how many cells are in the exercise table view
+    private var prevDataCount = -1
+    // the exercise the user is editing
+    private var editingWorkout: Workout? = nil
     
     // labels this view
     private var createWorkoutLabel: UILabel
@@ -46,7 +48,9 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
     // Cancel button
     private var cancelButton: PrettyButton
     
-    override init(frame: CGRect) {
+    init(workout: Workout? = nil, frame: CGRect) {
+        self.editingWorkout = workout
+        
         self.createWorkoutLabel = UILabel()
         self.nameEntryField = BetterTextField(defaultString: "Required: Name", frame: .zero)
         self.exerciseTableLabel = UILabel()
@@ -82,9 +86,22 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
         
         self.createRepeatButtons(encapsulatingView: repeatButtonView)
         
-        self.addExerciseButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
-        self.createWorkoutButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
-        self.cancelButton.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
+        self.addExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        self.createWorkoutButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        self.cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        
+        if self.editingWorkout != nil {
+            self.nameEntryField.textfield.text = self.editingWorkout!.getName()!
+            
+            for exercise in self.editingWorkout!.getExercises() {
+                self.editExerciseTableView.appendDataToTableView(data: exercise)
+            }
+            
+            let repeatOnDays = self.editingWorkout!.getsDayOfTheWeek()
+            for (index, button) in self.repeatButtons.enumerated() {
+                button.setIsToggled(toggled: repeatOnDays[index].value)
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -102,7 +119,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
         
         // Label
         self.createWorkoutLabel.setDefaultProperties()
-        self.createWorkoutLabel.text = "Create New Workout"
+        self.createWorkoutLabel.text = self.editingWorkout != nil ? "Edit Workout" : "Create New Workout"
         
         // Name Entry Field
         self.nameEntryField.setDefaultProperties()
@@ -139,7 +156,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
         // Create workout button
         // Give it standard default properties
         self.createWorkoutButton.setDefaultProperties()
-        self.createWorkoutButton.setTitle("Create Workout", for: .normal)
+        self.createWorkoutButton.setTitle(self.editingWorkout != nil ? "Save Workout" : "Create Workout", for: .normal)
         
         // Cancel Button
         self.cancelButton.setDefaultProperties()
@@ -149,7 +166,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
     
     // MARK: Event functions
     
-    @objc func buttonPressed(sender: PrettyButton) {
+    @objc func buttonPress(sender: PrettyButton) {
         self.nameEntryField.textfield.resignFirstResponder()
         
         switch (sender) {
@@ -167,7 +184,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
             exercisePickerView.exercisePickerDelegate = self
             self.superview!.addSubview(exercisePickerView)
             
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 exercisePickerView.frame = CGRect(x: 0,
                                                   y: 0,
                                                   width: self.superview!.frame.width,
@@ -177,12 +194,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
         case createWorkoutButton:
             if checkRequirementsFulfilled() {
                 // Send info to delegate, animate up then remove self
-                let createdWorkout = createWorkoutWithData()
-                
-                let realm = try! Realm()
-                try! realm.write {
-                    realm.add(createdWorkout)
-                }
+                let savedWorkout = self.saveAndReturnWorkout()
                 
                 // Prevent user interaction with all subviews
                 for subview in self.subviews {
@@ -190,14 +202,14 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
                 }
                 
                 // Slide up, then remove from view
-                UIView.animate(withDuration: 0.5, animations: {
+                UIView.animate(withDuration: 0.2, animations: {
                     self.frame = CGRect(x: 0,
                                         y: -self.frame.height,
                                         width: self.frame.width,
                                         height: self.frame.height)
                 }, completion: {
                     (finished:Bool) -> Void in
-                    self.dataDelegate?.finishedWithWorkout(workout: createdWorkout)
+                    self.dataDelegate?.finishedWithWorkout(workout: savedWorkout)
                     self.removeFromSuperview()
                 })
             }
@@ -226,17 +238,28 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
     }
     
     // Use data on this form to create the workout
-    private func createWorkoutWithData() -> Workout {
-        let createdWorkout = Workout()
+    private func saveAndReturnWorkout() -> Workout {
+        let savedWorkout = self.editingWorkout ?? Workout()
+
+        savedWorkout.setName(name: nameEntryField.text)
+        savedWorkout.setDaysOfTheWeek(daysOfTheWeek: self.getDaysOfTheWeek())
         
-        createdWorkout.setName(name: nameEntryField.text)
-        createdWorkout.setDaysOfTheWeek(daysOfTheWeek: self.getDaysOfTheWeek())
-        
+        savedWorkout.removeExercies()
         for exercise in editExerciseTableView.getData() {
-            createdWorkout.addExercise(exercise: exercise)
+            savedWorkout.addExercise(exercise: exercise)
         }
         
-        return createdWorkout
+        // If this is a new workout, save it.
+        if self.editingWorkout == nil {
+            let realm = try! Realm()
+            
+            try! realm.write {
+                realm.add(savedWorkout)
+            }
+        }
+        
+        // Return this workout
+        return savedWorkout
     }
     
     // Creates the repeat buttons

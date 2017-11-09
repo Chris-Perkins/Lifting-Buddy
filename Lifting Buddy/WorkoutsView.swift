@@ -12,7 +12,7 @@ import UIKit
 import RealmSwift
 import Realm
 
-class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
+class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate {
     
     // View properties
     
@@ -70,7 +70,7 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
         createWorkoutView.dataDelegate = self
         self.addSubview(createWorkoutView)
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             createWorkoutView.frame = CGRect(x: 0,
                                              y: self.frame.minY,
                                              width: self.frame.width,
@@ -81,15 +81,17 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
     
     // MARK: CreateWorkoutViewDelegate methods
     
+    // We created a workout; update tableview
     func finishedWithWorkout(workout: Workout) {
-        workoutTableView.refreshData()
+        self.workoutTableView.refreshData()
         self.workoutTableView.reloadData()
         
         self.layoutSubviews()
     }
     
-     // MARK: StartWorkoutDelegate methods
+     // MARK: WorkoutCDelegate methods
     
+    // Start the workout with workout or exercise
     func startWorkout(workout: Workout?, exercise: Exercise?) {
         let startWorkoutView = WorkoutStartView(workout: workout,
                                                 frame: CGRect(x: 0,
@@ -105,6 +107,22 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
                                             y: 0,
                                             width: self.frame.width,
                                             height: self.frame.height)
+        })
+    }
+    
+    // Show the edit workout view
+    func editWorkout(workout: Workout) {
+        let workoutEditView = CreateWorkoutView(workout: workout,
+                                                frame: CGRect(x: 0,
+                                                              y: -self.frame.height,
+                                                              width: self.frame.width,
+                                                              height: self.frame.height))
+        self.addSubview(workoutEditView)
+        UIView.animate(withDuration: 0.2, animations: {
+            workoutEditView.frame = CGRect(x: 0,
+                                           y: 0,
+                                           width: self.frame.width,
+                                           height: self.frame.height)
         })
     }
     

@@ -129,7 +129,11 @@ class Workout: Object {
     }
     
     public func setName(name: String?) {
-        self.name = name
+        let realm = try! Realm()
+        
+        try! realm.write {
+            self.name = name
+        }
     }
     
     public func getsDayOfTheWeek() -> List<RLMBool> {
@@ -137,7 +141,11 @@ class Workout: Object {
     }
     
     public func setDaysOfTheWeek(daysOfTheWeek: List<RLMBool>) {
-        self.daysOfTheWeek = daysOfTheWeek
+        let realm = try! Realm()
+        
+        try! realm.write {
+            self.daysOfTheWeek = daysOfTheWeek
+        }
     }
     
     public func getExercises() -> List<Exercise> {
@@ -149,6 +157,14 @@ class Workout: Object {
         
         try! realm.write {
             self.exercises.append(exercise)
+        }
+    }
+    
+    public func removeExercies() {
+        let realm = try! Realm()
+        
+        try! realm.write {
+            self.exercises.removeAll()
         }
     }
     

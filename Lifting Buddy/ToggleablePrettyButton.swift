@@ -80,14 +80,19 @@ class ToggleablePrettyButton: PrettyButton {
         }
     }
     
+    public func setIsToggled(toggled: Bool) {
+        self.isToggled = toggled
+        self.backgroundColor = self.isToggled ? self.toggleViewColor : self.defaultViewColor
+        self.setTitleColor(self.isToggled ? self.toggleTextColor : self.defaultTextColor, for: .normal)
+    }
+    
     // MARK: Event functions
     
     @objc private func buttonPress(sender: UIButton) {
         self.isToggled = !self.isToggled
         
         UIView.animate(withDuration: animationTimeInSeconds, animations: {
-            self.backgroundColor = self.isToggled ? self.toggleViewColor : self.defaultViewColor
-            self.setTitleColor(self.isToggled ? self.toggleTextColor : self.defaultTextColor, for: .normal) 
+            self.setIsToggled(toggled: self.isToggled)
         })
     }
 }

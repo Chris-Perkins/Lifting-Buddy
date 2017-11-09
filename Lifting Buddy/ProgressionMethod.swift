@@ -10,6 +10,9 @@ import RealmSwift
 import Realm
 
 class ProgressionMethod: Object {
+    
+    // MARK: View properties
+    
     // Assign UUID to this object
     @objc dynamic private var identifier: String = UUID().uuidString
     

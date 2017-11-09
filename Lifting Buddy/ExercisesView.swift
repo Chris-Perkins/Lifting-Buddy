@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class ExercisesView: UIView, CreateExerciseViewDelegate, StartWorkoutDelegate, ExercisePickerDelegate,
+class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, ExercisePickerDelegate,
 EmptyTableViewOverlayDelegate {
     
     // MARK: View properties
@@ -99,7 +99,7 @@ EmptyTableViewOverlayDelegate {
         createWorkoutView.dataDelegate = self
         self.addSubview(createWorkoutView)
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             createWorkoutView.frame = CGRect(x: 0,
                                              y: self.frame.minY,
                                              width: self.frame.width,

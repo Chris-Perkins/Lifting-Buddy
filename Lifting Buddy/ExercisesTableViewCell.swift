@@ -22,7 +22,7 @@ class ExerciseTableViewCell: UITableViewCell {
     private var progressionLabels: [UILabel]
     
     // delegate we call to show the workout
-    public var workoutStartDelegate: StartWorkoutDelegate?
+    public var workoutStartDelegate: WorkoutCellDelegate?
     
     // The button that allows for exercise editing
     private var editButton: PrettyButton?

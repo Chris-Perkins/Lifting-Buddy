@@ -28,7 +28,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     private var isComplete: Bool = false
     
     // Delegate to notify on workout start
-    public var workoutStartDelegate: StartWorkoutDelegate?
+    public var workoutStartDelegate: WorkoutCellDelegate?
     
     // MARK: Inits
     
@@ -121,7 +121,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
             chooseExerciseView.exercisePickerDelegate = self
             self.superview!.addSubview(chooseExerciseView)
             
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 chooseExerciseView.frame = CGRect(x: 0,
                                                   y: 0,
                                                   width: self.superview!.frame.width,

@@ -27,6 +27,9 @@ import UIKit
     
     // MARK: Properties
     
+    // tag of overlay view
+    private static let overlayViewTag: Int = 1337
+    
     public enum Styles {
         case NONE
         case SLIDE
@@ -36,9 +39,6 @@ import UIKit
     
     // Default style of button is none
     private var style: PrettyButton.Styles
-    
-    // tag of overlay view
-    private var overlayViewTag: Int = 1337
     
     // MARK: Init Functions
     
@@ -105,8 +105,7 @@ import UIKit
     
     // Create overlay view with default properties
     private func createOverlayView(frame: CGRect) -> UIView {
-        if let overlayView = self.viewWithTag(self.overlayViewTag)
-        {
+        if let overlayView = self.viewWithTag(PrettyButton.overlayViewTag) {
             return overlayView
         } else {
             // Create view that slides to bottom right on press
@@ -116,7 +115,7 @@ import UIKit
             // Display behind the title
             overlayView.layer.zPosition = -1
             // Set tag to find this view later
-            overlayView.tag = self.overlayViewTag
+            overlayView.tag = PrettyButton.overlayViewTag
             
             return overlayView
         }
@@ -125,7 +124,7 @@ import UIKit
     // Creates the sliding effect on the button's background
     private func createSlideView() {
         // If slide view does not currently exist, create it
-        if self.viewWithTag(overlayViewTag) == nil {
+        if self.viewWithTag(PrettyButton.overlayViewTag) == nil {
             // Create view that slides to bottom right on press
             let overlayView: UIView = createOverlayView(frame:
                                                         CGRect(x: 0,
@@ -146,7 +145,7 @@ import UIKit
     // Bloom from inside
     private func createBloomView() {
         // If slide view does not currently exist, create it
-        if self.viewWithTag(overlayViewTag) == nil {
+        if self.viewWithTag(PrettyButton.overlayViewTag) == nil {
             // Create view that slides to bottom right on press
             let overlayView: UIView = createOverlayView(frame:
                                                         CGRect(x: self.frame.width / 2,
@@ -164,9 +163,10 @@ import UIKit
         }
     }
     
+    // Fades a view in
     private func createFadeView() {
         // If slide view does not currently exist, create it
-        if self.viewWithTag(overlayViewTag) == nil {
+        if self.viewWithTag(PrettyButton.overlayViewTag) == nil {
             // Create view that slides to bottom right on press
             let overlayView: UIView = createOverlayView(frame: CGRect(x: 0,
                                                                       y: 0,
@@ -184,15 +184,13 @@ import UIKit
     
     public func removeOverlayView() {
         // Delete slide view on release
-        if let overlayView: UIView = self.viewWithTag(self.overlayViewTag) {
+        if let overlayView: UIView = self.viewWithTag(PrettyButton.overlayViewTag) {
             UIView.animate(withDuration: animationTimeInSeconds, animations: {
                 overlayView.alpha = 0
-            }, completion:
-                {
-                    (finished: Bool) -> Void in
-                    overlayView.removeFromSuperview()
-                    // Set overlay color alpha to 1.0 for premature animation end
-                    self.overlayColor.withAlphaComponent(1.0)
+            },
+            completion: {
+                (finished: Bool) -> Void in
+                overlayView.removeFromSuperview()
             })
         }
     }

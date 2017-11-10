@@ -142,9 +142,14 @@ class Workout: Object {
     
     public func setDaysOfTheWeek(daysOfTheWeek: List<RLMBool>) {
         let realm = try! Realm()
-        
         try! realm.write {
-            self.daysOfTheWeek = daysOfTheWeek
+            self.daysOfTheWeek.removeAll()
+            for bool in daysOfTheWeek {
+                let boolToStore = RLMBool()
+                boolToStore.value = bool.value
+                self.daysOfTheWeek.append(boolToStore)
+                
+            }
         }
     }
     

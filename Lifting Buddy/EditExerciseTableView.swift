@@ -42,6 +42,17 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
         data[destinationIndexPath.row] = source
     }
     
+    // Deletion methods
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            self.data.remove(at: indexPath.row)
+            
+            heightConstraint?.constant -= 50
+            self.reloadData()
+        }
+    }
+    
     // Selected a table view cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(data)

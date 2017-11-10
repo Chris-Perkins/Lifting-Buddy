@@ -10,12 +10,12 @@ Expected / Hopeful release: December 20th
 
 | Process                   | Progress (Estimation) | Notes                                          |
 |---------------------------|-----------------------|------------------------------------------------|
-| Workout Creation          | 9/10                  | Need to be able to delete progression methods  |
+| Workout Creation          | 10/10                 |                                                |
 | Exercise Creation         | 9/10                  | Add nice way to choose progression method unit |
 | Workout History Tracking  | 10/10                 |                                                |
 | Exercise History Tracking | 9/10                  | Need to implement graphs/history viewing       |
 | Workout Start             | 10/10                 |                                                |
-| Exercise Start            | 9/10                  | Reworking UI; will be less table-based.        |
+| Exercise Start            | 8/10                  | Reworking UI; will be less table-based.        |
 | App Icon                  | 10/10                 |                                                |
 | Splash Screen             | 10/10                 |                                                |
 | Home Screen               | 10/10                 |                                                |
@@ -24,8 +24,7 @@ Expected / Hopeful release: December 20th
 | Settings Screen           | 0/10                  | Don't know what settings to put yet.           |
 
 
-### Future plans (?)
-Work around Apple Tableview Crash ( https://forums.developer.apple.com/thread/88190 )
+### Future plans (?)  
 Log in to sync and backup workouts
 
 #### Special Thanks

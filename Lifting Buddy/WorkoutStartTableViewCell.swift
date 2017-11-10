@@ -232,8 +232,6 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
             exerciseEntry.date = Date(timeIntervalSinceNow: 0)
             exerciseEntry.exerciseInfo = List<RLMExercisePiece>()
             
-            let realm = try! Realm()
-            
             for data in exerciseHistoryCell.getData() {
                 let exercisePiece = RLMExercisePiece()
                 exercisePiece.progressionMethod = data.0
@@ -241,9 +239,7 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
                 
                 exerciseEntry.exerciseInfo.append(exercisePiece)
                 
-                try! realm.write {
-                    data.0.setDefaultValue(defaultValue: data.1)
-                }
+                data.0.setDefaultValue(defaultValue: data.1)
             }
             
             exercise.appendExerciseHistoryEntry(exerciseHistoryEntry: exerciseEntry)

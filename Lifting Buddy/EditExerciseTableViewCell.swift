@@ -12,6 +12,9 @@ class EditExerciseTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
+    // A protocol to show a view
+    public var showViewDelegate: ShowViewProtocol?
+    
     // The exercise title for this cell
     private var exerciseNameLabel: UILabel
     // The edit button for this cell
@@ -29,6 +32,8 @@ class EditExerciseTableViewCell: UITableViewCell {
         
         self.addSubview(exerciseNameLabel)
         self.addSubview(editButton)
+        
+        editButton.addTarget(self, action: #selector(editPress(sender:)), for: .touchUpInside)
         
         
         /*
@@ -130,4 +135,12 @@ class EditExerciseTableViewCell: UITableViewCell {
         self.exercise = exercise
         self.exerciseNameLabel.text = exercise.getName()
     }
+    
+    // MARK: Event Functions
+    
+    @objc func editPress(sender: UIButton) {
+        self.showViewDelegate?.showView(view: CreateExerciseView(exercise: self.exercise!,
+                                                                 frame: .zero))
+    }
+    
 }

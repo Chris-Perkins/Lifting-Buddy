@@ -10,9 +10,9 @@ import UIKit
 import Realm
 import RealmSwift
 
-class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
+class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewProtocol {
     
-    // View properties
+    // MARK: View properties
     
     // Padding between views
     let viewPadding: CGFloat = 20.0
@@ -177,20 +177,10 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
              * That may be considered best practice... So, TODO
              */
             let exercisePickerView = ExercisesView(selectingExercise: true,
-                                                   frame: CGRect(x: 0,
-                                                                 y: -self.superview!.frame.height,
-                                                                 width: self.superview!.frame.width,
-                                                                 height: self.superview!.frame.height))
+                                                   frame: .zero)
             exercisePickerView.exercisePickerDelegate = self
-            self.superview!.addSubview(exercisePickerView)
+            self.showView(view: exercisePickerView)
             
-            UIView.animate(withDuration: 0.2, animations: {
-                exercisePickerView.frame = CGRect(x: 0,
-                                                  y: 0,
-                                                  width: self.superview!.frame.width,
-                                                  height: self.superview!.frame.height)
-            })
-            break
         case createWorkoutButton:
             if checkRequirementsFulfilled() {
                 // Send info to delegate, animate up then remove self
@@ -325,6 +315,24 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate {
     // whenever an exercise is selected from our select exercise view
     func didSelectExercise(exercise: Exercise) {
         self.editExerciseTableView.appendDataToTableView(data: exercise)
+    }
+    
+    // MARK: ShowViewProtocol
+    
+    func showView(view: UIView) {
+        self.superview!.addSubview(view)
+        
+        view.frame = CGRect(x: 0,
+                            y: -self.superview!.frame.height,
+                            width: self.superview!.frame.width,
+                            height: self.superview!.frame.height)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            view.frame = CGRect(x: 0,
+                                y: 0,
+                                width: self.superview!.frame.width,
+                                height: self.superview!.frame.height)
+        })
     }
     
     // MARK: Constraints

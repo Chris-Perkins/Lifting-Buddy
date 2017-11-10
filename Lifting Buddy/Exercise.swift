@@ -86,7 +86,10 @@ class Exercise: Object {
         return self.repCount
     }
     public func setRepCount(repCount: Int) {
-        self.repCount = repCount
+        let realm = try! Realm()
+        try! realm.write {
+            self.repCount = repCount
+        }
     }
     
     @objc public func getSetCount() -> Int {
@@ -95,19 +98,24 @@ class Exercise: Object {
     
     // This variable's name is kind of funny. :)
     public func setSetCount(setCount: Int) {
-        self.setCount = setCount
+        let realm = try! Realm()
+        try! realm.write {
+            self.setCount = setCount
+        }
     }
     
     @objc public func getName() -> String? {
         return self.name
     }
     public func setName(name: String?) {
-        self.name = name
+        let realm = try! Realm()
+        try! realm.write {
+            self.name = name
+        }
     }
     
     public func appendProgressionMethod(progressionMethod: ProgressionMethod) {
         let realm = try! Realm()
-        
         try! realm.write {
             self.progressionMethods.append(progressionMethod)
         }
@@ -115,6 +123,13 @@ class Exercise: Object {
     
     public func getProgressionMethods() -> List<ProgressionMethod> {
         return self.progressionMethods
+    }
+    
+    public func removeProgressionMethods() {
+        let realm = try! Realm()
+        try! realm.write {
+            self.progressionMethods.removeAll()
+        }
     }
     
     public func getExerciseHistory() -> List<ExerciseHistoryEntry> {
@@ -132,7 +147,10 @@ class Exercise: Object {
         return self.cooldownTime
     }
     @objc public func setCooldownTime(cooldownTime: Int) {
-        self.cooldownTime = cooldownTime
+        let realm = try! Realm()
+        try! realm.write {
+            self.cooldownTime = cooldownTime
+        }
     }
     
     // MARK: Static Methods

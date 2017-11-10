@@ -101,7 +101,8 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         let cell =
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! ExerciseTableViewCell
-        cell.workoutStartDelegate = self.superview as? WorkoutCellDelegate
+        cell.mainViewCellDelegate = self.superview as? WorkoutCellDelegate
+        cell.showViewDelegate = self.superview as? ShowViewProtocol
         cell.setExercise(exercise: sortedData[indexPath.row])
         cell.setExpandable(expandable: !self.selectingExercise)
         cell.updateSelectedStatus()

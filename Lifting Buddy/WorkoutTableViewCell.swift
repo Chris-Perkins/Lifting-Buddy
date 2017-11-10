@@ -29,6 +29,8 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // A delegate notified whenever we start a workout
     public var workoutCellDelegate: WorkoutCellDelegate?
+    // A delegate to show a view for us
+    public var showViewDelegate: ShowViewProtocol?
     
     // The button stating whether or not we want to edit this workout
     private var editButton: PrettyButton?
@@ -312,7 +314,7 @@ class WorkoutTableViewCell: UITableViewCell {
             self.workoutCellDelegate?.startWorkout(workout: self.workout, exercise: nil)
             break
         case editButton!:
-            self.workoutCellDelegate?.editWorkout?(workout: self.workout!)
+            self.showViewDelegate?.showView(view: CreateWorkoutView(workout: self.workout!, frame: .zero))
             break
         default:
             fatalError("User pressed a button that does not exist?")
@@ -325,10 +327,6 @@ class WorkoutTableViewCell: UITableViewCell {
      * Notified when a workout is starting
      */
     func startWorkout(workout: Workout?, exercise: Exercise?)
-    /*
-     * Edit workout view appear
-     */
-    @objc optional func editWorkout(workout: Workout)
     /*
      * Notified when a workout is ending
      */

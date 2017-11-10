@@ -20,6 +20,9 @@ class CreateExerciseView: UIScrollView {
     // Padding between views
     private let viewPadding: CGFloat = 20.0
     
+    // the exercise we're editing
+    private var editingExercise: Exercise?
+    
     // Labels the view
     private var createExerciseLabel: UILabel
     // where the name goes
@@ -39,7 +42,9 @@ class CreateExerciseView: UIScrollView {
     
     // MARK: Init overrides
     
-    override init(frame: CGRect) {
+    init(exercise: Exercise? = nil, frame: CGRect) {
+        self.editingExercise = exercise
+        
         self.createExerciseLabel = UILabel()
         self.nameEntryField = BetterTextField(defaultString: "Required: Name", frame: .zero)
         self.setEntryField = BetterTextField(defaultString: "Optional: Set Count", frame: .zero)
@@ -72,6 +77,8 @@ class CreateExerciseView: UIScrollView {
         self.addProgressionTrackerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         self.createExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         self.cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        
+        self.setViewPropertiesBasedOnExercise()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -89,7 +96,7 @@ class CreateExerciseView: UIScrollView {
         
         // Label
         self.createExerciseLabel.setDefaultProperties()
-        self.createExerciseLabel.text = "Create New Exercise"
+        self.createExerciseLabel.text = self.editingExercise == nil ? "Create New Exercise" : "Edit Exercise"
         
         // Name Entry Field
         self.nameEntryField.setDefaultProperties()
@@ -116,7 +123,8 @@ class CreateExerciseView: UIScrollView {
         self.addProgressionTrackerButton.setTitle("Add Progression Tracker", for: .normal)
         
         // Create exercise button
-        self.createExerciseButton.setTitle("Create Exercise", for: .normal)
+        self.createExerciseButton.setTitle(self.editingExercise == nil ? "Create Exercise" : "Save Exercise",
+                                           for: .normal)
         self.createExerciseButton.setDefaultProperties()
         
         // Cancel Button
@@ -135,13 +143,7 @@ class CreateExerciseView: UIScrollView {
         case self.createExerciseButton:
             // Send info to delegate, animate up then remove self
             if self.requirementsFulfilled() {
-                let exerciseCreated: Exercise = createExerciseFromData()
-                
-                let realm = try! Realm()
-                
-                try! realm.write {
-                    realm.add(exerciseCreated)
-                }
+                let exerciseCreated: Exercise = self.saveAndReturnExercise()
                 
                 // Send data to delegate
                 self.dataDelegate?.finishedWithExercise(exercise: exerciseCreated)
@@ -158,6 +160,19 @@ class CreateExerciseView: UIScrollView {
     
     // MARK: Private functions
     
+    // Starts the views off based on the exercise received
+    private func setViewPropertiesBasedOnExercise() {
+        if self.editingExercise != nil {
+            self.nameEntryField.textfield.text = self.editingExercise!.getName()!
+            self.setEntryField.textfield.text  = String(describing: self.editingExercise!.getSetCount())
+            self.repEntryField.textfield.text  = String(describing: self.editingExercise!.getRepCount())
+            
+            for progressionMethod in self.editingExercise!.getProgressionMethods() {
+                self.progressionsTableView.appendDataToTableView(data: progressionMethod)
+            }
+        }
+    }
+    
     // Checks if the requirements for this exercise are fulfilled
     // Requirements:
     // Non-empty name
@@ -166,25 +181,25 @@ class CreateExerciseView: UIScrollView {
     private func requirementsFulfilled() -> Bool {
         var fulfilled = true
         
-        if nameEntryField.textfield.text?.count == 0 {
+        if self.nameEntryField.textfield.text?.count == 0 {
             fulfilled = false
             
-            nameEntryField.textfield.backgroundColor = UIColor.niceRed()
-            nameEntryField.textfield.text = ""
+            self.nameEntryField.textfield.backgroundColor = UIColor.niceRed()
+            self.nameEntryField.textfield.text = ""
         }
-        if !setEntryField.textfield.isNumeric {
+        if !self.setEntryField.textfield.isNumeric {
             fulfilled = false
             
-            setEntryField.textfield.backgroundColor = UIColor.niceRed()
-            setEntryField.textfield.text = ""
+            self.setEntryField.textfield.backgroundColor = UIColor.niceRed()
+            self.setEntryField.textfield.text = ""
         }
-        if !repEntryField.textfield.isNumeric {
+        if !self.repEntryField.textfield.isNumeric {
             fulfilled = false
             
-            repEntryField.textfield.backgroundColor = UIColor.niceRed()
-            repEntryField.textfield.text = ""
+            self.repEntryField.textfield.backgroundColor = UIColor.niceRed()
+            self.repEntryField.textfield.text = ""
         }
-        for cell in progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]
+        for cell in self.progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]
         {
             if cell.nameEntryField.text?.count == 0 {
                 fulfilled = false
@@ -202,8 +217,8 @@ class CreateExerciseView: UIScrollView {
     }
     
     // Creates an exercise object with info from this screen
-    private func createExerciseFromData() -> Exercise {
-        let createdExercise = Exercise()
+    private func saveAndReturnExercise() -> Exercise {
+        let createdExercise = self.editingExercise ?? Exercise()
         
         createdExercise.setName(name: nameEntryField.text!)
         
@@ -219,23 +234,22 @@ class CreateExerciseView: UIScrollView {
         } else {
             createdExercise.setRepCount(repCount: 0)
         }
-        let progressionMethodRep = ProgressionMethod()
-        progressionMethodRep.setName(name: "Reps")
-        progressionMethodRep.setUnit(unit: "Reps")
-        progressionMethodRep.setDefaultValue(defaultValue: (repEntryField.textfield.text?.isEmpty)! ?
-                                                            "Rep Count" : repEntryField.textfield.text)
-        progressionMethodRep.setIndex(index: 0)
         
-        createdExercise.appendProgressionMethod(progressionMethod: progressionMethodRep)
-        
+        createdExercise.removeProgressionMethods()
         // Add all progression methods from this cell
         for (index, cell) in (progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]).enumerated() {
-            let progressionMethod = ProgressionMethod()
-            progressionMethod.setName(name: cell.nameEntryField.text!)
-            progressionMethod.setUnit(unit: cell.pickUnitButton.titleLabel!.text!)
-            progressionMethod.setIndex(index: index + 1)
+            let progressionMethod = cell.saveAndReturnProgressionMethod()
+            progressionMethod.setIndex(index: index)
             
             createdExercise.appendProgressionMethod(progressionMethod: progressionMethod)
+        }
+        
+        // If this is a new exercise, create it!
+        if self.editingExercise == nil {
+            let realm = try! Realm()
+            try! realm.write {
+                realm.add(createdExercise)
+            }
         }
         
         return createdExercise

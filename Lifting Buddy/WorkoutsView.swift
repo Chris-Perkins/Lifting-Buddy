@@ -12,7 +12,7 @@ import UIKit
 import RealmSwift
 import Realm
 
-class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate {
+class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate, ShowViewProtocol {
     
     // View properties
     
@@ -110,19 +110,20 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate {
         })
     }
     
-    // Show the edit workout view
-    func editWorkout(workout: Workout) {
-        let workoutEditView = CreateWorkoutView(workout: workout,
-                                                frame: CGRect(x: 0,
-                                                              y: -self.frame.height,
-                                                              width: self.frame.width,
-                                                              height: self.frame.height))
-        self.addSubview(workoutEditView)
+    //  Show view functions
+    func showView(view: UIView) {
+        self.addSubview(view)
+        
+        view.frame = CGRect(x: 0,
+                            y: -self.frame.height,
+                            width: self.frame.width,
+                            height: self.frame.height)
+        
         UIView.animate(withDuration: 0.2, animations: {
-            workoutEditView.frame = CGRect(x: 0,
-                                           y: 0,
-                                           width: self.frame.width,
-                                           height: self.frame.height)
+            view.frame = CGRect(x: 0,
+                                y: 0,
+                                width: self.frame.width,
+                                height: self.frame.height)
         })
     }
     

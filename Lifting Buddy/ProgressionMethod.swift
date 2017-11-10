@@ -66,7 +66,10 @@ class ProgressionMethod: Object {
     // MARK: Encapsulated methods
     
     public func setName(name: String?) {
-        self.name = name
+        let realm = try! Realm()
+        try! realm.write {
+            self.name = name
+        }
     }
     
     @objc public func getName() -> String? {
@@ -74,7 +77,10 @@ class ProgressionMethod: Object {
     }
     
     public func setUnit(unit: String?) {
-        self.unit = unit
+        let realm = try! Realm()
+        try! realm.write {
+            self.unit = unit
+        }
     }
     
     @objc public func getUnit() -> String? {
@@ -82,7 +88,10 @@ class ProgressionMethod: Object {
     }
     
     public func setDefaultValue(defaultValue: String?) {
-        self.defaultValue = defaultValue
+        let realm = try! Realm()
+        try! realm.write {
+            self.defaultValue = defaultValue
+        }
     }
     
     @objc public func getDefaultValue() -> String? {
@@ -90,7 +99,10 @@ class ProgressionMethod: Object {
     }
     
     public func setIndex(index: Int) {
-        self.index = String(index)
+        let realm = try! Realm()
+        try! realm.write {
+            self.index = String(index)
+        }
     }
     
     public func getIndex() -> Int? {

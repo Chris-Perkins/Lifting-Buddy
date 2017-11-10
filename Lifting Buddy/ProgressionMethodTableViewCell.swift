@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class ProgressionMethodTableViewCell: UITableViewCell {
     
@@ -16,6 +18,9 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     private var loaded: Bool
     // Whether or not we chose a unit
     private var chosen: Bool
+    
+    // the progression method we're modifying
+    var progressionMethod: ProgressionMethod? = nil
     
     // the name entry field for this name entry field
     var nameEntryField: BetterTextField
@@ -40,7 +45,6 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         
         self.nameEntryField.setDefaultString(defaultString: "Name")
         
-        self.pickUnitButton.setTitle("Required: Unit", for: .normal)
         self.pickUnitButton.addTarget(self,
                                       action: #selector(pickUnitButtonPress(sender:)),
                                       for: .touchUpInside)
@@ -61,6 +65,47 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         // MARK: Pick Unit button
         
         self.pickUnitButton.setDefaultProperties()
+    }
+    
+    // MARK: Custom view functions
+    
+    public func setProgressionMethod(progressionMethod: ProgressionMethod) {
+        self.progressionMethod = progressionMethod
+        
+        self.nameEntryField.textfield.text = self.progressionMethod?.getName()
+        self.pickUnitButton.setTitle(self.progressionMethod?.getName() ?? "Required: Unit", for: .normal)
+        
+        // Checks 'reps'; an old unit. Don't crash unnecessarily.
+        if self.progressionMethod?.getUnit() != nil && self.progressionMethod?.getUnit() != "Reps" {
+            guard let index: Int =  ProgressionMethod.unitList.index(of: (self.progressionMethod?.getUnit()!)!) else {
+                fatalError("Unable to find unit that supposedly exists...")
+            }
+            self.curSelect = index
+        } else if self.progressionMethod?.getUnit() == "Reps" {
+            // Replace reps with any unit.
+            // The app has only been distributed to 1 person, so no data migration.
+            self.progressionMethod?.setUnit(unit: ProgressionMethod.unitList[0])
+        }
+    }
+    
+    public func saveAndReturnProgressionMethod() -> ProgressionMethod {
+        guard let _ = self.progressionMethod else  {
+            fatalError("ProgressionMethod we were editing or creating is nil!")
+        }
+        
+        self.progressionMethod!.setName(name: self.nameEntryField.text)
+        self.progressionMethod!.setUnit(unit: self.pickUnitButton.titleLabel?.text)
+        
+        // If this progression method doesn't have an index, it has not been added to realm
+        // so, add this to realm
+        if self.progressionMethod!.getIndex() == nil {
+            let realm = try! Realm()
+            try! realm.write {
+                realm.add(self.progressionMethod!)
+            }
+        }
+        
+        return self.progressionMethod!
     }
     
     // MARK: Event functions

@@ -15,8 +15,6 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     
     // the data in this tableview
     private var data:[ProgressionMethod] = [ProgressionMethod].init()
-    // the cells in this tableview
-    private var cells: [ProgressionMethodTableViewCell] = [ProgressionMethodTableViewCell]()
     // the height per cell
     public static let cellHeight: CGFloat = 50.0
     
@@ -45,11 +43,6 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
         let destinationData = data[destinationIndexPath.row]
         data[sourceIndexPath.row] = destinationData
         data[destinationIndexPath.row] = sourceData
-        
-        let sourceCell = cells[sourceIndexPath.row]
-        let destinationCell = cells[destinationIndexPath.row]
-        cells[sourceIndexPath.row] = destinationCell
-        cells[destinationIndexPath.row] = sourceCell
     }
     
     // Data is what we use to fill in the table view
@@ -62,9 +55,6 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
         
         if editingStyle == .delete {
             self.data.remove(at: indexPath.row)
-            if indexPath.row < self.cells.count {
-                self.cells.remove(at: indexPath.row)
-            }
             
             heightConstraint?.constant -= 50
             self.reloadData()
@@ -74,12 +64,10 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Cell does not exist; create it.
-        if indexPath.row >= cells.count {
-            let cell = ProgressionMethodTableViewCell(style: .default, reuseIdentifier: nil)
-            cells.append(cell)
-        }
+        let cell = self.dequeueReusableCell(withIdentifier: "cell") as! ProgressionMethodTableViewCell
+        cell.setProgressionMethod(progressionMethod: data[indexPath.row])
         
-        return cells[indexPath.row]
+        return cell
     }
     
     // Each cell has a height of cellHeight

@@ -11,7 +11,6 @@ import UIKit
 class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate {
     
     // MARK: View properties
-    
     public var heightConstraint: NSLayoutConstraint?
     
     private var data:[Exercise] = [Exercise].init()
@@ -41,9 +40,6 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
         let destination = data[destinationIndexPath.row]
         data[sourceIndexPath.row] = destination
         data[destinationIndexPath.row] = source
-        
-        //(self.cellForRow(at: sourceIndexPath) as! ExerciseTableViewCell).reloadView()
-        //(self.cellForRow(at: destinationIndexPath) as! ExerciseTableViewCell).reloadView()
     }
     
     // Selected a table view cell
@@ -65,6 +61,7 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! EditExerciseTableViewCell
         cell.setExercise(exercise: data[indexPath.row])
+        cell.showViewDelegate = self.superview as? ShowViewProtocol
         return cell
     }
     

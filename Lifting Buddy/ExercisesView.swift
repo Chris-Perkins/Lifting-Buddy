@@ -11,7 +11,7 @@ import Realm
 import RealmSwift
 
 class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, ExercisePickerDelegate,
-EmptyTableViewOverlayDelegate {
+EmptyTableViewOverlayDelegate, ShowViewProtocol {
     
     // MARK: View properties
     
@@ -87,6 +87,18 @@ EmptyTableViewOverlayDelegate {
         exerciseTableView.reloadData()
     }
     
+    // MARK: View functions
+    
+    // Just removes this view
+    @objc func removeSelf() {
+        self.removeSelfNicelyWithAnimation()
+    }
+    
+    // We must refresh in case a new exercise was created mid-workout
+    func endWorkout() {
+        self.exerciseTableView.refreshData()
+    }
+    
     // MARK: Event functions
     
     @objc func showCreateExerciseView(sender: PrettyButton) {
@@ -136,6 +148,8 @@ EmptyTableViewOverlayDelegate {
             self.removeSelfNicelyWithAnimation()
         } else {
             self.exerciseTableView.refreshData()
+            self.exerciseTableView.reloadData()
+            self.exerciseTableView.layoutSubviews()
         }
     }
     
@@ -166,13 +180,22 @@ EmptyTableViewOverlayDelegate {
         })
     }
     
-    @objc func removeSelf() {
-        self.removeSelfNicelyWithAnimation()
-    }
+    // MARK: Show View Protocol Methods
     
-    // We must refresh in case a new exercise was created mid-workout
-    func endWorkout() {
-        self.exerciseTableView.refreshData()
+    func showView(view: UIView) {
+        self.addSubview(view)
+        
+        view.frame = CGRect(x: 0,
+                            y: -self.frame.height,
+                            width: self.frame.width,
+                            height: self.frame.height)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            view.frame = CGRect(x: 0,
+                                y: 0,
+                                width: self.frame.width,
+                                height: self.frame.height)
+        })
     }
     
     // MARK: Constraint functions

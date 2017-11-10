@@ -73,20 +73,16 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         self.progressionMethod = progressionMethod
         
         self.nameEntryField.textfield.text = self.progressionMethod?.getName()
-        self.pickUnitButton.setTitle(self.progressionMethod?.getName() ??
+        self.pickUnitButton.setTitle(self.progressionMethod?.getUnit() ??
                                     ((self.curSelect >= 0 && self.curSelect < ProgressionMethod.unitList.count) ? ProgressionMethod.unitList[self.curSelect] : "Required: Unit"),
                                      for: .normal)
         
-        // Checks 'reps'; an old unit. Don't crash unnecessarily.
-        if self.progressionMethod?.getUnit() != nil && self.progressionMethod?.getUnit() != "Reps" {
-            guard let index: Int =  ProgressionMethod.unitList.index(of: (self.progressionMethod?.getUnit()!)!) else {
+        
+        if let unitString = self.progressionMethod?.getUnit() {
+            guard let index =  ProgressionMethod.unitList.index(of: unitString.lowercased()) else {
                 fatalError("Unable to find unit that supposedly exists...")
             }
             self.curSelect = index
-        } else if self.progressionMethod?.getUnit() == "Reps" {
-            // Replace reps with any unit.
-            // The app has only been distributed to 1 person, so no data migration.
-            self.progressionMethod?.setUnit(unit: ProgressionMethod.unitList[0])
         }
     }
     

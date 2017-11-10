@@ -90,14 +90,15 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewProtocol 
         self.createWorkoutButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         self.cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
-        if self.editingWorkout != nil {
-            self.nameEntryField.textfield.text = self.editingWorkout!.getName()!
+        // If we're editing...
+        if let workout = self.editingWorkout {
+            self.nameEntryField.textfield.text = workout.getName()!
             
-            for exercise in self.editingWorkout!.getExercises() {
+            for exercise in workout.getExercises() {
                 self.editExerciseTableView.appendDataToTableView(data: exercise)
             }
             
-            let repeatOnDays = self.editingWorkout!.getsDayOfTheWeek()
+            let repeatOnDays = workout.getsDayOfTheWeek()
             for (index, button) in self.repeatButtons.enumerated() {
                 button.setIsToggled(toggled: repeatOnDays[index].value)
             }

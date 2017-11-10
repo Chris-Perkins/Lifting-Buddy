@@ -26,13 +26,14 @@ class ProgressionMethod: Object {
     @objc dynamic private var index: String?
     
     public enum Unit: String {
-        case WEIGHT = "weight"
-        case TIME = "time"
-        case DISTANCE = "distance"
-        case OTHER = "other"
+        case WEIGHT     = "weight"
+        case TIME       = "time"
+        case DISTANCE   = "distance"
+        case OTHER      = "other"
+        case REPS       = "reps"
     }
     
-    public static let unitList = ["weight", "time", "distance", "other"]
+    public static let unitList = ["weight", "time", "distance", "other", "reps"]
     
     // MARK: Init Functions
     

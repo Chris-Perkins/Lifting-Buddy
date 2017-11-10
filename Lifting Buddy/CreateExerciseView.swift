@@ -29,8 +29,6 @@ class CreateExerciseView: UIScrollView {
     private var nameEntryField: BetterTextField
     // field for set count entry
     private var setEntryField: BetterTextField
-    // field for rep entry
-    private var repEntryField: BetterTextField
     // table which holds all of the progressionmethods for this exercise
     private var progressionsTableView: ProgressionsMethodTableView
     // adds a progression method to the tableview
@@ -48,7 +46,6 @@ class CreateExerciseView: UIScrollView {
         self.createExerciseLabel = UILabel()
         self.nameEntryField = BetterTextField(defaultString: "Required: Name", frame: .zero)
         self.setEntryField = BetterTextField(defaultString: "Optional: Set Count", frame: .zero)
-        self.repEntryField = BetterTextField(defaultString: "Optional: Rep Count", frame: .zero)
         self.progressionsTableView = ProgressionsMethodTableView()
         self.addProgressionTrackerButton = PrettyButton()
         self.createExerciseButton = PrettyButton()
@@ -59,7 +56,6 @@ class CreateExerciseView: UIScrollView {
         self.addSubview(createExerciseLabel)
         self.addSubview(nameEntryField)
         self.addSubview(setEntryField)
-        self.addSubview(repEntryField)
         self.addSubview(progressionsTableView)
         self.addSubview(addProgressionTrackerButton)
         self.addSubview(createExerciseButton)
@@ -68,7 +64,6 @@ class CreateExerciseView: UIScrollView {
         self.createAndActivateCreateExerciseLabelConstraints()
         self.createAndActivateNameEntryFieldConstraints()
         self.createAndActivateSetEntryFieldConstraints()
-        self.createAndActivateRepEntryFieldConstraints()
         self.createAndActivateProgressionsTableViewConstraints()
         self.createAndActivateAddProgressionTrackerButtonConstraints()
         self.createAndActivateCreateExeciseButtonConstraints()
@@ -106,11 +101,6 @@ class CreateExerciseView: UIScrollView {
         self.setEntryField.setDefaultProperties()
         self.setEntryField.setLabelTitle(title: "Sets")
         self.setEntryField.textfield.keyboardType = .numberPad
-        
-        // Rep entry field
-        self.repEntryField.setDefaultProperties()
-        self.repEntryField.setLabelTitle(title: "Reps")
-        self.repEntryField.textfield.keyboardType = .numberPad
         
         // Progressions Table View
         // Prevent clipping as we can click and drag cells
@@ -162,14 +152,19 @@ class CreateExerciseView: UIScrollView {
     
     // Starts the views off based on the exercise received
     private func setViewPropertiesBasedOnExercise() {
-        if self.editingExercise != nil {
-            self.nameEntryField.textfield.text = self.editingExercise!.getName()!
-            self.setEntryField.textfield.text  = String(describing: self.editingExercise!.getSetCount())
-            self.repEntryField.textfield.text  = String(describing: self.editingExercise!.getRepCount())
+        if let exercise = self.editingExercise {
+            self.nameEntryField.textfield.text = exercise.getName()!
+            self.setEntryField.textfield.text = String(describing: exercise.getSetCount())
             
-            for progressionMethod in self.editingExercise!.getProgressionMethods() {
+            for progressionMethod in exercise.getProgressionMethods() {
                 self.progressionsTableView.appendDataToTableView(data: progressionMethod)
             }
+        } else {
+            let repProgressionMethod = ProgressionMethod()
+            repProgressionMethod.setName(name: ProgressionMethod.Unit.REPS.rawValue)
+            repProgressionMethod.setUnit(unit: ProgressionMethod.Unit.REPS.rawValue)
+            
+            self.progressionsTableView.appendDataToTableView(data: repProgressionMethod)
         }
     }
     
@@ -192,12 +187,6 @@ class CreateExerciseView: UIScrollView {
             
             self.setEntryField.textfield.backgroundColor = UIColor.niceRed()
             self.setEntryField.textfield.text = ""
-        }
-        if !self.repEntryField.textfield.isNumeric {
-            fulfilled = false
-            
-            self.repEntryField.textfield.backgroundColor = UIColor.niceRed()
-            self.repEntryField.textfield.text = ""
         }
         for cell in self.progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]
         {
@@ -227,12 +216,6 @@ class CreateExerciseView: UIScrollView {
             createdExercise.setSetCount(setCount: Int(setEntryField.textfield.text!)!)
         } else {
             createdExercise.setSetCount(setCount: 0)
-        }
-        
-        if repEntryField.textfield.text?.count != 0 {
-            createdExercise.setRepCount(repCount: Int(repEntryField.textfield.text!)!)
-        } else {
-            createdExercise.setRepCount(repCount: 0)
         }
         
         // Progression Methods that we need to delete from history
@@ -297,7 +280,7 @@ class CreateExerciseView: UIScrollView {
                                                             plusWidth: -40).isActive = true
     }
     
-    // cling to top,bottom,left of setrepentryfieldview; width of setrepentryfieldview / 2 - 5
+    // cling to top,bottom,left of setentryfieldview; width of self - 40
     private func createAndActivateSetEntryFieldConstraints() {
         self.setEntryField.translatesAutoresizingMaskIntoConstraints = false
         
@@ -317,26 +300,6 @@ class CreateExerciseView: UIScrollView {
                                                          height: 50).isActive = true
     }
     
-    // cling to top,bottom,right of setrepentryfieldview; width of setrepentryfieldview / 2 - 5
-    private func createAndActivateRepEntryFieldConstraints() {
-        self.repEntryField.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.repEntryField,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint(item: self.setEntryField,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.repEntryField,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: -viewPadding / 2).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.repEntryField,
-                                                            withCopyView: self,
-                                                            plusWidth: -40).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.repEntryField,
-                                                         height: 50).isActive = true
-    }
-    
     // center horiz in view ; place below progressionslabel ; height default 0 ; width of this view - 40
     private func createAndActivateProgressionsTableViewConstraints() {
         self.progressionsTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -344,7 +307,7 @@ class CreateExerciseView: UIScrollView {
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.progressionsTableView,
                                                                         inView: self).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.progressionsTableView,
-                                                         belowView: self.repEntryField,
+                                                         belowView: self.setEntryField,
                                                          withPadding: viewPadding * 2).isActive = true
         
         // Assign table view height constraint

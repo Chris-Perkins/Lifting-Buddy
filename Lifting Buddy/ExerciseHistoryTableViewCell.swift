@@ -90,6 +90,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     
     // Bind to view; place below the UIView
     private func createAndActivateDataDisplayConstraints(withData: [(ProgressionMethod, String)]) {
+        self.data = withData
         var prevView: UIView = self.setLabel
         
         for dataPiece in withData {

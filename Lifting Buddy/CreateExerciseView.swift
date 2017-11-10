@@ -235,14 +235,22 @@ class CreateExerciseView: UIScrollView {
             createdExercise.setRepCount(repCount: 0)
         }
         
+        // Progression Methods that we need to delete from history
+        var progressionMethodsToDelete = Set(createdExercise.getProgressionMethods())
+        
         createdExercise.removeProgressionMethods()
         // Add all progression methods from this cell
         for (index, cell) in (progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]).enumerated() {
             let progressionMethod = cell.saveAndReturnProgressionMethod()
             progressionMethod.setIndex(index: index)
             
+            // do not delete anything still in the exercise
+            progressionMethodsToDelete.remove(progressionMethod)
+            
             createdExercise.appendProgressionMethod(progressionMethod: progressionMethod)
         }
+        
+        createdExercise.removeProgressionMethodsFromHistory(progressionMethodsToDelete: progressionMethodsToDelete)
         
         // If this is a new exercise, create it!
         if self.editingExercise == nil {

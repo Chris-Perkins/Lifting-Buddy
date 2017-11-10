@@ -227,6 +227,7 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
     
     // adds workout data to history
     public func saveWorkoutData() {
+
         for exerciseHistoryCell in self.exerciseHistoryTableView.getAllCells() as! [ExerciseHistoryTableViewCell] {
             let exerciseEntry = ExerciseHistoryEntry()
             exerciseEntry.date = Date(timeIntervalSinceNow: 0)

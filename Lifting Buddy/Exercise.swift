@@ -85,6 +85,7 @@ class Exercise: Object {
     @objc public func getRepCount() -> Int {
         return self.repCount
     }
+    
     public func setRepCount(repCount: Int) {
         let realm = try! Realm()
         try! realm.write {
@@ -107,6 +108,7 @@ class Exercise: Object {
     @objc public func getName() -> String? {
         return self.name
     }
+    
     public func setName(name: String?) {
         let realm = try! Realm()
         try! realm.write {
@@ -114,6 +116,11 @@ class Exercise: Object {
         }
     }
     
+    public func getProgressionMethods() -> List<ProgressionMethod> {
+        return self.progressionMethods
+    }
+    
+    // Appends a progressionmethod to this exercise
     public func appendProgressionMethod(progressionMethod: ProgressionMethod) {
         let realm = try! Realm()
         try! realm.write {
@@ -121,10 +128,7 @@ class Exercise: Object {
         }
     }
     
-    public func getProgressionMethods() -> List<ProgressionMethod> {
-        return self.progressionMethods
-    }
-    
+    // Removes all progression methods
     public func removeProgressionMethods() {
         let realm = try! Realm()
         try! realm.write {
@@ -136,11 +140,36 @@ class Exercise: Object {
         return self.exerciseHistory
     }
     
+    // Adds an entry to this exercise
     public func appendExerciseHistoryEntry(exerciseHistoryEntry: ExerciseHistoryEntry) {
         let realm = try! Realm()
         try! realm.write {
             self.exerciseHistory.append(exerciseHistoryEntry)
         }
+    }
+    
+    // Removes the given progressionMethods from the exercise.
+    public func removeProgressionMethodsFromHistory(progressionMethodsToDelete: Set<ProgressionMethod>) {
+        let realm = try! Realm()
+        
+        // We have to dive down to delete any progression method trace.
+        // Don't want to store data if we don't have to anymore!
+        for (indexEntry, entry) in self.exerciseHistory.enumerated().reversed() {
+            for (indexDataPiece, dataPiece) in entry.exerciseInfo.enumerated().reversed() {
+                if let progressionMethod = dataPiece.progressionMethod {
+                    if progressionMethodsToDelete.contains(progressionMethod) {
+                        try! realm.write {
+                            entry.exerciseInfo.remove(at: indexDataPiece)
+                            
+                            
+                            if entry.exerciseInfo.isEmpty {
+                                self.exerciseHistory.remove(at: indexEntry)
+                            }
+                        } // closes realm.write
+                    }
+                } // closes if check
+            }
+        } // closes for loop # 1
     }
 
     @objc public func getCooldownTime() -> Int {

@@ -73,7 +73,9 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         self.progressionMethod = progressionMethod
         
         self.nameEntryField.textfield.text = self.progressionMethod?.getName()
-        self.pickUnitButton.setTitle(self.progressionMethod?.getName() ?? "Required: Unit", for: .normal)
+        self.pickUnitButton.setTitle(self.progressionMethod?.getName() ??
+                                    ((self.curSelect >= 0 && self.curSelect < ProgressionMethod.unitList.count) ? ProgressionMethod.unitList[self.curSelect] : "Required: Unit"),
+                                     for: .normal)
         
         // Checks 'reps'; an old unit. Don't crash unnecessarily.
         if self.progressionMethod?.getUnit() != nil && self.progressionMethod?.getUnit() != "Reps" {

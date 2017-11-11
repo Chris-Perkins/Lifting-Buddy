@@ -36,6 +36,8 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     
     // the minimum date we've encountered (used in displaying all-time)
     var minimumDate = Date.init(timeIntervalSinceNow: 0)
+    var maxDataValue: Float = 0
+    var minDataValue: Float = 0
     
     
     for exerciseHistoryEntry in exerciseHistory {
@@ -51,6 +53,9 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                 } else {
                     maxPerProgressionMethod[exercisePiece.progressionMethod!] = exercisePiece.value!.floatValue!
                 }
+                
+                maxDataValue = max(maxDataValue, exercisePiece.value!.floatValue!)
+                minDataValue = min(minDataValue, exercisePiece.value!.floatValue!)
             }
         }
         
@@ -75,7 +80,14 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                          animDelay: 0))
     }
     
-    let yValues = stride(from: 0, through: 20, by: 5).map {ChartAxisValueDouble($0, labelSettings: labelSettings)}
+    // If we went **higher** than zero for our min value, set this back to zero.
+    // Makes graphs less confusing.
+    minDataValue = minDataValue > 0 ? 0 : minDataValue
+    
+    let yValues = stride(from: Int(minDataValue),
+                         through: Int(maxDataValue) + 5,
+                         by: Int(maxDataValue + 5 - minDataValue) / 5).map {
+                            ChartAxisValueDouble($0, labelSettings: labelSettings) }
     
     var xValues = [ChartAxisValue]()
     
@@ -135,22 +147,12 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
 func getLineColorsForProgressionMethod(progressionMethod: ProgressionMethod) -> [UIColor] {
     var colors = [UIColor]()
     let modCount = 10
-
-    /*colors.append(UIColor(
-        red: CGFloat(mod(x: progressionMethod.hashValue, m: 101))/100.0,
-        green: CGFloat(mod(x: Int(progressionMethod.hashValue / 10^2), m: 101))/100.0,
-        blue: CGFloat(mod(x: Int(progressionMethod.hashValue / 10^4), m: 101))/100.0,
-                    alpha: 1))
-    return colors*/
     
-    /* probability that two colors match: 1/c^x
-     * x is # of times loop runs
-     * c is # of colors
-     */
     guard var index: Int = progressionMethod.getIndex() else {
         fatalError("Proper index not assigned! Index int returned nil.")
     }
     
+    // + 1 so index starting at 0 is given a color
     index += 1
     var i = 0
     var previousColor = -1

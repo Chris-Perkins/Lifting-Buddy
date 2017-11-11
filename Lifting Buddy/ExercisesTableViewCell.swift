@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftCharts
 
 class ExerciseTableViewCell: UITableViewCell {
     
@@ -20,6 +21,9 @@ class ExerciseTableViewCell: UITableViewCell {
     private var expandImage: UIImageView
     // The labels for every exercise
     private var progressionLabels: [UILabel]
+    
+    // the chart we're showing
+    private var chart: Chart?
     
     // delegate we call to show the workout
     public var mainViewCellDelegate: WorkoutCellDelegate?
@@ -88,6 +92,8 @@ class ExerciseTableViewCell: UITableViewCell {
     // MARK: View overrides
     
     override func layoutIfNeeded() {
+        super.layoutIfNeeded()
+        
         self.clipsToBounds = true
         
         cellTitle.textColor = UIColor.niceBlue()
@@ -120,7 +126,6 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // Set the exercise for this cell
     public func setExercise(exercise: Exercise) {
-        // Only make changes if we need to.
         cellTitle.text = exercise.getName()
         
         self.exercise = exercise
@@ -128,10 +133,31 @@ class ExerciseTableViewCell: UITableViewCell {
         for label in progressionLabels {
             label.removeFromSuperview()
         }
-        
         progressionLabels.removeAll()
+        self.chart?.view.removeFromSuperview()
+        self.chart = nil
         editButton?.removeFromSuperview()
         startExerciseButton?.removeFromSuperview()
+        
+        self.chart = createChartFromExerciseHistory(exerciseHistory: exercise.getExerciseHistory(),
+                                                    timeAmount: TimeAmount.ALLTIME,
+                                                    frame: CGRect(x: 0,
+                                                                  y: 0,
+                                                                  width: self.frame.width,
+                                                                  height: 300))
+        self.addSubview(chart!.view)
+        
+        self.chart!.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createViewBelowViewConstraint(view: self.chart!.view,
+                                                         belowView: self.cellTitle,
+                                                         withPadding: 0).isActive = true
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.chart!.view,
+                                                            withCopyView: self,
+                                                            plusWidth: 0).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.chart!.view,
+                                                         height: 300).isActive = true
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.chart!.view,
+                                                                        inView: self).isActive = true
         
         editButton = PrettyButton()
         startExerciseButton = PrettyButton()
@@ -145,7 +171,7 @@ class ExerciseTableViewCell: UITableViewCell {
         
         //TODO: Move constraints somewhere else
         // Previous view
-        var prevLabel: UIView = cellTitle
+        var prevLabel: UIView = self.chart!.view
         
         for progressionMethod in exercise.getProgressionMethods() {
             let progressionMethodLabel = UILabel()

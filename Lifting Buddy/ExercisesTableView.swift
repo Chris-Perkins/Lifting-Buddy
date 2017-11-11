@@ -115,7 +115,7 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         let progressionMethodCount = CGFloat(sortedData[indexPath.row].getProgressionMethods().count)
         
         return self.indexPathForSelectedRow?.row == indexPath.row ?
-            ExercisesTableView.baseCellHeight * 2 + progressionMethodCount * 30.0 + (progressionMethodCount > 0 ? 26 : 0) :
+            ExercisesTableView.baseCellHeight * 2 + 300 + progressionMethodCount * 30.0 + (progressionMethodCount > 0 ? 26 : 0) :
             ExercisesTableView.baseCellHeight
     }
     

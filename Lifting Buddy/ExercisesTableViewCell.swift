@@ -19,8 +19,10 @@ class ExerciseTableViewCell: UITableViewCell {
     private var exercise: Exercise?
     // An indicator on whether or not the cell is expanded
     private var expandImage: UIImageView
+    // The view where we'll put the chart
+    private var chartFrame: UIView
     // The labels for every exercise
-    private var progressionButtons: [ToggleablePrettyButton]
+    private var progressionButtons: [ToggleablePrettyButtonWithProgressionMethod]
     
     // the chart we're showing
     private var chart: Chart?
@@ -35,19 +37,26 @@ class ExerciseTableViewCell: UITableViewCell {
     // A button to start the exercise
     private var startExerciseButton: PrettyButton?
     
+    // Filter progressionMethods from graph
+    private var filterProgressionMethods: Set<ProgressionMethod>
+    
     // MARK: Init functions
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.cellTitle = UILabel()
         self.expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
-        self.progressionButtons = [ToggleablePrettyButton]()
+        self.chartFrame = UIView()
+        self.progressionButtons = [ToggleablePrettyButtonWithProgressionMethod]()
+        
+        self.filterProgressionMethods = Set<ProgressionMethod>()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = .none
         
-        self.addSubview(cellTitle)
-        self.addSubview(expandImage)
+        self.addSubview(self.cellTitle)
+        self.addSubview(self.expandImage)
+        self.addSubview(self.chartFrame)
         
         self.createAndActivateCellTitleConstraints()
         self.createAndActivateExpandImageConstraints()
@@ -97,23 +106,20 @@ class ExerciseTableViewCell: UITableViewCell {
         // Remove all dependent views so we don't get duplicates
         self.removeAllExerciseDependentViews()
         
-        self.chart = createChartFromExerciseHistory(exerciseHistory: exercise.getExerciseHistory(),
-                                                    timeAmount: TimeAmount.ALLTIME,
-                                                    frame: CGRect(x: 0,
-                                                                  y: 0,
-                                                                  width: self.frame.width,
-                                                                  height: 300))
-        self.addSubview(chart!.view)
-        self.createAndActivateChartViewConstraints()
+        self.createChart()
         
         self.editButton = PrettyButton()
         self.startExerciseButton = PrettyButton()
         
+        self.createAndActivateChartFrameConstraints()
+        
         // The last view before these (in terms of top to bottom)
-        var prevView: UIView = self.chart!.view
+        var prevView: UIView = self.chartFrame
         
         for progressionMethod in exercise.getProgressionMethods() {
-            let progressionMethodButton = ToggleablePrettyButton()
+            let progressionMethodButton = ToggleablePrettyButtonWithProgressionMethod(
+                                                        progressionMethod: progressionMethod,
+                                                        frame: .zero)
             progressionMethodButton.setTitle(progressionMethod.getName(), for: .normal)
             progressionMethodButton.setIsToggled(toggled: true)
             progressionMethodButton.setToggleTextColor(color: UIColor.white)
@@ -134,7 +140,7 @@ class ExerciseTableViewCell: UITableViewCell {
                                                                             inView: self).isActive = true
             NSLayoutConstraint.createViewBelowViewConstraint(view: progressionMethodButton,
                                                              belowView: prevView,
-                                                             withPadding: prevView == self.chart!.view ?
+                                                             withPadding: prevView == self.chartFrame ?
                                                                 10 : 0).isActive = true
             NSLayoutConstraint(item: self,
                                attribute: .width,
@@ -157,8 +163,13 @@ class ExerciseTableViewCell: UITableViewCell {
         self.addSubview(startExerciseButton!)
         
         self.createAndActivateEditAndStartButtonConstraints(withPrevView: prevView)
+        
+        self.layoutSubviews()
+        self.filterProgressionMethods.insert(exercise.getProgressionMethods()[0])
+        self.createChart()
     }
     
+    // Sets the expand button constraints
     public func setExpandable(expandable: Bool) {
         self.expandImage.alpha = expandable ? 1 : 0
     }
@@ -183,6 +194,19 @@ class ExerciseTableViewCell: UITableViewCell {
         self.chart = nil
         self.editButton?.removeFromSuperview()
         self.startExerciseButton?.removeFromSuperview()
+    }
+    
+    private func createChart() {
+        self.chart?.view.removeFromSuperview()
+        
+        self.chart = createChartFromExerciseHistory(exerciseHistory: self.exercise!.getExerciseHistory(),
+                                                    filterProgressionMethods: filterProgressionMethods,
+                                                    timeAmount: TimeAmount.ALLTIME,
+                                                    frame: CGRect(x: 0,
+                                                                  y: 0,
+                                                                  width: self.frame.width,
+                                                                  height: 300))
+        self.chartFrame.addSubview(chart!.view)
     }
     
     // MARK: Event functions
@@ -244,18 +268,18 @@ class ExerciseTableViewCell: UITableViewCell {
     }
     
     // Center horiz in view ; Width of this view ; Below cell title ; Height 300
-    private func createAndActivateChartViewConstraints() {
-        self.chart!.view.translatesAutoresizingMaskIntoConstraints = false
+    private func createAndActivateChartFrameConstraints() {
+        self.chartFrame.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.chart!.view,
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.chartFrame,
                                                                         inView: self).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.chart!.view,
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.chartFrame,
                                                             withCopyView: self,
                                                             plusWidth: 0).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.chart!.view,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: self.chartFrame,
                                                          belowView: self.cellTitle,
                                                          withPadding: 0).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.chart!.view,
+        NSLayoutConstraint.createHeightConstraintForView(view: self.chartFrame,
                                                          height: 300).isActive = true
     }
     
@@ -307,5 +331,19 @@ class ExerciseTableViewCell: UITableViewCell {
                            attribute: .width,
                            multiplier: 2,
                            constant: 0).isActive = true
+    }
+}
+
+class ToggleablePrettyButtonWithProgressionMethod: ToggleablePrettyButton {
+    public var progressionMethod: ProgressionMethod
+    
+    init(progressionMethod: ProgressionMethod, frame: CGRect) {
+        self.progressionMethod = progressionMethod
+        
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

@@ -111,10 +111,19 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     case TimeAmount.ALLTIME:
         let distanceBetweenMinAndToday = Date.init(timeIntervalSinceNow: 0).timeIntervalSince(minimumDate)
         
-        for i in -4...0 {
+        var prevDate: Date? = nil
+        for i in -6...0 {
+            let date = Date.init(timeIntervalSinceNow: Double(i) / 6.0 * distanceBetweenMinAndToday)
+            
+            // Don't show duplicate labels
+            if prevDate != nil && (Calendar.current.isDate(date, inSameDayAs: prevDate!)) {
+                xValues.remove(at: xValues.count - 1)
+            }
+                
             xValues.append(
-                createDateAxisValue(Date.init(timeIntervalSinceNow: Double(i) / 4.0 * distanceBetweenMinAndToday),
-                                               displayFormatter: displayFormatter))
+                    createDateAxisValue(Date.init(timeIntervalSinceNow: Double(i) / 6.0 * distanceBetweenMinAndToday),
+                                                displayFormatter: displayFormatter))
+            prevDate = date
         }
     default:
         fatalError("GRAPH FOR TIMEAMOUNT TYPE NOT YET IMPLEMENTED")

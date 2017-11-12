@@ -84,10 +84,20 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     // Makes graphs less confusing.
     minDataValue = minDataValue > 0 ? 0 : minDataValue
     
-    let yValues = stride(from: Int(minDataValue),
-                         through: Int(maxDataValue) + 5,
-                         by: Int(maxDataValue + 5 - minDataValue) / 5).map {
-                            ChartAxisValueDouble($0, labelSettings: labelSettings) }
+    var yValues = [ChartAxisValueDouble]()
+    var prevValue: Int? = nil
+    let increaseByValue = Int(maxDataValue + 5 - minDataValue) / 5
+    for index in 0...5 {
+        let newValue = Int(minDataValue) + increaseByValue * index
+        
+        // We always want to display 0 on our graph for clarity reasons.
+        if prevValue != nil && prevValue! < 0 && newValue > 0 {
+            yValues.append(ChartAxisValueDouble(0, labelSettings: labelSettings))
+        }
+        yValues.append(ChartAxisValueDouble(newValue, labelSettings: labelSettings))
+        
+        prevValue = newValue
+    }
     
     var xValues = [ChartAxisValue]()
     

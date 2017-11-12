@@ -10,19 +10,17 @@ Expected / Hopeful release: December 20th
 
 | Process                   | Progress (Estimation) | Notes                                          |
 |---------------------------|-----------------------|------------------------------------------------|
-| Workout Creation          | 10/10                 |                                                |
+| Workout Creation          | 10/10                 |                                                |
 | Exercise Creation         | 9/10                  | Add nice way to choose progression method unit |
 | Workout History Tracking  | 10/10                 |                                                |
-| Exercise History Tracking | 9/10                  | Need to implement graphs/history viewing       |
-| Workout Start             | 10/10                 |                                                |
-| Exercise Start            | 8/10                  | Reworking UI; will be less table-based.        |
+| Exercise History Tracking | 9/10                  | Need to implement table-based history viewing  |
+| Workout Start             | 9/10                  | Going to rework UI                             |
 | App Icon                  | 10/10                 |                                                |
 | Splash Screen             | 10/10                 |                                                |
 | Home Screen               | 10/10                 |                                                |
-| Workout Screen            | 7/10                  | Need search/filter bar.                        |
-| Exercise Screen           | 9/10                  | Need to implement graph history                |
+| Workout Screen            | 9/10                  | Need search/filter bar.                        |
+| Exercise Screen           | 10/10                 |                                                |
 | Settings Screen           | 0/10                  | Don't know what settings to put yet.           |
-
 
 ### Future plans (?)  
 Log in to sync and backup workouts

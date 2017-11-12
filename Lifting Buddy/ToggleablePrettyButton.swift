@@ -88,7 +88,7 @@ class ToggleablePrettyButton: PrettyButton {
     
     // MARK: Event functions
     
-    @objc private func buttonPress(sender: UIButton) {
+    @objc public func buttonPress(sender: UIButton) {
         self.isToggled = !self.isToggled
         
         UIView.animate(withDuration: animationTimeInSeconds, animations: {

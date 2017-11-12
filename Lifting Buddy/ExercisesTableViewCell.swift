@@ -127,6 +127,9 @@ class ExerciseTableViewCell: UITableViewCell {
             progressionMethodButton.setToggleViewColor(color:
                 getLineColorsForProgressionMethod(progressionMethod: progressionMethod)[0])
             progressionMethodButton.setDefaultViewColor(color: UIColor.niceGray())
+            progressionMethodButton.addTarget(self,
+                                              action: #selector(toggleButtonPress(sender:)),
+                                              for: .touchUpInside)
             self.addSubview(progressionMethodButton)
             
             // Constraints for this exercise label.
@@ -165,8 +168,6 @@ class ExerciseTableViewCell: UITableViewCell {
         self.createAndActivateEditAndStartButtonConstraints(withPrevView: prevView)
         
         self.layoutSubviews()
-        self.filterProgressionMethods.insert(exercise.getProgressionMethods()[0])
-        self.createChart()
     }
     
     // Sets the expand button constraints
@@ -220,6 +221,16 @@ class ExerciseTableViewCell: UITableViewCell {
         default:
             fatalError("Button press not handled in exercisestableview!")
         }
+    }
+    
+    @objc private func toggleButtonPress(sender: ToggleablePrettyButtonWithProgressionMethod) {
+        if sender.isToggled {
+            filterProgressionMethods.remove(sender.progressionMethod)
+        } else {
+            filterProgressionMethods.insert(sender.progressionMethod)
+        }
+        
+        self.createChart()
     }
     
     // MARK: Constraint functions

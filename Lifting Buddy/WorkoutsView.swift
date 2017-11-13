@@ -61,22 +61,11 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate, Show
     // MARK: Event functions
     
     @objc func showCreateWorkoutView(sender: PrettyButton) {
-        let createWorkoutView: CreateWorkoutView =
-            CreateWorkoutView(frame: CGRect(x: 0,
-                                            y: -self.frame.height,
-                                            width: self.frame.width,
-                                            height: self.frame.height))
+        let createWorkoutView: CreateWorkoutView = CreateWorkoutView(frame: .zero)
         
         createWorkoutView.dataDelegate = self
-        self.addSubview(createWorkoutView)
         
-        UIView.animate(withDuration: 0.2, animations: {
-            createWorkoutView.frame = CGRect(x: 0,
-                                             y: self.frame.minY,
-                                             width: self.frame.width,
-                                             height: self.frame.height)
-            
-        })
+        self.showView(view: createWorkoutView)
     }
     
     // MARK: CreateWorkoutViewDelegate methods
@@ -94,20 +83,11 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate, Show
     // Start the workout with workout or exercise
     func startWorkout(workout: Workout?, exercise: Exercise?) {
         let startWorkoutView = WorkoutStartView(workout: workout,
-                                                frame: CGRect(x: 0,
-                                                              y: -self.frame.height,
-                                                              width: self.frame.width,
-                                                              height: self.frame.height))
-        self.addSubview(startWorkoutView)
+                                                frame: .zero)
         
         startWorkoutView.workoutStartTableView.appendDataToTableView(data: exercise)
         
-        UIView.animate(withDuration: 0.2, animations: {
-            startWorkoutView.frame = CGRect(x: 0,
-                                            y: 0,
-                                            width: self.frame.width,
-                                            height: self.frame.height)
-        })
+        self.showView(view: startWorkoutView)
     }
     
     //  Show view functions

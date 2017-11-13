@@ -11,13 +11,19 @@ import Realm
 import RealmSwift
 
 class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, ExercisePickerDelegate,
-EmptyTableViewOverlayDelegate, ShowViewProtocol {
+                        TableViewOverlayDelegate, ShowViewProtocol {
     
     // MARK: View properties
     
+    // Notified when we pick an exercise
     public var exercisePickerDelegate: ExercisePickerDelegate?
+    
     // Whether or not we're simply selecting an exercise
     private var selectingExercise: Bool
+    
+    // The view we display when the tableview is empty
+    private var overlayView: UIView?
+    
     // The workouts for this view
     private var exerciseTableView: ExercisesTableView
     // The button to create this workout
@@ -50,8 +56,9 @@ EmptyTableViewOverlayDelegate, ShowViewProtocol {
         self.createCreateExerciseButtonConstraints()
         self.createAndActivateExerciseTableViewConstraints()
         
-        
         self.exerciseTableView.exercisePickerDelegate = self
+        self.exerciseTableView.overlayDelegate = self
+        
         createExerciseButton.addTarget(self,
                                        action: #selector(showCreateExerciseView(sender:)),
                                        for: .touchUpInside)
@@ -96,34 +103,22 @@ EmptyTableViewOverlayDelegate, ShowViewProtocol {
     
     // We must refresh in case a new exercise was created mid-workout
     func endWorkout() {
-        self.exerciseTableView.refreshData()
+        self.exerciseTableView.reloadData()
     }
     
     // MARK: Event functions
     
     @objc func showCreateExerciseView(sender: PrettyButton) {
-        let createWorkoutView: CreateExerciseView =
-            CreateExerciseView(frame: CGRect(x: 0,
-                                            y: -self.frame.height,
-                                            width: self.frame.width,
-                                            height: self.frame.height))
+        let createExerciseView: CreateExerciseView = CreateExerciseView(frame: .zero)
         
-        createWorkoutView.dataDelegate = self
-        self.addSubview(createWorkoutView)
+        createExerciseView.dataDelegate = self
         
-        UIView.animate(withDuration: 0.2, animations: {
-            createWorkoutView.frame = CGRect(x: 0,
-                                             y: self.frame.minY,
-                                             width: self.frame.width,
-                                             height: self.frame.height)
-            
-        })
+        self.showView(view: createExerciseView)
     }
     
     // MARK: CreateWorkoutViewDelegate methods
     
     func finishedWithWorkout(workout: Workout) {
-        exerciseTableView.refreshData()
         self.exerciseTableView.reloadData()
         
         self.layoutSubviews()
@@ -132,7 +127,10 @@ EmptyTableViewOverlayDelegate, ShowViewProtocol {
     // MARK: Empty Table Overlay delegate methods
     
     func showViewOverlay() {
-        // show the guy
+        // If the view exists, don't create another.
+        if self.overlayView != nil {
+            return
+        }
     }
     
     func hideViewOverlay() {
@@ -147,7 +145,6 @@ EmptyTableViewOverlayDelegate, ShowViewProtocol {
             self.exercisePickerDelegate?.didSelectExercise(exercise: exercise)
             self.removeSelfNicelyWithAnimation()
         } else {
-            self.exerciseTableView.refreshData()
             self.exerciseTableView.reloadData()
             self.exerciseTableView.layoutSubviews()
         }
@@ -163,21 +160,11 @@ EmptyTableViewOverlayDelegate, ShowViewProtocol {
     
     func startWorkout(workout: Workout?, exercise: Exercise?) {
         let startWorkoutView = WorkoutStartView(workout: workout,
-                                                frame: CGRect(x: 0,
-                                                              y: -self.frame.height,
-                                                              width: self.frame.width,
-                                                              height: self.frame.height))
+                                                frame: .zero)
         startWorkoutView.workoutStartDelegate = self
-        self.addSubview(startWorkoutView)
-        
         startWorkoutView.workoutStartTableView.appendDataToTableView(data: exercise)
         
-        UIView.animate(withDuration: 0.2, animations: {
-            startWorkoutView.frame = CGRect(x: 0,
-                                            y: 0,
-                                            width: self.frame.width,
-                                            height: self.frame.height)
-        })
+        self.showView(view: startWorkoutView)
     }
     
     // MARK: Show View Protocol Methods

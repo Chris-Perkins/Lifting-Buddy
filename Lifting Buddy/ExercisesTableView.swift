@@ -14,8 +14,11 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // MARK: View Properties
     
-    public var overlayDelegate: EmptyTableViewOverlayDelegate?
+    // A delegate to say when we should overlay
+    public var overlayDelegate: TableViewOverlayDelegate?
+    // If we're picking an exercise, have a delegate to say what exercise we picked
     public var exercisePickerDelegate: ExercisePickerDelegate?
+    
     // Whether or not we're simply selecting an exercise
     private var selectingExercise: Bool
     // The data displayed in cells
@@ -52,6 +55,21 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // MARK: TableView Functions
     
+    override func reloadData() {
+        let realm = try! Realm()
+        
+        self.data = AnyRealmCollection(realm.objects(Exercise.self))
+        self.sortedData = Exercise.getSortedExerciseArray(exercises: self.data)
+        
+        if self.sortedData.count > 0 {
+            self.overlayDelegate?.hideViewOverlay()
+        } else {
+            self.overlayDelegate?.showViewOverlay()
+        }
+        
+        super.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let cell = self.cellForRow(at: indexPath) as! ExerciseTableViewCell
         
@@ -87,12 +105,6 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if sortedData.count > 0 {
-            overlayDelegate?.hideViewOverlay()
-        } else {
-            overlayDelegate?.showViewOverlay()
-        }
-        
         return sortedData.count
     }
     
@@ -122,16 +134,6 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     }
     
     // MARK: Custom functions
-    
-    // Append some data to the tableView
-    public func refreshData() {
-        let realm = try! Realm()
-        
-        self.data = AnyRealmCollection(realm.objects(Exercise.self))
-        self.sortedData = Exercise.getSortedExerciseArray(exercises: self.data)
-        
-        reloadData()
-    }
     
     // Retrieve workouts
     public func getSortedData() -> [Exercise] {

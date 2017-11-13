@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol EmptyTableViewOverlayDelegate {
+protocol TableViewOverlayDelegate {
     /*
      * Tells the view we should show the overlay view
      */

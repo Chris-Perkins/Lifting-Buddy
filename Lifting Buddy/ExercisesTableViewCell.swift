@@ -23,6 +23,8 @@ class ExerciseTableViewCell: UITableViewCell {
     private var chartFrame: UIView
     // The labels for every exercise
     private var progressionButtons: [ToggleablePrettyButtonWithProgressionMethod]
+    // a button that absorbs touches to prevent view from collapsing
+    private var invisButton: UIButton
     
     // the chart we're showing
     private var chart: Chart?
@@ -47,6 +49,7 @@ class ExerciseTableViewCell: UITableViewCell {
         self.expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
         self.chartFrame = UIView()
         self.progressionButtons = [ToggleablePrettyButtonWithProgressionMethod]()
+        self.invisButton = UIButton()
         
         self.filterProgressionMethods = Set<ProgressionMethod>()
         
@@ -70,6 +73,7 @@ class ExerciseTableViewCell: UITableViewCell {
     
     override func layoutIfNeeded() {
         super.layoutIfNeeded()
+        self.filterProgressionMethods.removeAll()
         
         self.clipsToBounds = true
         
@@ -152,10 +156,10 @@ class ExerciseTableViewCell: UITableViewCell {
                                relatedBy: .equal,
                                toItem: progressionMethodButton,
                                attribute: .width,
-                               multiplier: 3/2,
+                               multiplier: 100/85,
                                constant: 0).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: progressionMethodButton,
-                                                             height: 30).isActive = true
+                                                             height: 40).isActive = true
             
             self.progressionButtons.append(progressionMethodButton)
             prevView = progressionMethodButton
@@ -207,7 +211,7 @@ class ExerciseTableViewCell: UITableViewCell {
                                                     timeAmount: TimeAmount.ALLTIME,
                                                     frame: CGRect(x: 0,
                                                                   y: 0,
-                                                                  width: self.frame.width,
+                                                                  width: self.frame.width * 0.85,
                                                                   height: 300))
         self.chartFrame.addSubview(chart!.view)
     }
@@ -286,9 +290,13 @@ class ExerciseTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.chartFrame,
                                                                         inView: self).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.chartFrame,
-                                                            withCopyView: self,
-                                                            plusWidth: 0).isActive = true
+        NSLayoutConstraint(item: self,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: self.chartFrame,
+                           attribute: .width,
+                           multiplier: 100/85,
+                           constant: 0).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.chartFrame,
                                                          belowView: self.cellTitle,
                                                          withPadding: 0).isActive = true

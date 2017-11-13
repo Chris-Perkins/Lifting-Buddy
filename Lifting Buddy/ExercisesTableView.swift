@@ -115,8 +115,9 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         let pgmCount = CGFloat(sortedData[indexPath.row].getProgressionMethods().count)
         
         return self.indexPathForSelectedRow?.row == indexPath.row ?
-            ExercisesTableView.baseCellHeight * 2 + pgmCount * 30.0 +
-                (pgmCount > 0 ? 320 : 0) :
+            // The height for when toggled depends on the number of progression methods.
+            // If there are no progression methods, no graph and no spacing occurs.
+            ExercisesTableView.baseCellHeight * 2 + pgmCount * 40.0 + (pgmCount > 0 ? 320 : 0) :
             ExercisesTableView.baseCellHeight
     }
     

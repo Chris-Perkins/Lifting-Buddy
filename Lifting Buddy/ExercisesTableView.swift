@@ -112,11 +112,11 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let progressionMethodCount = CGFloat(sortedData[indexPath.row].getProgressionMethods().count)
+        let pgmCount = CGFloat(sortedData[indexPath.row].getProgressionMethods().count)
         
         return self.indexPathForSelectedRow?.row == indexPath.row ?
-            ExercisesTableView.baseCellHeight * 2 + 300 + progressionMethodCount * 30.0 +
-                (progressionMethodCount > 0 ? 20 : 0) :
+            ExercisesTableView.baseCellHeight * 2 + pgmCount * 30.0 +
+                (pgmCount > 0 ? 320 : 0) :
             ExercisesTableView.baseCellHeight
     }
     

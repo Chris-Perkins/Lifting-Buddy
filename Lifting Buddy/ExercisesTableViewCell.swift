@@ -73,19 +73,21 @@ class ExerciseTableViewCell: UITableViewCell {
         
         self.clipsToBounds = true
         
-        cellTitle.textColor = UIColor.niceBlue()
-        cellTitle.textAlignment = .left
+        self.cellTitle.textColor = UIColor.niceBlue()
+        self.cellTitle.textAlignment = .left
+        
+        self.chartFrame.clipsToBounds = true
         
         if (self.isSelected) {
-            editButton?.setDefaultProperties()
-            editButton?.cornerRadius = 0
-            editButton?.backgroundColor = UIColor.niceBlue()
-            editButton?.setTitle("Edit", for: .normal)
+            self.editButton?.setDefaultProperties()
+            self.editButton?.cornerRadius = 0
+            self.editButton?.backgroundColor = UIColor.niceBlue()
+            self.editButton?.setTitle("Edit", for: .normal)
             
-            startExerciseButton?.setDefaultProperties()
-            startExerciseButton?.cornerRadius = 0
-            startExerciseButton?.backgroundColor = UIColor.niceGreen()
-            startExerciseButton?.setTitle("Start Exercise!", for: .normal)
+            self.startExerciseButton?.setDefaultProperties()
+            self.startExerciseButton?.cornerRadius = 0
+            self.startExerciseButton?.backgroundColor = UIColor.niceGreen()
+            self.startExerciseButton?.setTitle("Start Exercise!", for: .normal)
             
             self.backgroundColor = UIColor.niceLightGray()
         } else {
@@ -291,7 +293,7 @@ class ExerciseTableViewCell: UITableViewCell {
                                                          belowView: self.cellTitle,
                                                          withPadding: 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.chartFrame,
-                                                         height: 300).isActive = true
+                                                         height: self.exercise!.getProgressionMethods().count > 0 ? 300 :  0).isActive = true
     }
     
     // Place at bottom of view; take up left, right of view. Height of BaseCellHeight
@@ -300,7 +302,7 @@ class ExerciseTableViewCell: UITableViewCell {
         self.editButton?.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.editButton!,
                                                          belowView: withPrevView,
-                                                         withPadding: withPrevView == self.cellTitle ?
+                                                         withPadding: withPrevView == self.chartFrame ?
                                                             0 : 10).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.editButton!,
                                                          height: ExercisesTableView.baseCellHeight).isActive = true
@@ -324,7 +326,7 @@ class ExerciseTableViewCell: UITableViewCell {
         self.startExerciseButton?.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.startExerciseButton!,
                                                          belowView: withPrevView,
-                                                         withPadding: withPrevView == self.cellTitle ?
+                                                         withPadding: withPrevView == self.chartFrame ?
                                                             0 : 10).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.startExerciseButton!,
                                                          height: WorkoutTableView.baseCellHeight).isActive = true

@@ -79,6 +79,36 @@ extension NSDate {
 
 extension NSLayoutConstraint {
     
+    public static func clingViewToView(view: UIView,
+                                   toView: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewBelowViewTopConstraint(view: view,
+                                                            belowView: toView,
+                                                            withPadding: 0).isActive = true
+        NSLayoutConstraint(item: toView,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: toView,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: toView,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+    }
+    
     // Return a constraint that will center a view inside a view
     public static func createCenterViewHorizontallyInViewConstraint(view: UIView,
                                                                     inView: UIView) -> NSLayoutConstraint {

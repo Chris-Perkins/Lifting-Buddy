@@ -131,10 +131,24 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, Ex
         if self.overlayView != nil {
             return
         }
+        /*self.overlayView = UIView()
+        self.addSubview(self.overlayView!)
+        NSLayoutConstraint.clingViewToView(view: self.overlayView!, toView: self)
+        self.overlayView?.backgroundColor = UIColor.niceYellow()
+        
+        let overlayButton = PrettyButton()
+        self.addSubview(overlayButton)
+        overlayButton.setTitle("Create Exercise", for: .normal)
+        self.createAndActivateOverlayButtonConstraints(overlayButton: overlayButton)
+        
+        overlayButton.setDefaultProperties()
+        overlayButton.addTarget(self, action: #selector(showCreateExerciseView(sender:)), for: .touchUpInside)*/
     }
     
     func hideViewOverlay() {
         // hide the guy
+        self.overlayView?.removeFromSuperview()
+        self.overlayView = nil
     }
     
     // MARK: CreateExerciseViewDelegate methods
@@ -274,6 +288,32 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, Ex
         // make this button basically invisible if we're not selecting an exercise
         NSLayoutConstraint.createHeightConstraintForView(view: self.cancelButton,
                                                          height: self.selectingExercise ? 45 : 0).isActive = true
+    }
+    
+    private func createAndActivateOverlayButtonConstraints(overlayButton: UIButton) {
+        guard let overlayView = self.overlayView else {
+            fatalError("Unable to attach constraints; Overlay view nil")
+        }
+        
+        overlayButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: overlayView,
+                                                                        inView: overlayButton).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: overlayButton,
+                                                         height: 50).isActive = true
+        NSLayoutConstraint(item: overlayView,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: overlayButton,
+                           attribute: .width,
+                           multiplier: 100/85,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: overlayView,
+                           attribute: .centerY,
+                           relatedBy: .equal,
+                           toItem: overlayButton,
+                           attribute: .centerY,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
 }
 

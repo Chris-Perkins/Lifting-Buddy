@@ -385,7 +385,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewProtocol 
                                                          height: 20).isActive = true
         NSLayoutConstraint.createWidthCopyConstraintForView(view: exerciseTableLabel,
                                                             withCopyView: self,
-                                                            plusWidth: -80).isActive = true
+                                                            plusWidth: -20).isActive = true
     }
     
     // Center horiz in view ; place below exerciseTableLabel ; Default height of 0 ; Width of this view - 40

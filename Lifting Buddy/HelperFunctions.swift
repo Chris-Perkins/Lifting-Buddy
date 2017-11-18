@@ -57,7 +57,7 @@ extension ChartSettings {
 extension NSDate {
     public static func getDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy"
+        formatter.dateFormat = "dd MMM yyyy"
         return formatter
     }
     

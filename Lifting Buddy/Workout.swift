@@ -59,7 +59,42 @@ class Workout: Object {
         super.init(value: value, schema: schema)
     }
     
-    // MARK: Get/Set methods for variables in this class
+    // MARK: Information Functions
+    
+    // Resets the streak if we missed a day
+    public func checkAndUpdateStreakIfNecessary() {
+        // No use in checking if we have never done the workout.
+        if dateLastDone == nil {
+            return
+        }
+        
+        // TODO: Rework how streaks are done. This is bad.
+        let today = Date(timeIntervalSinceNow: 0)
+        let cal = Calendar(identifier: .gregorian)
+        // Sub one because Apple thought it'd be a good idea to make these 1-indexed.
+        // AKA: Sunday = 1 becomes Sunday = 0
+        let day = cal.component(.weekday, from: today) - 1
+        let weekdayLastDone = cal.component(.weekday, from: dateLastDone!)
+        
+        for i in 1...6 {
+            if daysOfTheWeek[(7 + day - i) % 7].value {
+                if cal.dateComponents(Set([Calendar.Component.day]), from: dateLastDone!, to: today).day! > 7 ||
+                   weekdayLastDone != (7 + day - i) % 7 {
+                    
+                    // If we ended our streak, curStreak is 0. SAD!
+                    let realm = try! Realm()
+                    try! realm.write {
+                        curStreak = 0
+                    }
+                }
+                
+                // Return as soon as we got to the first day that's previous to this one
+                return
+            }
+        }
+    }
+    
+    // MARK: Encapsulated Methods
     
     @objc public func getName() -> String? {
         return self.name

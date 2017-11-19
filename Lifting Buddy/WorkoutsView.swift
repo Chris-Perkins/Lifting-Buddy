@@ -37,6 +37,8 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
         
         self.createAndActivateWorkoutTableViewConstraints()
         self.createCreateWorkoutButtonConstraints()
+        
+        self.updateAllStreaks()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,6 +56,16 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, StartWorkoutDelegate {
         workoutTableView.reloadData()
 
         super.layoutSubviews()
+    }
+    
+    // MARK: View functions
+    
+    private func updateAllStreaks() {
+        let realm = try! Realm()
+        
+        for workout in realm.objects(Workout.self) {
+            workout.checkAndUpdateStreakIfNecessary()
+        }
     }
     
     // MARK: Event functions

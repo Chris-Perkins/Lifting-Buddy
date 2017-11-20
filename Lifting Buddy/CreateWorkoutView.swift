@@ -115,7 +115,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewProtocol 
         super.layoutSubviews()
         
         // Self stuff
-        self.backgroundColor = UIColor.niceGray()
+        self.backgroundColor = UIColor.niceGray
         self.contentSize.height = cancelButton.frame.maxY + viewPadding
         
         // Label
@@ -132,7 +132,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewProtocol 
         
         // Repeat Buton
         for repeatButton in self.repeatButtons {
-            repeatButton.setToggleViewColor(color: .niceYellow())
+            repeatButton.setToggleViewColor(color: UIColor.niceYellow)
             repeatButton.setToggleTextColor(color: .white)
             repeatButton.setDefaultTextColor(color: UIColor.black.withAlphaComponent(0.25))
             repeatButton.setDefaultViewColor(color: .white)
@@ -162,7 +162,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewProtocol 
         // Cancel Button
         self.cancelButton.setDefaultProperties()
         self.cancelButton.setTitle("Cancel", for: .normal)
-        self.cancelButton.backgroundColor = UIColor.niceRed()
+        self.cancelButton.backgroundColor = UIColor.niceRed
     }
     
     // MARK: Event functions
@@ -220,7 +220,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewProtocol 
         var fulfilled = true
         
         if nameEntryField.textfield.text?.count == 0 {
-            nameEntryField.textfield.backgroundColor = UIColor.niceRed()
+            nameEntryField.textfield.backgroundColor = UIColor.niceRed
             
             fulfilled = false
         }

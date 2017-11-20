@@ -14,13 +14,13 @@ Expected / Hopeful release: December 20th
 | Exercise Creation         | 9/10                  | Add nice way to choose progression method unit |
 | Workout History Tracking  | 10/10                 |                                                |
 | Exercise History Tracking | 9/10                  | Need to implement table-based history viewing  |
-| Workout Start             | 9/10                  | Going to rework UI                             |
+| Workout Start             | 9/10                  | Going to rework UI                             |
 | App Icon                  | 10/10                 |                                                |
 | Splash Screen             | 10/10                 |                                                |
 | Home Screen               | 10/10                 |                                                |
 | Workout Screen            | 9/10                  | Need search/filter bar.                        |
-| Exercise Screen           | 10/10                 |                                                |
-| Settings Screen           | ?/10                  | Don't know what settings to put yet.           |
+| Exercise Screen           | 10/10                 |                                                |
+| Summary Screen            | 0/10                  | Work on this view is starting.                 |
 
 ### Future plans    
 Convert relevant UIViews into ViewControllers (good practice)  

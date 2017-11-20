@@ -76,7 +76,7 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, Ex
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.backgroundColor = UIColor.niceGray()
+        self.backgroundColor = UIColor.niceGray
         
         createExerciseButton.setDefaultProperties()
         createExerciseButton.setTitle(self.selectingExercise ?
@@ -85,7 +85,7 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, Ex
         
         if self.selectingExercise {
             cancelButton.setDefaultProperties()
-            cancelButton.backgroundColor = UIColor.niceRed()
+            cancelButton.backgroundColor = UIColor.niceRed
             cancelButton.setTitle("Cancel", for: .normal)
         } else {
             cancelButton.alpha = 0
@@ -134,7 +134,7 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, Ex
         /*self.overlayView = UIView()
         self.addSubview(self.overlayView!)
         NSLayoutConstraint.clingViewToView(view: self.overlayView!, toView: self)
-        self.overlayView?.backgroundColor = UIColor.niceYellow()
+        self.overlayView?.backgroundColor = UIColor.niceYellow
         
         let overlayButton = PrettyButton()
         self.addSubview(overlayButton)

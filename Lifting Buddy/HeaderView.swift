@@ -72,7 +72,7 @@ class HeaderView: UIView {
         super.layoutSubviews()
         
         self.layer.zPosition = 100
-        self.backgroundColor = UIColor.niceBlue()
+        self.backgroundColor = UIColor.niceBlue
         
         // title bar
         titleBar.text = "Lifting Buddy [ALPHA]"

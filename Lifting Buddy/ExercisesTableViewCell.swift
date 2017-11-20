@@ -77,7 +77,7 @@ class ExerciseTableViewCell: UITableViewCell {
         
         self.clipsToBounds = true
         
-        self.cellTitle.textColor = UIColor.niceBlue()
+        self.cellTitle.textColor = UIColor.niceBlue
         self.cellTitle.textAlignment = .left
         
         self.chartFrame.clipsToBounds = true
@@ -85,15 +85,15 @@ class ExerciseTableViewCell: UITableViewCell {
         if (self.isSelected) {
             self.editButton?.setDefaultProperties()
             self.editButton?.cornerRadius = 0
-            self.editButton?.backgroundColor = UIColor.niceBlue()
+            self.editButton?.backgroundColor = UIColor.niceBlue
             self.editButton?.setTitle("Edit", for: .normal)
             
             self.startExerciseButton?.setDefaultProperties()
             self.startExerciseButton?.cornerRadius = 0
-            self.startExerciseButton?.backgroundColor = UIColor.niceGreen()
+            self.startExerciseButton?.backgroundColor = UIColor.niceGreen
             self.startExerciseButton?.setTitle("Start Exercise!", for: .normal)
             
-            self.backgroundColor = UIColor.niceLightGray()
+            self.backgroundColor = UIColor.niceLightGray
         } else {
             self.backgroundColor = UIColor.white
         }
@@ -132,7 +132,7 @@ class ExerciseTableViewCell: UITableViewCell {
             progressionMethodButton.setDefaultTextColor(color: UIColor.white)
             progressionMethodButton.setToggleViewColor(color:
                 getLineColorsForProgressionMethod(progressionMethod: progressionMethod)[0])
-            progressionMethodButton.setDefaultViewColor(color: UIColor.niceGray())
+            progressionMethodButton.setDefaultViewColor(color: UIColor.niceGray)
             progressionMethodButton.addTarget(self,
                                               action: #selector(toggleButtonPress(sender:)),
                                               for: .touchUpInside)

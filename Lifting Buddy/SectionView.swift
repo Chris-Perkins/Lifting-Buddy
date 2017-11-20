@@ -84,7 +84,7 @@ class SectionView: UIView {
     @objc private func buttonPress(sender: PrettyButton) {
         if self.selectedView != sender {
             self.selectedView?.backgroundColor = nil
-            sender.backgroundColor = UIColor.niceYellow()
+            sender.backgroundColor = UIColor.niceYellow
             
             var viewType: SectionView.ContentViews? = nil
             

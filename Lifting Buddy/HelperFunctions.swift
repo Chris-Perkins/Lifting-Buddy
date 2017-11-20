@@ -34,6 +34,7 @@ func ^^ (radix: Int, power: Int) -> Int {
 // MARK: Extensions
 
 extension ChartSettings {
+    // Default chart settings for this project
     public static func getDefaultSettings() -> ChartSettings {
         var chartSettings = ChartSettings()
         chartSettings.leading = 10
@@ -55,6 +56,7 @@ extension ChartSettings {
 }
 
 extension NSDate {
+    // Returns the default date formatter for this project
     public static func getDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM yyyy"
@@ -68,17 +70,18 @@ extension NSDate {
         return dateFormatter.string(from: self as Date)
     }
     
-    public func getDayOfWeek(_ today:String) -> Int? {
-        let formatter  = NSDate.getDateFormatter()
-        guard let todayDate = formatter.date(from: today) else { return nil }
+    // Gets the day of the week as a string
+    public func getDayOfWeek(_ fromDate:String, formatter: DateFormatter = NSDate.getDateFormatter()) -> Int? {
+        guard let date = formatter.date(from: fromDate) else { return nil }
         let myCalendar = Calendar(identifier: .gregorian)
-        let weekDay = myCalendar.component(.weekday, from: todayDate)
+        let weekDay = myCalendar.component(.weekday, from: date)
         return weekDay
     }
 }
 
 extension NSLayoutConstraint {
     
+    // Clings a view to the entirety of toView
     public static func clingViewToView(view: UIView,
                                    toView: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -186,8 +189,8 @@ extension NSLayoutConstraint {
 
 extension PrettyButton {
     override func setDefaultProperties() {
-        self.backgroundColor = UIColor.niceBlue()
-        self.setOverlayColor(color: UIColor.niceYellow())
+        self.backgroundColor = UIColor.niceBlue
+        self.setOverlayColor(color: UIColor.niceYellow)
         self.setOverlayStyle(style: .FADE)
         self.cornerRadius = 0
     }
@@ -200,64 +203,64 @@ extension String {
 }
 
 extension UIColor {
-    public static func niceGray() -> UIColor {
-        return UIColor(red: 0.90, green: 0.90, blue: 0.90, alpha: 1)
-    }
-    
-    public static func niceRed() -> UIColor {
-        return UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1)
-    }
-    
-    public static func niceBlue() -> UIColor {
+    public static var niceBlue: UIColor {
         return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
     }
     
-    public static func niceLabelBlue() -> UIColor {
-        return UIColor(red: 0.44, green: 0.56, blue: 0.86, alpha: 1)
-    }
-    
-    public static func niceLightBlue() -> UIColor {
-        return UIColor(red: 0.8, green: 0.78, blue: 0.96, alpha: 1)
-    }
-    
-    public static func niceYellow() -> UIColor {
-        return UIColor(red: 0.90, green: 0.70, blue: 0.16, alpha: 1)
-    }
-    
-    public static func niceGreen() -> UIColor {
-        return UIColor(red: 0.27, green: 0.66, blue: 0.3, alpha: 1)
-    }
-    
-    public static func niceLightGreen() -> UIColor {
-        return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
-    }
-    
-    public static func nicePurple() -> UIColor {
-        return UIColor(red: 0.5882, green: 0.1451, blue: 0.6392, alpha: 1.0)
-    }
-    
-    public static func niceCyan() -> UIColor {
-        return UIColor(red: 0.149, green: 0.651, blue: 0.6588, alpha: 1.0)
-    }
-    
-    public static func niceBrown() -> UIColor {
+    public static var niceBrown: UIColor {
         return UIColor(red: 0.6471, green: 0.3647, blue: 0.149, alpha: 1.0)
     }
     
-    public static func niceMediterranean() -> UIColor {
-        return UIColor(red: 0.0745, green: 0.2235, blue: 0.3373, alpha: 1.0)
+    public static var niceCyan: UIColor {
+        return UIColor(red: 0.149, green: 0.651, blue: 0.6588, alpha: 1.0)
     }
     
-    public static func niceMaroon() -> UIColor {
+    public static var niceGray: UIColor {
+        return UIColor(red: 0.90, green: 0.90, blue: 0.90, alpha: 1)
+    }
+    
+    public static var niceGreen: UIColor {
+        return UIColor(red: 0.27, green: 0.66, blue: 0.3, alpha: 1)
+    }
+    
+    public static var niceLabelBlue: UIColor {
+        return UIColor(red: 0.44, green: 0.56, blue: 0.86, alpha: 1)
+    }
+    
+    public static var niceLightBlue: UIColor {
+        return UIColor(red: 0.8, green: 0.78, blue: 0.96, alpha: 1)
+    }
+    
+    public static var niceLightGray: UIColor {
+        return UIColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1.0)
+    }
+    
+    public static var niceLightGreen: UIColor {
+        return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
+    }
+    
+    public static var niceMaroon: UIColor {
         return UIColor(red: 0.349, green: 0.0784, blue: 0.0784, alpha: 1.0)
     }
     
-    public static func niceOrange() -> UIColor {
+    public static var niceMediterranean: UIColor {
+        return UIColor(red: 0.0745, green: 0.2235, blue: 0.3373, alpha: 1.0)
+    }
+    
+    public static var niceOrange: UIColor {
         return UIColor(red: 1, green: 0.4118, blue: 0.1569, alpha: 1.0)
     }
     
-    public static func niceLightGray() -> UIColor {
-        return UIColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1.0)
+    public static var nicePurple: UIColor {
+        return UIColor(red: 0.5882, green: 0.1451, blue: 0.6392, alpha: 1.0)
+    }
+    
+    public static var niceRed: UIColor {
+        return UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1)
+    }
+    
+    public static var niceYellow: UIColor {
+        return UIColor(red: 0.90, green: 0.70, blue: 0.16, alpha: 1)
     }
 }
 
@@ -275,7 +278,7 @@ extension UILabel {
     override func setDefaultProperties() {
         self.font = UIFont.boldSystemFont(ofSize: 18.0)
         self.textAlignment = .center
-        self.textColor = UIColor.niceBlue()
+        self.textColor = UIColor.niceBlue
     }
 }
 
@@ -299,13 +302,17 @@ extension UITableView {
 
 extension UITextField {
     var isNumeric: Bool {
-        if self.text?.count == 0 { return true }
+        if let text = self.text {
+            if text.count == 0 { return true }
         
-        let setNums: Set<Character> = Set(arrayLiteral: "1", "2", "3", "4",
+            let setNums: Set<Character> = Set(arrayLiteral: "1", "2", "3", "4",
                                                         "5", "6", "7", "8",
                                                         "9", "0")
         
-        return Set(self.text!.characters).isSubset(of: setNums)
+            return Set(text).isSubset(of: setNums)
+        } else {
+            return false
+        }
     }
     
     override func setDefaultProperties() {
@@ -323,7 +330,7 @@ extension UITextField {
     
     @objc func textfieldSelected(sender: UITextField) {
         UIView.animate(withDuration: 0.1, animations: {
-            sender.backgroundColor = UIColor.niceYellow()
+            sender.backgroundColor = UIColor.niceYellow
             sender.textColor = UIColor.white
         })
     }
@@ -339,42 +346,6 @@ extension UITextField {
 extension UIView {
     @objc func setDefaultProperties() {
         // Override me!
-    }
-    
-    // Add an array of views to a main view with equal vertical spacing
-    func addSubviewsToViewWithYPadding(subviews: [UIView], spacing: CGFloat = -1) {
-        var trueSpacing: CGFloat = spacing
-        var headerFooterSpacing: CGFloat = 0
-        
-        // Get current height of all subviews
-        var totalVerticalHeight:CGFloat = 0
-        for view in subviews {
-            totalVerticalHeight += view.frame.height
-        }
-        
-        // If unassigned (or invalid), space equally through whole view
-        if spacing < 0 {
-            // Divide by subviews.count - 1 as we don't wait trailing spacing.
-            // Example: 2 views needs 1 thing of padding (not two)
-            trueSpacing = (self.frame.height - totalVerticalHeight) / CGFloat(subviews.count - 1)
-        } else {
-            // Divide by two because... there's a header and footer. 1 + 1 = 2
-            headerFooterSpacing = (self.frame.height - totalVerticalHeight -
-                spacing * (CGFloat(subviews.count) - 1)) / 2
-        }
-        
-        // Add in each frame with appropriate spacing
-        // Keep track of current forced height to prevent overlap
-        var currentHeight: CGFloat = headerFooterSpacing
-        for (index, view) in subviews.enumerated() {
-            view.frame = CGRect(x: view.frame.minX,
-                                y: currentHeight + trueSpacing * CGFloat(index),
-                                width: view.frame.width, height: view.frame.height)
-            
-            currentHeight += view.frame.height
-            
-            self.addSubview(view)
-        }
     }
     
     // Removes all subviews from a given view

@@ -45,7 +45,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.niceGray()
+        self.backgroundColor = UIColor.niceGray
         workoutStartTableView.viewDelegate = self
         
         self.addSubview(workoutNameLabel)
@@ -84,11 +84,11 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         
         // Modified by another method based on current complete
         self.completeButton.setOverlayStyle(style: .FADE)
-        self.completeButton.setOverlayColor(color: .niceYellow())
+        self.completeButton.setOverlayColor(color: UIColor.niceYellow)
         self.completeButton.setTitle("Finish Workout", for: .normal)
         
         self.cancelButton.setDefaultProperties()
-        self.cancelButton.backgroundColor = UIColor.niceRed()
+        self.cancelButton.backgroundColor = UIColor.niceRed
         self.cancelButton.setTitle("Cancel Workout", for: .normal)
         
         self.contentSize = CGSize(width: self.frame.width,
@@ -197,11 +197,11 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         self.isComplete = isComplete
         
         if isComplete {
-            self.backgroundColor = .niceLightGreen()
-            completeButton.backgroundColor = .niceGreen()
+            self.backgroundColor = UIColor.niceLightGreen
+            completeButton.backgroundColor = UIColor.niceGreen
         } else {
-            self.backgroundColor = .niceGray()
-            completeButton.backgroundColor = UIColor.niceLightBlue()
+            self.backgroundColor = UIColor.niceGray
+            completeButton.backgroundColor = UIColor.niceLightBlue
         }
     }
     

@@ -136,11 +136,11 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
         // If complete: cell turns green, title color turns white to be visible.
         // If not complete: Cell is white
         if self.isComplete {
-            self.backgroundColor = UIColor.niceGreen().withAlphaComponent(self.isToggled ? 0.65 : 0.5)
+            self.backgroundColor = UIColor.niceLightGreen
             self.cellTitle.textColor = UIColor.white
         } else {
-            self.backgroundColor = self.isToggled ? UIColor.niceLightGreen() : UIColor.white
-            self.cellTitle.textColor = UIColor.niceBlue()
+            self.backgroundColor = self.isToggled ? UIColor.niceLightGray : UIColor.white
+            self.cellTitle.textColor = UIColor.niceBlue
         }
     }
     

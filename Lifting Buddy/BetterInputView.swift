@@ -61,7 +61,7 @@ class BetterInputView: UIView, InputViewHolder {
         // if empty, set textfield to red
         for view in self.inputViews {
             if (view.text ?? "").isEmpty || view.text!.floatValue == nil {
-                view.textfield.backgroundColor = UIColor.niceRed()
+                view.textfield.backgroundColor = UIColor.niceRed
                 
                 returnValue = false
             }

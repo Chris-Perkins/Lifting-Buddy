@@ -76,8 +76,8 @@ class TimeInputField: UIView, InputViewHolder {
         self.secondField.setLabelTitle(title: "s")
         
         
-        self.timerButton.setToggleViewColor(color: UIColor.niceGreen())
-        self.timerButton.setDefaultViewColor(color: UIColor.niceBlue())
+        self.timerButton.setToggleViewColor(color: UIColor.niceGreen)
+        self.timerButton.setDefaultViewColor(color: UIColor.niceBlue)
     }
     
     // MARK: Events functions
@@ -137,7 +137,7 @@ class TimeInputField: UIView, InputViewHolder {
         let returnValue = field.text != nil
         
         if !returnValue {
-            field.backgroundColor = UIColor.niceRed()
+            field.backgroundColor = UIColor.niceRed
         }
         
         return returnValue

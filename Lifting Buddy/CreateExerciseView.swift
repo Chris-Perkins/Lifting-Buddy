@@ -86,7 +86,7 @@ class CreateExerciseView: UIScrollView {
         super.layoutSubviews()
         
         // self stuff
-        self.backgroundColor = UIColor.niceGray()
+        self.backgroundColor = UIColor.niceGray
         self.contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
         
         // Label
@@ -120,7 +120,7 @@ class CreateExerciseView: UIScrollView {
         // Cancel Button
         self.cancelButton.setDefaultProperties()
         self.cancelButton.setTitle("Cancel", for: .normal)
-        self.cancelButton.backgroundColor = UIColor.niceRed()
+        self.cancelButton.backgroundColor = UIColor.niceRed
     }
     
     // MARK: Event functions
@@ -179,13 +179,13 @@ class CreateExerciseView: UIScrollView {
         if self.nameEntryField.textfield.text?.count == 0 {
             fulfilled = false
             
-            self.nameEntryField.textfield.backgroundColor = UIColor.niceRed()
+            self.nameEntryField.textfield.backgroundColor = UIColor.niceRed
             self.nameEntryField.textfield.text = ""
         }
         if !self.setEntryField.textfield.isNumeric {
             fulfilled = false
             
-            self.setEntryField.textfield.backgroundColor = UIColor.niceRed()
+            self.setEntryField.textfield.backgroundColor = UIColor.niceRed
             self.setEntryField.textfield.text = ""
         }
         for cell in self.progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]
@@ -193,12 +193,12 @@ class CreateExerciseView: UIScrollView {
             if cell.nameEntryField.text?.count == 0 {
                 fulfilled = false
                 
-                cell.nameEntryField.backgroundColor = UIColor.niceRed()
+                cell.nameEntryField.backgroundColor = UIColor.niceRed
             }
             if cell.pickUnitButton.titleLabel?.text == "Required: Unit" {
                 fulfilled = false
                 
-                cell.pickUnitButton.backgroundColor = UIColor.niceRed()
+                cell.pickUnitButton.backgroundColor = UIColor.niceRed
             }
         }
         

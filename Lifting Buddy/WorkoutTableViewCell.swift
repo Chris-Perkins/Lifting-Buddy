@@ -138,14 +138,14 @@ class WorkoutTableViewCell: UITableViewCell {
     override func layoutIfNeeded() {
         self.clipsToBounds = true
         
-        cellTitle.textColor = UIColor.niceBlue()
+        cellTitle.textColor = UIColor.niceBlue
         cellTitle.textAlignment = .left
         
         
         // Don't show the streak if there is no streak
         if workout != nil && workout!.getCurSteak() > 0 {
             streakLabel.text = String(describing: workout!.getCurSteak())
-            streakLabel.textColor = UIColor.niceRed()
+            streakLabel.textColor = UIColor.niceRed
             
             streakLabel.alpha = 1
             fireImage.alpha = 1
@@ -156,17 +156,17 @@ class WorkoutTableViewCell: UITableViewCell {
         
         if (self.isSelected) {
             editButton?.setDefaultProperties()
-            editButton?.backgroundColor = UIColor.niceBlue()
+            editButton?.backgroundColor = UIColor.niceBlue
             editButton?.setTitle("Edit", for: .normal)
             
             startWorkoutButton?.setDefaultProperties()
             startWorkoutButton?.cornerRadius = 0
-            startWorkoutButton?.backgroundColor = UIColor.niceGreen()
+            startWorkoutButton?.backgroundColor = UIColor.niceGreen
             startWorkoutButton?.setTitle("Start Workout!", for: .normal)
             
-            self.backgroundColor = UIColor.niceLightGray()
+            self.backgroundColor = UIColor.niceLightGray
         } else {
-            self.backgroundColor = (workout?.getIfTodayWorkout())! ? UIColor.niceLightGreen() : UIColor.white
+            self.backgroundColor = (workout?.getIfTodayWorkout())! ? UIColor.niceLightGreen : UIColor.white
         }
         
         super.layoutSubviews()
@@ -206,7 +206,7 @@ class WorkoutTableViewCell: UITableViewCell {
         for exercise in self.exercises {
             let exerLabel = UILabel()
             exerLabel.text = "- " + exercise.getName()!
-            exerLabel.textColor = UIColor.niceBlue()
+            exerLabel.textColor = UIColor.niceBlue
             exerLabel.textAlignment = .left
             self.addSubview(exerLabel)
             

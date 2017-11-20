@@ -26,7 +26,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.niceGray()
+        self.view.backgroundColor = UIColor.niceGray
     }
     
     override func viewDidLayoutSubviews() {

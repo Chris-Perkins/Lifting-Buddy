@@ -22,7 +22,8 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                     timeAmount: TimeAmount,
                                     frame: CGRect) -> Chart {
     
-    let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18), fontColor: UIColor.niceBlue())
+    let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18),
+                                           fontColor: UIColor.niceBlue)
     
     let chartFrame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
     let chartSettings = ChartSettings.getDefaultSettings()
@@ -147,8 +148,11 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
 
     let chartPointsLineLayer = ChartPointsLineLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, lineModels: lineModels) // || CubicLinePathGenerator
     
-    let settings = ChartGuideLinesDottedLayerSettings(linesColor: UIColor.niceLightBlue(), linesWidth: 1)
-    let guidelinesLayer = ChartGuideLinesDottedLayer(xAxisLayer: xAxisLayer, yAxisLayer: yAxisLayer, settings: settings)
+    let settings = ChartGuideLinesDottedLayerSettings(linesColor: UIColor.niceLightBlue,
+                                                      linesWidth: 1)
+    let guidelinesLayer = ChartGuideLinesDottedLayer(xAxisLayer: xAxisLayer,
+                                                     yAxisLayer: yAxisLayer,
+                                                     settings: settings)
     
     return Chart(
         frame: chartFrame,
@@ -184,25 +188,25 @@ func getLineColorsForProgressionMethod(progressionMethod: ProgressionMethod) -> 
         
         switch (colorIndex) {
         case 0:
-            color = UIColor.niceRed()
+            color = UIColor.niceRed
         case 1:
-            color = UIColor.niceBlue()
+            color = UIColor.niceBlue
         case 2:
-            color = UIColor.niceGreen()
+            color = UIColor.niceGreen
         case 3:
-            color = UIColor.niceYellow()
+            color = UIColor.niceYellow
         case 4:
-            color = UIColor.niceCyan()
+            color = UIColor.niceCyan
         case 5:
-            color = UIColor.niceBrown()
+            color = UIColor.niceBrown
         case 6:
-            color = UIColor.nicePurple()
+            color = UIColor.nicePurple
         case 7:
-            color = UIColor.niceMediterranean()
+            color = UIColor.niceMediterranean
         case 8:
-            color = UIColor.niceMaroon()
+            color = UIColor.niceMaroon
         case 9:
-            color = UIColor.niceOrange()
+            color = UIColor.niceOrange
         default:
             fatalError("Modulo returned OOB value. Check case amount in ExerciseChartCreator -> GetLineColor Method")
         }
@@ -230,7 +234,7 @@ private func createChartPoint(date: Date, value: Float, displayFormatter: DateFo
 
 private func createDateAxisValue(_ date: Date, displayFormatter: DateFormatter) -> ChartAxisValue {
     let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18),
-                                           fontColor: UIColor.niceBlue(),
+                                           fontColor: UIColor.niceBlue,
                                            rotation: 90,
                                            rotationKeep: .top)
     return ChartAxisValueDate(date: date, formatter: displayFormatter, labelSettings: labelSettings)

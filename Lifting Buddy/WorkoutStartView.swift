@@ -14,8 +14,13 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     
     // MARK: View properties
     
+    public var showViewDelegate: ShowViewDelegate?
+    
     // Workout for this view
     private var workout: Workout?
+    // Whether or not the workout is complete
+    private var isComplete: Bool = false
+    
     // The name label for this exercise
     private var workoutNameLabel: UILabel
     // The tableview holding EVERYTHING!!!
@@ -26,8 +31,6 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     private var completeButton: PrettyButton
     // A button we can press to hide this view
     private var cancelButton: PrettyButton
-    // Whether or not the workout is complete
-    private var isComplete: Bool = false
     
     // Delegate to notify on workout start
     public var workoutStartDelegate: WorkoutCellDelegate?

@@ -90,7 +90,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
                                           for: indexPath as IndexPath) as! WorkoutTableViewCell
         
         cell.workoutCellDelegate = self.superview as? WorkoutCellDelegate
-        cell.showViewDelegate = self.superview as? ShowViewProtocol
+        cell.showViewDelegate = self.superview as? ShowViewDelegate
         cell.setWorkout(workout: sortedData[indexPath.row])
         cell.updateSelectedStatus()
         return cell

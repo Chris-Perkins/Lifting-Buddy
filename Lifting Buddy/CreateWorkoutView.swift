@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewProtocol {
+class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate {
     
     // MARK: View properties
     
@@ -318,7 +318,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewProtocol 
         self.editExerciseTableView.appendDataToTableView(data: exercise)
     }
     
-    // MARK: ShowViewProtocol
+    // MARK: ShowViewDelegate
     
     func showView(view: UIView) {
         self.superview!.addSubview(view)

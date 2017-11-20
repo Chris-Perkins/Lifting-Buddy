@@ -72,7 +72,7 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! EditExerciseTableViewCell
         cell.setExercise(exercise: data[indexPath.row])
-        cell.showViewDelegate = self.superview as? ShowViewProtocol
+        cell.showViewDelegate = self.superview as? ShowViewDelegate
         return cell
     }
     

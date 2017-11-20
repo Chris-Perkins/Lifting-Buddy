@@ -1,5 +1,5 @@
 //
-//  ShowViewProtocol.swift
+//  ShowViewDelegate.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 11/9/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ShowViewProtocol {
+protocol ShowViewDelegate {
     /*
      * Tells the delegate to show the view
      */

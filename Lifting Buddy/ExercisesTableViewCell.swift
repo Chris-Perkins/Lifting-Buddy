@@ -32,7 +32,7 @@ class ExerciseTableViewCell: UITableViewCell {
     // delegate we call to show the workout
     public var mainViewCellDelegate: WorkoutCellDelegate?
     // delegate to show a view for us
-    public var showViewDelegate: ShowViewProtocol?
+    public var showViewDelegate: ShowViewDelegate?
     
     // The button that allows for exercise editing
     private var editButton: PrettyButton?

@@ -13,7 +13,7 @@ class EditExerciseTableViewCell: UITableViewCell {
     // MARK: View properties
     
     // A protocol to show a view
-    public var showViewDelegate: ShowViewProtocol?
+    public var showViewDelegate: ShowViewDelegate?
     
     // The exercise title for this cell
     private var exerciseNameLabel: UILabel

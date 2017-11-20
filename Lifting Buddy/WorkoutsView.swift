@@ -12,7 +12,7 @@ import UIKit
 import RealmSwift
 import Realm
 
-class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate, ShowViewProtocol {
+class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate, ShowViewDelegate {
     
     // View properties
     

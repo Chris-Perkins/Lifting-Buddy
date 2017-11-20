@@ -30,7 +30,7 @@ class WorkoutTableViewCell: UITableViewCell {
     // A delegate notified whenever we start a workout
     public var workoutCellDelegate: WorkoutCellDelegate?
     // A delegate to show a view for us
-    public var showViewDelegate: ShowViewProtocol?
+    public var showViewDelegate: ShowViewDelegate?
     
     // The button stating whether or not we want to edit this workout
     private var editButton: PrettyButton?

@@ -11,7 +11,7 @@ import Realm
 import RealmSwift
 
 class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, ExercisePickerDelegate,
-                        TableViewOverlayDelegate, ShowViewProtocol {
+                        TableViewOverlayDelegate, ShowViewDelegate {
     
     // MARK: View properties
     

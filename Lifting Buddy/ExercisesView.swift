@@ -208,25 +208,17 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
     
     // Cling to top, left, right of this view ; bottom of this view @ createButton
     private func createAndActivateExerciseTableViewConstraints() {
-        exerciseTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.exerciseTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.exerciseTableView,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: self.exerciseTableView,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: self.exerciseTableView,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseTableView,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseTableView,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseTableView,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint(item: self.createExerciseButton,
                            attribute: .top,
                            relatedBy: .equal,
@@ -238,22 +230,14 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
     
     // Cling to left,right of this view ; place above cancel button ; height 50
     private func createCreateExerciseButtonConstraints() {
-        createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        self.createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.createExerciseButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: self.createExerciseButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createExerciseButton,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createExerciseButton,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint(item: self.cancelButton,
                            attribute: .top,
                            relatedBy: .equal,
@@ -269,56 +253,39 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
     private func createAndActivateCancelButtonConstraints() {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.cancelButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: self.cancelButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.cancelButton,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cancelButton,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cancelButton,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cancelButton,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
         // make this button basically invisible if we're not selecting an exercise
         NSLayoutConstraint.createHeightConstraintForView(view: self.cancelButton,
                                                          height: self.selectingExercise ? 45 : 0).isActive = true
     }
     
+    // Center in view ; height 50 ; width of 85% of this view.
     private func createAndActivateOverlayButtonConstraints(overlayButton: UIButton) {
         guard let overlayView = self.overlayView else {
             fatalError("Unable to attach constraints; Overlay view nil")
         }
         
         overlayButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: overlayView,
-                                                                        inView: overlayButton).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: overlayView,
+                                                             withCopyView: overlayButton,
+                                                             attribute: .centerX).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: overlayView,
+                                                             withCopyView: overlayButton,
+                                                             attribute: .centerY).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: overlayButton,
                                                          height: 50).isActive = true
-        NSLayoutConstraint(item: overlayView,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: overlayButton,
-                           attribute: .width,
-                           multiplier: 100/85,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: overlayView,
-                           attribute: .centerY,
-                           relatedBy: .equal,
-                           toItem: overlayButton,
-                           attribute: .centerY,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: overlayButton,
+                                                             withCopyView: overlayView,
+                                                             attribute: .width,
+                                                             multiplier: 0.85).isActive = true
     }
 }
 

@@ -275,16 +275,16 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
                                attribute: .left,
                                multiplier: 1,
                                constant: prevView == encapsulatingView ? -2.5 : -5).isActive = true
-            NSLayoutConstraint.createViewBelowViewTopConstraint(view: dayButton,
-                                                                belowView: encapsulatingView,
-                                                                withPadding: 0).isActive = true
-            NSLayoutConstraint(item: encapsulatingView,
-                               attribute: .width,
-                               relatedBy: .equal,
-                               toItem: dayButton,
-                               attribute: .width,
-                               multiplier: CGFloat(daysOfTheWeekChars.count),
-                               constant: 5 * CGFloat(daysOfTheWeekChars.count)).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: dayButton,
+                                                                 withCopyView: encapsulatingView,
+                                                                 attribute: .top).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: dayButton,
+                                                                 withCopyView: encapsulatingView,
+                                                                 attribute: .width,
+                                                                 multiplier: CGFloat(self.daysOfTheWeekChars.count),
+                                                                 plusConstant: 5 * CGFloat(daysOfTheWeekChars.count)
+                                                                ).isActive = true
+            // Constraint makes sure these buttons are circles
             NSLayoutConstraint(item: dayButton,
                                attribute: .height,
                                relatedBy: .equal,
@@ -342,14 +342,16 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
     private func createAndActivateCreateWorkoutLabelConstraints() {
         self.createWorkoutLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.createWorkoutLabel,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: self.createWorkoutLabel,
-                                                            belowView: self,
-                                                            withPadding: viewPadding).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.createWorkoutLabel,
-                                                            withCopyView: self,
-                                                            plusWidth: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutLabel,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutLabel,
+                                                             withCopyView: self,
+                                                             attribute: .top,
+                                                             plusConstant: viewPadding).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutLabel,
+                                                             withCopyView: self,
+                                                             attribute: .width).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.createWorkoutLabel,
                                                          height: 30).isActive = true
     }
@@ -359,16 +361,18 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
         // Name entry field
         self.nameEntryField.translatesAutoresizingMaskIntoConstraints = false
 
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.nameEntryField,
-                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.nameEntryField,
                                                             belowView: self.createWorkoutLabel,
                                                             withPadding: viewPadding / 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.nameEntryField,
                                                          height: 50).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.nameEntryField,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
                                                             withCopyView: self,
-                                                            plusWidth: -40).isActive = true
+                                                            attribute: .width,
+                                                            plusConstant: -40).isActive = true
 
     }
     
@@ -376,24 +380,27 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
     private func createAndActivateExerciseTableLabelConstraints() {
         self.exerciseTableLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.exerciseTableLabel,
-                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseTableLabel,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.exerciseTableLabel,
                                                          belowView: self.nameEntryField,
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.exerciseTableLabel,
                                                          height: 20).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: exerciseTableLabel,
-                                                            withCopyView: self,
-                                                            plusWidth: -20).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseTableLabel,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             plusConstant: -20).isActive = true
     }
     
     // Center horiz in view ; place below exerciseTableLabel ; Default height of 0 ; Width of this view - 40
     private func createAndActivateEditExerciseTableViewConstraints() {
         self.editExerciseTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.editExerciseTableView,
-                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editExerciseTableView,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.editExerciseTableView,
                                                          belowView: self.exerciseTableLabel,
                                                          withPadding: viewPadding / 2).isActive = true
@@ -403,9 +410,10 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
             NSLayoutConstraint.createHeightConstraintForView(view: editExerciseTableView, height: 0)
         self.editExerciseTableView.heightConstraint?.isActive = true
         
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.editExerciseTableView,
-                                                            withCopyView: self,
-                                                            plusWidth: -50).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editExerciseTableView,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             plusConstant: -50).isActive = true
     }
     
     // place below exercisetableview ; left/right match to exercisetableview ; height 50
@@ -437,24 +445,27 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
     private func createAndActivateRepeatLabelConstraints() {
         self.repeatLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.repeatLabel,
-                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.repeatLabel,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.repeatLabel,
                                                          belowView: self.addExerciseButton,
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.repeatLabel,
                                                          height: 20).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.repeatLabel,
-                                                            withCopyView: self,
-                                                            plusWidth: -20).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.repeatLabel,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             plusConstant: -20).isActive = true
     }
     
     // center horiz in view ; place below name entry field ; height 20 ; width of this view - 20
     private func createAndActivateRepeatButtonViewConstraints() {
         self.repeatButtonView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.repeatButtonView,
-                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.repeatButtonView,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.repeatButtonView,
                                                          belowView: self.repeatLabel,
                                                          withPadding: viewPadding / 2).isActive = true
@@ -465,41 +476,46 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
                            attribute: .height,
                            multiplier: CGFloat(self.daysOfTheWeekChars.count),
                            constant: 5 * CGFloat(self.daysOfTheWeekChars.count)).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.repeatButtonView,
-                                                            withCopyView: self,
-                                                            plusWidth: -20).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.repeatButtonView,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             plusConstant: -20).isActive = true
     }
     
     // center horiz in view ; place below add exercise button ; height of 50 ; width of this view - 50
     private func createAndActivateCreateWorkoutButtonConstraints() {
         self.createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.createWorkoutButton,
-                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.createWorkoutButton,
                                                          belowView: self.repeatButtonView,
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.createWorkoutButton,
                                                          height: 50).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.createWorkoutButton,
-                                                            withCopyView: self,
-                                                            plusWidth: -50).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             plusConstant: -50).isActive = true
     }
     
     // center horiz in view ; place below createWorkoutButton; height 30 ; width of createWorkoutButton - 40
     private func createAndActivateCancelButtonConstraints() {
         self.cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.cancelButton,
-                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cancelButton,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.cancelButton,
                                                          belowView: self.createWorkoutButton,
                                                          withPadding: viewPadding).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.cancelButton,
                                                          height: 40).isActive = true
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.cancelButton,
-                                                            withCopyView: self.createWorkoutButton,
-                                                            plusWidth: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cancelButton,
+                                                             withCopyView: self.createWorkoutButton,
+                                                             attribute: .width,
+                                                             plusConstant: 0).isActive = true
     }
 }
 

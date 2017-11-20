@@ -142,9 +142,9 @@ class ExerciseTableViewCell: UITableViewCell {
             
             progressionMethodButton.translatesAutoresizingMaskIntoConstraints = false
             
-            
-            NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: progressionMethodButton,
-                                                                            inView: self).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: progressionMethodButton,
+                                                                 withCopyView: self,
+                                                                 attribute: .centerX).isActive = true
             NSLayoutConstraint.createViewBelowViewConstraint(view: progressionMethodButton,
                                                              belowView: prevView,
                                                              withPadding: prevView == self.chartFrame ?
@@ -241,18 +241,15 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // Below view top ; indent to left by 10 ; do not overlap expandImage ; height of basecellheight
     private func createAndActivateCellTitleConstraints() {
-        cellTitle.translatesAutoresizingMaskIntoConstraints = false
+        self.cellTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: cellTitle,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: cellTitle,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: -10).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitle,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitle,
+                                                             withCopyView: self,
+                                                             attribute: .left,
+                                                             plusConstant: 10).isActive = true
         NSLayoutConstraint(item: expandImage,
                            attribute: .left,
                            relatedBy: .equal,
@@ -266,28 +263,29 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // Indent from right ; Below self top ; Width 16 ; Height 8.46
     private func createAndActivateExpandImageConstraints() {
-        expandImage.translatesAutoresizingMaskIntoConstraints = false
+        self.expandImage.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: expandImage,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 10).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: expandImage,
-                                                            belowView: self,
-                                                            withPadding: 20.77).isActive = true
-        NSLayoutConstraint.createWidthConstraintForView(view: expandImage, width: 16).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: expandImage, height: 8.46).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+                                                             withCopyView: self,
+                                                             attribute: .right,
+                                                             plusConstant: -10).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+                                                             withCopyView: self,
+                                                             attribute: .top,
+                                                             plusConstant: 20.77).isActive = true
+        NSLayoutConstraint.createWidthConstraintForView(view: expandImage,
+                                                        width: 16).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: expandImage,
+                                                         height: 8.46).isActive = true
     }
     
     // Center horiz in view ; Width of this view ; Below cell title ; Height 300
     private func createAndActivateChartFrameConstraints() {
         self.chartFrame.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.chartFrame,
-                                                                        inView: self).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.chartFrame,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .width,
                            relatedBy: .equal,
@@ -304,20 +302,21 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // Place at bottom of view; take up left, right of view. Height of BaseCellHeight
     private func createAndActivateEditAndStartButtonConstraints(withPrevView: UIView) {
+        guard let editButton = self.editButton else {
+            fatalError("Edit Button does not exist, but attempted to create constraints.")
+        }
+        
         // MARK: Edit Button Constraints
-        self.editButton?.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.editButton!,
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createViewBelowViewConstraint(view: editButton,
                                                          belowView: withPrevView,
                                                          withPadding: withPrevView == self.chartFrame ?
                                                             0 : 10).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.editButton!,
+        NSLayoutConstraint.createHeightConstraintForView(view: editButton,
                                                          height: ExercisesTableView.baseCellHeight).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.editButton,
-                           attribute: .left,
-                           multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .width,
                            relatedBy: .equal,

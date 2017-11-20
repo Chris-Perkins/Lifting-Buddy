@@ -86,63 +86,26 @@ extension NSLayoutConstraint {
                                    toView: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: view,
-                                                            belowView: toView,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: toView,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: toView,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: toView,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-    }
-    
-    // Return a constraint that will center a view inside a view
-    public static func createCenterViewHorizontallyInViewConstraint(view: UIView,
-                                                                    inView: UIView) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: inView,
-                                  attribute: .centerX,
-                                  relatedBy: .equal,
-                                  toItem: view,
-                                  attribute: .centerX,
-                                  multiplier: 1,
-                                  constant: 0)
-    }
-    
-    // Return a constraint that will place a view below a view with padding
-    public static func createViewBelowViewConstraint(view: UIView,
-                                                     belowView: UIView,
-                                                     withPadding: CGFloat) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: belowView,
-                                  attribute: .bottom,
-                                  relatedBy: .equal,
-                                  toItem: view,
-                                  attribute: .top,
-                                  multiplier: 1,
-                                  constant: -withPadding)
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                             withCopyView: toView,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                             withCopyView: toView,
+                                                            attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                             withCopyView: toView,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                             withCopyView: toView,
+                                                             attribute: .top).isActive = true
     }
     
     // Return a constraint that will place a view below's top a view with padding
-    public static func createViewBelowViewTopConstraint(view: UIView,
+    public static func createViewBelowViewConstraint(view: UIView,
                                                         belowView: UIView,
-                                                        withPadding: CGFloat) -> NSLayoutConstraint {
+                                                        withPadding: CGFloat = 0) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: belowView,
-                                  attribute: .top,
+                                  attribute: .bottom,
                                   relatedBy: .equal,
                                   toItem: view,
                                   attribute: .top,
@@ -174,16 +137,19 @@ extension NSLayoutConstraint {
                                   constant: height)
     }
     
-    public static func createWidthCopyConstraintForView(view: UIView,
-                                                        withCopyView: UIView,
-                                                        plusWidth: CGFloat) -> NSLayoutConstraint{
+    // Just a faster way to create a layout constraint copy. The original way is waaaay too long.
+    public static func createViewAttributeCopyConstraint(view: UIView,
+                                                         withCopyView: UIView,
+                                                         attribute: NSLayoutAttribute,
+                                                         multiplier: CGFloat = 1.0,
+                                                         plusConstant: CGFloat = 0.0) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: withCopyView,
-                                  attribute: .width,
+                                  attribute: attribute,
                                   relatedBy: .equal,
                                   toItem: view,
-                                  attribute: .width,
-                                  multiplier: 1,
-                                  constant: -plusWidth)
+                                  attribute: attribute,
+                                  multiplier: (1/multiplier),
+                                  constant: -plusConstant)
     }
 }
 

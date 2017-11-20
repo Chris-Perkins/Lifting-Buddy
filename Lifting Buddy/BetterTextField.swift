@@ -141,13 +141,13 @@ class BetterTextField: UIView {
     
     // MARK: Constraints
     
-    // cling to top, bottom, left of this view. Cling to right of label
+    // cling to top, bottom, left of this view ;  cling to right of label
     private func createAndActivateTextfieldConstraints() {
         self.textfield.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: self.textfield,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.textfield,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
         NSLayoutConstraint(item: self.label,
                            attribute: .left,
                            relatedBy: .equal,
@@ -155,54 +155,36 @@ class BetterTextField: UIView {
                            attribute: .right,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.textfield,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.textfield,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.textfield,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.textfield,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
     }
     
     // Cling to right, top, bottom of this view.
     private func createAndActivateLabelConstraints() {
         self.label.translatesAutoresizingMaskIntoConstraints = false
         
-        curLabelWidthConstraint?.isActive = false
+        self.curLabelWidthConstraint?.isActive = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: label,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: label,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: label,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.label,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.label,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.label,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
         
         if self.label.text != nil && self.label.text != "" {
-            curLabelWidthConstraint = NSLayoutConstraint(item: self,
-                                                         attribute: .width,
-                                                         relatedBy: .equal,
-                                                         toItem: label,
-                                                         attribute: .width,
-                                                         multiplier: 3,
-                                                         constant: 0)
+            self.curLabelWidthConstraint =
+                NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.label,
+                                                                     withCopyView: self,
+                                                                     attribute: .width,
+                                                                     multiplier: 1/3)
         } else {
             curLabelWidthConstraint = NSLayoutConstraint.createWidthConstraintForView(view: self.label,
                                                                                       width: 0)

@@ -127,23 +127,15 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     private func createAndActivateNameEntryFieldConstraints() {
         nameEntryField.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: nameEntryField,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: nameEntryField,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: nameEntryField,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: nameEntryField,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .width,
                            relatedBy: .equal,
@@ -158,23 +150,15 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     private func createAndActivatePickUnitButtonConstraints() {
         pickUnitButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: pickUnitButton,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: pickUnitButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: pickUnitButton,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: pickUnitButton,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.pickUnitButton,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.pickUnitButton,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
         NSLayoutConstraint(item: nameEntryField,
                            attribute: .right,
                            relatedBy: .equal,

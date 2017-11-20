@@ -290,47 +290,37 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Cling to top, left, right ; height of baseviewcell
     private func createAndActivateInvisButtonConstraints() {
-        invisButton.translatesAutoresizingMaskIntoConstraints = false
+        self.invisButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: invisButton,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: invisButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: invisButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.invisButton,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.invisButton,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.invisButton,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: invisButton,
                                                          height: WorkoutTableView.baseCellHeight).isActive = true
     }
     
     // Place below view top, cling to left, right ; height of baseCellHeight
     private func createAndActivateCellTitleConstraints() {
-        cellTitle.translatesAutoresizingMaskIntoConstraints = false
+        self.cellTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: cellTitle,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitle,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitle,
+                                                             withCopyView: self,
+                                                             attribute: .left,
+                                                             plusConstant: 10).isActive = true
+        NSLayoutConstraint(item: self.expandImage,
                            attribute: .left,
                            relatedBy: .equal,
-                           toItem: cellTitle,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: -10).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: cellTitle,
+                           toItem: self.cellTitle,
                            attribute: .right,
                            multiplier: 1,
                            constant: 10).isActive = true
@@ -340,39 +330,33 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Cling to top, right ;  height 8.46 ; width 16
     private func createAndActivateExpandImageConstraints() {
-        expandImage.translatesAutoresizingMaskIntoConstraints = false
+        self.expandImage.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createWidthConstraintForView(view: expandImage, width: 16).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: expandImage, height: 8.46).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: expandImage,
-                                                            belowView: self,
-                                                            withPadding: 20.77).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: expandImage,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 10).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+                                                             withCopyView: self,
+                                                             attribute: .top,
+                                                             plusConstant: 20.77).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+                                                             withCopyView: self,
+                                                             attribute: .right,
+                                                             plusConstant: -10).isActive = true
+        NSLayoutConstraint.createWidthConstraintForView(view: self.expandImage,
+                                                        width: 16).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.expandImage,
+                                                         height: 8.46).isActive = true
     }
     
     private func createAndActivateInputContentViewConstraints() {
-        inputContentView.translatesAutoresizingMaskIntoConstraints = false
+        self.inputContentView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: inputContentView,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: -25).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: inputContentView,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 25).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.inputContentView,
+                                                             withCopyView: self,
+                                                             attribute: .left,
+                                                             plusConstant: 25).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.inputContentView,
+                                                             withCopyView: self,
+                                                             attribute: .right,
+                                                             plusConstant: -25).isActive = true
         NSLayoutConstraint(item: invisButton,
                            attribute: .bottom,
                            relatedBy: .equal,
@@ -419,27 +403,19 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     private func addConstraintsToInputView(view: UIView, prevView: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: inputContentView,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: inputContentView,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                             withCopyView: self.inputContentView,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                             withCopyView: self.inputContentView,
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint(item: prevView,
-                           attribute: prevView == inputContentView ? .top : .bottom,
+                           attribute: prevView == self.inputContentView ? .top : .bottom,
                            relatedBy: .equal,
                            toItem: view,
                            attribute: .top,
                            multiplier: 1,
-                           constant: prevView == inputContentView ? -viewPadding : 0).isActive = true
+                           constant: prevView == self.inputContentView ? -viewPadding : 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: view,
                                                          height: 40).isActive = true
     }
@@ -448,15 +424,13 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     private func createAndActivateAddSetButtonConstraints() {
         self.addSetButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.addSetButton,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.addSetButton,
-                           attribute: .width,
-                           multiplier: 4/3,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.addSetButton,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.addSetButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.75).isActive = true
         NSLayoutConstraint(item: self.inputContentView,
                            attribute: .bottom,
                            relatedBy: .equal,
@@ -472,15 +446,12 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     private func createAndActivateExerciseHistoryTableViewConstraints() {
         self.exerciseHistoryTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.exerciseHistoryTableView,
-                                                                        inView: self).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.exerciseHistoryTableView,
-                           attribute: .width,
-                           multiplier: 4/3,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseHistoryTableView,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseHistoryTableView,
+                                                             withCopyView: self.addSetButton,
+                                                             attribute: .width).isActive = true
         NSLayoutConstraint(item: self.addSetButton,
                            attribute: .bottom,
                            relatedBy: .equal,

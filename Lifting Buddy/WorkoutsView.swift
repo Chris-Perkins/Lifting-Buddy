@@ -116,58 +116,36 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
     private func createAndActivateWorkoutTableViewConstraints() {
         workoutTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: workoutTableView,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: workoutTableView,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: workoutTableView,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .height,
-                           relatedBy: .equal,
-                           toItem: workoutTableView,
-                           attribute: .height,
-                           multiplier: 1, constant: 50).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutTableView,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutTableView,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutTableView,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutTableView,
+                                                             withCopyView: self,
+                                                             attribute: .height,
+                                                             plusConstant: -50).isActive = true
     }
     
-    // Cling to bottom,left,right of workouttableview, place 10 above this view's bottom
+    // Cling to top,left,right of workouttableview ; bottom is self view
     private func createCreateWorkoutButtonConstraints() {
         createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: workoutTableView,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: createWorkoutButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: workoutTableView,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: createWorkoutButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
+                                                             withCopyView: self.workoutTableView,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
+                                                             withCopyView: self.workoutTableView,
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
                                                          belowView: workoutTableView,
                                                          withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: createWorkoutButton,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
     }
 }

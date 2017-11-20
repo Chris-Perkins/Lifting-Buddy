@@ -57,17 +57,16 @@ class WorkoutTableViewCell: UITableViewCell {
         self.addSubview(expandImage)
         
         // MARK: Label constraints
+        
+        // Below view top ; cling to left of view ; to the right of the fire image ; height of basecellheight
         cellTitle.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: cellTitle,
-                                                            belowView: self,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: cellTitle,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: -10).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitle,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitle,
+                                                             withCopyView: self,
+                                                             attribute: .left,
+                                                             plusConstant: 10).isActive = true
         NSLayoutConstraint(item: fireImage,
                            attribute: .left,
                            relatedBy: .equal,
@@ -79,12 +78,13 @@ class WorkoutTableViewCell: UITableViewCell {
                                                          height: WorkoutTableView.baseCellHeight).isActive = true
         
         // MARK: Image constraints
-        expandImage.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createWidthConstraintForView(view: expandImage, width: 16).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: expandImage, height: 8.46).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: expandImage,
-                                                            belowView: self,
-                                                            withPadding: 20.77).isActive = true
+        self.expandImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createWidthConstraintForView(view: self.expandImage, width: 16).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.expandImage, height: 8.46).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+                                                             withCopyView: self,
+                                                             attribute: .top,
+                                                             plusConstant: 20.77).isActive = true
         NSLayoutConstraint(item: self,
                            attribute: .right,
                            relatedBy: .equal,
@@ -94,14 +94,15 @@ class WorkoutTableViewCell: UITableViewCell {
                            constant: 10).isActive = true
         
         // MARK: streak label constraints
-        streakLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createWidthConstraintForView(view: streakLabel,
+        self.streakLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createWidthConstraintForView(view: self.streakLabel,
                                                         width: 72).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: streakLabel,
+        NSLayoutConstraint.createHeightConstraintForView(view: self.streakLabel,
                                                          height: 20).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: streakLabel,
-                                                            belowView: self,
-                                                            withPadding: 15).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.streakLabel,
+                                                             withCopyView: self,
+                                                             attribute: .top,
+                                                             plusConstant: 15).isActive = true
         NSLayoutConstraint(item: expandImage,
                            attribute: .left,
                            relatedBy: .equal,
@@ -111,18 +112,19 @@ class WorkoutTableViewCell: UITableViewCell {
                            constant: -10).isActive = true
         
         // MARK: Streak fire icon
-        fireImage.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createWidthConstraintForView(view: fireImage,
+        self.fireImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createWidthConstraintForView(view: self.fireImage,
                                                         width: 25).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: fireImage,
+        NSLayoutConstraint.createHeightConstraintForView(view: self.fireImage,
                                                          height: 25).isActive = true
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: fireImage,
-                                                            belowView: self,
-                                                            withPadding: 12.5).isActive = true
-        NSLayoutConstraint(item: streakLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.fireImage,
+                                                             withCopyView: self,
+                                                             attribute: .top,
+                                                             plusConstant: 12.5).isActive = true
+        NSLayoutConstraint(item: self.streakLabel,
                            attribute: .left,
                            relatedBy: .equal,
-                           toItem: fireImage,
+                           toItem: self.fireImage,
                            attribute: .right,
                            multiplier: 1,
                            constant: 0).isActive = true

@@ -127,88 +127,53 @@ class HeaderView: UIView {
     func createAndActivateTitleBarConstraints() {
         titleBar.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: titleBar,
-                                                            belowView: contentView,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: contentView,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: titleBar,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: contentView,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: titleBar,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: divideView,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: titleBar,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleBar,
+                                                             withCopyView: contentView,
+                                                             attribute: .centerX).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleBar,
+                                                             withCopyView: self.contentView,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleBar,
+                                                             withCopyView: self.contentView,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleBar,
+                                                             withCopyView: self.contentView,
+                                                             attribute: .bottom).isActive = true
     }
     
     // center vert in contentview ; cling to left, right to content view ; height 1
     func createAndActivateDivideViewConstraints() {
         divideView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: contentView,
-                           attribute: .centerY,
-                           relatedBy: .equal,
-                           toItem: divideView,
-                           attribute: .centerY,
-                           multiplier: 1,
-                           constant: -10).isActive = true
-        NSLayoutConstraint(item: contentView,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: divideView,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: contentView,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: divideView,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.divideView,
+                                                             withCopyView: self.contentView,
+                                                             attribute: .centerY,
+                                                             plusConstant: -10).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.divideView,
+                                                             withCopyView: self.contentView,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.divideView,
+                                                             withCopyView: self.contentView,
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: divideView,
                                                          height: 1).isActive = true
     }
     
     // cling to top of divideview ; bottom,left,right of contentView
     func createAndActivateSectionViewConstraints() {
-        sectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.sectionView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewTopConstraint(view: sectionView,
-                                                            belowView: divideView,
-                                                            withPadding: 0).isActive = true
-        NSLayoutConstraint(item: contentView,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: sectionView,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: contentView,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: sectionView,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: contentView,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: sectionView,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.sectionView,
+                                                             withCopyView: self.divideView,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.sectionView,
+                                                             withCopyView: self.contentView,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.sectionView,
+                                                             withCopyView: self.contentView,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.sectionView,
+                                                             withCopyView: self.contentView,
+                                                             attribute: .right).isActive = true
     }
 }

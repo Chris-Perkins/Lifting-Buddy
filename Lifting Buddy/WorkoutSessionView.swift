@@ -1,5 +1,5 @@
 //
-//  WorkoutStartView.swift
+//  WorkoutSessionStartView.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 9/9/17.
@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePickerDelegate {
+class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, ExercisePickerDelegate {
     
     // MARK: View properties
     
@@ -24,7 +24,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     // The name label for this exercise
     private var workoutNameLabel: UILabel
     // The tableview holding EVERYTHING!!!
-    public var workoutStartTableView: WorkoutStartTableView
+    public var workoutSessionTableView: WorkoutSessionTableView
     // Button press to add an exercise to this workout
     private var addExerciseButton: PrettyButton
     // the complete button for the exercise
@@ -33,7 +33,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     private var cancelButton: PrettyButton
     
     // Delegate to notify on workout start
-    public var workoutStartDelegate: WorkoutCellDelegate?
+    public var workoutSessionDelegate: WorkoutSessionStarter?
     
     // MARK: Inits
     
@@ -41,7 +41,8 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         self.workout = workout
         
         self.workoutNameLabel = UILabel()
-        self.workoutStartTableView = WorkoutStartTableView(workout: workout, style: .plain)
+        self.workoutSessionTableView = WorkoutSessionTableView(workout: workout,
+                                                               style: .plain)
         self.addExerciseButton = PrettyButton()
         self.completeButton = PrettyButton()
         self.cancelButton = PrettyButton()
@@ -49,25 +50,31 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         super.init(frame: frame)
         
         self.backgroundColor = UIColor.niceGray
-        workoutStartTableView.viewDelegate = self
+        workoutSessionTableView.viewDelegate = self
         
         self.addSubview(workoutNameLabel)
-        self.addSubview(workoutStartTableView)
+        self.addSubview(workoutSessionTableView)
         self.addSubview(addExerciseButton)
         self.addSubview(completeButton)
         self.addSubview(cancelButton)
         
         self.createAndActivateWorkoutNameLabelConstraints()
-        self.createAndActivateWorkoutStartTableViewConstraints()
+        self.createAndActivateWorkoutSessionTableViewConstraints()
         self.createAndActivateAddExerciseButtonConstraints()
         self.createAndActivateCompleteButtonConstraints()
         self.createAndActivateCancelButtonConstraints()
         
-        self.completeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        self.addExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        self.cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        self.completeButton.addTarget(self,
+                                      action: #selector(buttonPress(sender:)),
+                                      for: .touchUpInside)
+        self.addExerciseButton.addTarget(self,
+                                         action: #selector(buttonPress(sender:)),
+                                         for: .touchUpInside)
+        self.cancelButton.addTarget(self,
+                                    action: #selector(buttonPress(sender:)),
+                                    for: .touchUpInside)
         
-        workoutStartTableView.checkComplete()
+        workoutSessionTableView.checkComplete()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,16 +90,19 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         self.workoutNameLabel.text = self.workout?.getName() ?? "Custom Workout"
         
         self.addExerciseButton.setDefaultProperties()
-        self.addExerciseButton.setTitle("Add Exercise to Workout", for: .normal)
+        self.addExerciseButton.setTitle("Add Exercise to Workout",
+                                        for: .normal)
         
         // Modified by another method based on current complete
         self.completeButton.setOverlayStyle(style: .FADE)
         self.completeButton.setOverlayColor(color: UIColor.niceYellow)
-        self.completeButton.setTitle("Finish Workout", for: .normal)
+        self.completeButton.setTitle("Finish Workout",
+                                     for: .normal)
         
         self.cancelButton.setDefaultProperties()
         self.cancelButton.backgroundColor = UIColor.niceRed
-        self.cancelButton.setTitle("Cancel Workout", for: .normal)
+        self.cancelButton.setTitle("Cancel Workout",
+                                   for: .normal)
         
         self.contentSize = CGSize(width: self.frame.width,
                                   height: self.cancelButton.frame.maxY + 20)
@@ -102,7 +112,7 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     
     // Called on completion of the workout (sent by user)
     private func saveWorkoutData() {
-        workoutStartTableView.saveWorkoutData()
+        workoutSessionTableView.saveWorkoutData()
         
         self.workout?.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
         self.workout?.incrementWorkoutCount()
@@ -110,8 +120,12 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     
     // Completes this workout, dismisses the view.
     private func completeWorkout() {
-        self.workoutStartDelegate?.endWorkout!()
+        self.workoutSessionDelegate?.endWorkout!()
         self.saveWorkoutData()
+        
+        let view = WorkoutSessionSummaryScreen(withExercises: self.workoutSessionTableView.getData())
+        self.showViewDelegate?.showView(view: view)
+        
         self.removeSelfNicelyWithAnimation()
     }
     
@@ -191,10 +205,10 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     
     // MARK: ExercisePicker Delegate methods
     func didSelectExercise(exercise: Exercise) {
-        self.workoutStartTableView.appendDataToTableView(data: exercise)
+        self.workoutSessionTableView.appendDataToTableView(data: exercise)
     }
     
-    // MARK: WorkoutStartTableViewDelegate
+    // MARK: WorkoutSessionTableViewDelegate
     
     func updateCompleteStatus(isComplete: Bool) {
         self.isComplete = isComplete
@@ -233,22 +247,22 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
     }
     
     // Center horiz in view ; below workoutNameLabel ; height 0 ; width of this view
-    private func createAndActivateWorkoutStartTableViewConstraints() {
-        self.workoutStartTableView.translatesAutoresizingMaskIntoConstraints = false
+    private func createAndActivateWorkoutSessionTableViewConstraints() {
+        self.workoutSessionTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.workoutStartTableView,
+        NSLayoutConstraint.createCenterViewHorizontallyInViewConstraint(view: self.workoutSessionTableView,
                                                                         inView: self).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.workoutStartTableView,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: self.workoutSessionTableView,
                                                          belowView: self.workoutNameLabel,
                                                          withPadding: 15).isActive = true
         
         // Assign height constraint
-        self.workoutStartTableView.heightConstraint =
-            NSLayoutConstraint.createHeightConstraintForView(view: self.workoutStartTableView,
+        self.workoutSessionTableView.heightConstraint =
+            NSLayoutConstraint.createHeightConstraintForView(view: self.workoutSessionTableView,
                                                              height: 0)
-        self.workoutStartTableView.heightConstraint?.isActive = true
+        self.workoutSessionTableView.heightConstraint?.isActive = true
         
-        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.workoutStartTableView,
+        NSLayoutConstraint.createWidthCopyConstraintForView(view: self.workoutSessionTableView,
                                                             withCopyView: self,
                                                             plusWidth: 0).isActive = true
     }
@@ -258,16 +272,16 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
         self.addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.addExerciseButton,
-                                                         belowView: self.workoutStartTableView,
+                                                         belowView: self.workoutSessionTableView,
                                                          withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self.workoutStartTableView,
+        NSLayoutConstraint(item: self.workoutSessionTableView,
                            attribute: .left,
                            relatedBy: .equal,
                            toItem: self.addExerciseButton,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint(item: self.workoutStartTableView,
+        NSLayoutConstraint(item: self.workoutSessionTableView,
                            attribute: .right,
                            relatedBy: .equal,
                            toItem: self.addExerciseButton,
@@ -275,10 +289,10 @@ class WorkoutStartView: UIScrollView, WorkoutStartTableViewDelegate, ExercisePic
                            multiplier: 1,
                            constant: 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.addExerciseButton,
-                                                         height: WorkoutStartTableView.baseCellHeight).isActive = true
+                                                         height: WorkoutSessionTableView.baseCellHeight).isActive = true
     }
     
-    // center horiz in view ; place below workoutStartTableView ; height 50 ; width of this view - 80
+    // center horiz in view ; place below workoutSessionTableView ; height 50 ; width of this view - 80
     private func createAndActivateCompleteButtonConstraints() {
         self.completeButton.translatesAutoresizingMaskIntoConstraints = false
         

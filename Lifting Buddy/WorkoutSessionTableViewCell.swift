@@ -1,5 +1,5 @@
 //
-//  WorkoutStartTableViewCell.swift
+//  WorkoutSessionTableViewCell.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 9/10/17.
@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
+class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // MARK: View properties
     
@@ -29,7 +29,7 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
     // IndexPath of this cell in the tableview
     public var indexPath: IndexPath?
     // Delegate we use to change height of cells
-    public var delegate: WorkoutStartTableViewCellDelegate?
+    public var delegate: WorkoutSessionTableViewCellDelegate?
     
     // Title bar properties
     
@@ -163,7 +163,7 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Gets the height of the current cell
     private func getHeight() -> CGFloat {
-        return self.isToggled ? getExpandedHeight() : WorkoutStartTableView.baseCellHeight
+        return self.isToggled ? getExpandedHeight() : WorkoutSessionTableView.baseCellHeight
     }
 
     // gets the height of this cell when expanded
@@ -500,7 +500,7 @@ class WorkoutStartTableViewCell: UITableViewCell, TableViewDelegate {
     }
 }
 
-protocol WorkoutStartTableViewCellDelegate {
+protocol WorkoutSessionTableViewCellDelegate {
     /*
      * This cell height changed
      */

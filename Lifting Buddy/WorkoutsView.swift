@@ -12,7 +12,7 @@ import UIKit
 import RealmSwift
 import Realm
 
-class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate, ShowViewDelegate {
+class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, ShowViewDelegate {
     
     // View properties
     
@@ -82,10 +82,13 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutCellDelegate, Show
     
     // Start the workout with workout or exercise
     func startWorkout(workout: Workout?, exercise: Exercise?) {
-        let startWorkoutView = WorkoutStartView(workout: workout,
-                                                frame: .zero)
+        let startWorkoutView = WorkoutSessionView(workout: workout,
+                                                  frame: .zero)
+        startWorkoutView.showViewDelegate = self
         
-        startWorkoutView.workoutStartTableView.appendDataToTableView(data: exercise)
+        if let appendedExercise = exercise {
+            startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
+        }
         
         self.showView(view: startWorkoutView)
     }

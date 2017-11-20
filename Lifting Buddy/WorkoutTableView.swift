@@ -89,7 +89,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! WorkoutTableViewCell
         
-        cell.workoutCellDelegate = self.superview as? WorkoutCellDelegate
+        cell.workoutSessionStarter = self.superview as? WorkoutSessionStarter
         cell.showViewDelegate = self.superview as? ShowViewDelegate
         cell.setWorkout(workout: sortedData[indexPath.row])
         cell.updateSelectedStatus()

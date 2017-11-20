@@ -13,6 +13,16 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
+    // delegate we call to show the workout
+    public var mainViewCellDelegate: WorkoutSessionStarter?
+    // delegate to show a view for us
+    public var showViewDelegate: ShowViewDelegate?
+    
+    // Filter progressionMethods from graph
+    private var filterProgressionMethods: Set<ProgressionMethod>
+    // the chart we're showing
+    private var chart: Chart?
+    
     // The title for every cell
     private var cellTitle: UILabel
     // The exercise associated with each cell
@@ -25,22 +35,10 @@ class ExerciseTableViewCell: UITableViewCell {
     private var progressionButtons: [ToggleablePrettyButtonWithProgressionMethod]
     // a button that absorbs touches to prevent view from collapsing
     private var invisButton: UIButton
-    
-    // the chart we're showing
-    private var chart: Chart?
-    
-    // delegate we call to show the workout
-    public var mainViewCellDelegate: WorkoutCellDelegate?
-    // delegate to show a view for us
-    public var showViewDelegate: ShowViewDelegate?
-    
     // The button that allows for exercise editing
     private var editButton: PrettyButton?
     // A button to start the exercise
     private var startExerciseButton: PrettyButton?
-    
-    // Filter progressionMethods from graph
-    private var filterProgressionMethods: Set<ProgressionMethod>
     
     // MARK: Init functions
     

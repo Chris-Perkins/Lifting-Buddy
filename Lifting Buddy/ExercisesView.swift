@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, ExercisePickerDelegate,
+class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, ExercisePickerDelegate,
                         TableViewOverlayDelegate, ShowViewDelegate {
     
     // MARK: View properties
@@ -172,17 +172,22 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutCellDelegate, Ex
     
     // MARK: Start Workout Delegate methods
     
+    // Starts a workout based on the information we're given
     func startWorkout(workout: Workout?, exercise: Exercise?) {
-        let startWorkoutView = WorkoutStartView(workout: workout,
-                                                frame: .zero)
-        startWorkoutView.workoutStartDelegate = self
-        startWorkoutView.workoutStartTableView.appendDataToTableView(data: exercise)
+        let startWorkoutView = WorkoutSessionView(workout: workout,
+                                                  frame: .zero)
+        startWorkoutView.workoutSessionDelegate = self
+        
+        if let appendedExercise = exercise {
+            startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
+        }
         
         self.showView(view: startWorkoutView)
     }
     
     // MARK: Show View Protocol Methods
     
+    // Shows a view
     func showView(view: UIView) {
         self.addSubview(view)
         

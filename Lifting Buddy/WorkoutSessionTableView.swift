@@ -1,5 +1,5 @@
 //
-//  WorkoutStartTableView.swift
+//  WorkoutSessionTableView.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 9/10/17.
@@ -10,8 +10,8 @@ import UIKit
 import Realm
 import RealmSwift
 
-class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSource,
-                             WorkoutStartTableViewCellDelegate {
+class WorkoutSessionTableView: UITableView, UITableViewDelegate, UITableViewDataSource,
+                             WorkoutSessionTableViewCellDelegate {
     
     // MARK: View properties
     
@@ -21,12 +21,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     // Height constraint for this view
     public var heightConstraint: NSLayoutConstraint?
     // The delegate for this view
-    public var viewDelegate: WorkoutStartTableViewDelegate?
+    public var viewDelegate: WorkoutSessionTableViewDelegate?
     
     // Data, holds exercises per cell
     private var data: List<Exercise>
     // cells in this tableview
-    public var cells: [WorkoutStartTableViewCell]
+    public var cells: [WorkoutSessionTableViewCell]
     // Heights per cell
     private var heights: [CGFloat]
     // Whether or not this workout is complete
@@ -36,12 +36,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     init(workout: Workout?, frame: CGRect, style: UITableViewStyle) {
         data = workout?.getExercises() ?? List<Exercise>()
-        cells = [WorkoutStartTableViewCell]()
+        cells = [WorkoutSessionTableViewCell]()
         heights = [CGFloat]()
         curComplete = 0
         
         for _ in data {
-            heights.append(WorkoutStartTableView.baseCellHeight)
+            heights.append(WorkoutSessionTableView.baseCellHeight)
         }
         self.heightConstraint?.constant = heights.reduce(0, +)
         
@@ -52,12 +52,12 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     
     init(workout: Workout?, style: UITableViewStyle) {
         data = workout?.getExercises() ?? List<Exercise>()
-        cells = [WorkoutStartTableViewCell]()
+        cells = [WorkoutSessionTableViewCell]()
         heights = [CGFloat]()
         curComplete = 0
         
         for _ in data {
-            heights.append(WorkoutStartTableView.baseCellHeight)
+            heights.append(WorkoutSessionTableView.baseCellHeight)
         }
         
         super.init(frame: .zero, style: style)
@@ -136,10 +136,9 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row >= cells.count {
-            let cell =
-                WorkoutStartTableViewCell(exercise: data[indexPath.row],
-                                          style: .default,
-                                          reuseIdentifier: nil)
+            let cell = WorkoutSessionTableViewCell(exercise: data[indexPath.row],
+                                                   style: .default,
+                                                   reuseIdentifier: nil)
             cell.delegate = self
             cell.indexPath = indexPath
             cell.updateToggledStatus()
@@ -158,7 +157,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         return heights[indexPath.row]
     }
     
-    // MARK: WorkoutStartTableViewCellDelegate methods
+    // MARK: WorkoutSessionTableViewCellDelegate methods
     
     // Height of a cell changed ; update this view's height to match height change
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
@@ -179,19 +178,17 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     // MARK: Custom functions
     
     // Append some data to the tableView
-    public func appendDataToTableView(data: Exercise?) {
-        if data != nil {
-            heights.append(WorkoutStartTableView.baseCellHeight)
-            
-            let realm = try! Realm()
-            try! realm.write {
-                self.data.append(data!)
-            }
-            
-            reloadData()
-            
-            self.checkComplete()
+    public func appendDataToTableView(data: Exercise) {
+        heights.append(WorkoutSessionTableView.baseCellHeight)
+        
+        let realm = try! Realm()
+        try! realm.write {
+            self.data.append(data)
         }
+        
+        reloadData()
+        
+        self.checkComplete()
     }
     
     // Retrieve workouts
@@ -204,7 +201,8 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
         self.delegate = self
         self.dataSource = self
         self.allowsSelection = true
-        self.register(WorkoutStartTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.register(WorkoutSessionTableViewCell.self,
+                      forCellReuseIdentifier: "cell")
         self.backgroundColor = UIColor.clear
     }
     
@@ -225,7 +223,7 @@ class WorkoutStartTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     }
 }
 
-protocol WorkoutStartTableViewDelegate {
+protocol WorkoutSessionTableViewDelegate {
     /*
      The status of the workout is being updated
      */

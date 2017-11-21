@@ -149,13 +149,10 @@ class ExerciseTableViewCell: UITableViewCell {
                                                              belowView: prevView,
                                                              withPadding: prevView == self.chartFrame ?
                                                                 10 : 0).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .width,
-                               relatedBy: .equal,
-                               toItem: progressionMethodButton,
-                               attribute: .width,
-                               multiplier: 100/85,
-                               constant: 0).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: progressionMethodButton,
+                                                                 withCopyView: self,
+                                                                 attribute: .width,
+                                                                 multiplier: 0.85).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: progressionMethodButton,
                                                              height: 40).isActive = true
             
@@ -286,13 +283,10 @@ class ExerciseTableViewCell: UITableViewCell {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.chartFrame,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.chartFrame,
-                           attribute: .width,
-                           multiplier: 100/85,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.chartFrame,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.85).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.chartFrame,
                                                          belowView: self.cellTitle,
                                                          withPadding: 0).isActive = true
@@ -317,38 +311,32 @@ class ExerciseTableViewCell: UITableViewCell {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.editButton,
-                           attribute: .width,
-                           multiplier: 2,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.5).isActive = true
         
         
         // MARK: Start exercise button constraints
         
+        guard let startButton = self.startExerciseButton else {
+            fatalError("Start Exercise button does not exist, but attempted to create constraints.")
+        }
+        
         self.startExerciseButton?.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.startExerciseButton!,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: startButton,
                                                          belowView: withPrevView,
                                                          withPadding: withPrevView == self.chartFrame ?
                                                             0 : 10).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.startExerciseButton!,
+        NSLayoutConstraint.createHeightConstraintForView(view: startButton,
                                                          height: WorkoutTableView.baseCellHeight).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: self.startExerciseButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.startExerciseButton,
-                           attribute: .width,
-                           multiplier: 2,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: startButton,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: startButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.5).isActive = true
     }
 }
 

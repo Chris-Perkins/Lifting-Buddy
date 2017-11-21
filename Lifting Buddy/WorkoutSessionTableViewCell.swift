@@ -119,6 +119,10 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         // Cell Title
         let curSetCount: Int = self.exerciseHistoryTableView.getData().count
         let reqSetCount: Int = self.exercise.getSetCount()
+        /* Text depends on whether or not we have a required set amount.
+         * If we do, a format example is [1/2]
+         * If we don't, the same example is [1]
+         */
         self.cellTitle.text = reqSetCount > 0 ?
                                 "\(self.exercise.getName()!) [\(curSetCount)/\(reqSetCount)]":
                                 "\(self.exercise.getName()!) [\(curSetCount)]"
@@ -136,7 +140,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         // If complete: cell turns green, title color turns white to be visible.
         // If not complete: Cell is white
         if self.isComplete {
-            self.backgroundColor = UIColor.niceLightGreen
+            self.backgroundColor = UIColor.niceGreen.withAlphaComponent(self.isToggled ? 0.85 : 0.75)
             self.cellTitle.textColor = UIColor.white
         } else {
             self.backgroundColor = self.isToggled ? UIColor.niceLightGray : UIColor.white
@@ -357,13 +361,8 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
                                                              withCopyView: self,
                                                              attribute: .right,
                                                              plusConstant: -25).isActive = true
-        NSLayoutConstraint(item: invisButton,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: inputContentView,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: self.inputContentView,
+                                                         belowView: self.invisButton).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: inputContentView,
                                                          height: getContentHeight()).isActive = true
     }

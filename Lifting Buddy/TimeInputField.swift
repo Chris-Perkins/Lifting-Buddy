@@ -165,61 +165,34 @@ class TimeInputField: UIView, InputViewHolder {
     private func createAndActivateTimerButtonConstraints() {
         self.timerButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: self.timerButton,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.timerButton,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: self.timerButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.timerButton,
-                           attribute: .width,
-                           multiplier: 4,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timerButton,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timerButton,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timerButton,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timerButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.25).isActive = true
     }
     
     // Take up whatever the timer button isn't
     private func createAndActivateInputViewContainerConstraints() {
         self.timeInputView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: self.timeInputView,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.timeInputView,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.timeInputView,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeInputView,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeInputView,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeInputView,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
         NSLayoutConstraint(item: self.timerButton,
                            attribute: .left,
                            relatedBy: .equal,
@@ -229,7 +202,7 @@ class TimeInputField: UIView, InputViewHolder {
                            constant: 0).isActive = true
     }
     
-    // Timer functions
+    /// MARK: Timer functions
     
     private func startTimer() {
         //  Make all textfields non-editable (gray to indicate)

@@ -123,7 +123,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     
     // MARK: Constraints
     
-    // Cling to top, left, bottom of this view ; width of this view * 2 / 3 (66%)
+    // Cling to top, left, bottom of this view ; width of this view * 2/3
     private func createAndActivateNameEntryFieldConstraints() {
         nameEntryField.translatesAutoresizingMaskIntoConstraints = false
         
@@ -136,13 +136,10 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: nameEntryField,
-                           attribute: .width,
-                           multiplier: 7/4,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 2/3).isActive = true
     }
     
     // Cling to top, right, bottom of this ; Cling to right of nameEntryField

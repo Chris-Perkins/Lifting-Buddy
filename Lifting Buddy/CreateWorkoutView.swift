@@ -281,8 +281,8 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
             NSLayoutConstraint.createViewAttributeCopyConstraint(view: dayButton,
                                                                  withCopyView: encapsulatingView,
                                                                  attribute: .width,
-                                                                 multiplier: CGFloat(self.daysOfTheWeekChars.count),
-                                                                 plusConstant: 5 * CGFloat(daysOfTheWeekChars.count)
+                                                                 multiplier: 1/CGFloat(self.daysOfTheWeekChars.count),
+                                                                 plusConstant: -5 * CGFloat(daysOfTheWeekChars.count)
                                                                 ).isActive = true
             // Constraint makes sure these buttons are circles
             NSLayoutConstraint(item: dayButton,
@@ -423,20 +423,12 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.addExerciseButton,
                                                          belowView: self.editExerciseTableView,
                                                          withPadding: 0).isActive = true
-        NSLayoutConstraint(item: self.editExerciseTableView,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.addExerciseButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self.editExerciseTableView,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: self.addExerciseButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.addExerciseButton,
+                                                             withCopyView: self.editExerciseTableView,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.addExerciseButton,
+                                                             withCopyView: self.editExerciseTableView,
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.addExerciseButton,
                                                          height: 50).isActive = true
     }

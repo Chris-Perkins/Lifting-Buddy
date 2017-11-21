@@ -238,7 +238,8 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
                                                              attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutNameLabel,
                                                              withCopyView: self,
-                                                             attribute: .top).isActive = true
+                                                             attribute: .top,
+                                                             plusConstant: 30).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.workoutNameLabel,
                                                          height: 20).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutNameLabel,

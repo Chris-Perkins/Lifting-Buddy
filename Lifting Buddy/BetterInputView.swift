@@ -99,20 +99,12 @@ class BetterInputView: UIView, InputViewHolder {
         for view in inputViews {
             view.translatesAutoresizingMaskIntoConstraints = false
             
-            NSLayoutConstraint(item: self,
-                               attribute: .top,
-                               relatedBy: .equal,
-                               toItem: view,
-                               attribute: .top,
-                               multiplier: 1,
-                               constant: 0).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .bottom,
-                               relatedBy: .equal,
-                               toItem: view,
-                               attribute: .bottom,
-                               multiplier: 1,
-                               constant: 0).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                                 withCopyView: self,
+                                                                 attribute: .top).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                                 withCopyView: self,
+                                                                 attribute: .bottom).isActive = true
             NSLayoutConstraint(item: prevView,
                                attribute: prevView == self ? .left : .right,
                                relatedBy: .equal,
@@ -120,13 +112,10 @@ class BetterInputView: UIView, InputViewHolder {
                                attribute: .left,
                                multiplier: 1,
                                constant: 0).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .width,
-                               relatedBy: .equal,
-                               toItem: view,
-                               attribute: .width,
-                               multiplier: CGFloat(inputViews.count),
-                               constant: 0).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                                 withCopyView: self,
+                                                                 attribute: .width,
+                                                                 multiplier: 1/CGFloat(inputViews.count)).isActive = true
             
             prevView = view
         }

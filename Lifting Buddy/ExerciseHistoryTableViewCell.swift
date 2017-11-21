@@ -63,27 +63,15 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     private func createAndActivateSetLabelConstraints() {
         self.setLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.setLabel,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: self.setLabel,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: self.setLabel,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.setLabel,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.setLabel,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.setLabel,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.setLabel,
                                                          height: ExerciseHistoryTableViewCell.baseHeight).isActive = true
     }
@@ -112,20 +100,13 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
             
             progressionMethodLabel.translatesAutoresizingMaskIntoConstraints = false
             
-            NSLayoutConstraint(item: self,
-                               attribute: .right,
-                               relatedBy: .equal,
-                               toItem: progressionMethodLabel,
-                               attribute: .right,
-                               multiplier: 1,
-                               constant: 0).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .width,
-                               relatedBy: .equal,
-                               toItem: progressionMethodLabel,
-                               attribute: .width,
-                               multiplier: 2,
-                               constant: 0).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: progressionMethodLabel,
+                                                                 withCopyView: self,
+                                                                 attribute: .right).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: progressionMethodLabel,
+                                                                 withCopyView: self,
+                                                                 attribute: .width,
+                                                                 multiplier: 0.5).isActive = true
             NSLayoutConstraint(item: prevView,
                                attribute: .bottom,
                                relatedBy: .equal,
@@ -134,17 +115,14 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
                                multiplier: 1,
                                constant: 0).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: progressionMethodLabel,
-                                                             height: ExerciseHistoryTableViewCell.heightPerProgressionMethod).isActive = true
+                                                             height: ExerciseHistoryTableViewCell.heightPerProgressionMethod
+                                                            ).isActive = true
             
             dataLabel.translatesAutoresizingMaskIntoConstraints = false
             
-            NSLayoutConstraint(item: self,
-                               attribute: .left,
-                               relatedBy: .equal,
-                               toItem: dataLabel,
-                               attribute: .left,
-                               multiplier: 1,
-                               constant: 0).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: dataLabel,
+                                                                 withCopyView: self,
+                                                                 attribute: .left).isActive = true
             NSLayoutConstraint(item: progressionMethodLabel,
                                attribute: .left,
                                relatedBy: .equal,
@@ -152,20 +130,12 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
                                attribute: .right,
                                multiplier: 1,
                                constant: 0).isActive = true
-            NSLayoutConstraint(item: progressionMethodLabel,
-                               attribute: .top,
-                               relatedBy: .equal,
-                               toItem: dataLabel,
-                               attribute: .top,
-                               multiplier: 1,
-                               constant: 0).isActive = true
-            NSLayoutConstraint(item: progressionMethodLabel,
-                               attribute: .bottom,
-                               relatedBy: .equal,
-                               toItem: dataLabel,
-                               attribute: .bottom,
-                               multiplier: 1,
-                               constant: 0).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: dataLabel,
+                                                                 withCopyView: progressionMethodLabel,
+                                                                 attribute: .top).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: dataLabel,
+                                                                 withCopyView: progressionMethodLabel,
+                                                                 attribute: .bottom).isActive = true
             
             prevView = progressionMethodLabel
         }

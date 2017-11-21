@@ -41,70 +41,7 @@ class EditExerciseTableViewCell: UITableViewCell {
          * starting from the left. For example: N = Name Label, E = Edit button
          * Layout is: NNNE
          */
-        
-        // MARK: Exercise Name label
-        
-        exerciseNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: self, attribute: .top,
-                           relatedBy: .equal,
-                           toItem: self.exerciseNameLabel,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.exerciseNameLabel,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.exerciseNameLabel,
-                           attribute: .width,
-                           multiplier: 3/2,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: self.exerciseNameLabel,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        
-        
-        // MARK: Edit button
-        
-        self.editButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: self,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: self.editButton,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.editButton,
-                           attribute: .bottom,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self.exerciseNameLabel,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: self.editButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: self.editButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        self.createAndActivateExerciseNameLabelConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -143,4 +80,46 @@ class EditExerciseTableViewCell: UITableViewCell {
                                                                  frame: .zero))
     }
     
+    // MARK: Constraint functions
+    
+    // Cling to top, bottom, left. Width of this view * 0.66
+    private func createAndActivateExerciseNameLabelConstraints() {
+        self.exerciseNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseNameLabel,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseNameLabel,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseNameLabel,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 2/3).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseNameLabel,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+    }
+    
+    // Cling to top, bottom, right of this view ; cling to left of exercisenamelabel
+    private func createAndActivateEditButtonConstraints() {
+        self.editButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint(item: self.exerciseNameLabel,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: self.editButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+    }
 }

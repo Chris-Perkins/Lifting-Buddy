@@ -25,7 +25,10 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18),
                                            fontColor: UIColor.niceBlue)
     
-    let chartFrame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+    let chartFrame = CGRect(x: 0,
+                            y: 0,
+                            width: frame.width,
+                            height: frame.height)
     let chartSettings = ChartSettings.getDefaultSettings()
     
     let displayFormatter = NSDate.getDateFormatter()

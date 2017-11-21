@@ -85,13 +85,10 @@ class WorkoutTableViewCell: UITableViewCell {
                                                              withCopyView: self,
                                                              attribute: .top,
                                                              plusConstant: 20.77).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: expandImage,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 10).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+                                                             withCopyView: self,
+                                                             attribute: .right,
+                                                             plusConstant: -10).isActive = true
         
         // MARK: streak label constraints
         self.streakLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -222,20 +219,14 @@ class WorkoutTableViewCell: UITableViewCell {
             NSLayoutConstraint.createViewBelowViewConstraint(view: exerLabel,
                                                                  belowView: prevLabel,
                                                                  withPadding: 10).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .left,
-                               relatedBy: .equal,
-                               toItem: exerLabel,
-                               attribute: .left,
-                               multiplier: 1,
-                               constant: -20).isActive = true
-            NSLayoutConstraint(item: self,
-                               attribute: .right,
-                               relatedBy: .equal,
-                               toItem: exerLabel,
-                               attribute: .right,
-                               multiplier: 1,
-                               constant: 10).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerLabel,
+                                                                 withCopyView: self,
+                                                                 attribute: .left,
+                                                                 plusConstant: 20).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerLabel,
+                                                                 withCopyView: self,
+                                                                 attribute: .right,
+                                                                 plusConstant: -10).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: exerLabel,
                                                              height: 20).isActive = true
             
@@ -252,19 +243,13 @@ class WorkoutTableViewCell: UITableViewCell {
                                                             0 : 26).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: editButton!,
                                                          height: WorkoutTableView.baseCellHeight).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: editButton,
-                           attribute: .left,
-                           multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: editButton,
-                           attribute: .width,
-                           multiplier: 2,
-                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton!,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton!,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.5).isActive = true
         
         
         // MARK: Start workout button constraints
@@ -276,21 +261,13 @@ class WorkoutTableViewCell: UITableViewCell {
                                                          0 : 26).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: startWorkoutButton!,
                                                          height: WorkoutTableView.baseCellHeight).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: startWorkoutButton,
-                           attribute: .right,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: startWorkoutButton,
-                           attribute: .width,
-                           multiplier: 2,
-                           constant: 0).isActive = true
-        //}
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.startWorkoutButton!,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.startWorkoutButton!,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.5).isActive = true
     }
     
     // Returns this workout

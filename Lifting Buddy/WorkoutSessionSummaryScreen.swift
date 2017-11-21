@@ -45,6 +45,9 @@ class WorkoutSessionSummaryScreen: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.closeButton,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.closeButton,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
         
     }
 }

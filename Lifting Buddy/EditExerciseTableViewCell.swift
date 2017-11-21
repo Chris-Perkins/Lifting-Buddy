@@ -42,6 +42,7 @@ class EditExerciseTableViewCell: UITableViewCell {
          * Layout is: NNNE
          */
         self.createAndActivateExerciseNameLabelConstraints()
+        self.createAndActivateEditButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {

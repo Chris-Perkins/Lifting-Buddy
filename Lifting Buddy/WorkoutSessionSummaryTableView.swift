@@ -22,6 +22,8 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
         self.data = exercises
         
         super.init(frame: .zero, style: style)
+        
+        self.setupTableView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,6 +42,7 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkoutSessionSummaryTableViewCell
         
         cell.setExercise(exercise: data[indexPath.row])
+        cell.backgroundColor = UIColor.niceRed
         
         return cell
     }

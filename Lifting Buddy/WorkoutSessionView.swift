@@ -124,7 +124,7 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
         self.saveWorkoutData()
         
         let view = WorkoutSessionSummaryView(workout: self.workout,
-                                               withExercises: self.workoutSessionTableView.getData())
+                                             exercises: self.workoutSessionTableView.getData())
         self.showViewDelegate?.showView(view: view)
         
         self.removeSelfNicelyWithAnimation()

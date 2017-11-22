@@ -10,6 +10,20 @@ import UIKit
 
 class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.backgroundColor = UIColor.niceRed
+    }
+    
     public func setExercise(exercise: Exercise) {
         // do something
     }

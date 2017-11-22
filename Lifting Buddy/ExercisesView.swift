@@ -177,6 +177,7 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
         let startWorkoutView = WorkoutSessionView(workout: workout,
                                                   frame: .zero)
         startWorkoutView.workoutSessionDelegate = self
+        startWorkoutView.showViewDelegate = self
         
         if let appendedExercise = exercise {
             startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)

@@ -1,5 +1,5 @@
 //
-//  WorkoutSessionSummaryScreen.swift
+//  WorkoutSessionSummaryView.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 11/19/17.
@@ -10,17 +10,28 @@ import UIKit
 import RealmSwift
 import Realm
 
-class WorkoutSessionSummaryScreen: UIView {
+class WorkoutSessionSummaryView: UIView {
     
     // MARK: View properties
     
+    // The lowest content view in the scrollable view.
+    // Used to determine the contentsize for this view
+    var lowestContentView: UIView
+    
+    let contentView: UIScrollView
+    // the label displaying the title
+    let titleLabel: UILabel
     // A button the user should press if we're trying to close this view
     let closeButton: PrettyButton
     
     // MARK: Init methods
     
-    init(withExercises: List<Exercise>) {
+    init(workout: Workout?, withExercises: List<Exercise>) {
+        self.contentView = UIScrollView()
+        self.titleLabel  = UILabel()
         self.closeButton = PrettyButton()
+        
+        self.lowestContentView = self.titleLabel
         
         super.init(frame: .zero)
         
@@ -64,6 +75,13 @@ class WorkoutSessionSummaryScreen: UIView {
     
     // MARK: Constraint Functions
     
+    private func createAndActivateLabelConstraints() {
+        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+    }
+    
+    // Cling to bottom, right, left ; height 50
     private func createAndActivateCloseButtonConstraints() {
         self.closeButton.translatesAutoresizingMaskIntoConstraints = false
         

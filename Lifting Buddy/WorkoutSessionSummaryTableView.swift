@@ -49,7 +49,7 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
     
     // Each cell's height depends on the number of progression methods, but there is a flat height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return UITableViewCell.defaultHeight
     }
     
     // MARK: Private functions

@@ -229,7 +229,7 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
                            constant: 0).isActive = true
     }
     
-    // Cling to left,right of this view ; place above cancel button ; height 50
+    // Cling to left,right of this view ; place above cancel button ; height of prettybutton default height
     private func createCreateExerciseButtonConstraints() {
         self.createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -247,10 +247,10 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
                            multiplier: 1,
                            constant: 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.createExerciseButton,
-                                                         height: 50).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
     }
     
-    // cling to left, right, bottom of this view ; height of 0 or 50 (depends on selecting exercise)
+    // cling to left, right, bottom of this view ; height of 0 or default height - 5 (depends on selecting exercise)
     private func createAndActivateCancelButtonConstraints() {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -265,7 +265,7 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
                                                              attribute: .bottom).isActive = true
         // make this button basically invisible if we're not selecting an exercise
         NSLayoutConstraint.createHeightConstraintForView(view: self.cancelButton,
-                                                         height: self.selectingExercise ? 45 : 0).isActive = true
+                                                         height: self.selectingExercise ? PrettyButton.defaultHeight - 5 : 0).isActive = true
     }
     
     // Center in view ; height 50 ; width of 85% of this view.
@@ -282,7 +282,7 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
                                                              withCopyView: overlayButton,
                                                              attribute: .centerY).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: overlayButton,
-                                                         height: 50).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: overlayButton,
                                                              withCopyView: overlayView,
                                                              attribute: .width,

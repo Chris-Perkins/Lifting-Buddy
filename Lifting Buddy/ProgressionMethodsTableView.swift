@@ -15,8 +15,6 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     
     // the data in this tableview
     private var data:[ProgressionMethod] = [ProgressionMethod].init()
-    // the height per cell
-    public static let cellHeight: CGFloat = 50.0
     
     // MARK: Override Init
     
@@ -56,7 +54,7 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
         if editingStyle == .delete {
             self.data.remove(at: indexPath.row)
             
-            heightConstraint?.constant -= 50
+            heightConstraint?.constant -= UITableViewCell.defaultHeight
             self.reloadData()
         }
     }
@@ -72,14 +70,14 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ProgressionsMethodTableView.cellHeight
+        return UITableViewCell.defaultHeight
     }
     
     // MARK: Custom functions
     
     // Append some data to the tableView
     public func appendDataToTableView(data: ProgressionMethod) {
-        heightConstraint?.constant += 50
+        heightConstraint?.constant += UITableViewCell.defaultHeight
         
         self.data.append(data)
         reloadData()

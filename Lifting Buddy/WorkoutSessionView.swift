@@ -286,10 +286,10 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
                                                              withCopyView: self.addExerciseButton,
                                                              attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.addExerciseButton,
-                                                         height: WorkoutSessionTableView.baseCellHeight).isActive = true
+                                                         height: UITableViewCell.defaultHeight).isActive = true
     }
     
-    // center horiz in view ; place below workoutSessionTableView ; height 50 ; width of this view - 80
+    // center horiz in view ; place below workoutSessionTableView ; height default; width of this view - 80
     private func createAndActivateCompleteButtonConstraints() {
         self.completeButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -300,7 +300,7 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
                                                          belowView: self.addExerciseButton,
                                                          withPadding: 25).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.completeButton,
-                                                         height: 50).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.completeButton,
                                                              withCopyView: self,
                                                              attribute: .width,

@@ -17,8 +17,6 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     // The data displayed in cells
     private var sortedData: [Workout]
     private var data: AnyRealmCollection<Workout>
-    // The base height per cell
-    public static let baseCellHeight: CGFloat = 50.0
     
     // MARK: Initializers
     
@@ -101,8 +99,8 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         let exerCount = CGFloat(sortedData[indexPath.row].getExercises().count)
         
         return self.indexPathForSelectedRow?.row == indexPath.row ?
-            WorkoutTableView.baseCellHeight * 2 + exerCount * 30.0 + (exerCount > 0 ? 26 : 0) :
-            WorkoutTableView.baseCellHeight
+            UITableViewCell.defaultHeight + PrettyButton.defaultHeight + exerCount * 30.0 + (exerCount > 0 ? 26 : 0) :
+            UITableViewCell.defaultHeight
     }
     
     // MARK: Custom functions

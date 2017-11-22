@@ -125,10 +125,13 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutTableView,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutTableView,
-                                                             withCopyView: self,
-                                                             attribute: .height,
-                                                             plusConstant: -50).isActive = true
+        NSLayoutConstraint(item: self.createWorkoutButton,
+                           attribute: .top,
+                           relatedBy: .equal,
+                           toItem: self.workoutTableView,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
     
     // Cling to top,left,right of workouttableview ; bottom is self view
@@ -141,11 +144,10 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
                                                              withCopyView: self.workoutTableView,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: createWorkoutButton,
-                                                         belowView: workoutTableView,
-                                                         withPadding: 0).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.createWorkoutButton,
+                                                         height: PrettyButton.defaultHeight).isActive = true
     }
 }

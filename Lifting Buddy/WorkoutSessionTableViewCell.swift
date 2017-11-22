@@ -167,7 +167,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Gets the height of the current cell
     private func getHeight() -> CGFloat {
-        return self.isToggled ? getExpandedHeight() : WorkoutSessionTableView.baseCellHeight
+        return self.isToggled ? getExpandedHeight() : UITableViewCell.defaultHeight
     }
 
     // gets the height of this cell when expanded
@@ -175,10 +175,10 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         // total padding for this view. Incremement by one per each "cell" of this view
         var totalPadding = 0
         
-        let titleBarHeight = WorkoutTableView.baseCellHeight
+        let titleBarHeight = UITableViewCell.defaultHeight
         let contentHeight = getContentHeight()
         
-        let addSetButtonHeight = WorkoutTableView.baseCellHeight
+        let addSetButtonHeight = PrettyButton.defaultHeight
         totalPadding += 1
         
         let totalTableViewHeight = self.tableViewHeight + self.viewPadding
@@ -306,10 +306,10 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: invisButton,
-                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+                                                         height: UITableViewCell.defaultHeight).isActive = true
     }
     
-    // Place below view top, cling to left, right ; height of baseCellHeight
+    // Place below view top, cling to left, right ; height of default height
     private func createAndActivateCellTitleConstraints() {
         self.cellTitle.translatesAutoresizingMaskIntoConstraints = false
         
@@ -329,7 +329,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
                            multiplier: 1,
                            constant: 10).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: cellTitle,
-                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+                                                         height: UITableViewCell.defaultHeight).isActive = true
     }
     
     // Cling to top, right ;  height 8.46 ; width 16
@@ -438,7 +438,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
                            multiplier: 1,
                            constant: -self.viewPadding).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.addSetButton,
-                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
     }
     
     // center horiz in view ; width of this view/1.33 ; place below add set button ; height of tableviewheight

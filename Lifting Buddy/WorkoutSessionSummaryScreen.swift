@@ -93,7 +93,7 @@ class WorkoutSessionSummaryView: UIView {
         
     }
     
-    // Cling to bottom, right, left ; height 50
+    // Cling to bottom, right, left ; height of pretty button default height
     private func createAndActivateCloseButtonConstraints() {
         self.closeButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -107,7 +107,7 @@ class WorkoutSessionSummaryView: UIView {
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.closeButton,
-                                                         height: 50).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
         
     }
 }

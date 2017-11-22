@@ -23,9 +23,8 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     private var selectingExercise: Bool
     // The data displayed in cells
     private var sortedData: [Exercise]
+    // the data we sort from
     private var data: AnyRealmCollection<Exercise>
-    // The base height per cell
-    public static let baseCellHeight: CGFloat = 50.0
     
     // MARK: Initializers
     
@@ -129,8 +128,8 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         return self.indexPathForSelectedRow?.row == indexPath.row ?
             // The height for when toggled depends on the number of progression methods.
             // If there are no progression methods, no graph and no spacing occurs.
-            ExercisesTableView.baseCellHeight * 2 + pgmCount * 40.0 + (pgmCount > 0 ? 320 : 0) :
-            ExercisesTableView.baseCellHeight
+            UITableViewCell.defaultHeight + PrettyButton.defaultHeight + pgmCount * 40.0 + (pgmCount > 0 ? 320 : 0) :
+            UITableViewCell.defaultHeight
     }
     
     // MARK: Custom functions

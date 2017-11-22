@@ -58,7 +58,7 @@ class WorkoutTableViewCell: UITableViewCell {
         
         // MARK: Label constraints
         
-        // Below view top ; cling to left of view ; to the right of the fire image ; height of basecellheight
+        // Below view top ; cling to left of view ; to the right of the fire image ; height of default height
         cellTitle.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitle,
                                                              withCopyView: self,
@@ -75,7 +75,7 @@ class WorkoutTableViewCell: UITableViewCell {
                            multiplier: 1,
                            constant: 5).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: cellTitle,
-                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+                                                         height: UITableViewCell.defaultHeight).isActive = true
         
         // MARK: Image constraints
         self.expandImage.translatesAutoresizingMaskIntoConstraints = false
@@ -242,7 +242,7 @@ class WorkoutTableViewCell: UITableViewCell {
                                                          withPadding: prevLabel == cellTitle ?
                                                             0 : 26).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: editButton!,
-                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton!,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
@@ -260,7 +260,7 @@ class WorkoutTableViewCell: UITableViewCell {
                                                          withPadding: prevLabel == cellTitle ?
                                                          0 : 26).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: startWorkoutButton!,
-                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.startWorkoutButton!,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true

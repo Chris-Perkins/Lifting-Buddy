@@ -356,7 +356,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
                                                          height: 30).isActive = true
     }
     
-    // Center horiz in view; place below self ; height of 50 ; width of this view - 40
+    // Center horiz in view; place below self ; height of default height ; width of this view - 40
     private func createAndActivateNameEntryFieldConstraints() {
         // Name entry field
         self.nameEntryField.translatesAutoresizingMaskIntoConstraints = false
@@ -368,7 +368,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
                                                             belowView: self.createWorkoutLabel,
                                                             withPadding: viewPadding / 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.nameEntryField,
-                                                         height: 50).isActive = true
+                                                         height: BetterTextField.defaultHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
                                                             withCopyView: self,
                                                             attribute: .width,
@@ -407,7 +407,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
         
         // Height constraint property assigning; increases based on number of cells
         self.editExerciseTableView.heightConstraint =
-            NSLayoutConstraint.createHeightConstraintForView(view: editExerciseTableView, height: 0)
+            NSLayoutConstraint.createHeightConstraintForView(view: self.editExerciseTableView, height: 0)
         self.editExerciseTableView.heightConstraint?.isActive = true
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editExerciseTableView,
@@ -416,7 +416,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
                                                              plusConstant: -50).isActive = true
     }
     
-    // place below exercisetableview ; left/right match to exercisetableview ; height 50
+    // place below exercisetableview ; left/right match to exercisetableview ; height of default height
     private func createAndActivateAddExerciseButtonConstraints() {
         self.addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
  
@@ -430,7 +430,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
                                                              withCopyView: self.editExerciseTableView,
                                                              attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.addExerciseButton,
-                                                         height: 50).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
     }
     
     // center horiz in view ; place below name entry field ; height 20 ; width of this view - 20
@@ -474,7 +474,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
                                                              plusConstant: -20).isActive = true
     }
     
-    // center horiz in view ; place below add exercise button ; height of 50 ; width of this view - 50
+    // center horiz in view ; place below add exercise button ; height of default ; width of this view - 50
     private func createAndActivateCreateWorkoutButtonConstraints() {
         self.createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -485,7 +485,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
                                                          belowView: self.repeatButtonView,
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.createWorkoutButton,
-                                                         height: 50).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
                                                              withCopyView: self,
                                                              attribute: .width,

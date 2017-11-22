@@ -14,7 +14,6 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
     public var heightConstraint: NSLayoutConstraint?
     
     private var data:[Exercise] = [Exercise].init()
-    var cellHeight: CGFloat = 50.0
     
     // MARK: Override Init
     
@@ -48,7 +47,7 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
         if editingStyle == .delete {
             self.data.remove(at: indexPath.row)
             
-            heightConstraint?.constant -= 50
+            heightConstraint?.constant -= UITableViewCell.defaultHeight
             self.reloadData()
         }
     }
@@ -78,14 +77,14 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
     
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeight
+        return UITableViewCell.defaultHeight
     }
     
     // MARK: Custom functions
     
     // Append some data to the tableView
     public func appendDataToTableView(data: Exercise) {
-        self.heightConstraint?.constant += 50
+        self.heightConstraint?.constant += UITableViewCell.defaultHeight
         
         self.data.append(data)
         reloadData()

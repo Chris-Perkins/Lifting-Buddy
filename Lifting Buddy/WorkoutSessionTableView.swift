@@ -15,9 +15,6 @@ class WorkoutSessionTableView: UITableView, UITableViewDelegate, UITableViewData
     
     // MARK: View properties
     
-    // Base cell height for each tableviewcell
-    public static let baseCellHeight: CGFloat = 50.0
-    
     // Height constraint for this view
     public var heightConstraint: NSLayoutConstraint?
     // The delegate for this view
@@ -41,7 +38,7 @@ class WorkoutSessionTableView: UITableView, UITableViewDelegate, UITableViewData
         curComplete = 0
         
         for _ in data {
-            heights.append(WorkoutSessionTableView.baseCellHeight)
+            heights.append(UITableViewCell.defaultHeight)
         }
         self.heightConstraint?.constant = heights.reduce(0, +)
         
@@ -57,7 +54,7 @@ class WorkoutSessionTableView: UITableView, UITableViewDelegate, UITableViewData
         curComplete = 0
         
         for _ in data {
-            heights.append(WorkoutSessionTableView.baseCellHeight)
+            heights.append(UITableViewCell.defaultHeight)
         }
         
         super.init(frame: .zero, style: style)
@@ -179,7 +176,7 @@ class WorkoutSessionTableView: UITableView, UITableViewDelegate, UITableViewData
     
     // Append some data to the tableView
     public func appendDataToTableView(data: Exercise) {
-        heights.append(WorkoutSessionTableView.baseCellHeight)
+        heights.append(UITableViewCell.defaultHeight)
         
         let realm = try! Realm()
         try! realm.write {

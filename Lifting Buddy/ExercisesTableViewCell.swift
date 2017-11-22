@@ -207,7 +207,7 @@ class ExerciseTableViewCell: UITableViewCell {
                                                     frame: CGRect(x: 0,
                                                                   y: 0,
                                                                   width: self.frame.width * 0.85,
-                                                                  height: 300))
+                                                                  height: Chart.defaultHeight))
         self.chartFrame.addSubview(chart!.view)
     }
     
@@ -236,7 +236,7 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // MARK: Constraint functions
     
-    // Below view top ; indent to left by 10 ; do not overlap expandImage ; height of basecellheight
+    // Below view top ; indent to left by 10 ; do not overlap expandImage ; height of defaultHeight
     private func createAndActivateCellTitleConstraints() {
         self.cellTitle.translatesAutoresizingMaskIntoConstraints = false
         
@@ -255,7 +255,7 @@ class ExerciseTableViewCell: UITableViewCell {
                            multiplier: 1,
                            constant: 5).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: cellTitle,
-                                                         height: ExercisesTableView.baseCellHeight).isActive = true
+                                                         height: UITableViewCell.defaultHeight).isActive = true
     }
     
     // Indent from right ; Below self top ; Width 16 ; Height 8.46
@@ -276,7 +276,7 @@ class ExerciseTableViewCell: UITableViewCell {
                                                          height: 8.46).isActive = true
     }
     
-    // Center horiz in view ; Width of this view ; Below cell title ; Height 300
+    // Center horiz in view ; Width of this view ; Below cell title ; Height of Chart's default height
     private func createAndActivateChartFrameConstraints() {
         self.chartFrame.translatesAutoresizingMaskIntoConstraints = false
         
@@ -291,7 +291,7 @@ class ExerciseTableViewCell: UITableViewCell {
                                                          belowView: self.cellTitle,
                                                          withPadding: 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.chartFrame,
-                                                         height: self.exercise!.getProgressionMethods().count > 0 ? 300 :  0).isActive = true
+                                                         height: self.exercise!.getProgressionMethods().count > 0 ? Chart.defaultHeight :  0).isActive = true
     }
     
     // Place at bottom of view; take up left, right of view. Height of BaseCellHeight
@@ -307,7 +307,7 @@ class ExerciseTableViewCell: UITableViewCell {
                                                          withPadding: withPrevView == self.chartFrame ?
                                                             0 : 10).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: editButton,
-                                                         height: ExercisesTableView.baseCellHeight).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
@@ -329,7 +329,7 @@ class ExerciseTableViewCell: UITableViewCell {
                                                          withPadding: withPrevView == self.chartFrame ?
                                                             0 : 10).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: startButton,
-                                                         height: WorkoutTableView.baseCellHeight).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: startButton,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true

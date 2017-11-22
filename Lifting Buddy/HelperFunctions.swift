@@ -33,6 +33,18 @@ func ^^ (radix: Int, power: Int) -> Int {
 
 // MARK: Extensions
 
+extension BetterTextField {
+    public static var defaultHeight: CGFloat {
+        return 50
+    }
+}
+
+extension Chart {
+    public static var defaultHeight: CGFloat {
+        return 300
+    }
+}
+
 extension ChartSettings {
     // Default chart settings for this project
     public static func getDefaultSettings() -> ChartSettings {
@@ -154,6 +166,10 @@ extension NSLayoutConstraint {
 }
 
 extension PrettyButton {
+    public static var defaultHeight: CGFloat {
+        return 50
+    }
+    
     override func setDefaultProperties() {
         self.backgroundColor = UIColor.niceBlue
         self.setOverlayColor(color: UIColor.niceYellow)
@@ -266,7 +282,14 @@ extension UITableView {
     }
 }
 
+extension UITableViewCell {
+    public static var defaultHeight: CGFloat {
+        return 50
+    }
+}
+
 extension UITextField {
+    
     var isNumeric: Bool {
         if let text = self.text {
             if text.count == 0 { return true }

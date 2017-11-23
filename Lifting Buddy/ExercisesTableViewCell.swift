@@ -81,6 +81,7 @@ class ExerciseTableViewCell: UITableViewCell {
         self.chartFrame.layoutSubviews()
         
         self.clipsToBounds = true
+        self.chartFrame.clipsToBounds = true
         
         self.cellTitle.textColor = UIColor.niceBlue
         self.cellTitle.textAlignment = .left
@@ -110,18 +111,22 @@ class ExerciseTableViewCell: UITableViewCell {
         
         self.cellTitle.text = exercise.getName()
         
-        let chartGraphView = ExerciseChartViewWithToggles(exercise: exercise,
-                                                          chartWidth: self.frame.width *
-                                                            ExerciseTableViewCell.chartWidthMultiplier)
-        self.chartFrame.addSubview(chartGraphView)
-        self.chartFrame.backgroundColor = UIColor.niceRed
-        
-        self.chartHeightConstraint?.constant =
-        ExerciseChartViewWithToggles.getNecessaryHeightForExerciseGraph(exercise: exercise)
-        chartGraphView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.clingViewToView(view: chartGraphView,
-                                           toView: self.chartFrame)
+        if exercise.getProgressionMethods().count > 0 {
+            let chartGraphView = ExerciseChartViewWithToggles(exercise: exercise,
+                                                              chartWidth: self.frame.width *
+                                                                ExerciseTableViewCell.chartWidthMultiplier)
+            self.chartFrame.addSubview(chartGraphView)
+            self.chartFrame.backgroundColor = UIColor.niceRed
+            
+            self.chartHeightConstraint?.constant =
+            ExerciseChartViewWithToggles.getNecessaryHeightForExerciseGraph(exercise: exercise)
+            chartGraphView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.clingViewToView(view: chartGraphView,
+                                               toView: self.chartFrame)
+        } else {
+            self.chartHeightConstraint?.constant = 0
+        }
         
         self.layoutSubviews()
     }

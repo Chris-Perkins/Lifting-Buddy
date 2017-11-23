@@ -129,9 +129,10 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         return self.indexPathForSelectedRow?.row == indexPath.row ?
             // The height for when toggled depends on the number of progression methods.
             // If there are no progression methods, no graph and no spacing occurs.
-            UITableViewCell.defaultHeight + PrettyButton.defaultHeight + pgmCount * 40.0 +
+            UITableViewCell.defaultHeight + PrettyButton.defaultHeight +
                 // + 10 as we add padding to the view.
-                (pgmCount > 0 ? Chart.defaultHeight + 10 : 0) + PrettySegmentedControl.defaultHeight :
+                (pgmCount > 0 ? ExerciseChartViewWithToggles.getNecessaryHeightForExerciseGraph(
+                                    exercise: sortedData[indexPath.row]) : 0) + 10  :
             UITableViewCell.defaultHeight
     }
     

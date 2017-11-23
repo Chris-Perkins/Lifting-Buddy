@@ -38,7 +38,7 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
     // MARK: Inits
     init(exercise: Exercise, chartWidth: CGFloat) {
         self.exercise = exercise
-        self.selectedTimeAmount = TimeAmount.ALLTIME
+        self.selectedTimeAmount = TimeAmount.MONTH
         self.filterProgressionMethods = Set<ProgressionMethod>()
         self.chartWidth = chartWidth
         

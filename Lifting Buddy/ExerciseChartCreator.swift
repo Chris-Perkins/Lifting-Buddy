@@ -10,13 +10,6 @@ import UIKit
 import SwiftCharts
 import RealmSwift
 
-public enum TimeAmount {
-    case WEEK
-    case MONTH
-    case YEAR
-    case ALLTIME
-}
-
 func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                     filterProgressionMethods: Set<ProgressionMethod> = Set<ProgressionMethod>(),
                                     timeAmount: TimeAmount,
@@ -139,8 +132,6 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                                 displayFormatter: displayFormatter))
             prevDate = date
         }
-    default:
-        fatalError("GRAPH FOR TIMEAMOUNT TYPE NOT YET IMPLEMENTED")
     }
     
     let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "Date", settings: labelSettings))

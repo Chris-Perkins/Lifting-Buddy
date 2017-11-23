@@ -21,6 +21,15 @@ func getStatusBarHeight() -> CGFloat {
     return Swift.min(statusBarSize.width, statusBarSize.height)
 }
 
+// Time amount values (used in graphing)
+public enum TimeAmount: String {
+    case MONTH = "MONTH"
+    case YEAR = "YEAR"
+    case ALLTIME = "ALLTIME"
+}
+// An associated array for easy parsing
+public var TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]
+
 
 // MARK: Operators
 
@@ -175,6 +184,12 @@ extension PrettyButton {
         self.setOverlayColor(color: UIColor.niceYellow)
         self.setOverlayStyle(style: .FADE)
         self.cornerRadius = 0
+    }
+}
+
+extension PrettySegmentedControl {
+    public static var defaultHeight: CGFloat {
+        return 30
     }
 }
 

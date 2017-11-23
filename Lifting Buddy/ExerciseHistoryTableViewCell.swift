@@ -116,7 +116,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
                                constant: 0).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: progressionMethodLabel,
                                                              height: ExerciseHistoryTableViewCell.heightPerProgressionMethod
-                                                            ).isActive = true
+                                                             ).isActive = true
             
             dataLabel.translatesAutoresizingMaskIntoConstraints = false
             

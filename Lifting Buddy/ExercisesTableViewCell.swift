@@ -9,7 +9,7 @@
 import UIKit
 import SwiftCharts
 
-class ExerciseTableViewCell: UITableViewCell {
+class ExerciseTableViewCell: UITableViewCell, PrettySegmentedControlDelegate {
     
     // MARK: View properties
     
@@ -18,6 +18,8 @@ class ExerciseTableViewCell: UITableViewCell {
     // delegate to show a view for us
     public var showViewDelegate: ShowViewDelegate?
     
+    // the time amount we're currently displaying
+    private var selectedTimeAmount: TimeAmount
     // Filter progressionMethods from graph
     private var filterProgressionMethods: Set<ProgressionMethod>
     // the chart we're showing
@@ -29,6 +31,8 @@ class ExerciseTableViewCell: UITableViewCell {
     private var exercise: Exercise?
     // An indicator on whether or not the cell is expanded
     private var expandImage: UIImageView
+    // A view we use to select a date view
+    private var timeAmountSelectionView: PrettySegmentedControl
     // The view where we'll put the chart
     private var chartFrame: UIView
     // The labels for every exercise
@@ -45,22 +49,29 @@ class ExerciseTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.cellTitle = UILabel()
         self.expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
+        self.timeAmountSelectionView = PrettySegmentedControl(labelStrings: TimeAmountArray.map {$0.rawValue},
+                                                              frame: .zero)
         self.chartFrame = UIView()
         self.progressionButtons = [ToggleablePrettyButtonWithProgressionMethod]()
         self.invisButton = UIButton()
         
+        self.selectedTimeAmount = TimeAmount.ALLTIME
         self.filterProgressionMethods = Set<ProgressionMethod>()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = .none
         
+        self.timeAmountSelectionView.delegate = self
+        
         self.addSubview(self.cellTitle)
         self.addSubview(self.expandImage)
+        self.addSubview(self.timeAmountSelectionView)
         self.addSubview(self.chartFrame)
         
         self.createAndActivateCellTitleConstraints()
         self.createAndActivateExpandImageConstraints()
+        self.createAndActivateTimeAmountSelectionViewConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,6 +89,7 @@ class ExerciseTableViewCell: UITableViewCell {
         self.cellTitle.textColor = UIColor.niceBlue
         self.cellTitle.textAlignment = .left
         
+        self.timeAmountSelectionView.backgroundColor = UIColor.niceRed
         self.chartFrame.clipsToBounds = true
         
         if (self.isSelected) {
@@ -203,7 +215,7 @@ class ExerciseTableViewCell: UITableViewCell {
         
         self.chart = createChartFromExerciseHistory(exerciseHistory: self.exercise!.getExerciseHistory(),
                                                     filterProgressionMethods: filterProgressionMethods,
-                                                    timeAmount: TimeAmount.ALLTIME,
+                                                    timeAmount: self.selectedTimeAmount,
                                                     frame: CGRect(x: 0,
                                                                   y: 0,
                                                                   width: self.frame.width * 0.85,
@@ -230,6 +242,14 @@ class ExerciseTableViewCell: UITableViewCell {
         } else {
             filterProgressionMethods.insert(sender.progressionMethod)
         }
+        
+        self.createChart()
+    }
+    
+    // MARK: PrettySegmentedControlDelegate functions
+    
+    func segmentSelectionChanged(index: Int) {
+        self.selectedTimeAmount = TimeAmountArray[index]
         
         self.createChart()
     }
@@ -276,6 +296,23 @@ class ExerciseTableViewCell: UITableViewCell {
                                                          height: 8.46).isActive = true
     }
     
+    // Center horiz in view ; below cellTitle ; width of this view * 0.85 ; height of default
+    private func createAndActivateTimeAmountSelectionViewConstraints() {
+        self.timeAmountSelectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeAmountSelectionView,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: self.timeAmountSelectionView,
+                                                         belowView: self.cellTitle).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeAmountSelectionView,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.85).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.timeAmountSelectionView,
+                                                         height: PrettySegmentedControl.defaultHeight).isActive = true
+    }
+    
     // Center horiz in view ; Width of this view ; Below cell title ; Height of Chart's default height
     private func createAndActivateChartFrameConstraints() {
         self.chartFrame.translatesAutoresizingMaskIntoConstraints = false
@@ -284,11 +321,10 @@ class ExerciseTableViewCell: UITableViewCell {
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.chartFrame,
-                                                             withCopyView: self,
-                                                             attribute: .width,
-                                                             multiplier: 0.85).isActive = true
+                                                             withCopyView: self.timeAmountSelectionView,
+                                                             attribute: .width).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.chartFrame,
-                                                         belowView: self.cellTitle,
+                                                         belowView: self.timeAmountSelectionView,
                                                          withPadding: 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.chartFrame,
                                                          height: self.exercise!.getProgressionMethods().count > 0 ? Chart.defaultHeight :  0).isActive = true

@@ -118,7 +118,6 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         cell.setExercise(exercise: sortedData[indexPath.row])
         cell.setExpandable(expandable: !self.selectingExercise)
         cell.updateSelectedStatus()
-        cell.updateSelectedStatus()
         
         return cell
     }

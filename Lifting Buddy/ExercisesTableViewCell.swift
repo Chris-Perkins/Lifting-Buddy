@@ -159,8 +159,7 @@ class ExerciseTableViewCell: UITableViewCell, PrettySegmentedControlDelegate {
                                                                  attribute: .centerX).isActive = true
             NSLayoutConstraint.createViewBelowViewConstraint(view: progressionMethodButton,
                                                              belowView: prevView,
-                                                             withPadding: prevView == self.chartFrame ?
-                                                                10 : 0).isActive = true
+                                                             withPadding: 0).isActive = true
             NSLayoutConstraint.createViewAttributeCopyConstraint(view: progressionMethodButton,
                                                                  withCopyView: self,
                                                                  attribute: .width,
@@ -220,6 +219,7 @@ class ExerciseTableViewCell: UITableViewCell, PrettySegmentedControlDelegate {
                                                                   y: 0,
                                                                   width: self.frame.width * 0.85,
                                                                   height: Chart.defaultHeight))
+        chart!.view.backgroundColor = UIColor.white
         self.chartFrame.addSubview(chart!.view)
     }
     

@@ -9,6 +9,7 @@
 import UIKit
 import Realm
 import RealmSwift
+import SwiftCharts
 
 class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
     
@@ -129,7 +130,8 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
             // The height for when toggled depends on the number of progression methods.
             // If there are no progression methods, no graph and no spacing occurs.
             UITableViewCell.defaultHeight + PrettyButton.defaultHeight + pgmCount * 40.0 +
-                (pgmCount > 0 ? 320 : 0) + PrettySegmentedControl.defaultHeight :
+                // + 10 as we add padding to the view.
+                (pgmCount > 0 ? Chart.defaultHeight + 10 : 0) + PrettySegmentedControl.defaultHeight :
             UITableViewCell.defaultHeight
     }
     

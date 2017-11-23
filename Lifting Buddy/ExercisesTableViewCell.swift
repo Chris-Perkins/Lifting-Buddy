@@ -97,7 +97,7 @@ class ExerciseTableViewCell: UITableViewCell {
             self.startExerciseButton.setDefaultProperties()
             self.startExerciseButton.cornerRadius = 0
             self.startExerciseButton.backgroundColor = UIColor.niceGreen
-            self.startExerciseButton.setTitle("Start Exercise!", for: .normal)
+            self.startExerciseButton.setTitle("Start Exercise", for: .normal)
             
             self.backgroundColor = UIColor.niceLightGray
         } else {

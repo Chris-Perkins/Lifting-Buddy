@@ -161,7 +161,7 @@ class WorkoutTableViewCell: UITableViewCell {
             startWorkoutButton?.setDefaultProperties()
             startWorkoutButton?.cornerRadius = 0
             startWorkoutButton?.backgroundColor = UIColor.niceGreen
-            startWorkoutButton?.setTitle("Start Workout!", for: .normal)
+            startWorkoutButton?.setTitle("Start Workout", for: .normal)
             
             self.backgroundColor = UIColor.niceLightGray
         } else {

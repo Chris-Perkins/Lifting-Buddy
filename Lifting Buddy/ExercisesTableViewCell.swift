@@ -31,6 +31,8 @@ class ExerciseTableViewCell: UITableViewCell {
     private let invisButton: UIButton
     // The view which holds our chart and all associated views
     private var chartFrame: UIView
+    // The view that actually stores the exercise chart
+    private var chartView: ExerciseChartViewWithToggles?
     // The button that allows for exercise editing
     private let editButton: PrettyButton
     // A button to start the exercise
@@ -122,6 +124,8 @@ class ExerciseTableViewCell: UITableViewCell {
             ExerciseChartViewWithToggles.getNecessaryHeightForExerciseGraph(exercise: exercise)
             chartGraphView.translatesAutoresizingMaskIntoConstraints = false
             
+            self.chartView = chartGraphView
+            
             NSLayoutConstraint.clingViewToView(view: chartGraphView,
                                                toView: self.chartFrame)
         } else {
@@ -140,7 +144,13 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // Update selected status; v image becomes ^
     public func updateSelectedStatus() {
-        self.expandImage.transform = CGAffineTransform(scaleX: 1, y: self.isSelected ? -1 : 1)
+        if self.isSelected {
+            self.expandImage.transform = CGAffineTransform(scaleX: 1, y: -1)
+            self.chartView?.createChart()
+        } else {
+            self.expandImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.chartView?.destroyChart()
+        }
         
         self.layoutIfNeeded()
     }

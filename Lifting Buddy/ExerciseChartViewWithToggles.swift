@@ -57,8 +57,6 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
         self.createAndActivateTimeAmountSelectionViewConstraints()
         self.createAndActivateChartFrameConstraints()
         self.createProgressionMethodFilterButtons()
-        
-        self.createChart()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -81,13 +79,19 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
     // MARK: Custom view functions
     
     static func getNecessaryHeightForExerciseGraph(exercise: Exercise) -> CGFloat {
-        return CGFloat(exercise.getProgressionMethods().count) *
-            ExerciseChartViewWithToggles.heightPerProgressionMethodButton +
-            PrettySegmentedControl.defaultHeight + Chart.defaultHeight
+        // If we have stuff to graph, get height necessary
+        if exercise.getExerciseHistory().count > 1 {
+            return CGFloat(exercise.getProgressionMethods().count) *
+                ExerciseChartViewWithToggles.heightPerProgressionMethodButton +
+                PrettySegmentedControl.defaultHeight + Chart.defaultHeight
+        } else {
+            // Otherwise, there is nothing to graph. Show nothing.
+            return 0
+        }
     }
     
     // Creates a chart with the given selected information
-    private func createChart() {
+    public func createChart() {
         self.chart?.view.removeFromSuperview()
         
         self.chart = createChartFromExerciseHistory(exerciseHistory: self.exercise.getExerciseHistory(),
@@ -101,6 +105,15 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
         self.chartFrame.addSubview(chart!.view)
         
         self.layoutSubviews()
+    }
+    
+    // Destroys the chart being shown in memory. Used for saving memory
+    public func destroyChart() {
+        if self.chart != nil {
+            self.chart?.view.removeFromSuperview()
+            self.chart = nil
+            self.layoutSubviews()
+        }
     }
     
     // MARK: Event functions

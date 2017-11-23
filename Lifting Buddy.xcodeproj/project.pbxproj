@@ -28,6 +28,7 @@
 		226B119E1F96DB250013139B /* BetterInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B119D1F96DB250013139B /* BetterInputView.swift */; };
 		226B11A11F96E1750013139B /* InputViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B11A01F96E1750013139B /* InputViewProtocol.swift */; };
 		2278818D1FC6443000EBFA7E /* PrettySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2278818C1FC6443000EBFA7E /* PrettySegmentedControl.swift */; };
+		2278818F1FC6627500EBFA7E /* ExerciseChartViewWithToggles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2278818E1FC6627500EBFA7E /* ExerciseChartViewWithToggles.swift */; };
 		227981421F4D13BE0010DA18 /* ProgressionMethodsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227981411F4D13BE0010DA18 /* ProgressionMethodsTableView.swift */; };
 		227981441F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227981431F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift */; };
 		2280A2FD1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280A2FC1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift */; };
@@ -79,6 +80,7 @@
 		226B119D1F96DB250013139B /* BetterInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterInputView.swift; sourceTree = "<group>"; };
 		226B11A01F96E1750013139B /* InputViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewProtocol.swift; sourceTree = "<group>"; };
 		2278818C1FC6443000EBFA7E /* PrettySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrettySegmentedControl.swift; sourceTree = "<group>"; };
+		2278818E1FC6627500EBFA7E /* ExerciseChartViewWithToggles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseChartViewWithToggles.swift; sourceTree = "<group>"; };
 		227981411F4D13BE0010DA18 /* ProgressionMethodsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressionMethodsTableView.swift; sourceTree = "<group>"; };
 		227981431F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressionMethodTableViewCell.swift; sourceTree = "<group>"; };
 		2280A2FC1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				22A3F3EA1FACCC8E00BEAB97 /* TableOverlayProtocol.swift */,
 				2263DF971F8DA60E00592DCB /* TimeInputField.swift */,
 				225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */,
+				2278818E1FC6627500EBFA7E /* ExerciseChartViewWithToggles.swift */,
 			);
 			name = "Custom UITypes";
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
 				22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */,
 				2289D4451FAF9B7700A2DF9D /* ExerciseChartCreator.swift in Sources */,
+				2278818F1FC6627500EBFA7E /* ExerciseChartViewWithToggles.swift in Sources */,
 				229D87021F65FC7400FF05DD /* WorkoutSessionTableView.swift in Sources */,
 				22CDEFF61FC5EA9B000CB8C0 /* WorkoutSessionSummaryTableViewCell.swift in Sources */,
 				226B119E1F96DB250013139B /* BetterInputView.swift in Sources */,

@@ -25,7 +25,7 @@ func getStatusBarHeight() -> CGFloat {
 public enum TimeAmount: String {
     case MONTH = "MONTH"
     case YEAR = "YEAR"
-    case ALLTIME = "ALLTIME"
+    case ALLTIME = "ALL-TIME"
 }
 // An associated array for easy parsing
 public var TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]
@@ -118,7 +118,7 @@ extension NSLayoutConstraint {
                                                              attribute: .top).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
                                                              withCopyView: toView,
-                                                             attribute: .top).isActive = true
+                                                             attribute: .bottom).isActive = true
     }
     
     // Return a constraint that will place a view below's top a view with padding

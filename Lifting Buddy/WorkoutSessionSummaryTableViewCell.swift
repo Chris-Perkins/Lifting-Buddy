@@ -12,6 +12,9 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
+    public static var dateRecorded = Date.init(timeIntervalSince1970: 0)
+    
+    // The height for the progressionMethod views
     private static let heightPerProgressionMethod: CGFloat = 30
     
     let cellTitleLabel: UILabel
@@ -54,23 +57,23 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     }
     
     // Called by tableview to set the exercise
-    public func setExercise(exercise: Exercise) {
+    public func setExercise(exercise: Exercise, withDateRecorded: Date) {
         self.deleteProgressionMethodSummaryViews()
         
         self.cellTitleLabel.text = exercise.getName()
         
-        self.createProgressionMethodSummaryViews(data: self.getDataForSummaryViews(forExercise: exercise))
+        self.createProgressionMethodSummaryViews(data: self.getDataForSummaryViews(forExercise: exercise,
+                                                                                   withDateRecorded: withDateRecorded))
     }
     
     // Gets the progression method, new value, and old value for data based on an exercise.
-    private func getDataForSummaryViews(forExercise: Exercise) -> [(ProgressionMethod, CGFloat?, CGFloat?)] {
+    private func getDataForSummaryViews(forExercise: Exercise,
+                                        withDateRecorded: Date) -> [(ProgressionMethod, CGFloat?, CGFloat?)] {
         // The data we'll be returning
         var returnData = [(ProgressionMethod, CGFloat?, CGFloat?)]()
         
         // A shorter name for easier calls
         let exerciseHistory = forExercise.getExerciseHistory()
-        // The current time. Used in determining distance to previous entries
-        let nowTime = Date.init(timeIntervalSinceNow: 0)
         
         // The newest entry (the one we should have just entered...)
         var newestEntry: ExerciseHistoryEntry? = nil
@@ -81,14 +84,14 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
             // If the exercise info was submitted less than 2 seconds ago,
             // we assume this is the exercise we're attempting to access.
             // Otherwise, we skipped this workout.
-            if exerciseHistory[exerciseHistory.count - 1].date!.seconds(from: nowTime) > -2 {
+            if exerciseHistory[exerciseHistory.count - 1].date!.seconds(from: withDateRecorded) > -2 {
                 newestEntry = exerciseHistory[exerciseHistory.count - 1]
                 
                 for exerciseEntry in exerciseHistory.reversed() {
                     // If we found something that was not done in the past few seconds
                     // it must be our previous entry!
                     // (small bugs can occur here. Don't think about it too hard.)
-                    if exerciseEntry.date!.seconds(from: nowTime) < -2 {
+                    if exerciseEntry.date!.seconds(from: withDateRecorded) < -2 {
                         prevEntryToNewest = exerciseEntry
                         break
                     }

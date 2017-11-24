@@ -15,11 +15,13 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
     // MARK: View properties
     
     let data: List<Exercise>
+    let dateInitialized: Date
     
     // MARK: View overrides
     
     init(workout: Workout?, exercises: List<Exercise>, style: UITableViewStyle) {
         self.data = exercises
+        self.dateInitialized = Date.init(timeIntervalSinceNow: 0)
         
         super.init(frame: .zero, style: style)
         
@@ -40,7 +42,8 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
     // Initialize our cells..
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkoutSessionSummaryTableViewCell
-        cell.setExercise(exercise: data[indexPath.row])
+        cell.setExercise(exercise: data[indexPath.row],
+                         withDateRecorded: self.dateInitialized)
         return cell
     }
     

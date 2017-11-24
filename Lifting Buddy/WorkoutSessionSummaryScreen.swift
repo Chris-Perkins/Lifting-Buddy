@@ -14,6 +14,8 @@ class WorkoutSessionSummaryView: UIView {
     
     // MARK: View properties
     
+    // The title label for this view
+    let titleLabel: UILabel
     // The table view holding all the data of this past workout
     let summaryTableView: WorkoutSessionSummaryTableView
     // A button the user should press if we're trying to close this view
@@ -22,6 +24,7 @@ class WorkoutSessionSummaryView: UIView {
     // MARK: Init methods
     
     init(workout: Workout?, exercises: List<Exercise>) {
+        self.titleLabel = UILabel()
         self.summaryTableView = WorkoutSessionSummaryTableView(workout: workout,
                                                                exercises: exercises,
                                                                style: .plain)
@@ -29,6 +32,7 @@ class WorkoutSessionSummaryView: UIView {
         
         super.init(frame: .zero)
         
+        self.addSubview(titleLabel)
         self.addSubview(summaryTableView)
         self.addSubview(closeButton)
         
@@ -36,6 +40,7 @@ class WorkoutSessionSummaryView: UIView {
                                    action: #selector(buttonPress(sender:)),
                                    for: .touchUpInside)
         
+        self.createAndActivateTitleLabelConstraints()
         self.createAndActivateSummaryTableViewConstraints()
         self.createAndActivateCloseButtonConstraints()
     }
@@ -51,6 +56,12 @@ class WorkoutSessionSummaryView: UIView {
         
         // This view's layout
         self.backgroundColor = UIColor.niceGray
+        
+        // Title label
+        self.titleLabel.setDefaultProperties()
+        self.titleLabel.textColor = UIColor.white
+        self.titleLabel.backgroundColor = UIColor.niceLightBlue
+        self.titleLabel.text = "Workout Summary"
         
         // Close button
         self.closeButton.setDefaultProperties()
@@ -71,12 +82,29 @@ class WorkoutSessionSummaryView: UIView {
     
     // MARK: Constraint Functions
     
+    // Cling to top, left, right ; height 30
+    private func createAndActivateTitleLabelConstraints() {
+        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleLabel,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleLabel,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleLabel,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: self.titleLabel,
+                                                         height: 30).isActive = true
+    }
+    
+    // Below title label ; Cling to left, right. Place above the close button
     private func createAndActivateSummaryTableViewConstraints() {
         self.summaryTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.summaryTableView,
-                                                             withCopyView: self,
-                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: self.summaryTableView,
+                                                         belowView: self.titleLabel).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.summaryTableView,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true

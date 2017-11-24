@@ -20,7 +20,7 @@ Expected / Hopeful release: December 20th
 | Home Screen               | 10/10                 |                                                |
 | Workout Screen            | 9/10                  | Need search/filter bar.                        |
 | Exercise Screen           | 10/10                 |                                                |
-| Summary Screen            | 4/10                  | Base view done. Working on making it work.     |
+| Summary Screen            | 10/10                 |                                                |
 | Add Default Workouts      | 0/10                  | Not yet started                                |
 
 ### Future plans    

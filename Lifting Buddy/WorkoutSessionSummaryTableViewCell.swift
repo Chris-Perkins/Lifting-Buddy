@@ -208,8 +208,10 @@ class ProgressionMethodSummaryView: UIView {
     
     // The title label associated with this progressionMethod
     private let titleLabel: UILabel
+    // The label that says how much we did in this label
+    private let newValueLabel: UILabel
     // Summary results controller
-    private let resultsLabel: UILabel
+    private let differenceLabel: UILabel
     
     // MARK: View inits
     
@@ -219,15 +221,18 @@ class ProgressionMethodSummaryView: UIView {
         self.oldValue = oldValue
         
         self.titleLabel = UILabel()
-        self.resultsLabel = UILabel()
+        self.newValueLabel = UILabel()
+        self.differenceLabel = UILabel()
         
         super.init(frame: frame)
         
         self.addSubview(self.titleLabel)
-        self.addSubview(resultsLabel)
+        self.addSubview(self.newValueLabel)
+        self.addSubview(self.differenceLabel)
         
         self.createAndActivateTitleLabelConstraints()
-        self.createAndActivateResultsLabelConstraints()
+        self.createAndActivateNewValueLabelConstraints()
+        self.createAndActivateDifferenceLabelConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -246,28 +251,32 @@ class ProgressionMethodSummaryView: UIView {
         self.titleLabel.textAlignment = .left
         self.titleLabel.text = self.progressionMethod.getName()
         
-        // Results label
+        // NewValue & Difference label
         
-        self.resultsLabel.textAlignment = .right
         if let newValue = self.newValue {
+            self.newValueLabel.textColor = UIColor.niceBlue
+            self.newValueLabel.text = String(describing: newValue)
+            
             if let oldValue = self.oldValue {
                 // Green text color if new > old. Red if less. Blue for equal
                 if newValue > oldValue {
-                    self.resultsLabel.textColor = UIColor.niceGreen
+                    self.differenceLabel.textColor = UIColor.niceGreen
                 } else if newValue < oldValue {
-                    self.resultsLabel.textColor = UIColor.niceRed
+                    self.differenceLabel.textColor = UIColor.niceRed
                 } else {
-                    self.resultsLabel.textColor = UIColor.niceBlue
+                    self.differenceLabel.textColor = UIColor.niceBlue
                 }
                 
-                self.resultsLabel.text = String(describing: newValue - oldValue)
+                // Add a "+" char to symbolize that we gained some weight
+                self.differenceLabel.text = (newValue >= oldValue ? "+" : "") +
+                    String(describing: newValue - oldValue)
             } else {
-                self.resultsLabel.textColor = UIColor.niceGreen
-                self.resultsLabel.text = String(describing: newValue) + " (new!)"
+                self.differenceLabel.textColor = UIColor.niceGreen
+                self.differenceLabel.text = String(describing: newValue) + " (new!)"
             }
         } else {
-            self.resultsLabel.textColor = UIColor.niceRed
-            self.resultsLabel.text = "Skipped"
+            self.differenceLabel.textColor = UIColor.niceRed
+            self.differenceLabel.text = "Skipped"
         }
     }
     
@@ -293,24 +302,47 @@ class ProgressionMethodSummaryView: UIView {
                                                              multiplier: 0.5).isActive = true
     }
     
-    // Cling to right, top, bottom of view ; cling to right of titleLabel
-    private func createAndActivateResultsLabelConstraints() {
-        self.resultsLabel.translatesAutoresizingMaskIntoConstraints = false
+    // Cling to top, bottom ; cling to right of titlelabel ; width of this view * 0.25
+    private func createAndActivateNewValueLabelConstraints() {
+        self.newValueLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.resultsLabel,
-                                                             withCopyView: self,
-                                                             attribute: .right,
-                                                             plusConstant: -10).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.resultsLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.newValueLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.resultsLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.newValueLabel,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
         NSLayoutConstraint(item: self.titleLabel,
                            attribute: .right,
                            relatedBy: .equal,
-                           toItem: self.resultsLabel,
+                           toItem: self.newValueLabel,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.newValueLabel,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.25).isActive = true
+    }
+    
+    // Cling to right, top, bottom of view ; cling to right of newresultlabel
+    private func createAndActivateDifferenceLabelConstraints() {
+        self.differenceLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.differenceLabel,
+                                                             withCopyView: self,
+                                                             attribute: .right,
+                                                             plusConstant: -10).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.differenceLabel,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.differenceLabel,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint(item: self.newValueLabel,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: self.differenceLabel,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true

@@ -37,11 +37,10 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
         return data.count
     }
     
-    // Create our custom cell class
+    // Initialize our cells..
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkoutSessionSummaryTableViewCell
         cell.setExercise(exercise: data[indexPath.row])
-        
         return cell
     }
     

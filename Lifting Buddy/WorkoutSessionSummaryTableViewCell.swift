@@ -58,16 +58,80 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
         self.deleteProgressionMethodSummaryViews()
         
         self.cellTitleLabel.text = exercise.getName()
-        self.createProgressionMethodSummaryViews(exercise: exercise)
+        
+        self.createProgressionMethodSummaryViews(data: self.getDataForSummaryViews(forExercise: exercise))
     }
     
-    private func createProgressionMethodSummaryViews(exercise: Exercise) {
+    // Gets the progression method, new value, and old value for data based on an exercise.
+    private func getDataForSummaryViews(forExercise: Exercise) -> [(ProgressionMethod, CGFloat?, CGFloat?)] {
+        // The data we'll be returning
+        var returnData = [(ProgressionMethod, CGFloat?, CGFloat?)]()
+        
+        // A shorter name for easier calls
+        let exerciseHistory = forExercise.getExerciseHistory()
+        // The current time. Used in determining distance to previous entries
+        let nowTime = Date.init(timeIntervalSinceNow: 0)
+        
+        // The newest entry (the one we should have just entered...)
+        var newestEntry: ExerciseHistoryEntry? = nil
+        // The previous entry to the newest one (second to last)
+        var prevEntryToNewest: ExerciseHistoryEntry? = nil
+        
+        if exerciseHistory.count >= 1 {
+            // The last item in our list is the newest entry
+            newestEntry = exerciseHistory[exerciseHistory.count - 1]
+            
+            // If the exercise info was submitted less than 2 seconds ago,
+            // we do a little guess work and say this is what we want!
+            if newestEntry!.date!.seconds(from: nowTime) > -2 {
+                for exerciseEntry in exerciseHistory.reversed() {
+                    // If we found something that was not done in the past few seconds
+                    // it must be our previous entry!
+                    // (small bugs can occur here. Don't think about it too hard.)
+                    if exerciseEntry.date!.seconds(from: nowTime) < -2 {
+                        prevEntryToNewest = exerciseEntry
+                        break
+                    }
+                }
+            }
+            
+        }
+        
+        // Just used to map everything out while we iterate.
+        var dict = Dictionary<ProgressionMethod, (CGFloat?, CGFloat?)>()
+        for progressionMethod in forExercise.getProgressionMethods() {
+            dict[progressionMethod] = (nil, nil)
+        }
+        
+        if newestEntry != nil {
+            for entryPiece in newestEntry!.exerciseInfo {
+                dict[entryPiece.progressionMethod!]!.0 = CGFloat(entryPiece.value!.floatValue!)
+            }
+            
+            if prevEntryToNewest != nil {
+                for entryPiece in prevEntryToNewest!.exerciseInfo {
+                    dict[entryPiece.progressionMethod!]!.1 = CGFloat(entryPiece.value!.floatValue!)
+                }
+            }
+        }
+        for key in dict.keys {
+            returnData.append((key, dict[key]!.0, dict[key]!.1))
+        }
+        
+        return returnData
+    }
+    
+    // Creates the progression method data views
+    private func createProgressionMethodSummaryViews(data: [(ProgressionMethod, // Progression method
+                                                             CGFloat?,          // New data
+                                                             CGFloat?)          // Old data
+                                                            ]) {
         var prevView: UIView = self.cellTitleLabel
         
-        for (index, progressionMethod) in exercise.getProgressionMethods().enumerated() {
-            let view = ProgressionMethodSummaryView(progressionMethod: progressionMethod,
-                                                    newValue: nil,
-                                                    oldValue: nil,
+        for (index, dataPiece) in data.enumerated() {
+            let view = ProgressionMethodSummaryView(progressionMethod: dataPiece.0,
+                                                    newValue: dataPiece.1,
+                                                    oldValue: dataPiece.2,
                                                     frame: .zero)
             
             self.addSubview(view)
@@ -98,6 +162,7 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
         }
     }
     
+    // Deletes progression methods views
     private func deleteProgressionMethodSummaryViews() {
         for view in self.progressionMethodSummaryViews {
             view.removeFromSuperview()

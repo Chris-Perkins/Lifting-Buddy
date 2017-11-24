@@ -78,12 +78,12 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
         var prevEntryToNewest: ExerciseHistoryEntry? = nil
         
         if exerciseHistory.count >= 1 {
-            // The last item in our list is the newest entry
-            newestEntry = exerciseHistory[exerciseHistory.count - 1]
-            
             // If the exercise info was submitted less than 2 seconds ago,
-            // we do a little guess work and say this is what we want!
-            if newestEntry!.date!.seconds(from: nowTime) > -2 {
+            // we assume this is the exercise we're attempting to access.
+            // Otherwise, we skipped this workout.
+            if exerciseHistory[exerciseHistory.count - 1].date!.seconds(from: nowTime) > -2 {
+                newestEntry = exerciseHistory[exerciseHistory.count - 1]
+                
                 for exerciseEntry in exerciseHistory.reversed() {
                     // If we found something that was not done in the past few seconds
                     // it must be our previous entry!
@@ -253,18 +253,25 @@ class ProgressionMethodSummaryView: UIView {
         
         // NewValue & Difference label
         
+        self.differenceLabel.textAlignment = .center
+        self.newValueLabel.textAlignment = .center
+        
         if let newValue = self.newValue {
             self.newValueLabel.textColor = UIColor.niceBlue
             self.newValueLabel.text = String(describing: newValue)
+            self.newValueLabel.backgroundColor = UIColor.niceLightBlue.withAlphaComponent(0.2)
             
             if let oldValue = self.oldValue {
                 // Green text color if new > old. Red if less. Blue for equal
                 if newValue > oldValue {
                     self.differenceLabel.textColor = UIColor.niceGreen
+                    self.differenceLabel.backgroundColor = UIColor.niceGreen.withAlphaComponent(0.2)
                 } else if newValue < oldValue {
                     self.differenceLabel.textColor = UIColor.niceRed
+                    self.differenceLabel.backgroundColor = UIColor.niceRed.withAlphaComponent(0.2)
                 } else {
                     self.differenceLabel.textColor = UIColor.niceBlue
+                    self.differenceLabel.backgroundColor = UIColor.niceBlue.withAlphaComponent(0.2)
                 }
                 
                 // Add a "+" char to symbolize that we gained some weight
@@ -272,10 +279,12 @@ class ProgressionMethodSummaryView: UIView {
                     String(describing: newValue - oldValue)
             } else {
                 self.differenceLabel.textColor = UIColor.niceGreen
+                self.differenceLabel.backgroundColor = UIColor.niceGreen.withAlphaComponent(0.2)
                 self.differenceLabel.text = String(describing: newValue) + " (new!)"
             }
         } else {
             self.differenceLabel.textColor = UIColor.niceRed
+            self.differenceLabel.backgroundColor = UIColor.niceRed.withAlphaComponent(0.2)
             self.differenceLabel.text = "Skipped"
         }
     }
@@ -331,8 +340,7 @@ class ProgressionMethodSummaryView: UIView {
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.differenceLabel,
                                                              withCopyView: self,
-                                                             attribute: .right,
-                                                             plusConstant: -10).isActive = true
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.differenceLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true

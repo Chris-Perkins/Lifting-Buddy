@@ -72,6 +72,39 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         }
     }
     
+    // Deletion methods
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            
+            let workout = sortedData[indexPath.row]
+            
+            let alert = UIAlertController(title: "Delete Workout?",
+                                          message: "All history for '" + workout.getName()!
+                                            + "' will be deleted.\n" +
+                                            "This cannot be undone. Continue?",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel",
+                                          style: .cancel,
+                                          handler: nil))
+            alert.addAction(
+                UIAlertAction(title: "Delete",
+                              style: .destructive,
+                              handler: {
+                                UIAlertAction -> Void in
+                                let realm = try! Realm()
+                                try! realm.write {
+                                    realm.delete(workout)
+                                }
+                                
+                                self.sortedData.remove(at: indexPath.row)
+                                self.reloadData()
+                }))
+            
+            self.viewController()?.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     // Selected a table view cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }

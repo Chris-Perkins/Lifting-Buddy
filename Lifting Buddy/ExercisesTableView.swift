@@ -80,7 +80,8 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
             let alert = UIAlertController(title: "Delete Exercise?",
                                           message: "All history for '" + exercise.getName()!
                                             + "' will be deleted.\n" +
-                                            "This cannot be undone. Continue?", preferredStyle: .alert)
+                                            "This cannot be undone. Continue?",
+                                          preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel",
                                           style: .cancel,
                                           handler: nil))

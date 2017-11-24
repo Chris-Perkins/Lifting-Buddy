@@ -40,16 +40,14 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkoutSessionSummaryTableViewCell
-        
         cell.setExercise(exercise: data[indexPath.row])
-        cell.backgroundColor = UIColor.niceRed
         
         return cell
     }
     
-    // Each cell's height depends on the number of progression methods, but there is a flat height
+    // Each cell's height is retrieved based on the cell's requirements for progression methods
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewCell.defaultHeight
+        return WorkoutSessionSummaryTableViewCell.heightForExercise(exercise: data[indexPath.row])
     }
     
     // MARK: Private functions

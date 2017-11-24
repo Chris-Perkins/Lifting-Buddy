@@ -14,11 +14,15 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     public var heightConstraint: NSLayoutConstraint?
     
     // the data in this tableview
-    private var data:[ProgressionMethod] = [ProgressionMethod].init()
+    private var data: [ProgressionMethod]
+    private var cells: [ProgressionMethodTableViewCell]
     
     // MARK: Override Init
     
     override init(frame: CGRect, style: UITableViewStyle) {
+        self.data = [ProgressionMethod]()
+        self.cells = [ProgressionMethodTableViewCell]()
+        
         super.init(frame: frame, style: style)
         
         self.delegate = self
@@ -41,6 +45,11 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
         let destinationData = data[destinationIndexPath.row]
         data[sourceIndexPath.row] = destinationData
         data[destinationIndexPath.row] = sourceData
+        
+        let sourceCell = cells[sourceIndexPath.row]
+        let destinationCell = cells[destinationIndexPath.row]
+        cells[sourceIndexPath.row] = destinationCell
+        cells[destinationIndexPath.row] = sourceCell
     }
     
     // Data is what we use to fill in the table view
@@ -62,10 +71,14 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Cell does not exist; create it.
-        let cell = self.dequeueReusableCell(withIdentifier: "cell") as! ProgressionMethodTableViewCell
-        cell.setProgressionMethod(progressionMethod: data[indexPath.row])
-        
-        return cell
+        if cells.count > indexPath.row {
+            return cells[indexPath.row]
+        } else {
+            let cell = ProgressionMethodTableViewCell(style: .default, reuseIdentifier: nil)
+            cell.setProgressionMethod(progressionMethod: data[indexPath.row])
+            cells.append(cell)
+            return cell
+        }
     }
     
     // Each cell has a height of cellHeight

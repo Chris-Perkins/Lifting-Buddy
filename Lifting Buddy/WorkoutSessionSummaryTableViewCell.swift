@@ -280,7 +280,7 @@ class ProgressionMethodSummaryView: UIView {
             } else {
                 self.differenceLabel.textColor = UIColor.niceGreen
                 self.differenceLabel.backgroundColor = UIColor.niceGreen.withAlphaComponent(0.2)
-                self.differenceLabel.text = String(describing: newValue) + " (new!)"
+                self.differenceLabel.text = String(describing: newValue)
             }
         } else {
             self.differenceLabel.textColor = UIColor.niceRed

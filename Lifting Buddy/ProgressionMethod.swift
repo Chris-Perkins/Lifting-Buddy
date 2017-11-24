@@ -107,11 +107,10 @@ class ProgressionMethod: Object {
     
     public func getIndex() -> Int? {
         guard let indexStr: String = self.index else {
-            print("No string set up!")
             return nil
         }
         guard let indexInt = Int(indexStr) else {
-            return nil
+            fatalError("The index associated to a progressionmethod is not an int")
         }
         return indexInt
     }

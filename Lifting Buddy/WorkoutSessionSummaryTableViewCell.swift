@@ -114,8 +114,9 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
                 }
             }
         }
-        for key in dict.keys {
-            returnData.append((key, dict[key]!.0, dict[key]!.1))
+        
+        for pgm in forExercise.getProgressionMethods() {
+            returnData.append((pgm, dict[pgm]!.0, dict[pgm]!.1))
         }
         
         return returnData

@@ -16,7 +16,6 @@ class MainViewController: UIViewController {
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var sectionContentView: UIView!
     
-    private var homeView: UIView? = nil
     private var workoutView: UIView? = nil
     private var exercisesView: UIView? = nil
     private var aboutView: UIView? = nil

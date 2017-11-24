@@ -59,12 +59,12 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
         self.exerciseTableView.exercisePickerDelegate = self
         self.exerciseTableView.overlayDelegate = self
         
-        createExerciseButton.addTarget(self,
-                                       action: #selector(showCreateExerciseView(sender:)),
-                                       for: .touchUpInside)
-        cancelButton.addTarget(self,
-                               action: #selector(removeSelf),
-                               for: .touchUpInside)
+        self.createExerciseButton.addTarget(self,
+                                            action: #selector(showCreateExerciseView(sender:)),
+                                            for: .touchUpInside)
+        self.cancelButton.addTarget(self,
+                                    action: #selector(removeSelf),
+                                    for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,20 +78,20 @@ class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, 
         
         self.backgroundColor = UIColor.niceGray
         
-        createExerciseButton.setDefaultProperties()
-        createExerciseButton.setTitle(self.selectingExercise ?
+        self.createExerciseButton.setDefaultProperties()
+        self.createExerciseButton.setTitle(self.selectingExercise ?
                                         "Add New Exercise" :
                                         "Create New Exercise", for: .normal)
         
         if self.selectingExercise {
-            cancelButton.setDefaultProperties()
-            cancelButton.backgroundColor = UIColor.niceRed
-            cancelButton.setTitle("Cancel", for: .normal)
+            self.cancelButton.setDefaultProperties()
+            self.cancelButton.backgroundColor = UIColor.niceRed
+            self.cancelButton.setTitle("Cancel", for: .normal)
         } else {
-            cancelButton.alpha = 0
+            self.cancelButton.alpha = 0
         }
         
-        exerciseTableView.reloadData()
+        self.exerciseTableView.reloadData()
     }
     
     // MARK: View functions

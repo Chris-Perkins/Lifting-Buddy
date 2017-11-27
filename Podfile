@@ -14,4 +14,7 @@ target 'Lifting Buddy' do
   # For graphing
   pod 'SwiftCharts', :git => 'https://github.com/i-schuetz/SwiftCharts.git'
 
+  # For tracking app run history
+  pod 'GBVersionTracking'
+
 end

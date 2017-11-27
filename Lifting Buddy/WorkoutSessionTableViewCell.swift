@@ -124,8 +124,8 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
          * If we don't, the same example is [1]
          */
         self.cellTitle.text = reqSetCount > 0 ?
-                                "\(self.exercise.getName()!) [\(curSetCount)/\(reqSetCount)]":
-                                "\(self.exercise.getName()!) [\(curSetCount)]"
+                                "[\(curSetCount)/\(reqSetCount)] \(self.exercise.getName()!)":
+                                "[\(curSetCount)] \(self.exercise.getName()!)"
         self.cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
         
         // Invisible Button has to be "visible" to be pressed. So, 0.001

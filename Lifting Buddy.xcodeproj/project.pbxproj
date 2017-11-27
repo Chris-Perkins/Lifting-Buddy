@@ -59,6 +59,7 @@
 		07EAE38F8336E92D79D24030 /* Pods-Lifting Buddy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.debug.xcconfig"; sourceTree = "<group>"; };
 		220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryTableView.swift; sourceTree = "<group>"; };
 		223590901F427D1A002BE0BF /* EditExerciseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableView.swift; sourceTree = "<group>"; };
+		223CF15F1FCC9C2F0093BBC7 /* Lifting-Buddy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Lifting-Buddy-Bridging-Header.h"; path = "Lifting Buddy/Lifting-Buddy-Bridging-Header.h"; sourceTree = "<group>"; };
 		224153751F1EE12B00F7B82B /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		224153771F1EE1F000F7B82B /* Exercise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		224697C21F19843A0089C7CA /* Lifting Buddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lifting Buddy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +134,7 @@
 		224697B91F19843A0089C7CA = {
 			isa = PBXGroup;
 			children = (
+				223CF15F1FCC9C2F0093BBC7 /* Lifting-Buddy-Bridging-Header.h */,
 				22A36A321F451479000DCDBF /* Libraries */,
 				224697C41F19843A0089C7CA /* Lifting Buddy */,
 				224697C31F19843A0089C7CA /* Products */,
@@ -152,7 +154,6 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
-				22C777BF1F92A53E00901D00 /* New Group */,
 				22AA6D0F1F2184A400624744 /* View Controllers */,
 				225D44101F510FD700B35D80 /* Custom UITypes */,
 				22AA6D0E1F21847F00624744 /* Content Views */,
@@ -286,13 +287,6 @@
 			name = Miscellaneous;
 			sourceTree = "<group>";
 		};
-		22C777BF1F92A53E00901D00 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
 		22CDEFF21FC5EA74000CB8C0 /* Summary Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,6 +395,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GBVersionTracking/GBVersionTracking.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -408,6 +403,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GBVersionTracking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",

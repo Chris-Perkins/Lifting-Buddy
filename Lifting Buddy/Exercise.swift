@@ -82,17 +82,6 @@ class Exercise: Object {
     
     // MARK: Encapsulated methods
     
-    @objc public func getRepCount() -> Int {
-        return self.repCount
-    }
-    
-    public func setRepCount(repCount: Int) {
-        let realm = try! Realm()
-        try! realm.write {
-            self.repCount = repCount
-        }
-    }
-    
     @objc public func getSetCount() -> Int {
         return self.setCount
     }

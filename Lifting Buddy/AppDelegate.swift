@@ -10,6 +10,7 @@ import UIKit
 import IQKeyboardManagerSwift
 import Realm
 import RealmSwift
+import GBVersionTracking
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         IQKeyboardManager.sharedManager().enable = true
+        // Start tracking version
+        GBVersionTracking.track()
+        
+        // If this is the first launch EVER, build some workouts.
+        if (GBVersionTracking.isFirstLaunchEver()) {
+            Workout.createDefaultWorkouts()
+        }
         
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
@@ -39,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
         })
         
-        let realm = try! Realm(configuration: config) // Invoke migration block if needed
+        let _ = try! Realm(configuration: config) // Invoke migration block if needed
         
         return true
     }
@@ -65,7 +73,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 

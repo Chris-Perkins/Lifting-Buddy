@@ -244,10 +244,198 @@ class Workout: Object {
             workout.checkAndUpdateStreakIfNecessary()
         }
     }
+    
+    // Creates a chest, back, and leg day workout.
+    public static func createDefaultWorkouts() {
+        Workout.createChestDayWorkout()
+        Workout.createLegDayWorkout()
+    }
+    
+    // Creates a chest day workout
+    private static func createChestDayWorkout() {
+        let realm = try! Realm()
+        
+        let workout = Workout()
+        workout.setName(name: "Arm Day")
+        
+        // Set this workout to activate Monday
+        let mondayList = List<RLMBool>()
+        for i in 0...7 {
+            let dayBool = RLMBool()
+            dayBool.value = i == 1 // Set to true on Monday
+            mondayList.append(dayBool)
+        }
+        
+        workout.setDaysOfTheWeek(daysOfTheWeek: mondayList)
+        
+        let benchPress = Exercise()
+        benchPress.setName(name: "Flat Barbell Bench Press")
+        benchPress.setSetCount(setCount: 5)
+        
+        // Progression method holding reps
+        var repsPGM = ProgressionMethod.createRepsPGM()
+        repsPGM.setDefaultValue(defaultValue: "5")
+        repsPGM.setIndex(index: 0)
+        
+        // Progression method holding weight
+        var weightPGM = ProgressionMethod.createWeightPGM()
+        weightPGM.setIndex(index: 1)
+        
+        // Bench press tracked by reps & weight
+        benchPress.appendProgressionMethod(progressionMethod: repsPGM)
+        benchPress.appendProgressionMethod(progressionMethod: weightPGM)
+        
+        // Add bench press to this workout and to the realm
+        try! realm.write {
+            realm.add(repsPGM)
+            realm.add(weightPGM)
+            realm.add(benchPress)
+        }
+        workout.addExercise(exercise: benchPress)
+        
+        // Incline bench workout
+        let inclineBench = Exercise()
+        inclineBench.setName(name: "Incline Barbell Bench Press")
+        inclineBench.setSetCount(setCount: 5)
+        
+        // Progression method holding reps
+        repsPGM = ProgressionMethod.createRepsPGM()
+        repsPGM.setDefaultValue(defaultValue: "5")
+        repsPGM.setIndex(index: 0)
+        
+        // Progression method holding weight
+        weightPGM = ProgressionMethod.createWeightPGM()
+        weightPGM.setIndex(index: 1)
+        
+        // incline press tracked by reps & weight
+        inclineBench.appendProgressionMethod(progressionMethod: repsPGM)
+        inclineBench.appendProgressionMethod(progressionMethod: weightPGM)
+        
+        // Add incline bench to this workout and to the realm
+        try! realm.write {
+            realm.add(repsPGM)
+            realm.add(weightPGM)
+            realm.add(inclineBench)
+        }
+        workout.addExercise(exercise: inclineBench)
+        
+        // Pushups
+        let pushups = Exercise()
+        pushups.setName(name: "Pushups")
+        pushups.setSetCount(setCount: 3)
+        
+        // Progression method holding reps
+        repsPGM = ProgressionMethod.createRepsPGM()
+        repsPGM.setDefaultValue(defaultValue: "10")
+        repsPGM.setIndex(index: 0)
+        
+        // Crossovers tracked by reps and weight
+        pushups.appendProgressionMethod(progressionMethod: repsPGM)
+        
+        // Add pushups to our workout
+        try! realm.write {
+            realm.add(repsPGM)
+            realm.add(pushups)
+        }
+        workout.addExercise(exercise: pushups)
+        
+        try! realm.write {
+            realm.add(workout)
+        }
+    }
+    
+    // Creates a leg day workout
+    private static func createLegDayWorkout() {
+        let realm = try! Realm()
+        
+        let workout = Workout()
+        workout.setName(name: "Leg and Abs Day")
+        
+        // Set this workout to activate Friday
+        let fridayList = List<RLMBool>()
+        for i in 0...7 {
+            let dayBool = RLMBool()
+            dayBool.value = i == 5 // Set to true on Friday
+            fridayList.append(dayBool)
+        }
+        
+        workout.setDaysOfTheWeek(daysOfTheWeek: fridayList)
+        
+        // Squats exercise
+        let squats = Exercise()
+        squats.setName(name: "Squats")
+        squats.setSetCount(setCount: 5)
+        
+        var repsPGM = ProgressionMethod.createRepsPGM()
+        repsPGM.setIndex(index: 0)
+        repsPGM.setDefaultValue(defaultValue: "5")
+        
+        var weightPGM = ProgressionMethod.createWeightPGM()
+        weightPGM.setIndex(index: 1)
+        
+        squats.appendProgressionMethod(progressionMethod: repsPGM)
+        squats.appendProgressionMethod(progressionMethod: weightPGM)
+        
+        try! realm.write {
+            realm.add(repsPGM)
+            realm.add(weightPGM)
+            realm.add(squats)
+        }
+        
+        workout.addExercise(exercise: squats)
+        
+        // Leg Curls Exercise
+        let legCurls = Exercise()
+        legCurls.setName(name: "Leg Curls")
+        legCurls.setSetCount(setCount: 3)
+        
+        repsPGM = ProgressionMethod.createRepsPGM()
+        repsPGM.setIndex(index: 0)
+        repsPGM.setDefaultValue(defaultValue: "10")
+        
+        weightPGM = ProgressionMethod.createWeightPGM()
+        weightPGM.setIndex(index: 0)
+        
+        legCurls.appendProgressionMethod(progressionMethod: repsPGM)
+        legCurls.appendProgressionMethod(progressionMethod: weightPGM)
+        
+        try! realm.write {
+            realm.add(repsPGM)
+            realm.add(weightPGM)
+            realm.add(legCurls)
+        }
+        
+        workout.addExercise(exercise: legCurls)
+        
+        // Planks
+        
+        let planks = Exercise()
+        planks.setName(name: "Planks")
+        planks.setSetCount(setCount: 1)
+        
+        let timePGM = ProgressionMethod()
+        timePGM.setDefaultValue(defaultValue: "3")
+        timePGM.setName(name: "Time")
+        timePGM.setUnit(unit: ProgressionMethod.Unit.TIME.rawValue.lowercased())
+        timePGM.setIndex(index: 0)
+        
+        planks.appendProgressionMethod(progressionMethod: timePGM)
+        
+        try! realm.write {
+            realm.add(planks)
+            realm.add(timePGM)
+        }
+        
+        workout.addExercise(exercise: planks)
+        
+        try! realm.write {
+            realm.add(workout)
+        }
+    }
 }
 
 // Question:
-// "CHRIS?! CHRIS OH WHY DID YOU DO THIS?"
+// "CHRIS?! CHRIS WHY DID YOU DO THIS?"
 // Answer:
 // Because realm does not support RLMArrays/Lists of primitive types.
 public class RLMBool: Object {

@@ -91,6 +91,8 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
                               handler: {
                                     UIAlertAction -> Void in
                                     let realm = try! Realm()
+                                
+                                    exercise.removeProgressionMethods()
                                     try! realm.write {
                                         realm.delete(exercise)
                                     }

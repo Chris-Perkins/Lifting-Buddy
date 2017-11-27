@@ -114,4 +114,25 @@ class ProgressionMethod: Object {
         }
         return indexInt
     }
+    
+    // MARK: Default workout creation
+    
+    // Create a reps pgm
+    public static func createRepsPGM() -> ProgressionMethod {
+        // Progression method holding reps
+        let repsPGM = ProgressionMethod()
+        repsPGM.setName(name: "Reps")
+        repsPGM.setUnit(unit: ProgressionMethod.Unit.REPS.rawValue.lowercased())
+        
+        return repsPGM
+    }
+    
+    // Create a weight pgm
+    public static func createWeightPGM() -> ProgressionMethod {
+        let weightPGM = ProgressionMethod()
+        weightPGM.setName(name: "Weight")
+        weightPGM.setUnit(unit: ProgressionMethod.Unit.WEIGHT.rawValue.lowercased())
+        
+        return weightPGM
+    }
 }

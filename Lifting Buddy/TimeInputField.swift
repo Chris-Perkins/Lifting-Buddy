@@ -75,8 +75,11 @@ class TimeInputField: UIView, InputViewHolder {
         self.secondField.setDefaultString(defaultString: "0")
         self.secondField.setLabelTitle(title: "s")
         
-        
-        self.timerButton.setToggleViewColor(color: UIColor.niceGreen)
+        self.timerButton.setToggleTextColor(color: UIColor.white)
+        self.timerButton.setDefaultTextColor(color: UIColor.white)
+        self.timerButton.setDefaultText(text: "Start")
+        self.timerButton.setToggleText(text: "Stop")
+        self.timerButton.setToggleViewColor(color: UIColor.niceYellow)
         self.timerButton.setDefaultViewColor(color: UIColor.niceBlue)
     }
     

@@ -21,7 +21,7 @@ Expected / Hopeful release: December 20th
 | Workout Screen            | 9/10                  | Need search/filter bar.                        |
 | Exercise Screen           | 10/10                 |                                                |
 | Summary Screen            | 10/10                 |                                                |
-| Add Default Workouts      | 0/10                  | Not yet started                                |
+| Add Default Workouts      | 10/10                 |                                                |
 
 ### Future plans    
 Convert relevant UIViews into ViewControllers (good practice)  

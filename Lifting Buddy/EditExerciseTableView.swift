@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import HPReorderTableView
 
-class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDelegate {
+class EditExerciseTableView: HPReorderTableView, UITableViewDataSource,UITableViewDelegate {
     
     // MARK: View properties
     public var heightConstraint: NSLayoutConstraint?
@@ -32,7 +33,7 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
     
     // MARK: TableView Functions
     
-    // Moved a cell (LPRTableView requirement for drag-and-drop)
+    // Moved a cell (HPRTableview requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
         let source = data[sourceIndexPath.row]

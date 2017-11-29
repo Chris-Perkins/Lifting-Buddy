@@ -38,8 +38,6 @@
 		229D87021F65FC7400FF05DD /* WorkoutSessionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229D87011F65FC7400FF05DD /* WorkoutSessionTableView.swift */; };
 		229D87041F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229D87031F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift */; };
 		22A36A2F1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */; };
-		22A36A311F4513AD000DCDBF /* LPRTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A301F4513AD000DCDBF /* LPRTableView.swift */; };
-		22A36A341F451492000DCDBF /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 22A36A331F451492000DCDBF /* LICENSE */; };
 		22A3F3EB1FACCC8E00BEAB97 /* TableOverlayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A3F3EA1FACCC8E00BEAB97 /* TableOverlayProtocol.swift */; };
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
 		22AA6D141F218AD400624744 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D131F218AD400624744 /* SectionView.swift */; };
@@ -91,8 +89,6 @@
 		229D87011F65FC7400FF05DD /* WorkoutSessionTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSessionTableView.swift; sourceTree = "<group>"; };
 		229D87031F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSessionTableViewCell.swift; sourceTree = "<group>"; };
 		22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableViewCell.swift; sourceTree = "<group>"; };
-		22A36A301F4513AD000DCDBF /* LPRTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPRTableView.swift; path = "Lifting Buddy/LPRTableView.swift"; sourceTree = "<group>"; };
-		22A36A331F451492000DCDBF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		22A3F3EA1FACCC8E00BEAB97 /* TableOverlayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableOverlayProtocol.swift; sourceTree = "<group>"; };
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		22AA6D131F218AD400624744 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
@@ -135,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				223CF15F1FCC9C2F0093BBC7 /* Lifting-Buddy-Bridging-Header.h */,
-				22A36A321F451479000DCDBF /* Libraries */,
 				224697C41F19843A0089C7CA /* Lifting Buddy */,
 				224697C31F19843A0089C7CA /* Products */,
 				DA15027B3E5B3207682F7681 /* Pods */,
@@ -247,15 +242,6 @@
 				22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */,
 			);
 			name = "Create Workout";
-			sourceTree = "<group>";
-		};
-		22A36A321F451479000DCDBF /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				22A36A301F4513AD000DCDBF /* LPRTableView.swift */,
-				22A36A331F451492000DCDBF /* LICENSE */,
-			);
-			name = Libraries;
 			sourceTree = "<group>";
 		};
 		22AA6D0E1F21847F00624744 /* Content Views */ = {
@@ -380,7 +366,6 @@
 			files = (
 				224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */,
 				224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */,
-				22A36A341F451492000DCDBF /* LICENSE in Resources */,
 				224697CB1F19843A0089C7CA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -396,6 +381,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GBVersionTracking/GBVersionTracking.framework",
+				"${BUILT_PRODUCTS_DIR}/HPReorderTableView/HPReorderTableView.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -404,6 +390,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GBVersionTracking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HPReorderTableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -487,7 +474,6 @@
 				22EC7FD31F5E01FE00A1E66B /* WorkoutTableViewCell.swift in Sources */,
 				224153781F1EE1F000F7B82B /* Exercise.swift in Sources */,
 				22BC5AF41F3E5C2A00B150BD /* CreateWorkoutView.swift in Sources */,
-				22A36A311F4513AD000DCDBF /* LPRTableView.swift in Sources */,
 				22533B551F549B1500EE474E /* ProgressionMethod.swift in Sources */,
 				2263DF981F8DA60E00592DCB /* TimeInputField.swift in Sources */,
 				229D87041F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift in Sources */,

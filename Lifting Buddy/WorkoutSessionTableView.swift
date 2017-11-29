@@ -9,8 +9,9 @@
 import UIKit
 import Realm
 import RealmSwift
+import HPReorderTableView
 
-class WorkoutSessionTableView: UITableView, UITableViewDelegate, UITableViewDataSource,
+class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableViewDataSource,
                              WorkoutSessionTableViewCellDelegate {
     
     // MARK: View properties
@@ -83,7 +84,7 @@ class WorkoutSessionTableView: UITableView, UITableViewDelegate, UITableViewData
         super.reloadData()
     }
     
-    // Moved a cell (LPRTableView requirement for drag-and-drop)
+    // Moved a cell (HPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         let sourceData = data[sourceIndexPath.row]
@@ -95,13 +96,13 @@ class WorkoutSessionTableView: UITableView, UITableViewDelegate, UITableViewData
             data[destinationIndexPath.row] = sourceData
         }
         
-        /*let sourceCell = cells[sourceIndexPath.row]
+        let sourceCell = cells[sourceIndexPath.row]
         let destinationCell = cells[destinationIndexPath.row]
         sourceCell.indexPath = destinationIndexPath
         destinationCell.indexPath = sourceIndexPath
         
         cells[sourceIndexPath.row] = destinationCell
-        cells[destinationIndexPath.row] = sourceCell*/
+        cells[destinationIndexPath.row] = sourceCell
     }
     
     // Deletion methods

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import HPReorderTableView
 
-class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableViewDelegate {
+class ProgressionsMethodTableView: HPReorderTableView, UITableViewDataSource,UITableViewDelegate {
     
     // MARK: View properties
     public var heightConstraint: NSLayoutConstraint?
@@ -38,7 +39,7 @@ class ProgressionsMethodTableView: UITableView, UITableViewDataSource,UITableVie
     
     // MARK: TableView Functions
     
-    // Moved a cell (LPRTableView requirement for drag-and-drop)
+    // Moved a cell (HPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // Modify this code as needed to support more advanced reordering, such as between sections.
         let sourceData = data[sourceIndexPath.row]

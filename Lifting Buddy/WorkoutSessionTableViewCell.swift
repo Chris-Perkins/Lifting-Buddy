@@ -76,7 +76,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         // between the two views.
         self.curSet = 1
         self.isComplete = false
-        self.isToggled = true
+        self.isToggled = false
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

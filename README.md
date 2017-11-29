@@ -24,7 +24,9 @@ Expected / Hopeful release: December 20th
 | Add Default Workouts      | 10/10                 |                                                |
 
 ### Future plans    
-Convert relevant UIViews into ViewControllers (good practice)  
+Convert relevant UIViews into ViewControllers (good practice)
+    Update from 11/29 -- my shower thoughts said this wasn't a good idea.
+        Reason being that containerviewcontrollers would require the frames to be set anyway, which is what I wanted to avoid.  
 Log in to sync and backup workouts
 
 #### Special Thanks

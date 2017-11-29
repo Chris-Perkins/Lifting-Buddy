@@ -36,6 +36,14 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: View functions
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.backgroundColor = UIColor.white
+    }
+    
     // MARK: Tableview functions
     
     // allow cell deletion

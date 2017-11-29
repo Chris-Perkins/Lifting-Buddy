@@ -85,20 +85,23 @@ class WorkoutSessionTableView: UITableView, UITableViewDelegate, UITableViewData
     
     // Moved a cell (LPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        // Modify this code as needed to support more advanced reordering, such as between sections.
+        
         let sourceData = data[sourceIndexPath.row]
         let destinationData = data[destinationIndexPath.row]
-        data[sourceIndexPath.row] = destinationData
-        data[destinationIndexPath.row] = sourceData
         
-        let sourceCell = cells[sourceIndexPath.row]
+        let realm = try! Realm()
+        try! realm.write {
+            data[sourceIndexPath.row] = destinationData
+            data[destinationIndexPath.row] = sourceData
+        }
+        
+        /*let sourceCell = cells[sourceIndexPath.row]
         let destinationCell = cells[destinationIndexPath.row]
-        
         sourceCell.indexPath = destinationIndexPath
         destinationCell.indexPath = sourceIndexPath
         
         cells[sourceIndexPath.row] = destinationCell
-        cells[destinationIndexPath.row] = sourceCell
+        cells[destinationIndexPath.row] = sourceCell*/
     }
     
     // Deletion methods

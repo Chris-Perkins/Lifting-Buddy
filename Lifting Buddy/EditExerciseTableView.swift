@@ -33,8 +33,8 @@ class EditExerciseTableView: LPRTableView, UITableViewDataSource,UITableViewDele
     // MARK: TableView Functions
     
     // Moved a cell (LPRTableView requirement for drag-and-drop)
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        // Modify this code as needed to support more advanced reordering, such as between sections.
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath,
+                   to destinationIndexPath: IndexPath) {
         let source = data[sourceIndexPath.row]
         let destination = data[destinationIndexPath.row]
         data[sourceIndexPath.row] = destination

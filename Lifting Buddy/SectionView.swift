@@ -16,8 +16,9 @@ class SectionView: UIView {
     // Required view for modifying sectionContentView
     var mainViewController: MainViewController?
     // Our sections
-    private var workoutsButton: PrettyButton
-    private var exercisesButton: PrettyButton
+    private let workoutsButton: PrettyButton
+    private let exercisesButton: PrettyButton
+    private let aboutButton: PrettyButton
     
     private var selectedView: PrettyButton?
     
@@ -27,22 +28,26 @@ class SectionView: UIView {
     public enum ContentViews {
         case WORKOUTS
         case EXERCISES
+        case HELP
     }
     
     
     // MARK: Init functions
     
     override init(frame: CGRect) {
-        workoutsButton = PrettyButton()
-        exercisesButton = PrettyButton()
+        self.workoutsButton = PrettyButton()
+        self.exercisesButton = PrettyButton()
+        self.aboutButton = PrettyButton()
         
         super.init(frame: frame)
         
-        self.addSubview(workoutsButton)
-        self.addSubview(exercisesButton)
+        self.addSubview(self.workoutsButton)
+        self.addSubview(self.exercisesButton)
+        self.addSubview(self.aboutButton)
         
         self.createAndActivateWorkoutsButtonConstraints()
         self.createAndActivateExercisesButtonConstraints()
+        self.createAndActivateHelpButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,12 +63,16 @@ class SectionView: UIView {
         self.mainViewController = (self.next?.next?.next?.next as! MainViewController)
         
         // Workouts Button
-        workoutsButton.setTitle("workouts", for: .normal)
-        setButtonProperties(button: workoutsButton)
+        self.workoutsButton.setTitle("workouts", for: .normal)
+        self.setButtonProperties(button: workoutsButton)
         
         // Exercises Button
-        exercisesButton.setTitle("exercises", for: .normal)
-        setButtonProperties(button: exercisesButton)
+        self.exercisesButton.setTitle("exercises", for: .normal)
+        self.setButtonProperties(button: exercisesButton)
+        
+        // Home button
+        self.aboutButton.setTitle("about", for: .normal)
+        self.setButtonProperties(button: self.aboutButton)
         
         // Start on the workout screen
         buttonPress(sender: workoutsButton)
@@ -93,8 +102,10 @@ class SectionView: UIView {
                 viewType = .WORKOUTS
             case (self.exercisesButton):
                 viewType = .EXERCISES
+            case (self.aboutButton):
+                viewType = .HELP
             default:
-                print("User pressed a button that doesn't exist?")
+                print("User pressed button that isn't set up")
                 exit(0)
             }
             
@@ -107,7 +118,7 @@ class SectionView: UIView {
     
     // Mark: Constraint functions
     
-    // cling to top of view, right of homeButton ; height of this homebutton ; width of this view / 4
+    // cling to top of view, right of homeButton ; height of this homebutton ; width of this view / 3
     func createAndActivateWorkoutsButtonConstraints() {
         self.workoutsButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -123,21 +134,21 @@ class SectionView: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutsButton,
                                                              withCopyView: self,
                                                              attribute: .width,
-                                                             multiplier: 0.5).isActive = true
+                                                             multiplier: 1/3).isActive = true
     }
     
     // cling to top of homeButton, right of workoutsButton ; height of exercisesButton ;
-    // width of this view / 4
+    // width of this view / 3
     func createAndActivateExercisesButtonConstraints() {
-        exercisesButton.translatesAutoresizingMaskIntoConstraints = false
+        self.exercisesButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exercisesButton,
                                                              withCopyView: self.workoutsButton,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint(item: workoutsButton,
+        NSLayoutConstraint(item: self.workoutsButton,
                            attribute: .right,
                            relatedBy: .equal,
-                           toItem: exercisesButton,
+                           toItem: self.exercisesButton,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
@@ -147,6 +158,30 @@ class SectionView: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exercisesButton,
                                                              withCopyView: self,
                                                              attribute: .width,
-                                                             multiplier: 0.5).isActive = true
+                                                             multiplier: 1/3).isActive = true
+    }
+    
+    // Cling to top ; left clings to right of exercisesButton ; height of thisView ;
+    // width of this view / 3
+    func createAndActivateHelpButtonConstraints() {
+        self.aboutButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.aboutButton,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint(item: self.exercisesButton,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: self.aboutButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.aboutButton,
+                                                             withCopyView: self,
+                                                             attribute: .height).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.aboutButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 1/3).isActive = true
     }
 }

@@ -53,6 +53,8 @@ class MainViewController: UIViewController {
                 self.exercisesView = ExercisesView(frame: frame)
             }
             self.sectionContentView.addSubview(self.exercisesView!)
+        case SectionView.ContentViews.HELP:
+            break// create a view in a few
         }
     }
 }

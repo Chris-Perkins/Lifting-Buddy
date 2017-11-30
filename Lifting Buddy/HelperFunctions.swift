@@ -190,6 +190,30 @@ extension UIColor {
     public static func niceLightGreen() -> UIColor {
         return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
     }
+    
+    public static func nicePurple() -> UIColor {
+        return UIColor(red: 0.5882, green: 0.1451, blue: 0.6392, alpha: 1.0)
+    }
+    
+    public static func niceCyan() -> UIColor {
+        return UIColor(red: 0.149, green: 0.651, blue: 0.6588, alpha: 1.0)
+    }
+    
+    public static func niceBrown() -> UIColor {
+        return UIColor(red: 0.6471, green: 0.3647, blue: 0.149, alpha: 1.0)
+    }
+    
+    public static func niceMediterranean() -> UIColor {
+        return UIColor(red: 0.0745, green: 0.2235, blue: 0.3373, alpha: 1.0)
+    }
+    
+    public static func niceMaroon() -> UIColor {
+        return UIColor(red: 0.349, green: 0.0784, blue: 0.0784, alpha: 1.0)
+    }
+    
+    public static func niceOrange() -> UIColor {
+        return UIColor(red: 1, green: 0.4118, blue: 0.1569, alpha: 1.0)
+    }
 }
 
 extension UIImage {

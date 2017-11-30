@@ -69,7 +69,7 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     
     for (key, value) in pointDictionary {
         lineModels.append(ChartLineModel(chartPoints: value,
-                                         lineColor: getLineColorForProgressionMethod(progressionMethod: key),
+                                         lineColors: getLineColorsForProgressionMethod(progressionMethod: key),
                                          lineWidth: 3,
                                          animDuration: 1,
                                          animDelay: 0))
@@ -132,33 +132,57 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     )
 }
 
-func getLineColorForProgressionMethod(progressionMethod: ProgressionMethod) -> UIColor {
-    var color: UIColor?
+func getLineColorsForProgressionMethod(progressionMethod: ProgressionMethod) -> [UIColor] {
+    var colors = [UIColor]()
+
+    colors.append(UIColor(
+        red: CGFloat(mod(x: progressionMethod.hashValue, m: 101))/100.0,
+        green: CGFloat(mod(x: Int(progressionMethod.hashValue / 10^2), m: 101))/100.0,
+        blue: CGFloat(mod(x: Int(progressionMethod.hashValue / 10^4), m: 101))/100.0,
+                    alpha: 1))
+    return colors
     
-    switch ((progressionMethod.hashValue + 6) % 6) {
-    case 0:
-        color = UIColor.niceRed()
-        break
-    case 1:
-        color = UIColor.niceBlue()
-        break
-    case 2:
-        color = UIColor.niceGreen()
-        break
-    case 3:
-        color = UIColor.niceYellow()
-        break
-    case 4:
-        color = UIColor.niceLightBlue()
-        break
-    case 5:
-        color = UIColor.niceLightGreen()
-        break
-    default:
-        fatalError("MODULO FAILED? Check addition in ExerciseChartCreator -> GetLineColor Method")
+    /* probability that two colors match: 1/c^x
+     * x is # of times loop runs
+     * c is # of colors
+     */
+    /*for i in 0...1 {
+        var color: UIColor?
+        switch (mod(x: progressionMethod.hashValue / (10^i), m: 10)) {
+        case 0:
+            color = UIColor.niceRed()
+        case 1:
+            color = UIColor.niceBlue()
+        case 2:
+            color = UIColor.niceGreen()
+        case 3:
+            color = UIColor.niceYellow()
+        case 4:
+            color = UIColor.niceCyan()
+        case 5:
+            color = UIColor.niceBrown()
+        case 6:
+            color = UIColor.nicePurple()
+        case 7:
+            color = UIColor.niceMediterranean()
+        case 8:
+            color = UIColor.niceMaroon()
+        case 9:
+            color = UIColor.niceOrange()
+            
+        default:
+            fatalError("Modulo returned OOB value. Check case amount in ExerciseChartCreator -> GetLineColor Method")
+        }
+        
+        colors.append(color!)
     }
     
-    return color!.withAlphaComponent(CGFloat((progressionMethod.hashValue + 25) % 25) / 100.0 + 0.75)
+    return colors*/
+}
+
+private func mod(x: Int, m: Int) -> Int {
+    let r = x % m
+    return r < 0 ? r + m : r
 }
 
 private func createChartPoint(date: Date, value: Float, displayFormatter: DateFormatter) -> ChartPoint {

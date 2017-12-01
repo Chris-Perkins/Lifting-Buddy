@@ -72,9 +72,9 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
         }
     }
     
-    for (key, value) in pointDictionary {
-        lineModels.append(ChartLineModel(chartPoints: value,
-                                         lineColors: getLineColorsForProgressionMethod(progressionMethod: key),
+    for (progressionMethod, points) in pointDictionary {
+        lineModels.append(ChartLineModel(chartPoints: points,
+                                         lineColors: getLineColorsForProgressionMethod(progressionMethod: progressionMethod),
                                          lineWidth: 3,
                                          animDuration: 0,
                                          animDelay: 0))
@@ -92,7 +92,7 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
         
         // We always want to display 0 on our graph for clarity reasons.
         if prevValue != nil && prevValue! < 0 && newValue > 0 {
-            yValues.append(ChartAxisValueDouble(0, labelSettings: labelSettings))
+            yValues.append(ChartAxisValueDouble(0.0, labelSettings: labelSettings))
         }
         yValues.append(ChartAxisValueDouble(newValue, labelSettings: labelSettings))
         

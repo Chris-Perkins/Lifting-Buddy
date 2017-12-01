@@ -20,7 +20,7 @@ Expected / Hopeful release: December 20th
 | Home Screen               | 10/10                 |                                                |
 | Workout Screen            | 9/10                  | Need search/filter bar.                        |
 | Exercise Screen           | 10/10                 |                                                |
-| Settings Screen           | 0/10                  | Don't know what settings to put yet.           |
+| Settings Screen           | ?/10                  | Don't know what settings to put yet.           |
 
 ### Future plans    
 Convert relevant UIViews into ViewControllers (good practice)  

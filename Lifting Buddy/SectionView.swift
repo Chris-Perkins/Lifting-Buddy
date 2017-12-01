@@ -18,7 +18,6 @@ class SectionView: UIView {
     // Our sections
     private var workoutsButton: PrettyButton
     private var exercisesButton: PrettyButton
-    private var settingsButton: PrettyButton
     
     private var selectedView: PrettyButton?
     
@@ -28,7 +27,6 @@ class SectionView: UIView {
     public enum ContentViews {
         case WORKOUTS
         case EXERCISES
-        case SETTINGS
     }
     
     
@@ -37,17 +35,14 @@ class SectionView: UIView {
     override init(frame: CGRect) {
         workoutsButton = PrettyButton()
         exercisesButton = PrettyButton()
-        settingsButton = PrettyButton()
         
         super.init(frame: frame)
         
         self.addSubview(workoutsButton)
         self.addSubview(exercisesButton)
-        self.addSubview(settingsButton)
         
         self.createAndActivateWorkoutsButtonConstraints()
         self.createAndActivateExercisesButtonConstraints()
-        self.createAndActivateSettingsButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,14 +61,9 @@ class SectionView: UIView {
         workoutsButton.setTitle("workouts", for: .normal)
         setButtonProperties(button: workoutsButton)
         
-        
         // Exercises Button
         exercisesButton.setTitle("exercises", for: .normal)
         setButtonProperties(button: exercisesButton)
-        
-        // Settings Button
-        settingsButton.setTitle("settings", for: .normal)
-        setButtonProperties(button: settingsButton)
         
         // Start on the workout screen
         buttonPress(sender: workoutsButton)
@@ -92,8 +82,8 @@ class SectionView: UIView {
     
     // Called by the event handlers to send a call to the main view controller to display view
     @objc private func buttonPress(sender: PrettyButton) {
-        if selectedView != sender {
-            selectedView?.backgroundColor = nil
+        if self.selectedView != sender {
+            self.selectedView?.backgroundColor = nil
             sender.backgroundColor = UIColor.niceYellow()
             
             var viewType: SectionView.ContentViews? = nil
@@ -101,13 +91,8 @@ class SectionView: UIView {
             switch(sender) {
             case (self.workoutsButton):
                 viewType = .WORKOUTS
-                break
             case (self.exercisesButton):
                 viewType = .EXERCISES
-                break
-            case (self.settingsButton):
-                viewType = .SETTINGS
-                break
             default:
                 print("User pressed a button that doesn't exist?")
                 exit(0)
@@ -152,7 +137,7 @@ class SectionView: UIView {
                            relatedBy: .equal,
                            toItem: workoutsButton,
                            attribute: .width,
-                           multiplier: 3,
+                           multiplier: 2,
                            constant: 0).isActive = true
     }
     
@@ -187,42 +172,7 @@ class SectionView: UIView {
                            relatedBy: .equal,
                            toItem: exercisesButton,
                            attribute: .width,
-                           multiplier: 3,
-                           constant: 0).isActive = true
-    }
-    
-    // cling to top of homeButton, right of exercisesButton ; height of exercisesButton ;
-    // width of this view / 4
-    func createAndActivateSettingsButtonConstraints() {
-        settingsButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint(item: workoutsButton,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: settingsButton,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: exercisesButton,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: settingsButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: workoutsButton,
-                           attribute: .height,
-                           relatedBy: .equal,
-                           toItem: settingsButton,
-                           attribute: .height,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: self,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: settingsButton,
-                           attribute: .width,
-                           multiplier: 3,
+                           multiplier: 2,
                            constant: 0).isActive = true
     }
 }

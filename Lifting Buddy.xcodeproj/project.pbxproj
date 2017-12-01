@@ -47,7 +47,6 @@
 		22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */; };
 		22EC7FD31F5E01FE00A1E66B /* WorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */; };
 		22ECE3941F644E1A0067171A /* WorkoutStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ECE3931F644E1A0067171A /* WorkoutStartView.swift */; };
-		22EDF04E1F35860E0074E2F2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EDF04D1F35860E0074E2F2 /* SettingsView.swift */; };
 		987A120A06EF773208F02445 /* Pods_Lifting_Buddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */; };
 /* End PBXBuildFile section */
 
@@ -95,7 +94,6 @@
 		22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableView.swift; sourceTree = "<group>"; };
 		22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewCell.swift; sourceTree = "<group>"; };
 		22ECE3931F644E1A0067171A /* WorkoutStartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutStartView.swift; sourceTree = "<group>"; };
-		22EDF04D1F35860E0074E2F2 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C522BD41578E9EFDC2DF9433 /* Pods-Lifting Buddy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.release.xcconfig"; sourceTree = "<group>"; };
 		CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lifting_Buddy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -231,14 +229,6 @@
 			name = "Create Workout";
 			sourceTree = "<group>";
 		};
-		229D87081F65FD2B00FF05DD /* Settings Tab */ = {
-			isa = PBXGroup;
-			children = (
-				22EDF04D1F35860E0074E2F2 /* SettingsView.swift */,
-			);
-			name = "Settings Tab";
-			sourceTree = "<group>";
-		};
 		22A36A321F451479000DCDBF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,7 +243,6 @@
 			children = (
 				229D87061F65FCAC00FF05DD /* Workouts Tab */,
 				228CD0A81FA6780700463B90 /* Exercises Tab */,
-				229D87081F65FD2B00FF05DD /* Settings Tab */,
 			);
 			name = "Content Views";
 			sourceTree = "<group>";
@@ -465,7 +454,6 @@
 				223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */,
 				228CD0AA1FA6782700463B90 /* ExercisesView.swift in Sources */,
 				22EC7FD31F5E01FE00A1E66B /* WorkoutTableViewCell.swift in Sources */,
-				22EDF04E1F35860E0074E2F2 /* SettingsView.swift in Sources */,
 				224153781F1EE1F000F7B82B /* Exercise.swift in Sources */,
 				22BC5AF41F3E5C2A00B150BD /* CreateWorkoutView.swift in Sources */,
 				22A36A311F4513AD000DCDBF /* LPRTableView.swift in Sources */,

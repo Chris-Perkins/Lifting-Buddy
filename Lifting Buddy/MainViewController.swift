@@ -19,7 +19,7 @@ class MainViewController: UIViewController {
     private var homeView: UIView? = nil
     private var workoutView: UIView? = nil
     private var exercisesView: UIView? = nil
-    private var settingsView: UIView? = nil
+    private var aboutView: UIView? = nil
     
     // MARK: Override functions
     
@@ -48,18 +48,12 @@ class MainViewController: UIViewController {
             if self.workoutView == nil {
                 self.workoutView = WorkoutsView(frame: frame)
             }
-            self.sectionContentView.addSubview(workoutView!)
+            self.sectionContentView.addSubview(self.workoutView!)
         case SectionView.ContentViews.EXERCISES:
             if self.exercisesView == nil {
                 self.exercisesView = ExercisesView(frame: frame)
             }
-            self.sectionContentView.addSubview(exercisesView!)
-        case SectionView.ContentViews.SETTINGS:
-            if self.settingsView == nil {
-                self.settingsView = SettingsView(frame: frame)
-            }
-            
-            self.sectionContentView.addSubview(settingsView!)
+            self.sectionContentView.addSubview(self.exercisesView!)
         }
     }
 }

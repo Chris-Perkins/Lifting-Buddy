@@ -142,7 +142,7 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
         
         // Exercise Table Label
         self.exerciseTableLabel.setDefaultProperties()
-        self.exerciseTableLabel.text = "Exercises (Hold + Drag to Reorder)"
+        self.exerciseTableLabel.text = "Exercises"
         
         // Exercise Table View
         // Prevent clipping as we can click and drag cells

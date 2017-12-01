@@ -112,6 +112,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         
         // Self stuff
         
+        self.updateCompleteStatus()
         self.selectionStyle = .none
         self.clipsToBounds = true
         

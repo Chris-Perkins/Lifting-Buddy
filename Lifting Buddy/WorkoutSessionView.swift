@@ -88,6 +88,7 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
         
         self.workoutNameLabel.setDefaultProperties()
         self.workoutNameLabel.text = self.workout?.getName() ?? "Custom Workout"
+        //self.workoutNameLabel.backgroundColor = UIColor.white
         
         self.addExerciseButton.setDefaultProperties()
         self.addExerciseButton.setTitle("Add Exercise to Workout",
@@ -240,13 +241,12 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutNameLabel,
                                                              withCopyView: self,
                                                              attribute: .top,
-                                                             plusConstant: 30).isActive = true
+                                                             plusConstant: 12.5).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: self.workoutNameLabel,
                                                          height: 20).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutNameLabel,
                                                              withCopyView: self,
-                                                             attribute: .width,
-                                                             plusConstant: -80.0).isActive = true
+                                                             attribute: .width).isActive = true
         
     }
     
@@ -259,7 +259,7 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
                                                         attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: self.workoutSessionTableView,
                                                          belowView: self.workoutNameLabel,
-                                                         withPadding: 15).isActive = true
+                                                         withPadding: 12.5).isActive = true
         
         // Assign height constraint
         self.workoutSessionTableView.heightConstraint =

@@ -36,10 +36,7 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource,UITableVi
     // Moved a cell (HPRTableview requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
-        let source = data[sourceIndexPath.row]
-        let destination = data[destinationIndexPath.row]
-        data[sourceIndexPath.row] = destination
-        data[destinationIndexPath.row] = source
+        self.data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
     
     // Deletion methods

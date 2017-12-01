@@ -22,7 +22,6 @@ class SectionView: UIView {
     
     private var selectedView: PrettyButton?
     
-    
     // MARK: Enums
     
     public enum ContentViews {
@@ -131,6 +130,7 @@ class SectionView: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutsButton,
                                                              withCopyView: self,
                                                              attribute: .height).isActive = true
+        
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutsButton,
                                                              withCopyView: self,
                                                              attribute: .width,

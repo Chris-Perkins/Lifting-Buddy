@@ -87,22 +87,12 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
     // Moved a cell (HPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
-        let sourceData = data[sourceIndexPath.row]
-        let destinationData = data[destinationIndexPath.row]
-        
         let realm = try! Realm()
         try! realm.write {
-            data[sourceIndexPath.row] = destinationData
-            data[destinationIndexPath.row] = sourceData
+            self.data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
         }
         
-        let sourceCell = cells[sourceIndexPath.row]
-        let destinationCell = cells[destinationIndexPath.row]
-        sourceCell.indexPath = destinationIndexPath
-        destinationCell.indexPath = sourceIndexPath
-        
-        cells[sourceIndexPath.row] = destinationCell
-        cells[destinationIndexPath.row] = sourceCell
+        self.cells.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
     
     // Deletion methods

@@ -8,6 +8,8 @@
 
 import UIKit
 import HPReorderTableView
+import Realm
+import RealmSwift
 
 class ProgressionsMethodTableView: HPReorderTableView, UITableViewDataSource,UITableViewDelegate {
     
@@ -41,16 +43,8 @@ class ProgressionsMethodTableView: HPReorderTableView, UITableViewDataSource,UIT
     
     // Moved a cell (HPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        // Modify this code as needed to support more advanced reordering, such as between sections.
-        let sourceData = data[sourceIndexPath.row]
-        let destinationData = data[destinationIndexPath.row]
-        data[sourceIndexPath.row] = destinationData
-        data[destinationIndexPath.row] = sourceData
-        
-        let sourceCell = cells[sourceIndexPath.row]
-        let destinationCell = cells[destinationIndexPath.row]
-        cells[sourceIndexPath.row] = destinationCell
-        cells[destinationIndexPath.row] = sourceCell
+        self.data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        self.cells.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
     
     // Data is what we use to fill in the table view

@@ -11,8 +11,7 @@ import Realm
 import RealmSwift
 import HPReorderTableView
 
-class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableViewDataSource,
-WorkoutSessionTableViewCellDelegate {
+class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: View properties
     
@@ -85,8 +84,8 @@ WorkoutSessionTableViewCellDelegate {
     }
     
     // Moved a cell (HPRTableView requirement for drag-and-drop)
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath,
+                   to destinationIndexPath: IndexPath) {
         let realm = try! Realm()
         try! realm.write {
             data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
@@ -98,24 +97,12 @@ WorkoutSessionTableViewCellDelegate {
     // Deletion methods
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if indexPath.row < cells.count {
-                if cells[indexPath.row].getIsComplete() {
-                    /* if this cell was complete, make sure that we remove it from curComplete int! */
-                    curComplete -= 1
-                }
-                
-                cells.remove(at: indexPath.row)
-            }
+            deleteData(at: indexPath.row)
             
-            // remove from the workout (realm data)
             let realm = try! Realm()
             try! realm.write {
                 data.remove(at: indexPath.row)
             }
-            
-            heights.remove(at: indexPath.row)
-            checkComplete()
-            reloadData()
         }
     }
     
@@ -131,6 +118,7 @@ WorkoutSessionTableViewCellDelegate {
                                                    style: .default,
                                                    reuseIdentifier: nil)
             cell.delegate = self
+            cell.deletionDelegate = self
             cell.indexPath = indexPath
             cell.updateToggledStatus()
             cell.updateCompleteStatus()
@@ -146,24 +134,6 @@ WorkoutSessionTableViewCellDelegate {
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return heights[indexPath.row]
-    }
-    
-    // MARK: WorkoutSessionTableViewCellDelegate methods
-    
-    // Height of a cell changed ; update this view's height to match height change
-    func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
-        heightConstraint?.constant += height - heights[indexPath.row]
-        heights[indexPath.row] = height
-        
-        reloadData()
-        
-        viewDelegate?.heightChange()
-    }
-    
-    // Update complete count, check if we completed all exercises
-    func cellCompleteStatusChanged(complete: Bool) {
-        curComplete += complete ? 1 : -1
-        checkComplete()
     }
     
     // MARK: Custom functions
@@ -214,6 +184,42 @@ WorkoutSessionTableViewCellDelegate {
     }
 }
 
+extension WorkoutSessionTableView: WorkoutSessionTableViewCellDelegate {
+    // Height of a cell changed ; update this view's height to match height change
+    func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
+        heightConstraint?.constant += height - heights[indexPath.row]
+        heights[indexPath.row] = height
+        
+        reloadData()
+        
+        viewDelegate?.heightChange()
+    }
+    
+    // Update complete count, check if we completed all exercises
+    func cellCompleteStatusChanged(complete: Bool) {
+        curComplete += complete ? 1 : -1
+        checkComplete()
+    }
+}
+
+extension WorkoutSessionTableView: CellDeletionDelegate {
+    // Deletes all data that we can
+    func deleteData(at index: Int) {
+        if index < cells.count {
+            if cells[index].getIsComplete() {
+                /* if this cell was complete, make sure that we remove it from curComplete int! */
+                curComplete -= 1
+            }
+            
+            cells.remove(at: index)
+        }
+        
+        heights.remove(at: index)
+        checkComplete()
+        reloadData()
+    }
+}
+
 protocol WorkoutSessionTableViewDelegate {
     /*
      The status of the workout is being updated
@@ -224,4 +230,11 @@ protocol WorkoutSessionTableViewDelegate {
      Height of this view changed
      */
     func heightChange()
+}
+
+protocol CellDeletionDelegate {
+    /*
+     * The callee should delete the data at the given index
+     */
+    func deleteData(at index: Int)
 }

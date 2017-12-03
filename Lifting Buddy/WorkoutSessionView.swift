@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, ExercisePickerDelegate {
+class WorkoutSessionView: UIScrollView {
     
     // MARK: View properties
     
@@ -205,30 +205,6 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
         }
     }
     
-    // MARK: ExercisePicker Delegate methods
-    func didSelectExercise(exercise: Exercise) {
-        workoutSessionTableView.appendDataToTableView(data: exercise)
-    }
-    
-    // MARK: WorkoutSessionTableViewDelegate
-    
-    func updateCompleteStatus(isComplete: Bool) {
-        self.isComplete = isComplete
-        
-        if isComplete {
-            backgroundColor = .niceLightGreen
-            completeButton.backgroundColor = .niceGreen
-        } else {
-            backgroundColor = .niceGray
-            completeButton.backgroundColor = .niceLightBlue
-        }
-    }
-    
-    // Height of this view changed
-    func heightChange() {
-        layoutSubviews()
-    }
-    
     // MARK: View Constraints
     
     // Center horiz in view ; place below top of this view ; height 20 ; width of this view - 80
@@ -323,4 +299,32 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
                                                              withCopyView: completeButton,
                                                              attribute: .width).isActive = true
     }
+}
+
+extension WorkoutSessionView: WorkoutSessionTableViewDelegate {
+    // Determine if we've completed this workout
+    func updateCompleteStatus(isComplete: Bool) {
+        self.isComplete = isComplete
+        
+        if isComplete {
+            backgroundColor = .niceLightGreen
+            completeButton.backgroundColor = .niceGreen
+        } else {
+            backgroundColor = .niceGray
+            completeButton.backgroundColor = .niceLightBlue
+        }
+    }
+    
+    // Height of this view changed
+    func heightChange() {
+        layoutSubviews()
+    }
+}
+
+extension WorkoutSessionView: ExercisePickerDelegate {
+    // Add this data to our tableview
+    func didSelectExercise(exercise: Exercise) {
+        workoutSessionTableView.appendDataToTableView(data: exercise)
+    }
+
 }

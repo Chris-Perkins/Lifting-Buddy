@@ -26,7 +26,7 @@ Expected / Hopeful release: December 20th
 | Create “Session” View     | 2/10                  | I know how to do it, but no code yet.          |
 
 ### Known Bugs
-Starting a workout session with an exercise, deleting that exercise, then viewing the workout session causes a crash.
+Edit a workout with some exercise. Delete the exercise using the exercises tab. Go back to the edit view-- should crash.
 
 ### Future plans
 Convert relevant UIViews into ViewControllers (good practice)

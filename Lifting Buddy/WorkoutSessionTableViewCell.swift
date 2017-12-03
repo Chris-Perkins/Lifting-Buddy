@@ -53,6 +53,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     public var indexPath: IndexPath?
     // Delegate we use to change height of cells
     public var delegate: WorkoutSessionTableViewCellDelegate?
+    public var deletionDelegate: CellDeletionDelegate?
     
     // MARK: Init Functions
     
@@ -146,6 +147,14 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         } else {
             backgroundColor = isToggled ? .niceLightGray : .white
             cellTitle.textColor = .niceBlue
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if exercise.isInvalidated {
+            self.deletionDelegate?.deleteData(at: indexPath!.row)
         }
     }
     

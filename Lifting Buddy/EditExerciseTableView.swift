@@ -9,7 +9,7 @@
 import UIKit
 import HPReorderTableView
 
-class EditExerciseTableView: HPReorderTableView, UITableViewDataSource,UITableViewDelegate {
+class EditExerciseTableView: HPReorderTableView, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: View properties
     public var heightConstraint: NSLayoutConstraint?

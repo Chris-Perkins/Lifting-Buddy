@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate {
+class CreateWorkoutView: UIScrollView {
     
     // MARK: View properties
     
@@ -47,6 +47,8 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
     private let createWorkoutButton: PrettyButton
     // Cancel button
     private let cancelButton: PrettyButton
+    
+    // MARK: View inits
     
     init(workout: Workout? = nil, frame: CGRect) {
         editingWorkout = workout
@@ -311,31 +313,6 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
         return toggledIndices
     }
     
-    // MARK: ExercisePickerDelegate Methods
-    
-    // whenever an exercise is selected from our select exercise view
-    func didSelectExercise(exercise: Exercise) {
-        editExerciseTableView.appendDataToTableView(data: exercise)
-    }
-    
-    // MARK: ShowViewDelegate
-    
-    func showView(view: UIView) {
-        superview!.addSubview(view)
-        
-        view.frame = CGRect(x: 0,
-                            y: -superview!.frame.height,
-                            width: superview!.frame.width,
-                            height: superview!.frame.height)
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            view.frame = CGRect(x: 0,
-                                y: 0,
-                                width: self.superview!.frame.width,
-                                height: self.superview!.frame.height)
-        })
-    }
-    
     // MARK: Constraints
     
     // center horiz in view; cling to top; width of this view ; height 30
@@ -508,6 +485,32 @@ class CreateWorkoutView: UIScrollView, ExercisePickerDelegate, ShowViewDelegate 
                                                              withCopyView: createWorkoutButton,
                                                              attribute: .width,
                                                              plusConstant: 0).isActive = true
+    }
+}
+
+extension CreateWorkoutView: ShowViewDelegate {
+    // Shows a view over this view
+    func showView(view: UIView) {
+        superview!.addSubview(view)
+        
+        view.frame = CGRect(x: 0,
+                            y: -superview!.frame.height,
+                            width: superview!.frame.width,
+                            height: superview!.frame.height)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            view.frame = CGRect(x: 0,
+                                y: 0,
+                                width: self.superview!.frame.width,
+                                height: self.superview!.frame.height)
+        })
+    }
+}
+
+extension CreateWorkoutView: ExercisePickerDelegate {
+    // whenever an exercise is selected from our select exercise view
+    func didSelectExercise(exercise: Exercise) {
+        editExerciseTableView.appendDataToTableView(data: exercise)
     }
 }
 

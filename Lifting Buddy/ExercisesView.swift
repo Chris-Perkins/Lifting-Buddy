@@ -10,8 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class ExercisesView: UIView, CreateExerciseViewDelegate, WorkoutSessionStarter, ExercisePickerDelegate,
-TableViewOverlayDelegate, ShowViewDelegate {
+class ExercisesView: UIView {
     
     // MARK: View properties
     
@@ -116,95 +115,6 @@ TableViewOverlayDelegate, ShowViewDelegate {
         showView(view: createExerciseView)
     }
     
-    // MARK: CreateWorkoutViewDelegate methods
-    
-    func finishedWithWorkout(workout: Workout) {
-        exerciseTableView.reloadData()
-        
-        layoutSubviews()
-    }
-    
-    // MARK: Empty Table Overlay delegate methods
-    
-    func showViewOverlay() {
-        // If the view exists, don't create another.
-        if overlayView != nil {
-            return
-        }
-        /*overlayView = UIView()
-         addSubview(overlayView!)
-         NSLayoutConstraint.clingViewToView(view: overlayView!, toView: self)
-         overlayView?.backgroundColor = .niceYellow
-         
-         let overlayButton = PrettyButton()
-         addSubview(overlayButton)
-         overlayButton.setTitle("Create Exercise", for: .normal)
-         createAndActivateOverlayButtonConstraints(overlayButton: overlayButton)
-         
-         overlayButton.setDefaultProperties()
-         overlayButton.addTarget(self, action: #selector(showCreateExerciseView(sender:)), for: .touchUpInside)*/
-    }
-    
-    func hideViewOverlay() {
-        // hide the guy
-        overlayView?.removeFromSuperview()
-        overlayView = nil
-    }
-    
-    // MARK: CreateExerciseViewDelegate methods
-    
-    func finishedWithExercise(exercise: Exercise) {
-        // if we're selecting an exercise, return the one we just made.
-        if selectingExercise {
-            exercisePickerDelegate?.didSelectExercise(exercise: exercise)
-            removeSelfNicelyWithAnimation()
-        } else {
-            exerciseTableView.reloadData()
-            exerciseTableView.layoutSubviews()
-        }
-    }
-    
-    // MARK: ExercisePickerDelegate methods
-    func didSelectExercise(exercise: Exercise) {
-        exercisePickerDelegate?.didSelectExercise(exercise: exercise)
-        removeSelfNicelyWithAnimation()
-    }
-    
-    // MARK: Start Workout Delegate methods
-    
-    // Starts a workout based on the information we're given
-    func startWorkout(workout: Workout?, exercise: Exercise?) {
-        let startWorkoutView = WorkoutSessionView(workout: workout,
-                                                  frame: .zero)
-        startWorkoutView.workoutSessionDelegate = self
-        startWorkoutView.showViewDelegate = self
-        
-        if let appendedExercise = exercise {
-            startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
-        }
-        
-        showView(view: startWorkoutView)
-    }
-    
-    // MARK: Show View Protocol Methods
-    
-    // Shows a view
-    func showView(view: UIView) {
-        addSubview(view)
-        
-        view.frame = CGRect(x: 0,
-                            y: -frame.height,
-                            width: frame.width,
-                            height: frame.height)
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            view.frame = CGRect(x: 0,
-                                y: 0,
-                                width: self.frame.width,
-                                height: self.frame.height)
-        })
-    }
-    
     // MARK: Constraint functions
     
     // Cling to top, left, right of this view ; bottom of this view @ createButton
@@ -287,6 +197,90 @@ TableViewOverlayDelegate, ShowViewDelegate {
                                                              withCopyView: overlayView,
                                                              attribute: .width,
                                                              multiplier: 0.85).isActive = true
+    }
+}
+
+extension ExercisesView: ExercisePickerDelegate {
+    // when we select an exercise, return it.
+    func didSelectExercise(exercise: Exercise) {
+        exercisePickerDelegate?.didSelectExercise(exercise: exercise)
+        removeSelfNicelyWithAnimation()
+    }
+}
+
+extension ExercisesView: WorkoutSessionStarter {
+    // Starts a workout based on the information we're given
+    func startWorkout(workout: Workout?, exercise: Exercise?) {
+        let startWorkoutView = WorkoutSessionView(workout: workout,
+                                                  frame: .zero)
+        startWorkoutView.workoutSessionDelegate = self
+        startWorkoutView.showViewDelegate = self
+        
+        if let appendedExercise = exercise {
+            startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
+        }
+        
+        showView(view: startWorkoutView)
+    }
+}
+
+extension ExercisesView: CreateExerciseViewDelegate {
+    // Called when a workout is created from this view
+    func finishedWithExercise(exercise: Exercise) {
+        // if we're selecting an exercise, return the one we just made.
+        if selectingExercise {
+            exercisePickerDelegate?.didSelectExercise(exercise: exercise)
+            removeSelfNicelyWithAnimation()
+        } else {
+            exerciseTableView.reloadData()
+            exerciseTableView.layoutSubviews()
+        }
+    }
+}
+
+extension ExercisesView: ShowViewDelegate {
+    // Shows a view over this one
+    func showView(view: UIView) {
+        addSubview(view)
+        
+        view.frame = CGRect(x: 0,
+                            y: -frame.height,
+                            width: frame.width,
+                            height: frame.height)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            view.frame = CGRect(x: 0,
+                                y: 0,
+                                width: self.frame.width,
+                                height: self.frame.height)
+        })
+    }
+}
+
+extension ExercisesView: TableViewOverlayDelegate {
+    func showViewOverlay() {
+        // If the view exists, don't create another.
+        if overlayView != nil {
+            return
+        }
+        /*overlayView = UIView()
+         addSubview(overlayView!)
+         NSLayoutConstraint.clingViewToView(view: overlayView!, toView: self)
+         overlayView?.backgroundColor = .niceYellow
+         
+         let overlayButton = PrettyButton()
+         addSubview(overlayButton)
+         overlayButton.setTitle("Create Exercise", for: .normal)
+         createAndActivateOverlayButtonConstraints(overlayButton: overlayButton)
+         
+         overlayButton.setDefaultProperties()
+         overlayButton.addTarget(self, action: #selector(showCreateExerciseView(sender:)), for: .touchUpInside)*/
+    }
+    
+    func hideViewOverlay() {
+        // hide the guy
+        overlayView?.removeFromSuperview()
+        overlayView = nil
     }
 }
 

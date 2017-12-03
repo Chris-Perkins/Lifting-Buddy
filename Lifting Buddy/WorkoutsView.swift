@@ -12,7 +12,7 @@ import UIKit
 import RealmSwift
 import Realm
 
-class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, ShowViewDelegate {
+class WorkoutsView: UIView {
     
     // View properties
     
@@ -68,48 +68,6 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
         showView(view: createWorkoutView)
     }
     
-    // MARK: CreateWorkoutViewDelegate methods
-    
-    // We created a workout; update tableview
-    func finishedWithWorkout(workout: Workout) {
-        workoutTableView.refreshData()
-        workoutTableView.reloadData()
-        
-        layoutSubviews()
-    }
-    
-    // MARK: WorkoutCDelegate methods
-    
-    // Start the workout with workout or exercise
-    func startWorkout(workout: Workout?, exercise: Exercise?) {
-        let startWorkoutView = WorkoutSessionView(workout: workout,
-                                                  frame: .zero)
-        startWorkoutView.showViewDelegate = self
-        
-        if let appendedExercise = exercise {
-            startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
-        }
-        
-        showView(view: startWorkoutView)
-    }
-    
-    //  Show view functions
-    func showView(view: UIView) {
-        addSubview(view)
-        
-        view.frame = CGRect(x: 0,
-                            y: -frame.height,
-                            width: frame.width,
-                            height: frame.height)
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            view.frame = CGRect(x: 0,
-                                y: 0,
-                                width: self.frame.width,
-                                height: self.frame.height)
-        })
-    }
-    
     // MARK: Constraint functions
     
     // Cling to top, left, right of this view - 10, height of this view - 70
@@ -149,5 +107,49 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
                                                              attribute: .bottom).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: createWorkoutButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
+    }
+}
+
+extension WorkoutsView: CreateWorkoutViewDelegate {
+    // Called when a workout was created
+    func finishedWithWorkout(workout: Workout) {
+        workoutTableView.refreshData()
+        workoutTableView.reloadData()
+        
+        layoutSubviews()
+    }
+}
+
+extension WorkoutsView: ShowViewDelegate {
+    // Shows a view over this view
+    func showView(view: UIView) {
+        addSubview(view)
+        
+        view.frame = CGRect(x: 0,
+                            y: -frame.height,
+                            width: frame.width,
+                            height: frame.height)
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            view.frame = CGRect(x: 0,
+                                y: 0,
+                                width: self.frame.width,
+                                height: self.frame.height)
+        })
+    }
+}
+
+extension WorkoutsView: WorkoutSessionStarter {
+    // Start the workout with workout or exercise
+    func startWorkout(workout: Workout?, exercise: Exercise?) {
+        let startWorkoutView = WorkoutSessionView(workout: workout,
+                                                  frame: .zero)
+        startWorkoutView.showViewDelegate = self
+        
+        if let appendedExercise = exercise {
+            startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
+        }
+        
+        showView(view: startWorkoutView)
     }
 }

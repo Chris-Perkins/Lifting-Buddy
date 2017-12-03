@@ -11,7 +11,7 @@ import HPReorderTableView
 import Realm
 import RealmSwift
 
-class ProgressionsMethodTableView: HPReorderTableView, UITableViewDataSource,UITableViewDelegate {
+class ProgressionsMethodTableView: HPReorderTableView, UITableViewDelegate {
     
     // MARK: View properties
     public var heightConstraint: NSLayoutConstraint?
@@ -39,48 +39,6 @@ class ProgressionsMethodTableView: HPReorderTableView, UITableViewDataSource,UIT
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: TableView Functions
-    
-    // Moved a cell (HPRTableView requirement for drag-and-drop)
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
-        cells.swapAt(sourceIndexPath.row, destinationIndexPath.row)
-    }
-    
-    // Data is what we use to fill in the table view
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
-    }
-    
-    // Deletion methods
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            data.remove(at: indexPath.row)
-            
-            heightConstraint?.constant -= UITableViewCell.defaultHeight
-            reloadData()
-        }
-    }
-    
-    // Create our custom cell class
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Cell does not exist; create it.
-        if cells.count > indexPath.row {
-            return cells[indexPath.row]
-        } else {
-            let cell = ProgressionMethodTableViewCell(style: .default, reuseIdentifier: nil)
-            cell.setProgressionMethod(progressionMethod: data[indexPath.row])
-            cells.append(cell)
-            return cell
-        }
-    }
-    
-    // Each cell has a height of cellHeight
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewCell.defaultHeight
-    }
-    
     // MARK: Custom functions
     
     // Append some data to the tableView
@@ -94,5 +52,46 @@ class ProgressionsMethodTableView: HPReorderTableView, UITableViewDataSource,UIT
     // Returns the data in this tableview
     public func getData() -> [ProgressionMethod] {
         return data
+    }
+}
+
+extension ProgressionsMethodTableView: UITableViewDataSource {
+    // Create our custom cell class
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Cell does not exist; create it.
+        if cells.count > indexPath.row {
+            return cells[indexPath.row]
+        } else {
+            let cell = ProgressionMethodTableViewCell(style: .default, reuseIdentifier: nil)
+            cell.setProgressionMethod(progressionMethod: data[indexPath.row])
+            cells.append(cell)
+            return cell
+        }
+    }
+    
+    // Deletion methods
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            data.remove(at: indexPath.row)
+            
+            heightConstraint?.constant -= UITableViewCell.defaultHeight
+            reloadData()
+        }
+    }
+    
+    // Data is what we use to fill in the table view
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return data.count
+    }
+    
+    // Moved a cell (HPRTableView requirement for drag-and-drop)
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        cells.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewCell.defaultHeight
     }
 }

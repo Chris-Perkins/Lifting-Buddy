@@ -25,12 +25,16 @@ Expected / Hopeful release: December 20th
 | About screen              | 2/10                  | In progress now                                |
 | Create “Session” View     | 2/10                  | I know how to do it, but no code yet.          |
 
-### Future plans    
+### Known Bugs
+Starting a workout session with an exercise, deleting that exercise, then viewing the workout session causes a crash.
+
+### Future plans
 Convert relevant UIViews into ViewControllers (good practice)
-    Update from 11/29 -- my shower thoughts said this wasn't a good idea.
-        Reason being that containerviewcontrollers would require the frames to be set anyway, which is what I wanted to avoid.
+Update from 11/29 -- my shower thoughts said this wasn't a good idea.
+Reason being that containerviewcontrollers would require the frames to be set anyway, which is what I wanted to avoid.
 Add "Feature Poll", a poll that users can use to vote on for the next feature.
-Log in to sync and backup workouts  
+Log in to sync and backup workouts
 
 #### Special Thanks
 Alex Bridgeman - For giving me the idea for this application. Also created the splash screen and launch screen!
+

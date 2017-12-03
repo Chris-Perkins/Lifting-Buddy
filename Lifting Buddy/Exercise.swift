@@ -41,35 +41,35 @@ class Exercise: Object {
     // MARK: Init Functions
     
     required init() {
-        self.name = nil
-        self.setCount = 0
-        self.repCount = 0
-        self.cooldownTime = 0
+        name = nil
+        setCount = 0
+        repCount = 0
+        cooldownTime = 0
         
-        self.progressionMethods = List<ProgressionMethod>()
-        self.exerciseHistory = List<ExerciseHistoryEntry>()
+        progressionMethods = List<ProgressionMethod>()
+        exerciseHistory = List<ExerciseHistoryEntry>()
         
         super.init()
     }
     
     required init(value: Any, schema: RLMSchema) {
-        self.name = nil
-        self.setCount = 0
-        self.repCount = 0
-        self.cooldownTime = 0
-        self.progressionMethods = List<ProgressionMethod>()
-        self.exerciseHistory = List<ExerciseHistoryEntry>()
+        name = nil
+        setCount = 0
+        repCount = 0
+        cooldownTime = 0
+        progressionMethods = List<ProgressionMethod>()
+        exerciseHistory = List<ExerciseHistoryEntry>()
         
         super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        self.name = nil
-        self.setCount = 0
-        self.repCount = 0
-        self.cooldownTime = 0
-        self.progressionMethods = List<ProgressionMethod>()
-        self.exerciseHistory = List<ExerciseHistoryEntry>()
+        name = nil
+        setCount = 0
+        repCount = 0
+        cooldownTime = 0
+        progressionMethods = List<ProgressionMethod>()
+        exerciseHistory = List<ExerciseHistoryEntry>()
         
         super.init(realm: realm, schema: schema)
     }
@@ -83,7 +83,7 @@ class Exercise: Object {
     // MARK: Encapsulated methods
     
     @objc public func getSetCount() -> Int {
-        return self.setCount
+        return setCount
     }
     
     // This variable's name is kind of funny. :)
@@ -95,7 +95,7 @@ class Exercise: Object {
     }
     
     @objc public func getName() -> String? {
-        return self.name
+        return name
     }
     
     public func setName(name: String?) {
@@ -106,14 +106,14 @@ class Exercise: Object {
     }
     
     public func getProgressionMethods() -> List<ProgressionMethod> {
-        return self.progressionMethods
+        return progressionMethods
     }
     
     // Appends a progressionmethod to this exercise
     public func appendProgressionMethod(progressionMethod: ProgressionMethod) {
         let realm = try! Realm()
         try! realm.write {
-            self.progressionMethods.append(progressionMethod)
+            progressionMethods.append(progressionMethod)
         }
     }
     
@@ -121,19 +121,19 @@ class Exercise: Object {
     public func removeProgressionMethods() {
         let realm = try! Realm()
         try! realm.write {
-            self.progressionMethods.removeAll()
+            progressionMethods.removeAll()
         }
     }
     
     public func getExerciseHistory() -> List<ExerciseHistoryEntry> {
-        return self.exerciseHistory
+        return exerciseHistory
     }
     
     // Adds an entry to this exercise
     public func appendExerciseHistoryEntry(exerciseHistoryEntry: ExerciseHistoryEntry) {
         let realm = try! Realm()
         try! realm.write {
-            self.exerciseHistory.append(exerciseHistoryEntry)
+            exerciseHistory.append(exerciseHistoryEntry)
         }
     }
     
@@ -143,7 +143,7 @@ class Exercise: Object {
         
         // We have to dive down to delete any progression method trace.
         // Don't want to store data if we don't have to anymore!
-        for (indexEntry, entry) in self.exerciseHistory.enumerated().reversed() {
+        for (indexEntry, entry) in exerciseHistory.enumerated().reversed() {
             for (indexDataPiece, dataPiece) in entry.exerciseInfo.enumerated().reversed() {
                 if let progressionMethod = dataPiece.progressionMethod {
                     if progressionMethodsToDelete.contains(progressionMethod) {
@@ -152,7 +152,7 @@ class Exercise: Object {
                             
                             
                             if entry.exerciseInfo.isEmpty {
-                                self.exerciseHistory.remove(at: indexEntry)
+                                exerciseHistory.remove(at: indexEntry)
                             }
                         } // closes realm.write
                     }
@@ -160,9 +160,9 @@ class Exercise: Object {
             }
         } // closes for loop # 1
     }
-
+    
     @objc public func getCooldownTime() -> Int {
-        return self.cooldownTime
+        return cooldownTime
     }
     @objc public func setCooldownTime(cooldownTime: Int) {
         let realm = try! Realm()

@@ -14,15 +14,15 @@ class BetterTextField: UIView {
     // MARK: View properties
     public var text: String? {
         // return the textfield text if possible; otherwise, return placeholder
-        return !(self.textfield.text ?? "").isEmpty ?
-            self.textfield.text :
-            self.textfield.placeholder
+        return !(textfield.text ?? "").isEmpty ?
+            textfield.text :
+            textfield.placeholder
     }
     
     // Label for this text field
-    public var textfield: UITextField
+    public let textfield: UITextField
     // The label for this view
-    private var label: UILabel
+    private let label: UILabel
     
     // default string in this textfield
     private var defaultString: String?
@@ -37,25 +37,25 @@ class BetterTextField: UIView {
     // MARK: Inits
     
     init(defaultString: String?, frame: CGRect) {
-        self.textfield = UITextField()
-        self.label = UILabel()
+        textfield = UITextField()
+        label = UILabel()
         
         self.defaultString = defaultString
-        self.modified = false
-        self.userEditing = false
-        self.isNumeric = false
+        modified = false
+        userEditing = false
+        isNumeric = false
         
         super.init(frame: frame)
         
-        self.textfield.setDefaultProperties()
+        textfield.setDefaultProperties()
         
-        self.textfield.addTarget(self, action: #selector(editingDidEnd(sender:)), for: .editingDidEnd)
+        textfield.addTarget(self, action: #selector(editingDidEnd(sender:)), for: .editingDidEnd)
         
-        self.addSubview(textfield)
-        self.addSubview(label)
-
-        self.createAndActivateLabelConstraints()
-        self.createAndActivateTextfieldConstraints()
+        addSubview(textfield)
+        addSubview(label)
+        
+        createAndActivateLabelConstraints()
+        createAndActivateTextfieldConstraints()
     }
     
     
@@ -68,15 +68,15 @@ class BetterTextField: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.label.font = UIFont.boldSystemFont(ofSize: 18.0)
-        self.label.textAlignment = .center
-        self.label.backgroundColor = UIColor.niceLightGray
-        self.label.textColor = UIColor.niceBlue
-        self.label.layer.zPosition = 1
+        label.font = UIFont.boldSystemFont(ofSize: 18.0)
+        label.textAlignment = .center
+        label.backgroundColor = .niceLightGray
+        label.textColor = .niceBlue
+        label.layer.zPosition = 1
         
-        self.textfield.placeholder = defaultString
+        textfield.placeholder = defaultString
         
-        self.textfield.textAlignment = .center
+        textfield.textAlignment = .center
     }
     
     // MARK: Encapsulated methods
@@ -84,33 +84,33 @@ class BetterTextField: UIView {
     // Sets the label for this view
     
     public func setLabelTitle(title: String?) {
-        self.label.text = title
+        label.text = title
         
-        self.createAndActivateLabelConstraints()
+        createAndActivateLabelConstraints()
     }
     
     // Sets if this field is numeric
     public func setIsNumeric(isNumeric: Bool) {
         self.isNumeric = isNumeric
-        self.textfield.keyboardType = .decimalPad
+        textfield.keyboardType = .decimalPad
     }
     
     // Returns if this field is numeric
     public func getIsNumeric() -> Bool {
-        return self.isNumeric
+        return isNumeric
     }
     
     
     // Returns whether or not this textfield has been modified
     public func getModified() -> Bool {
-        return self.modified
+        return modified
     }
     
     // Sets the default string for this textfield
     public func setDefaultString(defaultString: String?) {
         self.defaultString = defaultString
         
-        self.textfield.placeholder = defaultString
+        textfield.placeholder = defaultString
     }
     
     // MARK: View functions
@@ -118,11 +118,11 @@ class BetterTextField: UIView {
     // decides whether or not this field was modified
     private func determineIfModified() -> Bool {
         // If the field is empty, the field was not modified.
-        let textIsEmpty = self.textfield.text == nil || self.textfield.text == ""
+        let textIsEmpty = textfield.text == nil || textfield.text == ""
         // valid: if it's not numeric, anything goes. if it is, make sure it's not nil.
-        let textIsValid = (!self.isNumeric ||
-                            (self.textfield.text?.floatValue != nil ||
-                             self.textfield.text?.floatValue != 0))
+        let textIsValid = (!isNumeric ||
+            (textfield.text?.floatValue != nil ||
+                textfield.text?.floatValue != 0))
         
         // this field is modified if it's not empty and if the text is valid
         return !textIsEmpty && textIsValid
@@ -132,9 +132,9 @@ class BetterTextField: UIView {
     
     // When the user is done editing
     @objc func editingDidEnd(sender: UITextField) {
-        if self.isNumeric {
-            if self.textfield.text?.floatValue == nil {
-                self.textfield.text = ""
+        if isNumeric {
+            if textfield.text?.floatValue == nil {
+                textfield.text = ""
             }
         }
     }
@@ -143,50 +143,50 @@ class BetterTextField: UIView {
     
     // cling to top, bottom, left of this view ;  cling to right of label
     private func createAndActivateTextfieldConstraints() {
-        self.textfield.translatesAutoresizingMaskIntoConstraints = false
+        textfield.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.textfield,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: textfield,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint(item: self.label,
+        NSLayoutConstraint(item: label,
                            attribute: .left,
                            relatedBy: .equal,
-                           toItem: self.textfield,
+                           toItem: textfield,
                            attribute: .right,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.textfield,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: textfield,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.textfield,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: textfield,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
     }
     
     // Cling to right, top, bottom of this view.
     private func createAndActivateLabelConstraints() {
-        self.label.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
         
-        self.curLabelWidthConstraint?.isActive = false
+        curLabelWidthConstraint?.isActive = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.label,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: label,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.label,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: label,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.label,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: label,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
         
-        if self.label.text != nil && self.label.text != "" {
-            self.curLabelWidthConstraint =
-                NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.label,
+        if label.text != nil && label.text != "" {
+            curLabelWidthConstraint =
+                NSLayoutConstraint.createViewAttributeCopyConstraint(view: label,
                                                                      withCopyView: self,
                                                                      attribute: .width,
                                                                      multiplier: 1/3)
         } else {
-            curLabelWidthConstraint = NSLayoutConstraint.createWidthConstraintForView(view: self.label,
+            curLabelWidthConstraint = NSLayoutConstraint.createWidthConstraintForView(view: label,
                                                                                       width: 0)
         }
         

@@ -30,9 +30,9 @@ class ExerciseTableViewCell: UITableViewCell {
     // a button that absorbs touches to prevent view from collapsing
     private let invisButton: UIButton
     // The view which holds our chart and all associated views
-    private var chartFrame: UIView
-    // The view that actually stores the exercise chart
-    private var chartView: ExerciseChartViewWithToggles?
+    private let chartFrame: UIView
+        // The view that actually stores the exercise chart
+        private var chartView: ExerciseChartViewWithToggles?
     // The button that allows for exercise editing
     private let editButton: PrettyButton
     // A button to start the exercise
@@ -44,31 +44,31 @@ class ExerciseTableViewCell: UITableViewCell {
     // MARK: Init functions
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.cellTitle = UILabel()
-        self.expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
-        self.invisButton = UIButton()
-        self.chartFrame = UIView()
-        self.editButton = PrettyButton()
-        self.startExerciseButton = PrettyButton()
+        cellTitle = UILabel()
+        expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
+        invisButton = UIButton()
+        chartFrame = UIView()
+        editButton = PrettyButton()
+        startExerciseButton = PrettyButton()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.selectionStyle = .none
+        selectionStyle = .none
         
-        self.editButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        self.startExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        editButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        startExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
-        self.addSubview(self.cellTitle)
-        self.addSubview(self.expandImage)
-        self.addSubview(self.chartFrame)
-        self.addSubview(self.editButton)
-        self.addSubview(self.startExerciseButton)
+        addSubview(cellTitle)
+        addSubview(expandImage)
+        addSubview(chartFrame)
+        addSubview(editButton)
+        addSubview(startExerciseButton)
         
-        self.createAndActivateCellTitleConstraints()
-        self.createAndActivateExpandImageConstraints()
-        self.createAndActivateChartFrameConstraints()
-        self.createAndActivateEditButtonConstraints()
-        self.createAndActivateStartButtonConstraints()
+        createAndActivateCellTitleConstraints()
+        createAndActivateExpandImageConstraints()
+        createAndActivateChartFrameConstraints()
+        createAndActivateEditButtonConstraints()
+        createAndActivateStartButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -80,28 +80,28 @@ class ExerciseTableViewCell: UITableViewCell {
     override func layoutIfNeeded() {
         super.layoutIfNeeded()
         
-        self.chartFrame.layoutSubviews()
+        chartFrame.layoutSubviews()
         
-        self.clipsToBounds = true
-        self.chartFrame.clipsToBounds = true
+        clipsToBounds = true
+        chartFrame.clipsToBounds = true
         
-        self.cellTitle.textColor = UIColor.niceBlue
-        self.cellTitle.textAlignment = .left
+        cellTitle.textColor = .niceBlue
+        cellTitle.textAlignment = .left
         
-        if (self.isSelected) {
-            self.editButton.setDefaultProperties()
-            self.editButton.cornerRadius = 0
-            self.editButton.backgroundColor = UIColor.niceBlue
-            self.editButton.setTitle("Edit", for: .normal)
+        if (isSelected) {
+            editButton.setDefaultProperties()
+            editButton.cornerRadius = 0
+            editButton.backgroundColor = .niceBlue
+            editButton.setTitle("Edit", for: .normal)
             
-            self.startExerciseButton.setDefaultProperties()
-            self.startExerciseButton.cornerRadius = 0
-            self.startExerciseButton.backgroundColor = UIColor.niceGreen
-            self.startExerciseButton.setTitle("Start Exercise", for: .normal)
+            startExerciseButton.setDefaultProperties()
+            startExerciseButton.cornerRadius = 0
+            startExerciseButton.backgroundColor = .niceGreen
+            startExerciseButton.setTitle("Start Exercise", for: .normal)
             
-            self.backgroundColor = UIColor.niceLightGray
+            backgroundColor = .niceLightGray
         } else {
-            self.backgroundColor = UIColor.white
+            backgroundColor = .white
         }
     }
     
@@ -111,48 +111,48 @@ class ExerciseTableViewCell: UITableViewCell {
     public func setExercise(exercise: Exercise) {
         self.exercise = exercise
         
-        self.cellTitle.text = exercise.getName()
+        cellTitle.text = exercise.getName()
         
         if exercise.getProgressionMethods().count > 0 {
             let chartGraphView = ExerciseChartViewWithToggles(exercise: exercise,
-                                                              chartWidth: self.frame.width *
+                                                              chartWidth: frame.width *
                                                                 ExerciseTableViewCell.chartWidthMultiplier)
-            self.chartFrame.addSubview(chartGraphView)
-            self.chartFrame.backgroundColor = UIColor.niceRed
+            chartFrame.addSubview(chartGraphView)
+            chartFrame.backgroundColor = .niceRed
             
-            self.chartHeightConstraint?.constant =
-            ExerciseChartViewWithToggles.getNecessaryHeightForExerciseGraph(exercise: exercise)
+            chartHeightConstraint?.constant =
+                ExerciseChartViewWithToggles.getNecessaryHeightForExerciseGraph(exercise: exercise)
             chartGraphView.translatesAutoresizingMaskIntoConstraints = false
             
-            self.chartView = chartGraphView
+            chartView = chartGraphView
             
             NSLayoutConstraint.clingViewToView(view: chartGraphView,
-                                               toView: self.chartFrame)
+                                               toView: chartFrame)
         } else {
-            self.chartHeightConstraint?.constant = 0
+            chartHeightConstraint?.constant = 0
         }
         
-        self.layoutSubviews()
+        layoutSubviews()
     }
     
     // Sets the expand button constraints
     public func setExpandable(expandable: Bool) {
-        self.expandImage.alpha = expandable ? 1 : 0
+        expandImage.alpha = expandable ? 1 : 0
     }
     
     // MARK: View functions
     
     // Update selected status; v image becomes ^
     public func updateSelectedStatus() {
-        if self.isSelected {
-            self.expandImage.transform = CGAffineTransform(scaleX: 1, y: -1)
-            self.chartView?.createChart()
+        if isSelected {
+            expandImage.transform = CGAffineTransform(scaleX: 1, y: -1)
+            chartView?.createChart()
         } else {
-            self.expandImage.transform = CGAffineTransform(scaleX: 1, y: 1)
-            self.chartView?.destroyChart()
+            expandImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+            chartView?.destroyChart()
         }
         
-        self.layoutIfNeeded()
+        layoutIfNeeded()
     }
     
     // MARK: Event functions
@@ -160,9 +160,9 @@ class ExerciseTableViewCell: UITableViewCell {
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
         case startExerciseButton:
-            self.mainViewCellDelegate?.startWorkout(workout: nil, exercise: self.exercise)
+            mainViewCellDelegate?.startWorkout(workout: nil, exercise: exercise)
         case editButton:
-            self.showViewDelegate?.showView(view: CreateExerciseView(exercise: self.exercise!, frame: .zero))
+            showViewDelegate?.showView(view: CreateExerciseView(exercise: exercise!, frame: .zero))
         default:
             fatalError("Button press not handled in exercisestableview!")
         }
@@ -172,12 +172,12 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // Below view top ; indent to left by 10 ; do not overlap expandImage ; height of defaultHeight
     private func createAndActivateCellTitleConstraints() {
-        self.cellTitle.translatesAutoresizingMaskIntoConstraints = false
+        cellTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitle,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitle,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitle,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitle,
                                                              withCopyView: self,
                                                              attribute: .left,
                                                              plusConstant: 10).isActive = true
@@ -194,13 +194,13 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // Indent from right ; Below self top ; Width 16 ; Height 8.46
     private func createAndActivateExpandImageConstraints() {
-        self.expandImage.translatesAutoresizingMaskIntoConstraints = false
+        expandImage.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: expandImage,
                                                              withCopyView: self,
                                                              attribute: .right,
                                                              plusConstant: -10).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: expandImage,
                                                              withCopyView: self,
                                                              attribute: .top,
                                                              plusConstant: 20.77).isActive = true
@@ -211,37 +211,37 @@ class ExerciseTableViewCell: UITableViewCell {
     }
     
     private func createAndActivateChartFrameConstraints() {
-        self.chartFrame.translatesAutoresizingMaskIntoConstraints = false
+        chartFrame.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.chartFrame,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: chartFrame,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.chartFrame,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: chartFrame,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              multiplier: ExerciseTableViewCell.chartWidthMultiplier
-                                                             ).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.chartFrame,
-                                                         belowView: self.cellTitle).isActive = true
+            ).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: chartFrame,
+                                                         belowView: cellTitle).isActive = true
         
         // Start at 0. Is increased when exercise is set.
-        self.chartHeightConstraint = NSLayoutConstraint.createHeightConstraintForView(view: self.chartFrame,
-                                                                                      height: 0)
-        self.chartHeightConstraint?.isActive = true
+        chartHeightConstraint = NSLayoutConstraint.createHeightConstraintForView(view: chartFrame,
+                                                                                 height: 0)
+        chartHeightConstraint?.isActive = true
     }
     
     // Place at bottom of view, left of view ; width of this view * 0.5 ; Height of default
     private func createAndActivateEditButtonConstraints() {
-        self.editButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.editButton,
-                                                         belowView: self.chartFrame,
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.createViewBelowViewConstraint(view: editButton,
+                                                         belowView: chartFrame,
                                                          withPadding: 10).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.editButton,
+        NSLayoutConstraint.createHeightConstraintForView(view: editButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              multiplier: 0.5).isActive = true
@@ -249,17 +249,17 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // Place at bottom of view, right of view ; width of this view * 0.5 ; Height of default
     private func createAndActivateStartButtonConstraints() {
-        self.startExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        startExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.startExerciseButton,
-                                                         belowView: self.chartFrame,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: startExerciseButton,
+                                                         belowView: chartFrame,
                                                          withPadding: 10).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.startExerciseButton,
+        NSLayoutConstraint.createHeightConstraintForView(view: startExerciseButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.startExerciseButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: startExerciseButton,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.startExerciseButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: startExerciseButton,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              multiplier: 0.5).isActive = true

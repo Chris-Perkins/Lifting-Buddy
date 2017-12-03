@@ -21,7 +21,7 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     public var exercisePickerDelegate: ExercisePickerDelegate?
     
     // Whether or not we're simply selecting an exercise
-    private var selectingExercise: Bool
+    private let selectingExercise: Bool
     // The data displayed in cells
     private var sortedData: [Exercise]
     // the data we sort from
@@ -29,24 +29,26 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // MARK: Initializers
     
-    init(exercises: AnyRealmCollection<Exercise>, selectingExercise: Bool, frame: CGRect, style: UITableViewStyle) {
-        self.data = exercises
-        self.sortedData = Exercise.getSortedExerciseArray(exercises: data)
+    init(exercises: AnyRealmCollection<Exercise>, selectingExercise: Bool, frame: CGRect,
+         style: UITableViewStyle) {
         self.selectingExercise = selectingExercise
+        
+        data = exercises
+        sortedData = Exercise.getSortedExerciseArray(exercises: data)
         
         super.init(frame: frame, style: style)
         
-        self.setupTableView()
+        setupTableView()
     }
     
     init(exercises: AnyRealmCollection<Exercise>, selectingExercise: Bool, style: UITableViewStyle) {
-        self.data = exercises
-        self.sortedData = Exercise.getSortedExerciseArray(exercises: data)
         self.selectingExercise = selectingExercise
+        data = exercises
+        sortedData = Exercise.getSortedExerciseArray(exercises: data)
         
         super.init(frame: .zero, style: style)
         
-        self.setupTableView()
+        setupTableView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,13 +60,13 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     override func reloadData() {
         let realm = try! Realm()
         
-        self.data = AnyRealmCollection(realm.objects(Exercise.self))
-        self.sortedData = Exercise.getSortedExerciseArray(exercises: self.data)
+        data = AnyRealmCollection(realm.objects(Exercise.self))
+        sortedData = Exercise.getSortedExerciseArray(exercises: data)
         
-        if self.sortedData.count > 0 {
-            self.overlayDelegate?.hideViewOverlay()
+        if sortedData.count > 0 {
+            overlayDelegate?.hideViewOverlay()
         } else {
-            self.overlayDelegate?.showViewOverlay()
+            overlayDelegate?.showViewOverlay()
         }
         
         super.reloadData()
@@ -80,50 +82,48 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
             let alert = UIAlertController(title: "Delete Exercise?",
                                           message: "All history for '" + exercise.getName()!
                                             + "' will be deleted.\n" +
-                                            "This cannot be undone. Continue?",
+                "This cannot be undone. Continue?",
                                           preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel",
                                           style: .cancel,
                                           handler: nil))
             alert.addAction(
-                UIAlertAction(title: "Delete",
-                              style: .destructive,
-                              handler: {
-                                    UIAlertAction -> Void in
-                                    let realm = try! Realm()
-                                
-                                    exercise.removeProgressionMethods()
-                                    try! realm.write {
-                                        realm.delete(exercise)
-                                    }
-                                
-                                    self.sortedData.remove(at: indexPath.row)
-                                    self.reloadData()
-                                }))
+                UIAlertAction(title: "Delete", style: .destructive, handler: {
+                    UIAlertAction -> Void in
+                    let realm = try! Realm()
+                    
+                    exercise.removeProgressionMethods()
+                    try! realm.write {
+                        realm.delete(exercise)
+                    }
+                    
+                    self.sortedData.remove(at: indexPath.row)
+                    self.reloadData()
+                }))
             
-            self.viewController()?.present(alert, animated: true, completion: nil)
+            viewController()?.present(alert, animated: true, completion: nil)
         }
     }
     
     // On select, expand the cell.
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let cell = self.cellForRow(at: indexPath) as! ExerciseTableViewCell
+        let cell = cellForRow(at: indexPath) as! ExerciseTableViewCell
         
-        if self.indexPathForSelectedRow == indexPath {
-            self.deselectRow(at: indexPath, animated: true)
-            self.reloadData()
+        if indexPathForSelectedRow == indexPath {
+            deselectRow(at: indexPath, animated: true)
+            reloadData()
             cell.updateSelectedStatus()
             
             return nil
         } else {
             var cell2: ExerciseTableViewCell? = nil
-            if self.indexPathForSelectedRow != nil {
-                cell2 = self.cellForRow(at: self.indexPathForSelectedRow!) as? ExerciseTableViewCell
+            if indexPathForSelectedRow != nil {
+                cell2 = cellForRow(at: indexPathForSelectedRow!) as? ExerciseTableViewCell
             }
             
-            self.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-            self.reloadData()
-            self.scrollToRow(at: indexPath, at: .none, animated: true)
+            selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            reloadData()
+            scrollToRow(at: indexPath, at: .none, animated: true)
             
             cell2?.updateSelectedStatus()
             cell.updateSelectedStatus()
@@ -134,8 +134,8 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // Selected a table view cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.selectingExercise {
-            self.exercisePickerDelegate?.didSelectExercise(exercise: sortedData[indexPath.row])
+        if selectingExercise {
+            exercisePickerDelegate?.didSelectExercise(exercise: sortedData[indexPath.row])
         }
     }
     
@@ -149,10 +149,10 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         let cell =
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! ExerciseTableViewCell
-        cell.mainViewCellDelegate = self.superview as? WorkoutSessionStarter
-        cell.showViewDelegate = self.superview as? ShowViewDelegate
+        cell.mainViewCellDelegate = superview as? WorkoutSessionStarter
+        cell.showViewDelegate = superview as? ShowViewDelegate
         cell.setExercise(exercise: sortedData[indexPath.row])
-        cell.setExpandable(expandable: !self.selectingExercise)
+        cell.setExpandable(expandable: !selectingExercise)
         cell.updateSelectedStatus()
         
         return cell
@@ -162,13 +162,13 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let pgmCount = CGFloat(sortedData[indexPath.row].getProgressionMethods().count)
         
-        return self.indexPathForSelectedRow?.row == indexPath.row ?
+        return indexPathForSelectedRow?.row == indexPath.row ?
             // The height for when toggled depends on the number of progression methods.
             // If there are no progression methods, no graph and no spacing occurs.
             UITableViewCell.defaultHeight + PrettyButton.defaultHeight +
                 // + 10 as we add padding to the view.
                 (pgmCount > 0 ? ExerciseChartViewWithToggles.getNecessaryHeightForExerciseGraph(
-                                    exercise: sortedData[indexPath.row]) : 0) + 10  :
+                    exercise: sortedData[indexPath.row]) : 0) + 10  :
             UITableViewCell.defaultHeight
     }
     
@@ -176,14 +176,14 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
     
     // Retrieve workouts
     public func getSortedData() -> [Exercise] {
-        return self.sortedData
+        return sortedData
     }
     
     private func setupTableView() {
-        self.delegate = self
-        self.dataSource = self
-        self.allowsSelection = true
-        self.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
-        self.backgroundColor = UIColor.clear
+        delegate = self
+        dataSource = self
+        allowsSelection = true
+        register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
+        backgroundColor = .clear
     }
 }

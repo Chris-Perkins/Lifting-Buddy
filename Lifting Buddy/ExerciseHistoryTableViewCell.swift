@@ -17,27 +17,27 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     // height for the title bar
     public static let baseHeight: CGFloat = 25
     
+    // displays the set title
+    public let setLabel: UILabel
+    
     // the data stored in each cell (stored as a string)
     private var data: [(ProgressionMethod, String)]
-    
-    // displays the set title
-    public var setLabel: UILabel
     // the views we're displaying in this cell
     private var displayViews: [UIView]
     
     // MARK: Inits
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.data = [(ProgressionMethod, String)]()
-        self.setLabel = UILabel()
-        self.displayViews = [UIView]()
+        data = [(ProgressionMethod, String)]()
+        setLabel = UILabel()
+        displayViews = [UIView]()
         
         super.init(style: style, reuseIdentifier: nil)
         
-        self.addSubview(setLabel)
+        addSubview(setLabel)
         setLabel.setDefaultProperties()
         
-        self.createAndActivateSetLabelConstraints()
+        createAndActivateSetLabelConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -47,56 +47,56 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     // MARK: Encapsulated Methods
     
     public func setData(data: [(ProgressionMethod, String)]) {
-        self.removeAllSubviews()
-        self.addSubview(setLabel)
-        self.createAndActivateSetLabelConstraints()
-        self.createAndActivateDataDisplayConstraints(withData: data)
+        removeAllSubviews()
+        addSubview(setLabel)
+        createAndActivateSetLabelConstraints()
+        createAndActivateDataDisplayConstraints(withData: data)
     }
     
     public func getData() -> [(ProgressionMethod, String)] {
-        return self.data
+        return data
     }
     
     // MARK: Constraints
     
     // Cling to this view ; height of baseHeight
     private func createAndActivateSetLabelConstraints() {
-        self.setLabel.translatesAutoresizingMaskIntoConstraints = false
+        setLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.setLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: setLabel,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.setLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: setLabel,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.setLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: setLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.setLabel,
+        NSLayoutConstraint.createHeightConstraintForView(view: setLabel,
                                                          height: ExerciseHistoryTableViewCell.baseHeight).isActive = true
     }
     
     // Bind to view; place below the UIView
     private func createAndActivateDataDisplayConstraints(withData: [(ProgressionMethod, String)]) {
-        self.data = withData
-        var prevView: UIView = self.setLabel
+        data = withData
+        var prevView: UIView = setLabel
         
         for dataPiece in withData {
             let progressionMethodLabel = UILabel()
-            self.displayViews.append(progressionMethodLabel)
+            displayViews.append(progressionMethodLabel)
             
             progressionMethodLabel.text = dataPiece.0.getName()!
             progressionMethodLabel.setDefaultProperties()
             progressionMethodLabel.font = UIFont.systemFont(ofSize: 18.0)
             
             let dataLabel = UILabel()
-            self.displayViews.append(dataLabel)
+            displayViews.append(dataLabel)
             dataLabel.textColor = UIColor.black.withAlphaComponent(0.25)
             dataLabel.text = dataPiece.1
             dataLabel.textAlignment = .center
             
-            self.addSubview(progressionMethodLabel)
-            self.addSubview(dataLabel)
+            addSubview(progressionMethodLabel)
+            addSubview(dataLabel)
             
             progressionMethodLabel.translatesAutoresizingMaskIntoConstraints = false
             
@@ -116,7 +116,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
                                constant: 0).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: progressionMethodLabel,
                                                              height: ExerciseHistoryTableViewCell.heightPerProgressionMethod
-                                                             ).isActive = true
+                ).isActive = true
             
             dataLabel.translatesAutoresizingMaskIntoConstraints = false
             

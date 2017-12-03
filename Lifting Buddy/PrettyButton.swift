@@ -15,11 +15,11 @@ import UIKit
     // MARK: IBInspectables
     
     @IBInspectable var cornerRadius: CGFloat = 5.0 {
-        didSet { self.layer.cornerRadius = cornerRadius }
+        didSet { layer.cornerRadius = cornerRadius }
     }
     @IBInspectable var shadowOpacity: Float = 0.2 {
         didSet {
-            self.layer.shadowOpacity = shadowOpacity
+            layer.shadowOpacity = shadowOpacity
         }
     }
     @IBInspectable private var overlayColor: UIColor = UIColor.white.withAlphaComponent(0.25)
@@ -43,27 +43,27 @@ import UIKit
     // MARK: Init Functions
     
     override init(frame: CGRect) {
-        self.style = Styles.NONE
+        style = Styles.NONE
         
         super.init(frame: frame)
         
         // Set shadows for the button
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 1)
-        self.layer.shadowRadius = 3.0
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 3.0
         
         // User selected button
-        self.addTarget(self, action: #selector(startPress(sender:)), for: .touchDown)
+        addTarget(self, action: #selector(startPress(sender:)), for: .touchDown)
         
         // User exited the button
-        self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchDragExit)
-        self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchUpInside)
-        self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchUpOutside)
-        self.addTarget(self, action: #selector(releasePress(sender:)), for: .touchCancel)
+        addTarget(self, action: #selector(releasePress(sender:)), for: .touchDragExit)
+        addTarget(self, action: #selector(releasePress(sender:)), for: .touchUpInside)
+        addTarget(self, action: #selector(releasePress(sender:)), for: .touchUpOutside)
+        addTarget(self, action: #selector(releasePress(sender:)), for: .touchCancel)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.style = Styles.NONE
+        style = Styles.NONE
         
         super.init(coder: aDecoder)
     }
@@ -74,15 +74,15 @@ import UIKit
         let touch: UITouch? = touches.first
         
         if touch?.view != self {
-            self.removeOverlayView()
-            self.layoutSubviews()
+            removeOverlayView()
+            layoutSubviews()
         }
     }
     
     // MARK: Event functions
     
     @objc func startPress(sender: PrettyButton) {
-        switch self.style {
+        switch style {
         case Styles.NONE:
             break
         case Styles.SLIDE:
@@ -105,13 +105,13 @@ import UIKit
     
     // Create overlay view with default properties
     private func createOverlayView(frame: CGRect) -> UIView {
-        if let overlayView = self.viewWithTag(PrettyButton.overlayViewTag) {
+        if let overlayView = viewWithTag(PrettyButton.overlayViewTag) {
             return overlayView
         } else {
             // Create view that slides to bottom right on press
             let overlayView: UIView = UIView.init(frame: frame)
             overlayView.layer.cornerRadius = cornerRadius
-            overlayView.backgroundColor = self.overlayColor
+            overlayView.backgroundColor = overlayColor
             // Display behind the title
             overlayView.layer.zPosition = -1
             // Set tag to find this view later
@@ -124,14 +124,14 @@ import UIKit
     // Creates the sliding effect on the button's background
     private func createSlideView() {
         // If slide view does not currently exist, create it
-        if self.viewWithTag(PrettyButton.overlayViewTag) == nil {
+        if viewWithTag(PrettyButton.overlayViewTag) == nil {
             // Create view that slides to bottom right on press
             let overlayView: UIView = createOverlayView(frame:
-                                                        CGRect(x: 0,
-                                                               y: 0,
-                                                               width: 1,
-                                                               height: self.frame.height))
-            self.addSubview(overlayView)
+                CGRect(x: 0,
+                       y: 0,
+                       width: 1,
+                       height: frame.height))
+            addSubview(overlayView)
             
             UIView.animate(withDuration: animationTimeInSeconds, animations: {
                 overlayView.frame = CGRect(x: 0,
@@ -145,14 +145,14 @@ import UIKit
     // Bloom from inside
     private func createBloomView() {
         // If slide view does not currently exist, create it
-        if self.viewWithTag(PrettyButton.overlayViewTag) == nil {
+        if viewWithTag(PrettyButton.overlayViewTag) == nil {
             // Create view that slides to bottom right on press
             let overlayView: UIView = createOverlayView(frame:
-                                                        CGRect(x: self.frame.width / 2,
-                                                               y: self.frame.height / 2,
-                                                               width: 0,
-                                                               height: 0))
-            self.addSubview(overlayView)
+                CGRect(x: frame.width / 2,
+                       y: frame.height / 2,
+                       width: 0,
+                       height: 0))
+            addSubview(overlayView)
             
             UIView.animate(withDuration: animationTimeInSeconds, animations: {
                 overlayView.frame = CGRect(x: 0,
@@ -166,15 +166,15 @@ import UIKit
     // Fades a view in
     private func createFadeView() {
         // If slide view does not currently exist, create it
-        if self.viewWithTag(PrettyButton.overlayViewTag) == nil {
+        if viewWithTag(PrettyButton.overlayViewTag) == nil {
             // Create view that slides to bottom right on press
             let overlayView: UIView = createOverlayView(frame: CGRect(x: 0,
                                                                       y: 0,
-                                                                      width: self.frame.width,
-                                                                      height: self.frame.height))
+                                                                      width: frame.width,
+                                                                      height: frame.height))
             // Fade view in
             overlayView.alpha = 0
-            self.addSubview(overlayView)
+            addSubview(overlayView)
             
             UIView.animate(withDuration: animationTimeInSeconds, animations: {
                 overlayView.alpha = 1
@@ -184,12 +184,10 @@ import UIKit
     
     public func removeOverlayView() {
         // Delete slide view on release
-        if let overlayView: UIView = self.viewWithTag(PrettyButton.overlayViewTag) {
+        if let overlayView: UIView = viewWithTag(PrettyButton.overlayViewTag) {
             UIView.animate(withDuration: animationTimeInSeconds, animations: {
                 overlayView.alpha = 0
-            },
-            completion: {
-                (finished: Bool) -> Void in
+            }, completion: { (finished: Bool) -> Void in
                 overlayView.removeFromSuperview()
             })
         }
@@ -202,6 +200,6 @@ import UIKit
     }
     
     public func setOverlayColor(color: UIColor) {
-        self.overlayColor = color
+        overlayColor = color
     }
 }

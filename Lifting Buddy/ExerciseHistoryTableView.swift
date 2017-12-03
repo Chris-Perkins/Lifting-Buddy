@@ -24,12 +24,12 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // MARK: Initializers
     
     init(forExercise: Exercise, style: UITableViewStyle) {
-        self.progressionMethods = forExercise.getProgressionMethods()
-        self.data = [[String]]()
+        progressionMethods = forExercise.getProgressionMethods()
+        data = [[String]]()
         
         super.init(frame: .zero, style: style)
         
-        self.setupTableView()
+        setupTableView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,7 +41,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.backgroundColor = UIColor.white
+        backgroundColor = .white
     }
     
     // MARK: Tableview functions
@@ -49,9 +49,9 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // allow cell deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            self.data.remove(at: indexPath.row)
-            self.tableViewDelegate?.cellDeleted()
-            self.reloadData()
+            data.remove(at: indexPath.row)
+            tableViewDelegate?.cellDeleted()
+            reloadData()
         }
     }
     
@@ -82,8 +82,8 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // Each cell's height depends on the number of progression methods, but there is a flat height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return ExerciseHistoryTableViewCell.baseHeight +
-                CGFloat(self.progressionMethods.count) *
-                ExerciseHistoryTableViewCell.heightPerProgressionMethod
+            CGFloat(progressionMethods.count) *
+            ExerciseHistoryTableViewCell.heightPerProgressionMethod
     }
     
     // MARK: Custom functions
@@ -92,7 +92,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     public func appendDataToTableView(data: [String]) {
         self.data.append(data)
         
-        self.reloadData()
+        reloadData()
     }
     
     // Retrieve workouts
@@ -101,11 +101,11 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     }
     
     private func setupTableView() {
-        self.delegate = self
-        self.dataSource = self
-        self.allowsSelection = true
-        self.register(ExerciseHistoryTableViewCell.self, forCellReuseIdentifier: "cell")
-        self.backgroundColor = UIColor.clear
+        delegate = self
+        dataSource = self
+        allowsSelection = true
+        register(ExerciseHistoryTableViewCell.self, forCellReuseIdentifier: "cell")
+        backgroundColor = .clear
     }
 }
 

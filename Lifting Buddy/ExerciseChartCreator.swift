@@ -16,7 +16,7 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                     frame: CGRect) -> Chart {
     
     let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18),
-                                           fontColor: UIColor.niceBlue)
+                                           fontColor: .niceBlue)
     
     let chartFrame = CGRect(x: 0,
                             y: 0,
@@ -142,7 +142,7 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
 
     let chartPointsLineLayer = ChartPointsLineLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, lineModels: lineModels) // || CubicLinePathGenerator
     
-    let settings = ChartGuideLinesDottedLayerSettings(linesColor: UIColor.niceLightBlue,
+    let settings = ChartGuideLinesDottedLayerSettings(linesColor: .niceLightBlue,
                                                       linesWidth: 1)
     let guidelinesLayer = ChartGuideLinesDottedLayer(xAxisLayer: xAxisLayer,
                                                      yAxisLayer: yAxisLayer,
@@ -182,25 +182,25 @@ func getLineColorsForProgressionMethod(progressionMethod: ProgressionMethod) -> 
         
         switch (colorIndex) {
         case 0:
-            color = UIColor.niceRed
+            color = .niceRed
         case 1:
-            color = UIColor.niceBlue
+            color = .niceBlue
         case 2:
-            color = UIColor.niceGreen
+            color = .niceGreen
         case 3:
-            color = UIColor.niceYellow
+            color = .niceYellow
         case 4:
-            color = UIColor.niceCyan
+            color = .niceCyan
         case 5:
-            color = UIColor.niceBrown
+            color = .niceBrown
         case 6:
-            color = UIColor.nicePurple
+            color = .nicePurple
         case 7:
-            color = UIColor.niceMediterranean
+            color = .niceMediterranean
         case 8:
-            color = UIColor.niceMaroon
+            color = .niceMaroon
         case 9:
-            color = UIColor.niceOrange
+            color = .niceOrange
         default:
             fatalError("Modulo returned OOB value. Check case amount in ExerciseChartCreator -> GetLineColor Method")
         }

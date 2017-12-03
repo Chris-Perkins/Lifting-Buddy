@@ -17,22 +17,22 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     // The height for the progressionMethod views
     private static let heightPerProgressionMethod: CGFloat = 30
     
-    let cellTitleLabel: UILabel
-    var progressionMethodSummaryViews: [ProgressionMethodSummaryView]
+    private let cellTitleLabel: UILabel
+    private var progressionMethodSummaryViews: [ProgressionMethodSummaryView]
     
     // MARK: View inits
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.cellTitleLabel = UILabel()
-        self.progressionMethodSummaryViews = [ProgressionMethodSummaryView]()
+        cellTitleLabel = UILabel()
+        progressionMethodSummaryViews = [ProgressionMethodSummaryView]()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.selectionStyle = .none
+        selectionStyle = .none
         
-        self.addSubview(self.cellTitleLabel)
+        addSubview(cellTitleLabel)
         
-        self.createAndActivateCellTitleLabelConstraints()
+        createAndActivateCellTitleLabelConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,8 +44,8 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.cellTitleLabel.setDefaultProperties()
-        self.cellTitleLabel.textAlignment = .left
+        cellTitleLabel.setDefaultProperties()
+        cellTitleLabel.textAlignment = .left
     }
     
     // MARK: View functions
@@ -58,12 +58,12 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
     // Called by tableview to set the exercise
     public func setExercise(exercise: Exercise, withDateRecorded: Date) {
-        self.deleteProgressionMethodSummaryViews()
+        deleteProgressionMethodSummaryViews()
         
-        self.cellTitleLabel.text = exercise.getName()
+        cellTitleLabel.text = exercise.getName()
         
-        self.createProgressionMethodSummaryViews(data: self.getDataForSummaryViews(forExercise: exercise,
-                                                                                   withDateRecorded: withDateRecorded))
+        createProgressionMethodSummaryViews(data: getDataForSummaryViews(forExercise: exercise,
+                                                                         withDateRecorded: withDateRecorded))
     }
     
     // Gets the progression method, new value, and old value for data based on an exercise.
@@ -127,10 +127,10 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
     // Creates the progression method data views
     private func createProgressionMethodSummaryViews(data: [(ProgressionMethod, // Progression method
-                                                             CGFloat?,          // New data
-                                                             CGFloat?)          // Old data
-                                                            ]) {
-        var prevView: UIView = self.cellTitleLabel
+        CGFloat?,          // New data
+        CGFloat?)          // Old data
+        ]) {
+        var prevView: UIView = cellTitleLabel
         
         for (index, dataPiece) in data.enumerated() {
             let view = ProgressionMethodSummaryView(progressionMethod: dataPiece.0,
@@ -138,12 +138,12 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
                                                     oldValue: dataPiece.2,
                                                     frame: .zero)
             
-            self.addSubview(view)
-            self.progressionMethodSummaryViews.append(view)
+            addSubview(view)
+            progressionMethodSummaryViews.append(view)
             
             // We check using bit-level comparison here. This provides a nice alternating
             // background color, making the view much more readable
-            view.backgroundColor = index&1 == 0 ? UIColor.niceLightGray : UIColor.niceGray
+            view.backgroundColor = index&1 == 0 ? .niceLightGray : .niceGray
             
             // Then, give it constraints.
             // Cling to left, right of view. place below prevView ; height of default
@@ -160,7 +160,7 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
                                                                  attribute: .right).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(view: view,
                                                              height: WorkoutSessionSummaryTableViewCell.heightPerProgressionMethod
-                                                             ).isActive = true
+                ).isActive = true
             
             prevView = view
         }
@@ -168,30 +168,30 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
     // Deletes progression methods views
     private func deleteProgressionMethodSummaryViews() {
-        for view in self.progressionMethodSummaryViews {
+        for view in progressionMethodSummaryViews {
             view.removeFromSuperview()
         }
         
-        self.progressionMethodSummaryViews.removeAll()
+        progressionMethodSummaryViews.removeAll()
     }
     
     // MARK: Constraint functions
     
     private func createAndActivateCellTitleLabelConstraints() {
-        self.cellTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        cellTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitleLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitleLabel,
                                                              withCopyView: self,
                                                              attribute: .left,
                                                              plusConstant: 10).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitleLabel,
                                                              withCopyView: self,
                                                              attribute: .right,
                                                              plusConstant: -10).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.cellTitleLabel,
+        NSLayoutConstraint.createHeightConstraintForView(view: cellTitleLabel,
                                                          height: UITableViewCell.defaultHeight).isActive = true
     }
 }
@@ -223,19 +223,19 @@ class ProgressionMethodSummaryView: UIView {
         self.newValue = newValue
         self.oldValue = oldValue
         
-        self.titleLabel = UILabel()
-        self.newValueLabel = UILabel()
-        self.differenceLabel = UILabel()
+        titleLabel = UILabel()
+        newValueLabel = UILabel()
+        differenceLabel = UILabel()
         
         super.init(frame: frame)
         
-        self.addSubview(self.titleLabel)
-        self.addSubview(self.newValueLabel)
-        self.addSubview(self.differenceLabel)
+        addSubview(titleLabel)
+        addSubview(newValueLabel)
+        addSubview(differenceLabel)
         
-        self.createAndActivateTitleLabelConstraints()
-        self.createAndActivateNewValueLabelConstraints()
-        self.createAndActivateDifferenceLabelConstraints()
+        createAndActivateTitleLabelConstraints()
+        createAndActivateNewValueLabelConstraints()
+        createAndActivateDifferenceLabelConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -249,46 +249,46 @@ class ProgressionMethodSummaryView: UIView {
         
         // Title label
         
-        self.titleLabel.setDefaultProperties()
-        self.titleLabel.font = UIFont.systemFont(ofSize: 18.0)
-        self.titleLabel.textAlignment = .left
-        self.titleLabel.text = self.progressionMethod.getName()
+        titleLabel.setDefaultProperties()
+        titleLabel.font = UIFont.systemFont(ofSize: 18.0)
+        titleLabel.textAlignment = .left
+        titleLabel.text = progressionMethod.getName()
         
         // NewValue & Difference label
         
-        self.differenceLabel.textAlignment = .center
-        self.newValueLabel.textAlignment = .center
+        differenceLabel.textAlignment = .center
+        newValueLabel.textAlignment = .center
         
-        if let newValue = self.newValue {
-            self.newValueLabel.textColor = UIColor.niceBlue
-            self.newValueLabel.text = String(describing: newValue)
-            self.newValueLabel.backgroundColor = UIColor.niceLightBlue.withAlphaComponent(0.2)
+        if let newValue = newValue {
+            newValueLabel.textColor = .niceBlue
+            newValueLabel.text = String(describing: newValue)
+            newValueLabel.backgroundColor = UIColor.niceLightBlue.withAlphaComponent(0.2)
             
-            if let oldValue = self.oldValue {
+            if let oldValue = oldValue {
                 // Green text color if new > old. Red if less. Blue for equal
                 if newValue > oldValue {
-                    self.differenceLabel.textColor = UIColor.niceGreen
-                    self.differenceLabel.backgroundColor = UIColor.niceGreen.withAlphaComponent(0.2)
+                    differenceLabel.textColor = .niceGreen
+                    differenceLabel.backgroundColor = UIColor.niceGreen.withAlphaComponent(0.2)
                 } else if newValue < oldValue {
-                    self.differenceLabel.textColor = UIColor.niceRed
-                    self.differenceLabel.backgroundColor = UIColor.niceRed.withAlphaComponent(0.2)
+                    differenceLabel.textColor = .niceRed
+                    differenceLabel.backgroundColor = UIColor.niceRed.withAlphaComponent(0.2)
                 } else {
-                    self.differenceLabel.textColor = UIColor.niceBlue
-                    self.differenceLabel.backgroundColor = UIColor.niceBlue.withAlphaComponent(0.2)
+                    differenceLabel.textColor = .niceBlue
+                    differenceLabel.backgroundColor = UIColor.niceBlue.withAlphaComponent(0.2)
                 }
                 
                 // Add a "+" char to symbolize that we gained some weight
-                self.differenceLabel.text = (newValue >= oldValue ? "+" : "") +
+                differenceLabel.text = (newValue >= oldValue ? "+" : "") +
                     String(describing: newValue - oldValue)
             } else {
-                self.differenceLabel.textColor = UIColor.niceGreen
-                self.differenceLabel.backgroundColor = UIColor.niceGreen.withAlphaComponent(0.2)
-                self.differenceLabel.text = String(describing: newValue)
+                differenceLabel.textColor = .niceGreen
+                differenceLabel.backgroundColor = UIColor.niceGreen.withAlphaComponent(0.2)
+                differenceLabel.text = String(describing: newValue)
             }
         } else {
-            self.differenceLabel.textColor = UIColor.niceRed
-            self.differenceLabel.backgroundColor = UIColor.niceRed.withAlphaComponent(0.2)
-            self.differenceLabel.text = "Skipped"
+            differenceLabel.textColor = .niceRed
+            differenceLabel.backgroundColor = UIColor.niceRed.withAlphaComponent(0.2)
+            differenceLabel.text = "Skipped"
         }
     }
     
@@ -296,19 +296,19 @@ class ProgressionMethodSummaryView: UIView {
     
     // Cling to left, top, bottom of view ; Width of this view / 2
     private func createAndActivateTitleLabelConstraints() {
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
                                                              withCopyView: self,
                                                              attribute: .left,
                                                              plusConstant: 10).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              multiplier: 0.5).isActive = true
@@ -316,22 +316,22 @@ class ProgressionMethodSummaryView: UIView {
     
     // Cling to top, bottom ; cling to right of titlelabel ; width of this view * 0.25
     private func createAndActivateNewValueLabelConstraints() {
-        self.newValueLabel.translatesAutoresizingMaskIntoConstraints = false
+        newValueLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.newValueLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: newValueLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.newValueLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: newValueLabel,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint(item: self.titleLabel,
+        NSLayoutConstraint(item: titleLabel,
                            attribute: .right,
                            relatedBy: .equal,
-                           toItem: self.newValueLabel,
+                           toItem: newValueLabel,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.newValueLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: newValueLabel,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              multiplier: 0.25).isActive = true
@@ -339,21 +339,21 @@ class ProgressionMethodSummaryView: UIView {
     
     // Cling to right, top, bottom of view ; cling to right of newresultlabel
     private func createAndActivateDifferenceLabelConstraints() {
-        self.differenceLabel.translatesAutoresizingMaskIntoConstraints = false
+        differenceLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.differenceLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: differenceLabel,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.differenceLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: differenceLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.differenceLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: differenceLabel,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint(item: self.newValueLabel,
+        NSLayoutConstraint(item: newValueLabel,
                            attribute: .right,
                            relatedBy: .equal,
-                           toItem: self.differenceLabel,
+                           toItem: differenceLabel,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true

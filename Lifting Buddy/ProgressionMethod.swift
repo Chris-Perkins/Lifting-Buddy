@@ -37,22 +37,22 @@ class ProgressionMethod: Object {
     // MARK: Init Functions
     
     required init() {
-        self.unit = nil
-        self.name = nil
+        unit = nil
+        name = nil
         
         super.init()
     }
     
     required init(value: Any, schema: RLMSchema) {
-        self.unit = nil
-        self.name = nil
+        unit = nil
+        name = nil
         
         super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        self.unit = nil
-        self.name = nil
+        unit = nil
+        name = nil
         
         super.init(realm: realm, schema: schema)
     }
@@ -73,7 +73,7 @@ class ProgressionMethod: Object {
     }
     
     @objc public func getName() -> String? {
-        return self.name
+        return name
     }
     
     public func setUnit(unit: String?) {
@@ -84,7 +84,7 @@ class ProgressionMethod: Object {
     }
     
     @objc public func getUnit() -> String? {
-        return self.unit
+        return unit
     }
     
     public func setDefaultValue(defaultValue: String?) {
@@ -95,7 +95,7 @@ class ProgressionMethod: Object {
     }
     
     @objc public func getDefaultValue() -> String? {
-        return self.defaultValue
+        return defaultValue
     }
     
     public func setIndex(index: Int) {
@@ -106,7 +106,7 @@ class ProgressionMethod: Object {
     }
     
     public func getIndex() -> Int? {
-        guard let indexStr: String = self.index else {
+        guard let indexStr: String = index else {
             return nil
         }
         guard let indexInt = Int(indexStr) else {

@@ -23,16 +23,16 @@ class ProgressionsMethodTableView: HPReorderTableView, UITableViewDataSource,UIT
     // MARK: Override Init
     
     override init(frame: CGRect, style: UITableViewStyle) {
-        self.data = [ProgressionMethod]()
-        self.cells = [ProgressionMethodTableViewCell]()
+        data = [ProgressionMethod]()
+        cells = [ProgressionMethodTableViewCell]()
         
         super.init(frame: frame, style: style)
         
-        self.delegate = self
-        self.dataSource = self
-        self.allowsSelection = false
-        self.clipsToBounds = true
-        self.register(ProgressionMethodTableViewCell.self, forCellReuseIdentifier: "cell")
+        delegate = self
+        dataSource = self
+        allowsSelection = false
+        clipsToBounds = true
+        register(ProgressionMethodTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,8 +43,8 @@ class ProgressionsMethodTableView: HPReorderTableView, UITableViewDataSource,UIT
     
     // Moved a cell (HPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        self.data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
-        self.cells.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        cells.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
     
     // Data is what we use to fill in the table view
@@ -56,10 +56,10 @@ class ProgressionsMethodTableView: HPReorderTableView, UITableViewDataSource,UIT
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            self.data.remove(at: indexPath.row)
+            data.remove(at: indexPath.row)
             
             heightConstraint?.constant -= UITableViewCell.defaultHeight
-            self.reloadData()
+            reloadData()
         }
     }
     

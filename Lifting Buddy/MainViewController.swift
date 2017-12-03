@@ -16,16 +16,16 @@ class MainViewController: UIViewController {
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var sectionContentView: UIView!
     
-    private var workoutView: UIView? = nil
-    private var exercisesView: UIView? = nil
-    private var aboutView: UIView? = nil
+    private var workoutView: WorkoutsView? = nil
+    private var exercisesView: ExercisesView? = nil
+    private var aboutView: AboutView? = nil
     
     // MARK: Override functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.niceGray
+        view.backgroundColor = .niceGray
     }
     
     override func viewDidLayoutSubviews() {
@@ -39,22 +39,25 @@ class MainViewController: UIViewController {
         
         let frame: CGRect = CGRect(x: 0,
                                    y: 0,
-                                   width: self.sectionContentView.frame.size.width,
-                                   height: self.sectionContentView.frame.size.height)
+                                   width: sectionContentView.frame.size.width,
+                                   height: sectionContentView.frame.size.height)
         
         switch(viewType) {
         case SectionView.ContentViews.WORKOUTS:
-            if self.workoutView == nil {
-                self.workoutView = WorkoutsView(frame: frame)
+            if workoutView == nil {
+                workoutView = WorkoutsView(frame: frame)
             }
-            self.sectionContentView.addSubview(self.workoutView!)
+            sectionContentView.addSubview(workoutView!)
         case SectionView.ContentViews.EXERCISES:
-            if self.exercisesView == nil {
-                self.exercisesView = ExercisesView(frame: frame)
+            if exercisesView == nil {
+                exercisesView = ExercisesView(frame: frame)
             }
-            self.sectionContentView.addSubview(self.exercisesView!)
+            sectionContentView.addSubview(exercisesView!)
         case SectionView.ContentViews.HELP:
-            break// create a view in a few
+            if aboutView == nil {
+                aboutView = AboutView(frame: frame)
+            }
+            sectionContentView.addSubview(aboutView!)
         }
     }
 }

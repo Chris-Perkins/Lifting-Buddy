@@ -17,9 +17,9 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
     // View properties
     
     // The workouts for this view
-    private var workoutTableView: WorkoutTableView
+    private let workoutTableView: WorkoutTableView
     // The button to create this workout
-    private var createWorkoutButton: PrettyButton
+    private let createWorkoutButton: PrettyButton
     
     
     override init(frame: CGRect) {
@@ -28,11 +28,11 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
         
         super.init(frame: frame)
         
-        self.addSubview(workoutTableView)
-        self.addSubview(createWorkoutButton)
+        addSubview(workoutTableView)
+        addSubview(createWorkoutButton)
         
-        self.createAndActivateWorkoutTableViewConstraints()
-        self.createCreateWorkoutButtonConstraints()
+        createAndActivateWorkoutTableViewConstraints()
+        createCreateWorkoutButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,7 +54,7 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
                                       action: #selector(showCreateWorkoutView(sender:)),
                                       for: .touchUpInside)
         workoutTableView.reloadData()
-
+        
         super.layoutSubviews()
     }
     
@@ -65,20 +65,20 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
         
         createWorkoutView.dataDelegate = self
         
-        self.showView(view: createWorkoutView)
+        showView(view: createWorkoutView)
     }
     
     // MARK: CreateWorkoutViewDelegate methods
     
     // We created a workout; update tableview
     func finishedWithWorkout(workout: Workout) {
-        self.workoutTableView.refreshData()
-        self.workoutTableView.reloadData()
+        workoutTableView.refreshData()
+        workoutTableView.reloadData()
         
-        self.layoutSubviews()
+        layoutSubviews()
     }
     
-     // MARK: WorkoutCDelegate methods
+    // MARK: WorkoutCDelegate methods
     
     // Start the workout with workout or exercise
     func startWorkout(workout: Workout?, exercise: Exercise?) {
@@ -90,17 +90,17 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
             startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
         }
         
-        self.showView(view: startWorkoutView)
+        showView(view: startWorkoutView)
     }
     
     //  Show view functions
     func showView(view: UIView) {
-        self.addSubview(view)
+        addSubview(view)
         
         view.frame = CGRect(x: 0,
-                            y: -self.frame.height,
-                            width: self.frame.width,
-                            height: self.frame.height)
+                            y: -frame.height,
+                            width: frame.width,
+                            height: frame.height)
         
         UIView.animate(withDuration: 0.2, animations: {
             view.frame = CGRect(x: 0,
@@ -116,19 +116,19 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
     private func createAndActivateWorkoutTableViewConstraints() {
         workoutTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutTableView,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutTableView,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutTableView,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint(item: self.createWorkoutButton,
+        NSLayoutConstraint(item: createWorkoutButton,
                            attribute: .top,
                            relatedBy: .equal,
-                           toItem: self.workoutTableView,
+                           toItem: workoutTableView,
                            attribute: .bottom,
                            multiplier: 1,
                            constant: 0).isActive = true
@@ -138,16 +138,16 @@ class WorkoutsView: UIView, CreateWorkoutViewDelegate, WorkoutSessionStarter, Sh
     private func createCreateWorkoutButtonConstraints() {
         createWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
-                                                             withCopyView: self.workoutTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createWorkoutButton,
+                                                             withCopyView: workoutTableView,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
-                                                             withCopyView: self.workoutTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createWorkoutButton,
+                                                             withCopyView: workoutTableView,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createWorkoutButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createWorkoutButton,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.createWorkoutButton,
+        NSLayoutConstraint.createHeightConstraintForView(view: createWorkoutButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
     }
 }

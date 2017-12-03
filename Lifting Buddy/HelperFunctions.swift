@@ -1,5 +1,5 @@
 //
-//  ViewHelperFunctions.swift
+//  HelperFunctions.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 7/16/17.
@@ -111,7 +111,7 @@ extension NSLayoutConstraint {
     
     // Clings a view to the entirety of toView
     public static func clingViewToView(view: UIView,
-                                   toView: UIView) {
+                                       toView: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
@@ -119,7 +119,7 @@ extension NSLayoutConstraint {
                                                              attribute: .right).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
                                                              withCopyView: toView,
-                                                            attribute: .left).isActive = true
+                                                             attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
                                                              withCopyView: toView,
                                                              attribute: .top).isActive = true
@@ -130,8 +130,8 @@ extension NSLayoutConstraint {
     
     // Return a constraint that will place a view below's top a view with padding
     public static func createViewBelowViewConstraint(view: UIView,
-                                                        belowView: UIView,
-                                                        withPadding: CGFloat = 0) -> NSLayoutConstraint {
+                                                     belowView: UIView,
+                                                     withPadding: CGFloat = 0) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: belowView,
                                   attribute: .bottom,
                                   relatedBy: .equal,
@@ -187,10 +187,10 @@ extension PrettyButton {
     }
     
     override func setDefaultProperties() {
-        self.backgroundColor = UIColor.niceBlue
-        self.setOverlayColor(color: UIColor.niceYellow)
-        self.setOverlayStyle(style: .FADE)
-        self.cornerRadius = 0
+        backgroundColor = UIColor.niceBlue
+        setOverlayColor(color: UIColor.niceYellow)
+        setOverlayStyle(style: .FADE)
+        cornerRadius = 0
     }
 }
 
@@ -270,19 +270,19 @@ extension UIColor {
 
 extension UIImage {
     public func rotateNinetyDegreesClockwise() -> UIImage {
-        return UIImage(cgImage: self.cgImage!, scale: 1, orientation: UIImageOrientation.right)
+        return UIImage(cgImage: cgImage!, scale: 1, orientation: UIImageOrientation.right)
     }
     
     public func rotateNinetyDegreesCounterClockwise() -> UIImage {
-        return UIImage(cgImage: self.cgImage!, scale: 1, orientation: UIImageOrientation.left)
+        return UIImage(cgImage: cgImage!, scale: 1, orientation: UIImageOrientation.left)
     }
 }
 
 extension UILabel {
     override func setDefaultProperties() {
-        self.font = UIFont.boldSystemFont(ofSize: 18.0)
-        self.textAlignment = .center
-        self.textColor = UIColor.niceBlue
+        font = UIFont.boldSystemFont(ofSize: 18.0)
+        textAlignment = .center
+        textColor = UIColor.niceBlue
     }
 }
 
@@ -292,9 +292,9 @@ extension UITableView {
     public func getAllCells() -> [UITableViewCell] {
         var cells = [UITableViewCell]()
         
-        for i in 0...self.numberOfSections - 1 {
-            for j in 0...self.numberOfRows(inSection: i) {
-                if let cell = self.cellForRow(at: IndexPath(row: j, section: i)) {
+        for i in 0...numberOfSections - 1 {
+            for j in 0...numberOfRows(inSection: i) {
+                if let cell = cellForRow(at: IndexPath(row: j, section: i)) {
                     cells.append(cell)
                 }
             }
@@ -313,13 +313,13 @@ extension UITableViewCell {
 extension UITextField {
     
     var isNumeric: Bool {
-        if let text = self.text {
+        if let text = text {
             if text.count == 0 { return true }
-        
+            
             let setNums: Set<Character> = Set(arrayLiteral: "1", "2", "3", "4",
-                                                        "5", "6", "7", "8",
-                                                        "9", "0")
-        
+                                              "5", "6", "7", "8",
+                                              "9", "0")
+            
             return Set(text).isSubset(of: setNums)
         } else {
             return false
@@ -328,13 +328,13 @@ extension UITextField {
     
     override func setDefaultProperties() {
         // View select / deselect events
-        self.addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
-        self.addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
+        addTarget(self, action: #selector(textfieldSelected(sender:)), for: .editingDidBegin)
+        addTarget(self, action: #selector(textfieldDeselected(sender:)), for: .editingDidEnd)
         
         // View prettiness
-        self.textAlignment = .center
+        textAlignment = .center
         
-        self.textfieldDeselected(sender: self)
+        textfieldDeselected(sender: self)
     }
     
     // MARK: Textfield events
@@ -361,7 +361,7 @@ extension UIView {
     
     // Removes all subviews from a given view
     func removeAllSubviews() {
-        for subview in self.subviews {
+        for subview in subviews {
             subview.removeFromSuperview()
         }
     }
@@ -369,20 +369,18 @@ extension UIView {
     // Removes itself from this superview by sliding up and fading out
     func removeSelfNicelyWithAnimation() {
         // Prevent user interaction with all subviews
-        for subview in self.subviews {
+        for subview in subviews {
             subview.isUserInteractionEnabled = false
         }
         
         // Slide up, then remove from view
-        UIView.animate(withDuration: 0.2,
-                       animations: {
-                            self.frame = CGRect(x: 0,
-                                                y: -self.frame.height,
-                                                width: self.frame.width,
-                                                height: self.frame.height)
-                        },
-                       completion: { (finished:Bool) -> Void in
-                            self.removeFromSuperview()
-                        })
+        UIView.animate(withDuration: 0.2, animations: {
+            self.frame = CGRect(x: 0,
+                                y: -self.frame.height,
+                                width: self.frame.width,
+                                height: self.frame.height)
+        }, completion: { (finished:Bool) -> Void in
+            self.removeFromSuperview()
+        })
     }
 }

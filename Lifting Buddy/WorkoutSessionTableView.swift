@@ -12,7 +12,7 @@ import RealmSwift
 import HPReorderTableView
 
 class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableViewDataSource,
-                             WorkoutSessionTableViewCellDelegate {
+WorkoutSessionTableViewCellDelegate {
     
     // MARK: View properties
     
@@ -41,11 +41,11 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
         for _ in data {
             heights.append(UITableViewCell.defaultHeight)
         }
-        self.heightConstraint?.constant = heights.reduce(0, +)
+        heightConstraint?.constant = heights.reduce(0, +)
         
         super.init(frame: frame, style: style)
         
-        self.setupTableView()
+        setupTableView()
     }
     
     init(workout: Workout?, style: UITableViewStyle) {
@@ -60,7 +60,7 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
         
         super.init(frame: .zero, style: style)
         
-        self.setupTableView()
+        setupTableView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,14 +72,14 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.backgroundColor = UIColor.clear
-        self.isScrollEnabled = false
+        backgroundColor = .clear
+        isScrollEnabled = false
     }
     
     // MARK: TableView Functions
     
     override func reloadData() {
-        self.heightConstraint?.constant = heights.reduce(0, +)
+        heightConstraint?.constant = heights.reduce(0, +)
         
         super.reloadData()
     }
@@ -89,33 +89,33 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
         
         let realm = try! Realm()
         try! realm.write {
-            self.data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+            data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
         }
         
-        self.cells.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        cells.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
     
     // Deletion methods
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if indexPath.row < self.cells.count {
+            if indexPath.row < cells.count {
                 if cells[indexPath.row].getIsComplete() {
                     /* if this cell was complete, make sure that we remove it from curComplete int! */
-                    self.curComplete -= 1
+                    curComplete -= 1
                 }
                 
-                self.cells.remove(at: indexPath.row)
+                cells.remove(at: indexPath.row)
             }
             
             // remove from the workout (realm data)
             let realm = try! Realm()
             try! realm.write {
-                self.data.remove(at: indexPath.row)
+                data.remove(at: indexPath.row)
             }
             
-            self.heights.remove(at: indexPath.row)
-            self.checkComplete()
-            self.reloadData()
+            heights.remove(at: indexPath.row)
+            checkComplete()
+            reloadData()
         }
     }
     
@@ -152,10 +152,10 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
     
     // Height of a cell changed ; update this view's height to match height change
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
-        self.heightConstraint?.constant += height - heights[indexPath.row]
+        heightConstraint?.constant += height - heights[indexPath.row]
         heights[indexPath.row] = height
         
-        self.reloadData()
+        reloadData()
         
         viewDelegate?.heightChange()
     }
@@ -179,7 +179,7 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
         
         reloadData()
         
-        self.checkComplete()
+        checkComplete()
     }
     
     // Retrieve workouts
@@ -189,20 +189,20 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
     
     // Setup the table view to default properties
     private func setupTableView() {
-        self.delegate = self
-        self.dataSource = self
-        self.allowsSelection = true
-        self.register(WorkoutSessionTableViewCell.self,
-                      forCellReuseIdentifier: "cell")
-        self.backgroundColor = UIColor.clear
+        delegate = self
+        dataSource = self
+        allowsSelection = true
+        register(WorkoutSessionTableViewCell.self,
+                 forCellReuseIdentifier: "cell")
+        backgroundColor = .clear
     }
     
     // Check if we completed all exercises
     public func checkComplete() {
-        if self.curComplete == self.data.count {
-            self.viewDelegate?.updateCompleteStatus(isComplete: true)
+        if curComplete == data.count {
+            viewDelegate?.updateCompleteStatus(isComplete: true)
         } else {
-            self.viewDelegate?.updateCompleteStatus(isComplete: false)
+            viewDelegate?.updateCompleteStatus(isComplete: false)
         }
     }
     

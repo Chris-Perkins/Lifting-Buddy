@@ -19,86 +19,86 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     // Table view height for expansion
     private let tableViewHeight: CGFloat = 150.0
     
+    // Title bar properties
+    
+    // the button we press to toggle this cell. It's invisible (basically)
+    private let invisButton: PrettyButton
+    // the title of this cell, holds the title of the exercise name
+    private let cellTitle: UILabel
+    // An image that shows whether or not this cell is expanded
+    private let expandImage: UIImageView
+    // Cell contents on expand
+    private let setLabel: UILabel
+    // view where we put the input textfields
+    private let inputContentView: UIView
+    // add a set to the table
+    private let addSetButton: PrettyButton
+    // table view that holds the history of our exercise this go around
+    private let exerciseHistoryTableView: ExerciseHistoryTableView
+    
+    // the fields themselves in the inputcontent view
+    private var exerciseInputFields: [InputViewHolder]
     // Exercise assigned to this cell
     private var exercise: Exercise
     // Whether or not this exercise is complete
     private var isComplete: Bool
     // Holds whether this view is toggled
     private var isToggled: Bool
+    // Data we're displaying
+    private var data: [[Float]]
+    // The current set we're doing
+    private var curSet: Int
     
     // IndexPath of this cell in the tableview
     public var indexPath: IndexPath?
     // Delegate we use to change height of cells
     public var delegate: WorkoutSessionTableViewCellDelegate?
     
-    // Title bar properties
-    
-    // the button we press to toggle this cell. It's invisible (basically)
-    private var invisButton: PrettyButton
-    // the title of this cell, holds the title of the exercise name
-    private var cellTitle: UILabel
-    // An image that shows whether or not this cell is expanded
-    private var expandImage: UIImageView
-    
-    // Cell contents on expand
-    private var setLabel: UILabel
-    // view where we put the input textfields
-    private var inputContentView: UIView
-    // the fields themselves in the inputcontent view
-    private var exerciseInputFields: [InputViewHolder]
-    // add a set to the table
-    private var addSetButton: PrettyButton
-    // table view that holds the history of our exercise this go around
-    private var exerciseHistoryTableView: ExerciseHistoryTableView
-    
-    private var data: [[Float]]
-    
-    private var curSet: Int
-    
     // MARK: Init Functions
     
     init(exercise: Exercise, style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.invisButton = PrettyButton()
-        self.cellTitle = UILabel()
-        self.expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
         self.exercise = exercise
         
-        self.setLabel = UILabel()
-        self.inputContentView = UIView()
-        self.exerciseInputFields = [InputViewHolder]()
-        self.addSetButton = PrettyButton()
-        self.exerciseHistoryTableView = ExerciseHistoryTableView(forExercise: exercise,
-                                                                 style: .plain)
+        invisButton = PrettyButton()
+        cellTitle = UILabel()
+        expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
         
-        self.data = [[Float]]()
+        setLabel = UILabel()
+        inputContentView = UIView()
+        exerciseInputFields = [InputViewHolder]()
+        addSetButton = PrettyButton()
+        exerciseHistoryTableView = ExerciseHistoryTableView(forExercise: exercise,
+                                                            style: .plain)
+        
+        data = [[Float]]()
         
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
-        self.curSet = 1
-        self.isComplete = false
-        self.isToggled = false
+        curSet = 1
+        isComplete = false
+        isToggled = false
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.addSubview(self.invisButton)
-        self.addSubview(self.cellTitle)
-        self.addSubview(self.expandImage)
-        self.addSubview(self.inputContentView)
-        self.addSubview(self.addSetButton)
-        self.addSubview(self.exerciseHistoryTableView)
+        addSubview(invisButton)
+        addSubview(cellTitle)
+        addSubview(expandImage)
+        addSubview(inputContentView)
+        addSubview(addSetButton)
+        addSubview(exerciseHistoryTableView)
         
-        self.createAndActivateInvisButtonConstraints()
-        self.createAndActivateCellTitleConstraints()
-        self.createAndActivateExpandImageConstraints()
-        self.createAndActivateInputContentViewConstraints()
-        self.createAndActivateInputFieldsConstraints()
-        self.createAndActivateAddSetButtonConstraints()
-        self.createAndActivateExerciseHistoryTableViewConstraints()
+        createAndActivateInvisButtonConstraints()
+        createAndActivateCellTitleConstraints()
+        createAndActivateExpandImageConstraints()
+        createAndActivateInputContentViewConstraints()
+        createAndActivateInputFieldsConstraints()
+        createAndActivateAddSetButtonConstraints()
+        createAndActivateExerciseHistoryTableViewConstraints()
         
-        self.giveInvisButtonProperties()
+        giveInvisButtonProperties()
         
-        self.exerciseHistoryTableView.tableViewDelegate = self
-        self.addSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        exerciseHistoryTableView.tableViewDelegate = self
+        addSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -112,40 +112,40 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         
         // Self stuff
         
-        self.updateCompleteStatus()
-        self.selectionStyle = .none
-        self.clipsToBounds = true
+        updateCompleteStatus()
+        selectionStyle = .none
+        clipsToBounds = true
         
         
         // Cell Title
-        let curSetCount: Int = self.exerciseHistoryTableView.getData().count
-        let reqSetCount: Int = self.exercise.getSetCount()
+        let curSetCount: Int = exerciseHistoryTableView.getData().count
+        let reqSetCount: Int = exercise.getSetCount()
         /* Text depends on whether or not we have a required set amount.
          * If we do, a format example is [1/2]
          * If we don't, the same example is [1]
          */
-        self.cellTitle.text = reqSetCount > 0 ?
-                                "[\(curSetCount)/\(reqSetCount)] \(self.exercise.getName()!)":
-                                "[\(curSetCount)] \(self.exercise.getName()!)"
-        self.cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
+        cellTitle.text = reqSetCount > 0 ?
+            "[\(curSetCount)/\(reqSetCount)] \(exercise.getName()!)":
+        "[\(curSetCount)] \(exercise.getName()!)"
+        cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
         
         // Invisible Button has to be "visible" to be pressed. So, 0.001
-        self.invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
+        invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
         
         // Add Set button
-        self.addSetButton.setDefaultProperties()
-        self.addSetButton.setTitle("Add Set", for: .normal)
+        addSetButton.setDefaultProperties()
+        addSetButton.setTitle("Add Set", for: .normal)
         
         // Different states for whether the cell is complete or not.
         // If complete: cell turns green, title color turns white to be visible.
         // If not complete: Cell is white
-        if self.isComplete {
-            self.backgroundColor = UIColor.niceGreen.withAlphaComponent(self.isToggled ? 0.85 : 0.75)
-            self.cellTitle.textColor = UIColor.white
+        if isComplete {
+            backgroundColor = UIColor.niceGreen.withAlphaComponent(isToggled ? 0.85 : 0.75)
+            cellTitle.textColor = .white
         } else {
-            self.backgroundColor = self.isToggled ? UIColor.niceLightGray : UIColor.white
-            self.cellTitle.textColor = UIColor.niceBlue
+            backgroundColor = isToggled ? .niceLightGray : .white
+            cellTitle.textColor = .niceBlue
         }
     }
     
@@ -158,19 +158,19 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Changes whether or not this cell is toggled
     public func updateToggledStatus() {
-        if self.indexPath != nil {
-            self.delegate?.cellHeightDidChange(height: self.getHeight(),
-                                               indexPath: indexPath!)
-            self.expandImage.transform = CGAffineTransform(scaleX: 1,
-                                                           y: self.isToggled ? -1 : 1)
+        if indexPath != nil {
+            delegate?.cellHeightDidChange(height: getHeight(),
+                                          indexPath: indexPath!)
+            expandImage.transform = CGAffineTransform(scaleX: 1,
+                                                      y: isToggled ? -1 : 1)
         }
     }
     
     // Gets the height of the current cell
     private func getHeight() -> CGFloat {
-        return self.isToggled ? getExpandedHeight() : UITableViewCell.defaultHeight
+        return isToggled ? getExpandedHeight() : UITableViewCell.defaultHeight
     }
-
+    
     // gets the height of this cell when expanded
     private func getExpandedHeight() -> CGFloat {
         // total padding for this view. Incremement by one per each "cell" of this view
@@ -182,26 +182,26 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         let addSetButtonHeight = PrettyButton.defaultHeight
         totalPadding += 1
         
-        let totalTableViewHeight = self.tableViewHeight + self.viewPadding
+        let totalTableViewHeight = tableViewHeight + viewPadding
         totalPadding += 1
         
         // Swift compiler doesn't like if we do too much addition at once. :-)
         let heightTop = titleBarHeight + contentHeight + addSetButtonHeight
         let heightBottom = totalTableViewHeight
         
-        return heightTop + heightBottom + CGFloat(totalPadding) * self.viewPadding
+        return heightTop + heightBottom + CGFloat(totalPadding) * viewPadding
     }
     
     // gets the height of the content view
     private func getContentHeight() -> CGFloat {
-        return self.viewPadding * 2 + CGFloat(self.exercise.getProgressionMethods().count) * 40.0
+        return viewPadding * 2 + CGFloat(exercise.getProgressionMethods().count) * 40.0
     }
     
     // saves workout data
     // Returns true if successful
     private func addWorkoutDataToTableIfPossible() {
         var canAddSet = true
-        for inputField in self.exerciseInputFields {
+        for inputField in exerciseInputFields {
             if !(inputField.areFieldsValid()) {
                 canAddSet = false
             }
@@ -210,30 +210,30 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         if canAddSet {
             var exerciseData = [String]()
             // todo: add to tableview
-            for inputField in self.exerciseInputFields {
+            for inputField in exerciseInputFields {
                 exerciseData.append(inputField.getValue())
             }
             
-            self.exerciseHistoryTableView.appendDataToTableView(data: exerciseData)
+            exerciseHistoryTableView.appendDataToTableView(data: exerciseData)
         }
     }
     
     // Update the complete status (call when some value changed)
     public func updateCompleteStatus() {
-        let newComplete = self.exerciseHistoryTableView.getData().count >= self.exercise.getSetCount()
+        let newComplete = exerciseHistoryTableView.getData().count >= exercise.getSetCount()
         
         // We updated our completed status! So inform the delegate.
-        if newComplete != self.isComplete {
-            self.isComplete = newComplete
-            self.delegate?.cellCompleteStatusChanged(complete: self.isComplete)
-            self.layoutIfNeeded()
+        if newComplete != isComplete {
+            isComplete = newComplete
+            delegate?.cellCompleteStatusChanged(complete: isComplete)
+            layoutIfNeeded()
         }
     }
     
     // adds workout data to history
     public func saveWorkoutData() {
-
-        for exerciseHistoryCell in self.exerciseHistoryTableView.getAllCells() as! [ExerciseHistoryTableViewCell] {
+        
+        for exerciseHistoryCell in exerciseHistoryTableView.getAllCells() as! [ExerciseHistoryTableViewCell] {
             let exerciseEntry = ExerciseHistoryEntry()
             exerciseEntry.date = Date(timeIntervalSinceNow: 0)
             exerciseEntry.exerciseInfo = List<RLMExercisePiece>()
@@ -257,15 +257,15 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     // Generic button press event
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
-        case self.invisButton:
-            self.isToggled = !self.isToggled
-            self.updateToggledStatus()
-        case self.addSetButton:
-            self.addWorkoutDataToTableIfPossible()
-            self.exerciseHistoryTableView.layoutIfNeeded()
-            self.exerciseHistoryTableView.reloadData()
-            self.updateCompleteStatus()
-            self.layoutIfNeeded()
+        case invisButton:
+            isToggled = !isToggled
+            updateToggledStatus()
+        case addSetButton:
+            addWorkoutDataToTableIfPossible()
+            exerciseHistoryTableView.layoutIfNeeded()
+            exerciseHistoryTableView.reloadData()
+            updateCompleteStatus()
+            layoutIfNeeded()
         default:
             fatalError("Button pressed did not exist?")
         }
@@ -275,35 +275,35 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Set whether or not this cell is toggled
     public func setIsToggled(toggled: Bool) {
-        self.isToggled = toggled
-        self.updateToggledStatus()
+        isToggled = toggled
+        updateToggledStatus()
     }
     
     public func getIsComplete() -> Bool {
-        return self.isComplete
+        return isComplete
     }
     
     // MARK: TableViewDelegate Functions
     
     // Called when a cell is deleted
     func cellDeleted() {
-        self.layoutIfNeeded()
-        self.updateCompleteStatus()
+        layoutIfNeeded()
+        updateCompleteStatus()
     }
     
     // MARK: Constraints
     
     // Cling to top, left, right ; height of baseviewcell
     private func createAndActivateInvisButtonConstraints() {
-        self.invisButton.translatesAutoresizingMaskIntoConstraints = false
+        invisButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.invisButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: invisButton,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.invisButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: invisButton,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.invisButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: invisButton,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: invisButton,
@@ -312,20 +312,20 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Place below view top, cling to left, right ; height of default height
     private func createAndActivateCellTitleConstraints() {
-        self.cellTitle.translatesAutoresizingMaskIntoConstraints = false
+        cellTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitle,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitle,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cellTitle,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitle,
                                                              withCopyView: self,
                                                              attribute: .left,
                                                              plusConstant: 10).isActive = true
-        NSLayoutConstraint(item: self.expandImage,
+        NSLayoutConstraint(item: expandImage,
                            attribute: .left,
                            relatedBy: .equal,
-                           toItem: self.cellTitle,
+                           toItem: cellTitle,
                            attribute: .right,
                            multiplier: 1,
                            constant: 10).isActive = true
@@ -335,35 +335,35 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Cling to top, right ;  height 8.46 ; width 16
     private func createAndActivateExpandImageConstraints() {
-        self.expandImage.translatesAutoresizingMaskIntoConstraints = false
+        expandImage.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: expandImage,
                                                              withCopyView: self,
                                                              attribute: .top,
                                                              plusConstant: 20.77).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.expandImage,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: expandImage,
                                                              withCopyView: self,
                                                              attribute: .right,
                                                              plusConstant: -10).isActive = true
-        NSLayoutConstraint.createWidthConstraintForView(view: self.expandImage,
+        NSLayoutConstraint.createWidthConstraintForView(view: expandImage,
                                                         width: 16).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.expandImage,
+        NSLayoutConstraint.createHeightConstraintForView(view: expandImage,
                                                          height: 8.46).isActive = true
     }
     
     private func createAndActivateInputContentViewConstraints() {
-        self.inputContentView.translatesAutoresizingMaskIntoConstraints = false
+        inputContentView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.inputContentView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: inputContentView,
                                                              withCopyView: self,
                                                              attribute: .left,
                                                              plusConstant: 25).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.inputContentView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: inputContentView,
                                                              withCopyView: self,
                                                              attribute: .right,
                                                              plusConstant: -25).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.inputContentView,
-                                                         belowView: self.invisButton).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: inputContentView,
+                                                         belowView: invisButton).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: inputContentView,
                                                          height: getContentHeight()).isActive = true
     }
@@ -372,27 +372,27 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     private func createAndActivateInputFieldsConstraints() {
         var prevView = inputContentView
         
-        for progressionMethod in self.exercise.getProgressionMethods() {
+        for progressionMethod in exercise.getProgressionMethods() {
             if progressionMethod.getUnit() != ProgressionMethod.Unit.TIME.rawValue {
                 let progressionInput = BetterInputView(args: [(
-                                                               progressionMethod.getName(),
-                                                               progressionMethod.getDefaultValue() ?? progressionMethod.getName(),
-                                                               true
-                                                             )], frame: .zero)
+                    progressionMethod.getName(),
+                    progressionMethod.getDefaultValue() ?? progressionMethod.getName(),
+                    true
+                    )], frame: .zero)
                 inputContentView.addSubview(progressionInput)
                 
-                progressionInput.backgroundColor = UIColor.white
+                progressionInput.backgroundColor = .white
                 
-                self.addConstraintsToInputView(view: progressionInput, prevView: prevView)
-                self.exerciseInputFields.append(progressionInput)
+                addConstraintsToInputView(view: progressionInput, prevView: prevView)
+                exerciseInputFields.append(progressionInput)
                 
                 prevView = progressionInput
             } else {
                 let progressionInput = TimeInputField(frame: .zero)
                 
-                self.inputContentView.addSubview(progressionInput)
-                self.addConstraintsToInputView(view: progressionInput, prevView: prevView)
-                self.exerciseInputFields.append(progressionInput)
+                inputContentView.addSubview(progressionInput)
+                addConstraintsToInputView(view: progressionInput, prevView: prevView)
+                exerciseInputFields.append(progressionInput)
                 
                 prevView = progressionInput
             }
@@ -404,63 +404,63 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
-                                                             withCopyView: self.inputContentView,
+                                                             withCopyView: inputContentView,
                                                              attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
-                                                             withCopyView: self.inputContentView,
+                                                             withCopyView: inputContentView,
                                                              attribute: .right).isActive = true
         NSLayoutConstraint(item: prevView,
-                           attribute: prevView == self.inputContentView ? .top : .bottom,
+                           attribute: prevView == inputContentView ? .top : .bottom,
                            relatedBy: .equal,
                            toItem: view,
                            attribute: .top,
                            multiplier: 1,
-                           constant: prevView == self.inputContentView ? -viewPadding : 0).isActive = true
+                           constant: prevView == inputContentView ? -viewPadding : 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: view,
                                                          height: 40).isActive = true
     }
     
     // Place below the input content view
     private func createAndActivateAddSetButtonConstraints() {
-        self.addSetButton.translatesAutoresizingMaskIntoConstraints = false
+        addSetButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.addSetButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: addSetButton,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.addSetButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: addSetButton,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              multiplier: 0.75).isActive = true
-        NSLayoutConstraint(item: self.inputContentView,
+        NSLayoutConstraint(item: inputContentView,
                            attribute: .bottom,
                            relatedBy: .equal,
-                           toItem: self.addSetButton,
+                           toItem: addSetButton,
                            attribute: .top,
                            multiplier: 1,
-                           constant: -self.viewPadding).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.addSetButton,
+                           constant: -viewPadding).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: addSetButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
     }
     
     // center horiz in view ; width of this view/1.33 ; place below add set button ; height of tableviewheight
     private func createAndActivateExerciseHistoryTableViewConstraints() {
-        self.exerciseHistoryTableView.translatesAutoresizingMaskIntoConstraints = false
+        exerciseHistoryTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseHistoryTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseHistoryTableView,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseHistoryTableView,
-                                                             withCopyView: self.addSetButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseHistoryTableView,
+                                                             withCopyView: addSetButton,
                                                              attribute: .width).isActive = true
-        NSLayoutConstraint(item: self.addSetButton,
+        NSLayoutConstraint(item: addSetButton,
                            attribute: .bottom,
                            relatedBy: .equal,
-                           toItem: self.exerciseHistoryTableView,
+                           toItem: exerciseHistoryTableView,
                            attribute: .top,
                            multiplier: 1,
-                           constant: -self.viewPadding).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.exerciseHistoryTableView,
-                                                         height: self.tableViewHeight).isActive = true
+                           constant: -viewPadding).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: exerciseHistoryTableView,
+                                                         height: tableViewHeight).isActive = true
     }
     
     // MARK: view properties assigned

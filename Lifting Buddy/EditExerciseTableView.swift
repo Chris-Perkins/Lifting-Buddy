@@ -21,10 +21,10 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource,UITableVi
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
         
-        self.delegate = self
-        self.dataSource = self
-        self.allowsSelection = false
-        self.register(EditExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
+        delegate = self
+        dataSource = self
+        allowsSelection = false
+        register(EditExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,17 +36,17 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource,UITableVi
     // Moved a cell (HPRTableview requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
-        self.data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
     
     // Deletion methods
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            self.data.remove(at: indexPath.row)
+            data.remove(at: indexPath.row)
             
             heightConstraint?.constant -= UITableViewCell.defaultHeight
-            self.reloadData()
+            reloadData()
         }
     }
     
@@ -54,13 +54,13 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource,UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(data)
         // TODO: Edit / Delete dialog
-        let cell: EditExerciseTableViewCell = self.cellForRow(at: indexPath) as! EditExerciseTableViewCell
-        cell.backgroundColor = UIColor.niceBlue
+        let cell: EditExerciseTableViewCell = cellForRow(at: indexPath) as! EditExerciseTableViewCell
+        cell.backgroundColor = .niceBlue
     }
     
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.data.count
+        return data.count
     }
     
     // Create our custom cell class
@@ -69,7 +69,7 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource,UITableVi
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! EditExerciseTableViewCell
         cell.setExercise(exercise: data[indexPath.row])
-        cell.showViewDelegate = self.superview as? ShowViewDelegate
+        cell.showViewDelegate = superview as? ShowViewDelegate
         return cell
     }
     
@@ -82,7 +82,7 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource,UITableVi
     
     // Append some data to the tableView
     public func appendDataToTableView(data: Exercise) {
-        self.heightConstraint?.constant += UITableViewCell.defaultHeight
+        heightConstraint?.constant += UITableViewCell.defaultHeight
         
         self.data.append(data)
         reloadData()

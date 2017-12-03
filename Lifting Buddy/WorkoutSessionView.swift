@@ -22,15 +22,15 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
     private var isComplete: Bool = false
     
     // The name label for this exercise
-    private var workoutNameLabel: UILabel
+    private let workoutNameLabel: UILabel
     // The tableview holding EVERYTHING!!!
-    public var workoutSessionTableView: WorkoutSessionTableView
+    public let workoutSessionTableView: WorkoutSessionTableView
     // Button press to add an exercise to this workout
-    private var addExerciseButton: PrettyButton
+    private let addExerciseButton: PrettyButton
     // the complete button for the exercise
-    private var completeButton: PrettyButton
+    private let completeButton: PrettyButton
     // A button we can press to hide this view
-    private var cancelButton: PrettyButton
+    private let cancelButton: PrettyButton
     
     // Delegate to notify on workout start
     public var workoutSessionDelegate: WorkoutSessionStarter?
@@ -40,39 +40,39 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
     init(workout: Workout?, frame: CGRect) {
         self.workout = workout
         
-        self.workoutNameLabel = UILabel()
-        self.workoutSessionTableView = WorkoutSessionTableView(workout: workout,
-                                                               style: .plain)
-        self.addExerciseButton = PrettyButton()
-        self.completeButton = PrettyButton()
-        self.cancelButton = PrettyButton()
+        workoutNameLabel = UILabel()
+        workoutSessionTableView = WorkoutSessionTableView(workout: workout,
+                                                          style: .plain)
+        addExerciseButton = PrettyButton()
+        completeButton = PrettyButton()
+        cancelButton = PrettyButton()
         
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.niceGray
+        backgroundColor = .niceGray
         workoutSessionTableView.viewDelegate = self
         
-        self.addSubview(workoutNameLabel)
-        self.addSubview(workoutSessionTableView)
-        self.addSubview(addExerciseButton)
-        self.addSubview(completeButton)
-        self.addSubview(cancelButton)
+        addSubview(workoutNameLabel)
+        addSubview(workoutSessionTableView)
+        addSubview(addExerciseButton)
+        addSubview(completeButton)
+        addSubview(cancelButton)
         
-        self.createAndActivateWorkoutNameLabelConstraints()
-        self.createAndActivateWorkoutSessionTableViewConstraints()
-        self.createAndActivateAddExerciseButtonConstraints()
-        self.createAndActivateCompleteButtonConstraints()
-        self.createAndActivateCancelButtonConstraints()
+        createAndActivateWorkoutNameLabelConstraints()
+        createAndActivateWorkoutSessionTableViewConstraints()
+        createAndActivateAddExerciseButtonConstraints()
+        createAndActivateCompleteButtonConstraints()
+        createAndActivateCancelButtonConstraints()
         
-        self.completeButton.addTarget(self,
-                                      action: #selector(buttonPress(sender:)),
-                                      for: .touchUpInside)
-        self.addExerciseButton.addTarget(self,
-                                         action: #selector(buttonPress(sender:)),
-                                         for: .touchUpInside)
-        self.cancelButton.addTarget(self,
+        completeButton.addTarget(self,
+                                 action: #selector(buttonPress(sender:)),
+                                 for: .touchUpInside)
+        addExerciseButton.addTarget(self,
                                     action: #selector(buttonPress(sender:)),
                                     for: .touchUpInside)
+        cancelButton.addTarget(self,
+                               action: #selector(buttonPress(sender:)),
+                               for: .touchUpInside)
         
         workoutSessionTableView.checkComplete()
     }
@@ -86,27 +86,27 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.workoutNameLabel.setDefaultProperties()
-        self.workoutNameLabel.text = self.workout?.getName() ?? "Custom Workout"
-        //self.workoutNameLabel.backgroundColor = UIColor.white
+        workoutNameLabel.setDefaultProperties()
+        workoutNameLabel.text = workout?.getName() ?? "Custom Workout"
+        //workoutNameLabel.backgroundColor = .white
         
-        self.addExerciseButton.setDefaultProperties()
-        self.addExerciseButton.setTitle("Add Exercise to Workout",
-                                        for: .normal)
-        
-        // Modified by another method based on current complete
-        self.completeButton.setOverlayStyle(style: .FADE)
-        self.completeButton.setOverlayColor(color: UIColor.niceYellow)
-        self.completeButton.setTitle("Finish Workout",
-                                     for: .normal)
-        
-        self.cancelButton.setDefaultProperties()
-        self.cancelButton.backgroundColor = UIColor.niceRed
-        self.cancelButton.setTitle("Cancel Workout",
+        addExerciseButton.setDefaultProperties()
+        addExerciseButton.setTitle("Add Exercise to Workout",
                                    for: .normal)
         
-        self.contentSize = CGSize(width: self.frame.width,
-                                  height: self.cancelButton.frame.maxY + 20)
+        // Modified by another method based on current complete
+        completeButton.setOverlayStyle(style: .FADE)
+        completeButton.setOverlayColor(color: .niceYellow)
+        completeButton.setTitle("Finish Workout",
+                                for: .normal)
+        
+        cancelButton.setDefaultProperties()
+        cancelButton.backgroundColor = .niceRed
+        cancelButton.setTitle("Cancel Workout",
+                              for: .normal)
+        
+        contentSize = CGSize(width: frame.width,
+                             height: cancelButton.frame.maxY + 20)
     }
     
     // MARK: Private functions
@@ -115,20 +115,20 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
     private func saveWorkoutData() {
         workoutSessionTableView.saveWorkoutData()
         
-        self.workout?.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
-        self.workout?.incrementWorkoutCount()
+        workout?.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
+        workout?.incrementWorkoutCount()
     }
     
     // Completes this workout, dismisses the view.
     private func completeWorkout() {
-        self.workoutSessionDelegate?.endWorkout!()
-        self.saveWorkoutData()
+        workoutSessionDelegate?.endWorkout!()
+        saveWorkoutData()
         
-        let view = WorkoutSessionSummaryView(workout: self.workout,
-                                             exercises: self.workoutSessionTableView.getData())
-        self.showViewDelegate?.showView(view: view)
+        let view = WorkoutSessionSummaryView(workout: workout,
+                                             exercises: workoutSessionTableView.getData())
+        showViewDelegate?.showView(view: view)
         
-        self.removeSelfNicelyWithAnimation()
+        removeSelfNicelyWithAnimation()
     }
     
     // MARK: Event functions
@@ -136,21 +136,21 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
     // Generic button press event
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
-        case self.addExerciseButton:
+        case addExerciseButton:
             /*
              * We use superview here as this view is a scrollview. This could
              * alternatively be done by having an encasing view for every workoutview.
              * That may be considered best practice... So, TODO
              */
             let frame = CGRect(x: 0,
-                               y: -self.superview!.frame.height,
-                               width: self.superview!.frame.width,
-                               height: self.superview!.frame.height)
+                               y: -superview!.frame.height,
+                               width: superview!.frame.width,
+                               height: superview!.frame.height)
             
             let chooseExerciseView = ExercisesView(selectingExercise: true, frame: frame)
             chooseExerciseView.layer.zPosition = 100
             chooseExerciseView.exercisePickerDelegate = self
-            self.superview!.addSubview(chooseExerciseView)
+            superview!.addSubview(chooseExerciseView)
             
             UIView.animate(withDuration: 0.2, animations: {
                 chooseExerciseView.frame = CGRect(x: 0,
@@ -159,10 +159,10 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
                                                   height: self.superview!.frame.height)
             })
             break
-        case self.completeButton:
-            if self.isComplete {
+        case completeButton:
+            if isComplete {
                 // If complete, we can just complete.
-                self.completeWorkout()
+                completeWorkout()
             } else {
                 // Otherwise, prompt for confirmation that we want to complete the workout.
                 let alert = UIAlertController(title: "Complete Workout Prematurely?",
@@ -174,15 +174,15 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
                 let okAction = UIAlertAction(title: "Ok",
                                              style: .default,
                                              handler: {(UIAlertAction) -> Void in
-                                                            self.completeWorkout()
-                                                      })
+                                                self.completeWorkout()
+                })
                 
                 alert.addAction(cancelAction)
                 alert.addAction(okAction)
                 
-                self.viewController()!.present(alert, animated: true, completion: nil)
+                viewController()!.present(alert, animated: true, completion: nil)
             }
-        case self.cancelButton:
+        case cancelButton:
             // Confirm that the user indeed wants to cancel this workout
             let alert = UIAlertController(title: "Cancel Workout?",
                                           message: "Canceling will not save any data about this workout. Continue?",
@@ -193,13 +193,13 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
             let okAction = UIAlertAction(title: "Ok",
                                          style: .default,
                                          handler: {(UIAlertAction) -> Void in
-                                            self.removeSelfNicelyWithAnimation()
+                self.removeSelfNicelyWithAnimation()
             })
             
             alert.addAction(cancelAction)
             alert.addAction(okAction)
             
-            self.viewController()!.present(alert, animated: true, completion: nil)
+            viewController()!.present(alert, animated: true, completion: nil)
         default:
             fatalError("Button pressed that does not exist?")
         }
@@ -207,7 +207,7 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
     
     // MARK: ExercisePicker Delegate methods
     func didSelectExercise(exercise: Exercise) {
-        self.workoutSessionTableView.appendDataToTableView(data: exercise)
+        workoutSessionTableView.appendDataToTableView(data: exercise)
     }
     
     // MARK: WorkoutSessionTableViewDelegate
@@ -216,35 +216,35 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
         self.isComplete = isComplete
         
         if isComplete {
-            self.backgroundColor = UIColor.niceLightGreen
-            completeButton.backgroundColor = UIColor.niceGreen
+            backgroundColor = .niceLightGreen
+            completeButton.backgroundColor = .niceGreen
         } else {
-            self.backgroundColor = UIColor.niceGray
-            completeButton.backgroundColor = UIColor.niceLightBlue
+            backgroundColor = .niceGray
+            completeButton.backgroundColor = .niceLightBlue
         }
     }
     
     // Height of this view changed
     func heightChange() {
-        self.layoutSubviews()
+        layoutSubviews()
     }
     
     // MARK: View Constraints
     
     // Center horiz in view ; place below top of this view ; height 20 ; width of this view - 80
     private func createAndActivateWorkoutNameLabelConstraints() {
-        self.workoutNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        workoutNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutNameLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutNameLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
                                                              withCopyView: self,
                                                              attribute: .top,
                                                              plusConstant: 12.5).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.workoutNameLabel,
+        NSLayoutConstraint.createHeightConstraintForView(view: workoutNameLabel,
                                                          height: 20).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutNameLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
                                                              withCopyView: self,
                                                              attribute: .width).isActive = true
         
@@ -252,56 +252,56 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
     
     // Center horiz in view ; below workoutNameLabel ; height 0 ; width of this view
     private func createAndActivateWorkoutSessionTableViewConstraints() {
-        self.workoutSessionTableView.translatesAutoresizingMaskIntoConstraints = false
+        workoutSessionTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutSessionTableView,
-                                                        withCopyView: self,
-                                                        attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.workoutSessionTableView,
-                                                         belowView: self.workoutNameLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutSessionTableView,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: workoutSessionTableView,
+                                                         belowView: workoutNameLabel,
                                                          withPadding: 12.5).isActive = true
         
         // Assign height constraint
-        self.workoutSessionTableView.heightConstraint =
-            NSLayoutConstraint.createHeightConstraintForView(view: self.workoutSessionTableView,
+        workoutSessionTableView.heightConstraint =
+            NSLayoutConstraint.createHeightConstraintForView(view: workoutSessionTableView,
                                                              height: 0)
-        self.workoutSessionTableView.heightConstraint?.isActive = true
+        workoutSessionTableView.heightConstraint?.isActive = true
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutSessionTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutSessionTableView,
                                                              withCopyView: self,
                                                              attribute: .width).isActive = true
     }
     
     // Below workout view ; left/right of tableview ; height of tableview cell
     private func createAndActivateAddExerciseButtonConstraints() {
-        self.addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.addExerciseButton,
-                                                         belowView: self.workoutSessionTableView,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: addExerciseButton,
+                                                         belowView: workoutSessionTableView,
                                                          withPadding: 0).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutSessionTableView,
-                                                             withCopyView: self.addExerciseButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutSessionTableView,
+                                                             withCopyView: addExerciseButton,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.workoutSessionTableView,
-                                                             withCopyView: self.addExerciseButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutSessionTableView,
+                                                             withCopyView: addExerciseButton,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.addExerciseButton,
+        NSLayoutConstraint.createHeightConstraintForView(view: addExerciseButton,
                                                          height: UITableViewCell.defaultHeight).isActive = true
     }
     
     // center horiz in view ; place below workoutSessionTableView ; height default; width of this view - 80
     private func createAndActivateCompleteButtonConstraints() {
-        self.completeButton.translatesAutoresizingMaskIntoConstraints = false
+        completeButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.completeButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: completeButton,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.completeButton,
-                                                         belowView: self.addExerciseButton,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: completeButton,
+                                                         belowView: addExerciseButton,
                                                          withPadding: 25).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.completeButton,
+        NSLayoutConstraint.createHeightConstraintForView(view: completeButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.completeButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: completeButton,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              plusConstant: -80).isActive = true
@@ -309,18 +309,18 @@ class WorkoutSessionView: UIScrollView, WorkoutSessionTableViewDelegate, Exercis
     
     // Center horiz in self ; below completeButton ; height 40 ; copy width of completeButton
     private func createAndActivateCancelButtonConstraints() {
-        self.cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cancelButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.cancelButton,
-                                                         belowView: self.completeButton,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: cancelButton,
+                                                         belowView: completeButton,
                                                          withPadding: 10).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.cancelButton,
+        NSLayoutConstraint.createHeightConstraintForView(view: cancelButton,
                                                          height: 40).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cancelButton,
-                                                            withCopyView: self.completeButton,
-                                                            attribute: .width).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
+                                                             withCopyView: completeButton,
+                                                             attribute: .width).isActive = true
     }
 }

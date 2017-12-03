@@ -31,16 +31,16 @@ class ToggleablePrettyButton: PrettyButton {
     // MARK: View inits
     
     override init(frame: CGRect) {
-        self.isToggled = false
-        self.defaultViewColor = .white
-        self.defaultTextColor = .black
+        isToggled = false
+        defaultViewColor = .white
+        defaultTextColor = .black
         
         super.init(frame: frame)
         
-        self.backgroundColor = self.defaultViewColor
-        self.setTitleColor(self.defaultTextColor, for: .normal)
+        backgroundColor = defaultViewColor
+        setTitleColor(defaultTextColor, for: .normal)
         
-        self.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,55 +51,55 @@ class ToggleablePrettyButton: PrettyButton {
     
     // The view's color when toggled
     public func setToggleViewColor(color: UIColor) {
-        self.toggleViewColor = color
+        toggleViewColor = color
         
-        if self.isToggled {
-            self.backgroundColor = self.toggleViewColor
+        if isToggled {
+            backgroundColor = toggleViewColor
         }
     }
     
     // The text's color when toggled
     public func setToggleTextColor(color: UIColor) {
-        self.toggleTextColor = color
+        toggleTextColor = color
         
-        if self.isToggled {
-            self.setTitleColor(self.toggleTextColor, for: .normal)
+        if isToggled {
+            setTitleColor(toggleTextColor, for: .normal)
         }
     }
     
     // Sets the text when toggled
     public func setToggleText(text: String) {
-        self.toggleText = text
+        toggleText = text
         
-        if self.isToggled {
-            self.setTitle(text, for: .normal)
+        if isToggled {
+            setTitle(text, for: .normal)
         }
     }
     
     // The view's color when not toggled
     public func setDefaultViewColor(color: UIColor) {
-        self.defaultViewColor = color
+        defaultViewColor = color
         
-        if !self.isToggled {
-            self.backgroundColor = self.defaultViewColor
+        if !isToggled {
+            backgroundColor = defaultViewColor
         }
     }
     
     // The view's color when toggled
     public func setDefaultTextColor(color: UIColor) {
-        self.defaultTextColor = color
+        defaultTextColor = color
         
-        if !self.isToggled {
-            self.setTitleColor(self.defaultTextColor, for: .normal)
+        if !isToggled {
+            setTitleColor(defaultTextColor, for: .normal)
         }
     }
     
     // Sets the default text
     public func setDefaultText(text: String) {
-        self.defaultText = text
+        defaultText = text
         
-        if !self.isToggled {
-            self.setTitle(text, for: .normal)
+        if !isToggled {
+            setTitle(text, for: .normal)
         }
     }
     
@@ -107,20 +107,20 @@ class ToggleablePrettyButton: PrettyButton {
     
     // Sets the view properties to a toggled state
     public func setIsToggled(toggled: Bool) {
-        self.isToggled = toggled
-        self.backgroundColor = toggled ? self.toggleViewColor : self.defaultViewColor
-        self.setTitleColor(toggled ? self.toggleTextColor : self.defaultTextColor, for: .normal)
+        isToggled = toggled
+        backgroundColor = toggled ? toggleViewColor : defaultViewColor
+        setTitleColor(toggled ? toggleTextColor : defaultTextColor, for: .normal)
         
         // If we toggled to a state that has non-nil text
-        if (!toggled && self.defaultText != nil) || (toggled && toggleText != nil) {
-            self.setTitle(toggled ? self.toggleText : self.defaultText, for: .normal)
+        if (!toggled && defaultText != nil) || (toggled && toggleText != nil) {
+            setTitle(toggled ? toggleText : defaultText, for: .normal)
         }
     }
     
     // MARK: Event functions
     
     @objc public func buttonPress(sender: UIButton) {
-        self.isToggled = !self.isToggled
+        isToggled = !isToggled
         
         UIView.animate(withDuration: animationTimeInSeconds, animations: {
             self.setIsToggled(toggled: self.isToggled)

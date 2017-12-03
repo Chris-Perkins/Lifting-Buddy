@@ -37,37 +37,37 @@ class Workout: Object {
     // MARK: Init Functions
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        self.name = nil
-        self.curStreak = 0
-        self.maxStreak = 0
-        self.completedCount = 0
+        name = nil
+        curStreak = 0
+        maxStreak = 0
+        completedCount = 0
         
-        self.daysOfTheWeek = List<RLMBool>()
-        self.exercises = List<Exercise>()
+        daysOfTheWeek = List<RLMBool>()
+        exercises = List<Exercise>()
         
         super.init(realm: realm, schema: schema)
     }
     
     required init() {
-        self.name = nil
-        self.curStreak = 0
-        self.maxStreak = 0
-        self.completedCount = 0
+        name = nil
+        curStreak = 0
+        maxStreak = 0
+        completedCount = 0
         
-        self.daysOfTheWeek = List<RLMBool>()
-        self.exercises = List<Exercise>()
+        daysOfTheWeek = List<RLMBool>()
+        exercises = List<Exercise>()
         
         super.init()
     }
     
     required init(value: Any, schema: RLMSchema) {
-        self.name = nil
-        self.curStreak = 0
-        self.maxStreak = 0
-        self.completedCount = 0
+        name = nil
+        curStreak = 0
+        maxStreak = 0
+        completedCount = 0
         
-        self.daysOfTheWeek = List<RLMBool>()
-        self.exercises = List<Exercise>()
+        daysOfTheWeek = List<RLMBool>()
+        exercises = List<Exercise>()
         
         super.init(value: value, schema: schema)
     }
@@ -107,7 +107,7 @@ class Workout: Object {
             
             if daysOfTheWeek[(7 + day - i) % 7].value {
                 if cal.dateComponents(Set([Calendar.Component.day]), from: dateLastDone!, to: today).day! > 7 ||
-                   weekdayLastDone != (7 + day - i) % 7 {
+                    weekdayLastDone != (7 + day - i) % 7 {
                     
                     // If we ended our streak, curStreak is 0. SAD!
                     let realm = try! Realm()
@@ -125,7 +125,7 @@ class Workout: Object {
     // MARK: Encapsulated Methods
     
     @objc public func getName() -> String? {
-        return self.name
+        return name
     }
     
     public func setName(name: String?) {
@@ -137,31 +137,31 @@ class Workout: Object {
     }
     
     public func getsDayOfTheWeek() -> List<RLMBool> {
-        return self.daysOfTheWeek
+        return daysOfTheWeek
     }
     
     public func setDaysOfTheWeek(daysOfTheWeek: List<RLMBool>) {
         let realm = try! Realm()
         try! realm.write {
-            self.daysOfTheWeek.removeAll()
+            daysOfTheWeek.removeAll()
             for bool in daysOfTheWeek {
                 let boolToStore = RLMBool()
                 boolToStore.value = bool.value
-                self.daysOfTheWeek.append(boolToStore)
+                daysOfTheWeek.append(boolToStore)
                 
             }
         }
     }
     
     public func getExercises() -> List<Exercise> {
-        return self.exercises
+        return exercises
     }
     
     public func addExercise(exercise: Exercise) {
         let realm = try! Realm()
         
         try! realm.write {
-            self.exercises.append(exercise)
+            exercises.append(exercise)
         }
     }
     
@@ -169,7 +169,7 @@ class Workout: Object {
         let realm = try! Realm()
         
         try! realm.write {
-            self.exercises.removeAll()
+            exercises.removeAll()
         }
     }
     
@@ -187,7 +187,7 @@ class Workout: Object {
     public func setDateLastDone(date: Date?) {
         let realm = try! Realm()
         try! realm.write {
-            self.dateLastDone = date
+            dateLastDone = date
         }
     }
     
@@ -196,27 +196,27 @@ class Workout: Object {
     public func incrementWorkoutCount() {
         let realm = try! Realm()
         try! realm.write {
-            self.curStreak += 1
-            self.completedCount += 1
+            curStreak += 1
+            completedCount += 1
             
             // check if we've increases the maximum streak
-            if self.curStreak > self.maxStreak {
-                self.maxStreak = self.curStreak
+            if curStreak > maxStreak {
+                maxStreak = curStreak
             }
         }
     }
     
     public func getCurSteak() -> Int {
-        return self.curStreak
+        return curStreak
     }
     
     // Remove exercise stored at an index in the int if possible
     public func removeExerciseAtIndex(index: Int) {
-        if index >= 0 && index < self.exercises.endIndex {
+        if index >= 0 && index < exercises.endIndex {
             let realm = try! Realm()
             
             try! realm.write {
-                self.exercises.remove(at: index)
+                exercises.remove(at: index)
             }
         }
     }
@@ -441,4 +441,3 @@ class Workout: Object {
 public class RLMBool: Object {
     @objc public dynamic var value: Bool = false
 }
-

@@ -20,34 +20,34 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     private var chosen: Bool
     
     // the progression method we're modifying
-    var progressionMethod: ProgressionMethod? = nil
+    private var progressionMethod: ProgressionMethod? = nil
     
     // the name entry field for this name entry field
-    var nameEntryField: BetterTextField
+    public let nameEntryField: BetterTextField
     // get the pick unit button
-    var pickUnitButton: PrettyButton
+    public let pickUnitButton: PrettyButton
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.nameEntryField = BetterTextField(defaultString: nil, frame: .zero)
-        self.pickUnitButton = PrettyButton()
-        self.loaded = false
-        self.chosen = false
+        nameEntryField = BetterTextField(defaultString: nil, frame: .zero)
+        pickUnitButton = PrettyButton()
+        loaded = false
+        chosen = false
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.addSubview(nameEntryField)
-        self.addSubview(pickUnitButton)
+        addSubview(nameEntryField)
+        addSubview(pickUnitButton)
         
-        self.createAndActivateNameEntryFieldConstraints()
-        self.createAndActivatePickUnitButtonConstraints()
+        createAndActivateNameEntryFieldConstraints()
+        createAndActivatePickUnitButtonConstraints()
         
-        self.nameEntryField.setDefaultString(defaultString: "Name")
+        nameEntryField.setDefaultString(defaultString: "Name")
         
-        self.pickUnitButton.addTarget(self,
-                                      action: #selector(pickUnitButtonPress(sender:)),
-                                      for: .touchUpInside)
+        pickUnitButton.addTarget(self,
+                                 action: #selector(pickUnitButtonPress(sender:)),
+                                 for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -59,12 +59,12 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     override func layoutIfNeeded() {
         super.layoutIfNeeded()
         
-        self.clipsToBounds = true
-        self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        clipsToBounds = true
+        backgroundColor = UIColor.white.withAlphaComponent(0.5)
         
         // MARK: Pick Unit button
         
-        self.pickUnitButton.setDefaultProperties()
+        pickUnitButton.setDefaultProperties()
     }
     
     // MARK: Custom view functions
@@ -72,38 +72,38 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     public func setProgressionMethod(progressionMethod: ProgressionMethod) {
         self.progressionMethod = progressionMethod
         
-        self.nameEntryField.textfield.text = self.progressionMethod?.getName()
-        self.pickUnitButton.setTitle(self.progressionMethod?.getUnit() ??
-                                    ((self.curSelect >= 0 && self.curSelect < ProgressionMethod.unitList.count) ? ProgressionMethod.unitList[self.curSelect] : "Required: Unit"),
-                                     for: .normal)
+        nameEntryField.textfield.text = self.progressionMethod?.getName()
+        pickUnitButton.setTitle(self.progressionMethod?.getUnit() ??
+            ((curSelect >= 0 && curSelect < ProgressionMethod.unitList.count) ? ProgressionMethod.unitList[curSelect] : "Required: Unit"),
+                                for: .normal)
         
         
         if let unitString = self.progressionMethod?.getUnit() {
             guard let index =  ProgressionMethod.unitList.index(of: unitString.lowercased()) else {
                 fatalError("Unable to find unit that supposedly exists...")
             }
-            self.curSelect = index
+            curSelect = index
         }
     }
     
     public func saveAndReturnProgressionMethod() -> ProgressionMethod {
-        guard let _ = self.progressionMethod else  {
+        guard let pgm = progressionMethod else  {
             fatalError("ProgressionMethod we were editing or creating is nil!")
         }
         
-        self.progressionMethod!.setName(name: self.nameEntryField.text)
-        self.progressionMethod!.setUnit(unit: self.pickUnitButton.titleLabel?.text)
+        pgm.setName(name: nameEntryField.text)
+        pgm.setUnit(unit: pickUnitButton.titleLabel?.text)
         
         // If this progression method doesn't have an index, it has not been added to realm
         // so, add this to realm
-        if self.progressionMethod!.getIndex() == nil {
+        if pgm.getIndex() == nil {
             let realm = try! Realm()
             try! realm.write {
-                realm.add(self.progressionMethod!)
+                realm.add(pgm)
             }
         }
         
-        return self.progressionMethod!
+        return pgm
     }
     
     // MARK: Event functions
@@ -130,13 +130,13 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: nameEntryField,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: nameEntryField,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: nameEntryField,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: nameEntryField,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              multiplier: 2/3).isActive = true
@@ -150,10 +150,10 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: pickUnitButton,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.pickUnitButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: pickUnitButton,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.pickUnitButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: pickUnitButton,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
         NSLayoutConstraint(item: nameEntryField,

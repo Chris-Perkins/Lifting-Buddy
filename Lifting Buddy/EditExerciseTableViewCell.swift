@@ -16,22 +16,22 @@ class EditExerciseTableViewCell: UITableViewCell {
     public var showViewDelegate: ShowViewDelegate?
     
     // The exercise title for this cell
-    private var exerciseNameLabel: UILabel
+    private let exerciseNameLabel: UILabel
     // The edit button for this cell
-    private var editButton: PrettyButton
+    private let editButton: PrettyButton
     // The exercise associated with this cell
     private var exercise: Exercise?
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        self.exerciseNameLabel = UILabel()
-        self.editButton = PrettyButton()
+        exerciseNameLabel = UILabel()
+        editButton = PrettyButton()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.addSubview(exerciseNameLabel)
-        self.addSubview(editButton)
+        addSubview(exerciseNameLabel)
+        addSubview(editButton)
         
         editButton.addTarget(self, action: #selector(editPress(sender:)), for: .touchUpInside)
         
@@ -41,8 +41,8 @@ class EditExerciseTableViewCell: UITableViewCell {
          * starting from the left. For example: N = Name Label, E = Edit button
          * Layout is: NNNE
          */
-        self.createAndActivateExerciseNameLabelConstraints()
-        self.createAndActivateEditButtonConstraints()
+        createAndActivateExerciseNameLabelConstraints()
+        createAndActivateEditButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,8 +54,8 @@ class EditExerciseTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        self.clipsToBounds = true
+        backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        clipsToBounds = true
         
         exerciseNameLabel.setDefaultProperties()
         
@@ -71,54 +71,54 @@ class EditExerciseTableViewCell: UITableViewCell {
     // Sets the exercise for this view
     public func setExercise(exercise: Exercise) {
         self.exercise = exercise
-        self.exerciseNameLabel.text = exercise.getName()
+        exerciseNameLabel.text = exercise.getName()
     }
     
     // MARK: Event Functions
     
     @objc func editPress(sender: UIButton) {
-        self.showViewDelegate?.showView(view: CreateExerciseView(exercise: self.exercise!,
-                                                                 frame: .zero))
+        showViewDelegate?.showView(view: CreateExerciseView(exercise: exercise!,
+                                                            frame: .zero))
     }
     
     // MARK: Constraint functions
     
     // Cling to top, bottom, left. Width of this view * 0.66
     private func createAndActivateExerciseNameLabelConstraints() {
-        self.exerciseNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        exerciseNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseNameLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseNameLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseNameLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseNameLabel,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseNameLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseNameLabel,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              multiplier: 2/3).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.exerciseNameLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseNameLabel,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
     }
     
     // Cling to top, bottom, right of this view ; cling to left of exercisenamelabel
     private func createAndActivateEditButtonConstraints() {
-        self.editButton.translatesAutoresizingMaskIntoConstraints = false
+        editButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.editButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint(item: self.exerciseNameLabel,
+        NSLayoutConstraint(item: exerciseNameLabel,
                            attribute: .right,
                            relatedBy: .equal,
-                           toItem: self.editButton,
+                           toItem: editButton,
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true

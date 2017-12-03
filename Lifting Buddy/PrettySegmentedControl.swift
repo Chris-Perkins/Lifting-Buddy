@@ -25,8 +25,8 @@ class PrettySegmentedControl: UIView {
     // MARK: View inits
     
     init(labelStrings: [String], frame: CGRect, defaultIndex: Int = 0) {
-        self.buttons = [PrettyButton]()
-        self.selectedIndex = defaultIndex
+        buttons = [PrettyButton]()
+        selectedIndex = defaultIndex
         
         // Create a button for each labelString we have
         // Each button's tag is associated with the index it can be found at
@@ -36,24 +36,24 @@ class PrettySegmentedControl: UIView {
             button.setTitle(labelString.lowercased(), for: .normal)
             button.tag = index
             
-            self.buttons.append(button)
+            buttons.append(button)
         }
         
         super.init(frame: frame)
         
-        for button in self.buttons {
+        for button in buttons {
             button.addTarget(self,
                              action: #selector(buttonPress(sender:)),
                              for: .touchUpInside)
-            self.addSubview(button)
+            addSubview(button)
         }
         
         // Simulate a button press if we can...
         if buttons.count >= 0 {
-            self.buttonPress(sender: buttons[0])
+            buttonPress(sender: buttons[0])
         }
         
-        self.createAndActivateButtonConstraints()
+        createAndActivateButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,19 +63,19 @@ class PrettySegmentedControl: UIView {
     // MARK: Public functions
     
     public func getSelectedIndex() -> Int {
-        return self.selectedIndex
+        return selectedIndex
     }
     
     // MARK: Event functions
     
     @objc private func buttonPress(sender: PrettyButton) {
-        buttons[self.selectedIndex].backgroundColor = UIColor.niceBlue
+        buttons[selectedIndex].backgroundColor = .niceBlue
         
         // tag = index of this button in buttons array
-        buttons[sender.tag].backgroundColor = UIColor.niceYellow
-        self.selectedIndex = sender.tag
+        buttons[sender.tag].backgroundColor = .niceYellow
+        selectedIndex = sender.tag
         
-        self.delegate?.segmentSelectionChanged(index: self.selectedIndex)
+        delegate?.segmentSelectionChanged(index: selectedIndex)
     }
     
     // MARK: View constraints
@@ -83,7 +83,7 @@ class PrettySegmentedControl: UIView {
     private func createAndActivateButtonConstraints() {
         var lastView: UIView = self
         
-        for button in self.buttons {
+        for button in buttons {
             button.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint(item: lastView,
@@ -102,8 +102,8 @@ class PrettySegmentedControl: UIView {
             NSLayoutConstraint.createViewAttributeCopyConstraint(view: button,
                                                                  withCopyView: self,
                                                                  attribute: .width,
-                                                                 multiplier: 1/CGFloat(self.buttons.count)
-                                                                ).isActive = true
+                                                                 multiplier: 1/CGFloat(buttons.count)
+                ).isActive = true
             
             lastView = button
         }

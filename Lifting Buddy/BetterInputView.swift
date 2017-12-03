@@ -23,7 +23,7 @@ class BetterInputView: UIView, InputViewHolder {
                  Bool       // is field numeric
                 )], frame: CGRect) {
         
-        self.inputViews = [BetterTextField]()
+        inputViews = [BetterTextField]()
         
         super.init(frame: frame)
         
@@ -35,8 +35,8 @@ class BetterInputView: UIView, InputViewHolder {
             btf.textfield.placeholder = arg.1
             btf.textfield.setDefaultProperties()
             
-            self.inputViews.append(btf)
-            self.addSubview(btf)
+            inputViews.append(btf)
+            addSubview(btf)
         }
         
         self.createAndActivateInputConstraints()
@@ -50,7 +50,7 @@ class BetterInputView: UIView, InputViewHolder {
     
     // returns the input views
     internal func getInputViews() -> [BetterTextField] {
-        return self.inputViews
+        return inputViews
     }
     
     // Shows which fields are invalid
@@ -59,9 +59,9 @@ class BetterInputView: UIView, InputViewHolder {
         
         // Go through each view; check if empty
         // if empty, set textfield to red
-        for view in self.inputViews {
+        for view in inputViews {
             if (view.text ?? "").isEmpty || view.text!.floatValue == nil {
-                view.textfield.backgroundColor = UIColor.niceRed
+                view.textfield.backgroundColor = .niceRed
                 
                 returnValue = false
             }
@@ -79,7 +79,7 @@ class BetterInputView: UIView, InputViewHolder {
         if areFieldsValid() {
             returnValue = 0
             
-            for view in self.inputViews {
+            for view in inputViews {
                 if view.getIsNumeric() {
                     returnValue += view.text!.floatValue!
                 }

@@ -17,46 +17,46 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
     private static let heightPerProgressionMethodButton: CGFloat = 40.0
     
     // The exercise we're graphing
-    let exercise: Exercise
+    private let exercise: Exercise
+    // the amount of space the chart can take up width-wise
+    private let chartWidth: CGFloat
+    // A view we use to select a date view
+    private let timeAmountSelectionView: PrettySegmentedControl
+    // The view where we'll put the chart
+    private let chartFrame: UIView
     
-    // the time amount we're currently displaying
-    private var selectedTimeAmount: TimeAmount
     // Filter progressionMethods from graph
     private var filterProgressionMethods: Set<ProgressionMethod>
+    // the time amount we're currently displaying
+    private var selectedTimeAmount: TimeAmount
     // the chart we're showing
     private var chart: Chart?
-    // the amount of space the chart can take up width-wise
-    private var chartWidth: CGFloat
-    
-    // A view we use to select a date view
-    private var timeAmountSelectionView: PrettySegmentedControl
-    // The view where we'll put the chart
-    private var chartFrame: UIView
     // The labels for every exercise
     private var progressionButtons: [ToggleablePrettyButtonWithProgressionMethod]
     
     // MARK: Inits
     init(exercise: Exercise, chartWidth: CGFloat) {
         self.exercise = exercise
-        self.selectedTimeAmount = TimeAmount.MONTH
-        self.filterProgressionMethods = Set<ProgressionMethod>()
         self.chartWidth = chartWidth
         
-        self.timeAmountSelectionView = PrettySegmentedControl(labelStrings: TimeAmountArray.map {$0.rawValue},
-                                                              frame: .zero)
-        self.chartFrame = UIView()
-        self.progressionButtons = [ToggleablePrettyButtonWithProgressionMethod]()
+        selectedTimeAmount = TimeAmount.MONTH
+        filterProgressionMethods = Set<ProgressionMethod>()
+        
+        timeAmountSelectionView = PrettySegmentedControl(labelStrings: TimeAmountArray.map {$0.rawValue},
+                                                         frame: .zero)
+        chartFrame = UIView()
+        progressionButtons = [ToggleablePrettyButtonWithProgressionMethod]()
         
         super.init(frame: .zero)
         
-        self.timeAmountSelectionView.delegate = self
+        timeAmountSelectionView.delegate = self
         
-        self.addSubview(self.timeAmountSelectionView)
-        self.addSubview(self.chartFrame)
+        addSubview(timeAmountSelectionView)
+        addSubview(chartFrame)
         
-        self.createAndActivateTimeAmountSelectionViewConstraints()
-        self.createAndActivateChartFrameConstraints()
-        self.createProgressionMethodFilterButtons()
+        createAndActivateTimeAmountSelectionViewConstraints()
+        createAndActivateChartFrameConstraints()
+        createProgressionMethodFilterButtons()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -67,13 +67,13 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
     
     override public func layoutIfNeeded() {
         super.layoutIfNeeded()
-        self.backgroundColor = UIColor.niceRed
+        backgroundColor = .niceRed
         
-        self.chartFrame.clipsToBounds = true
+        chartFrame.clipsToBounds = true
         
-        self.filterProgressionMethods.removeAll()
+        filterProgressionMethods.removeAll()
         
-        self.chartFrame.backgroundColor = UIColor.niceRed
+        chartFrame.backgroundColor = .niceRed
     }
     
     // MARK: Custom view functions
@@ -92,27 +92,27 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
     
     // Creates a chart with the given selected information
     public func createChart() {
-        self.chart?.view.removeFromSuperview()
+        chart?.view.removeFromSuperview()
         
-        self.chart = createChartFromExerciseHistory(exerciseHistory: self.exercise.getExerciseHistory(),
-                                                    filterProgressionMethods: self.filterProgressionMethods,
-                                                    timeAmount: self.selectedTimeAmount,
-                                                    frame: CGRect(x: 0,
-                                                                  y: 0,
-                                                                  width: chartWidth,
-                                                                  height: Chart.defaultHeight))
-        chart!.view.backgroundColor = UIColor.white
-        self.chartFrame.addSubview(chart!.view)
+        chart = createChartFromExerciseHistory(exerciseHistory: exercise.getExerciseHistory(),
+                                               filterProgressionMethods: filterProgressionMethods,
+                                               timeAmount: selectedTimeAmount,
+                                               frame: CGRect(x: 0,
+                                                             y: 0,
+                                                             width: chartWidth,
+                                                             height: Chart.defaultHeight))
+        chart!.view.backgroundColor = .white
+        chartFrame.addSubview(chart!.view)
         
-        self.layoutSubviews()
+        layoutSubviews()
     }
     
     // Destroys the chart being shown in memory. Used for saving memory
     public func destroyChart() {
-        if self.chart != nil {
-            self.chart?.view.removeFromSuperview()
-            self.chart = nil
-            self.layoutSubviews()
+        if chart != nil {
+            chart?.view.removeFromSuperview()
+            chart = nil
+            layoutSubviews()
         }
     }
     
@@ -126,57 +126,57 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
             filterProgressionMethods.insert(sender.progressionMethod)
         }
         
-        self.createChart()
+        createChart()
     }
     
     // MARK: PrettySegmentedControlDelegate functions
     
     func segmentSelectionChanged(index: Int) {
-        self.selectedTimeAmount = TimeAmountArray[index]
+        selectedTimeAmount = TimeAmountArray[index]
         
-        self.createChart()
+        createChart()
     }
     
     // MARK: Constraint Functions
     
     // Center horiz in view ; below cellTitle ; width of this view * 0.85 ; height of default
     private func createAndActivateTimeAmountSelectionViewConstraints() {
-        self.timeAmountSelectionView.translatesAutoresizingMaskIntoConstraints = false
+        timeAmountSelectionView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeAmountSelectionView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timeAmountSelectionView,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeAmountSelectionView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timeAmountSelectionView,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeAmountSelectionView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timeAmountSelectionView,
                                                              withCopyView: self,
                                                              attribute: .width).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.timeAmountSelectionView,
+        NSLayoutConstraint.createHeightConstraintForView(view: timeAmountSelectionView,
                                                          height: PrettySegmentedControl.defaultHeight).isActive = true
     }
     
     // Center horiz in view ; Width of this view ; Below cell title ; Height of Chart's default height
     private func createAndActivateChartFrameConstraints() {
-        self.chartFrame.translatesAutoresizingMaskIntoConstraints = false
+        chartFrame.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.chartFrame,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: chartFrame,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.chartFrame,
-                                                             withCopyView: self.timeAmountSelectionView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: chartFrame,
+                                                             withCopyView: timeAmountSelectionView,
                                                              attribute: .width).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.chartFrame,
-                                                         belowView: self.timeAmountSelectionView,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: chartFrame,
+                                                         belowView: timeAmountSelectionView,
                                                          withPadding: 0).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.chartFrame,
+        NSLayoutConstraint.createHeightConstraintForView(view: chartFrame,
                                                          height: Chart.defaultHeight).isActive = true
     }
     
     //  Creates the buttons and lines them up in a downwards fashion.
     private func createProgressionMethodFilterButtons() {
         // The last view before these (in terms of top to bottom)
-        var prevView: UIView = self.chartFrame
+        var prevView: UIView = chartFrame
         
         for progressionMethod in exercise.getProgressionMethods() {
             let progressionMethodButton = ToggleablePrettyButtonWithProgressionMethod(
@@ -184,15 +184,15 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
                 frame: .zero)
             progressionMethodButton.setTitle(progressionMethod.getName(), for: .normal)
             progressionMethodButton.setIsToggled(toggled: true)
-            progressionMethodButton.setToggleTextColor(color: UIColor.white)
-            progressionMethodButton.setDefaultTextColor(color: UIColor.white)
+            progressionMethodButton.setToggleTextColor(color: .white)
+            progressionMethodButton.setDefaultTextColor(color: .white)
             progressionMethodButton.setToggleViewColor(color:
                 getLineColorsForProgressionMethod(progressionMethod: progressionMethod)[0])
-            progressionMethodButton.setDefaultViewColor(color: UIColor.niceGray)
+            progressionMethodButton.setDefaultViewColor(color: .niceGray)
             progressionMethodButton.addTarget(self,
                                               action: #selector(toggleButtonPress(sender:)),
                                               for: .touchUpInside)
-            self.addSubview(progressionMethodButton)
+            addSubview(progressionMethodButton)
             
             // Constraints for this exercise label.
             // Place 10 from left/right of the cell
@@ -207,13 +207,13 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
                                                              belowView: prevView,
                                                              withPadding: 0).isActive = true
             NSLayoutConstraint.createViewAttributeCopyConstraint(view: progressionMethodButton,
-                                                                 withCopyView: self.chartFrame,
+                                                                 withCopyView: chartFrame,
                                                                  attribute: .width).isActive = true
             NSLayoutConstraint.createHeightConstraintForView(
                 view: progressionMethodButton,
                 height: ExerciseChartViewWithToggles.heightPerProgressionMethodButton).isActive = true
             
-            self.progressionButtons.append(progressionMethodButton)
+            progressionButtons.append(progressionMethodButton)
             
             prevView = progressionMethodButton
         }

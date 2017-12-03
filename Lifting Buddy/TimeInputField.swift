@@ -75,12 +75,12 @@ class TimeInputField: UIView, InputViewHolder {
         self.secondField.setDefaultString(defaultString: "0")
         self.secondField.setLabelTitle(title: "s")
         
-        self.timerButton.setToggleTextColor(color: UIColor.white)
-        self.timerButton.setDefaultTextColor(color: UIColor.white)
+        self.timerButton.setToggleTextColor(color: .white)
+        self.timerButton.setDefaultTextColor(color: .white)
         self.timerButton.setDefaultText(text: "Start")
         self.timerButton.setToggleText(text: "Stop")
-        self.timerButton.setToggleViewColor(color: UIColor.niceYellow)
-        self.timerButton.setDefaultViewColor(color: UIColor.niceBlue)
+        self.timerButton.setToggleViewColor(color: .niceYellow)
+        self.timerButton.setDefaultViewColor(color: .niceBlue)
     }
     
     // MARK: Events functions
@@ -140,7 +140,7 @@ class TimeInputField: UIView, InputViewHolder {
         let returnValue = field.text != nil
         
         if !returnValue {
-            field.backgroundColor = UIColor.niceRed
+            field.backgroundColor = .niceRed
         }
         
         return returnValue

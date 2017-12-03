@@ -17,63 +17,63 @@ class CreateExerciseView: UIScrollView {
     // delegate which receives information after creation
     public var dataDelegate: CreateExerciseViewDelegate?
     
-    // Padding between views
-    private let viewPadding: CGFloat = 20.0
-    
     // the exercise we're editing
     private var editingExercise: Exercise?
     
+    // Padding between views
+    private let viewPadding: CGFloat = 20.0
+    
     // Labels the view
-    private var createExerciseLabel: UILabel
+    private let createExerciseLabel: UILabel
     // where the name goes
-    private var nameEntryField: BetterTextField
+    private let nameEntryField: BetterTextField
     // field for set count entry
-    private var setEntryField: BetterTextField
+    private let setEntryField: BetterTextField
     // table which holds all of the progressionmethods for this exercise
-    private var progressionsTableView: ProgressionsMethodTableView
+    private let progressionsTableView: ProgressionsMethodTableView
     // adds a progression method to the tableview
-    private var addProgressionTrackerButton: PrettyButton
+    private let addProgressionTrackerButton: PrettyButton
     // creates the exercise
-    private var createExerciseButton: PrettyButton
+    private let createExerciseButton: PrettyButton
     // cancels creation
-    private var cancelButton: PrettyButton
+    private let cancelButton: PrettyButton
     
     // MARK: Init overrides
     
     init(exercise: Exercise? = nil, frame: CGRect) {
-        self.editingExercise = exercise
+        editingExercise = exercise
         
-        self.createExerciseLabel = UILabel()
-        self.nameEntryField = BetterTextField(defaultString: "Required: Name", frame: .zero)
-        self.setEntryField = BetterTextField(defaultString: "Optional: Set Count", frame: .zero)
-        self.progressionsTableView = ProgressionsMethodTableView()
-        self.addProgressionTrackerButton = PrettyButton()
-        self.createExerciseButton = PrettyButton()
-        self.cancelButton = PrettyButton()
+        createExerciseLabel = UILabel()
+        nameEntryField = BetterTextField(defaultString: "Required: Name", frame: .zero)
+        setEntryField = BetterTextField(defaultString: "Optional: Set Count", frame: .zero)
+        progressionsTableView = ProgressionsMethodTableView()
+        addProgressionTrackerButton = PrettyButton()
+        createExerciseButton = PrettyButton()
+        cancelButton = PrettyButton()
         
         super.init(frame: frame)
         
-        self.addSubview(createExerciseLabel)
-        self.addSubview(nameEntryField)
-        self.addSubview(setEntryField)
-        self.addSubview(progressionsTableView)
-        self.addSubview(addProgressionTrackerButton)
-        self.addSubview(createExerciseButton)
-        self.addSubview(cancelButton)
+        addSubview(createExerciseLabel)
+        addSubview(nameEntryField)
+        addSubview(setEntryField)
+        addSubview(progressionsTableView)
+        addSubview(addProgressionTrackerButton)
+        addSubview(createExerciseButton)
+        addSubview(cancelButton)
         
-        self.createAndActivateCreateExerciseLabelConstraints()
-        self.createAndActivateNameEntryFieldConstraints()
-        self.createAndActivateSetEntryFieldConstraints()
-        self.createAndActivateProgressionsTableViewConstraints()
-        self.createAndActivateAddProgressionTrackerButtonConstraints()
-        self.createAndActivateCreateExeciseButtonConstraints()
-        self.createAndActivateCancelButtonConstraints()
+        createAndActivateCreateExerciseLabelConstraints()
+        createAndActivateNameEntryFieldConstraints()
+        createAndActivateSetEntryFieldConstraints()
+        createAndActivateProgressionsTableViewConstraints()
+        createAndActivateAddProgressionTrackerButtonConstraints()
+        createAndActivateCreateExeciseButtonConstraints()
+        createAndActivateCancelButtonConstraints()
         
-        self.addProgressionTrackerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        self.createExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        self.cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        addProgressionTrackerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        createExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
-        self.setViewPropertiesBasedOnExercise()
+        setViewPropertiesBasedOnExercise()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -86,62 +86,62 @@ class CreateExerciseView: UIScrollView {
         super.layoutSubviews()
         
         // self stuff
-        self.backgroundColor = UIColor.niceGray
-        self.contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
+        backgroundColor = .niceGray
+        contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
         
         // Label
-        self.createExerciseLabel.setDefaultProperties()
-        self.createExerciseLabel.text = self.editingExercise == nil ? "Create New Exercise" : "Edit Exercise"
+        createExerciseLabel.setDefaultProperties()
+        createExerciseLabel.text = editingExercise == nil ? "Create New Exercise" : "Edit Exercise"
         
         // Name Entry Field
-        self.nameEntryField.setDefaultProperties()
-        self.nameEntryField.setLabelTitle(title: "Name")
+        nameEntryField.setDefaultProperties()
+        nameEntryField.setLabelTitle(title: "Name")
         
         // Set entry field
-        self.setEntryField.setDefaultProperties()
-        self.setEntryField.setLabelTitle(title: "Sets")
-        self.setEntryField.textfield.keyboardType = .numberPad
+        setEntryField.setDefaultProperties()
+        setEntryField.setLabelTitle(title: "Sets")
+        setEntryField.textfield.keyboardType = .numberPad
         
         // Progressions Table View
         // Prevent clipping as we can click and drag cells
-        self.progressionsTableView.clipsToBounds = false
-        self.progressionsTableView.isScrollEnabled = false
-        self.progressionsTableView.backgroundColor = UIColor.clear
+        progressionsTableView.clipsToBounds = false
+        progressionsTableView.isScrollEnabled = false
+        progressionsTableView.backgroundColor = .clear
         
         // Add progression method button
-        self.addProgressionTrackerButton.setDefaultProperties()
-        self.addProgressionTrackerButton.setTitle("Add Progression Tracker", for: .normal)
+        addProgressionTrackerButton.setDefaultProperties()
+        addProgressionTrackerButton.setTitle("Add Progression Tracker", for: .normal)
         
         // Create exercise button
-        self.createExerciseButton.setTitle(self.editingExercise == nil ? "Create Exercise" : "Save Exercise",
-                                           for: .normal)
-        self.createExerciseButton.setDefaultProperties()
+        createExerciseButton.setTitle(editingExercise == nil ? "Create Exercise" : "Save Exercise",
+                                      for: .normal)
+        createExerciseButton.setDefaultProperties()
         
         // Cancel Button
-        self.cancelButton.setDefaultProperties()
-        self.cancelButton.setTitle("Cancel", for: .normal)
-        self.cancelButton.backgroundColor = UIColor.niceRed
+        cancelButton.setDefaultProperties()
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.backgroundColor = .niceRed
     }
     
     // MARK: Event functions
     
     @objc func buttonPress(sender: UIButton) {
         switch(sender){
-        case self.addProgressionTrackerButton:
-            self.progressionsTableView.appendDataToTableView(data: ProgressionMethod())
+        case addProgressionTrackerButton:
+            progressionsTableView.appendDataToTableView(data: ProgressionMethod())
             break
-        case self.createExerciseButton:
+        case createExerciseButton:
             // Send info to delegate, animate up then remove self
-            if self.requirementsFulfilled() {
-                let exerciseCreated: Exercise = self.saveAndReturnExercise()
+            if requirementsFulfilled() {
+                let exerciseCreated: Exercise = saveAndReturnExercise()
                 
                 // Send data to delegate
-                self.dataDelegate?.finishedWithExercise(exercise: exerciseCreated)
-                self.removeSelfNicelyWithAnimation()
+                dataDelegate?.finishedWithExercise(exercise: exerciseCreated)
+                removeSelfNicelyWithAnimation()
             }
             break
-        case self.cancelButton:
-            self.removeSelfNicelyWithAnimation()
+        case cancelButton:
+            removeSelfNicelyWithAnimation()
             break
         default:
             fatalError("User pressed a button that does not exist in switch?")
@@ -152,19 +152,19 @@ class CreateExerciseView: UIScrollView {
     
     // Starts the views off based on the exercise received
     private func setViewPropertiesBasedOnExercise() {
-        if let exercise = self.editingExercise {
-            self.nameEntryField.textfield.text = exercise.getName()!
-            self.setEntryField.textfield.text = String(describing: exercise.getSetCount())
+        if let exercise = editingExercise {
+            nameEntryField.textfield.text = exercise.getName()!
+            setEntryField.textfield.text = String(describing: exercise.getSetCount())
             
             for progressionMethod in exercise.getProgressionMethods() {
-                self.progressionsTableView.appendDataToTableView(data: progressionMethod)
+                progressionsTableView.appendDataToTableView(data: progressionMethod)
             }
         } else {
             let repProgressionMethod = ProgressionMethod()
             repProgressionMethod.setName(name: ProgressionMethod.Unit.REPS.rawValue)
             repProgressionMethod.setUnit(unit: ProgressionMethod.Unit.REPS.rawValue)
             
-            self.progressionsTableView.appendDataToTableView(data: repProgressionMethod)
+            progressionsTableView.appendDataToTableView(data: repProgressionMethod)
         }
     }
     
@@ -176,29 +176,29 @@ class CreateExerciseView: UIScrollView {
     private func requirementsFulfilled() -> Bool {
         var fulfilled = true
         
-        if self.nameEntryField.textfield.text?.count == 0 {
+        if nameEntryField.textfield.text?.count == 0 {
             fulfilled = false
             
-            self.nameEntryField.textfield.backgroundColor = UIColor.niceRed
-            self.nameEntryField.textfield.text = ""
+            nameEntryField.textfield.backgroundColor = .niceRed
+            nameEntryField.textfield.text = ""
         }
-        if !self.setEntryField.textfield.isNumeric {
+        if !setEntryField.textfield.isNumeric {
             fulfilled = false
             
-            self.setEntryField.textfield.backgroundColor = UIColor.niceRed
-            self.setEntryField.textfield.text = ""
+            setEntryField.textfield.backgroundColor = .niceRed
+            setEntryField.textfield.text = ""
         }
-        for cell in self.progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]
+        for cell in progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]
         {
             if cell.nameEntryField.text?.count == 0 {
                 fulfilled = false
                 
-                cell.nameEntryField.backgroundColor = UIColor.niceRed
+                cell.nameEntryField.backgroundColor = .niceRed
             }
             if cell.pickUnitButton.titleLabel?.text == "Required: Unit" {
                 fulfilled = false
                 
-                cell.pickUnitButton.backgroundColor = UIColor.niceRed
+                cell.pickUnitButton.backgroundColor = .niceRed
             }
         }
         
@@ -207,7 +207,7 @@ class CreateExerciseView: UIScrollView {
     
     // Creates an exercise object with info from this screen
     private func saveAndReturnExercise() -> Exercise {
-        let createdExercise = self.editingExercise ?? Exercise()
+        let createdExercise = editingExercise ?? Exercise()
         
         createdExercise.setName(name: nameEntryField.text!)
         
@@ -236,7 +236,7 @@ class CreateExerciseView: UIScrollView {
         createdExercise.removeProgressionMethodsFromHistory(progressionMethodsToDelete: progressionMethodsToDelete)
         
         // If this is a new exercise, create it!
-        if self.editingExercise == nil {
+        if editingExercise == nil {
             let realm = try! Realm()
             try! realm.write {
                 realm.add(createdExercise)
@@ -250,36 +250,36 @@ class CreateExerciseView: UIScrollView {
     
     // center horiz in view; cling to top; width of this view ; height 30
     private func createAndActivateCreateExerciseLabelConstraints() {
-        self.createExerciseLabel.translatesAutoresizingMaskIntoConstraints = false
+        createExerciseLabel.translatesAutoresizingMaskIntoConstraints = false
         
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createExerciseLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseLabel,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createExerciseLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseLabel,
                                                              withCopyView: self,
                                                              attribute: .top,
                                                              plusConstant: viewPadding).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createExerciseLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseLabel,
                                                              withCopyView: self,
                                                              attribute: .width).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.createExerciseLabel,
+        NSLayoutConstraint.createHeightConstraintForView(view: createExerciseLabel,
                                                          height: 30).isActive = true
     }
     
     // center horiz in view ; place below nameentrylabel ; height of default height ; width of this view - 40
     private func createAndActivateNameEntryFieldConstraints() {
-        self.nameEntryField.translatesAutoresizingMaskIntoConstraints = false
+        nameEntryField.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: nameEntryField,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.nameEntryField,
-                                                            belowView: self.createExerciseLabel,
-                                                            withPadding: viewPadding / 2).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.nameEntryField,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField,
+                                                         belowView: createExerciseLabel,
+                                                         withPadding: viewPadding / 2).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
                                                          height: BetterTextField.defaultHeight).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.nameEntryField,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: nameEntryField,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              plusConstant: -40).isActive = true
@@ -287,44 +287,44 @@ class CreateExerciseView: UIScrollView {
     
     // center horiz ; cling to bottom of nameEntry ; width of self - 40 ; height of default height
     private func createAndActivateSetEntryFieldConstraints() {
-        self.setEntryField.translatesAutoresizingMaskIntoConstraints = false
+        setEntryField.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.setEntryField,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: setEntryField,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint(item: self.nameEntryField,
+        NSLayoutConstraint(item: nameEntryField,
                            attribute: .bottom,
                            relatedBy: .equal,
-                           toItem: self.setEntryField,
+                           toItem: setEntryField,
                            attribute: .top,
                            multiplier: 1,
                            constant: -viewPadding / 2).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.setEntryField,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: setEntryField,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              plusConstant: -40).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.setEntryField,
+        NSLayoutConstraint.createHeightConstraintForView(view: setEntryField,
                                                          height: BetterTextField.defaultHeight).isActive = true
     }
     
     // center horiz in view ; place below progressionslabel ; height default 0 ; width of this view - 40
     private func createAndActivateProgressionsTableViewConstraints() {
-        self.progressionsTableView.translatesAutoresizingMaskIntoConstraints = false
+        progressionsTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.progressionsTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: progressionsTableView,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.progressionsTableView,
-                                                         belowView: self.setEntryField,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: progressionsTableView,
+                                                         belowView: setEntryField,
                                                          withPadding: viewPadding * 2).isActive = true
         
         // Assign table view height constraint
-        self.progressionsTableView.heightConstraint =
-            NSLayoutConstraint.createHeightConstraintForView(view: self.progressionsTableView,
+        progressionsTableView.heightConstraint =
+            NSLayoutConstraint.createHeightConstraintForView(view: progressionsTableView,
                                                              height: 0)
-        self.progressionsTableView.heightConstraint?.isActive = true
+        progressionsTableView.heightConstraint?.isActive = true
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.progressionsTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: progressionsTableView,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              plusConstant: -40).isActive = true
@@ -332,34 +332,34 @@ class CreateExerciseView: UIScrollView {
     
     // place below progressionstableview ; height of default height ; cling left and right to progressionstableview
     private func createAndActivateAddProgressionTrackerButtonConstraints() {
-        self.addProgressionTrackerButton.translatesAutoresizingMaskIntoConstraints = false
+        addProgressionTrackerButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.addProgressionTrackerButton,
-                                                         belowView: self.progressionsTableView,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: addProgressionTrackerButton,
+                                                         belowView: progressionsTableView,
                                                          withPadding: 0).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.addProgressionTrackerButton,
+        NSLayoutConstraint.createHeightConstraintForView(view: addProgressionTrackerButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.addProgressionTrackerButton,
-                                                             withCopyView: self.progressionsTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: addProgressionTrackerButton,
+                                                             withCopyView: progressionsTableView,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.addProgressionTrackerButton,
-                                                             withCopyView: self.progressionsTableView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: addProgressionTrackerButton,
+                                                             withCopyView: progressionsTableView,
                                                              attribute: .right).isActive = true
     }
     
     // center horiz in view ; place below addprogressiontrackerbutton ; height 50 ; width of this view - 50
     private func createAndActivateCreateExeciseButtonConstraints() {
-        self.createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createExerciseButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseButton,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.createExerciseButton,
-                                                         belowView: self.addProgressionTrackerButton,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: createExerciseButton,
+                                                         belowView: addProgressionTrackerButton,
                                                          withPadding: viewPadding * 2).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.createExerciseButton,
+        NSLayoutConstraint.createHeightConstraintForView(view: createExerciseButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.createExerciseButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseButton,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              plusConstant: -50).isActive = true
@@ -367,18 +367,18 @@ class CreateExerciseView: UIScrollView {
     
     // center horiz in view ; place below createExerciseButton; height 30 ; width of createExerciseButton - 40
     private func createAndActivateCancelButtonConstraints() {
-        self.cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cancelButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: self.cancelButton,
-                                                         belowView: self.createExerciseButton,
+        NSLayoutConstraint.createViewBelowViewConstraint(view: cancelButton,
+                                                         belowView: createExerciseButton,
                                                          withPadding: viewPadding).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: self.cancelButton,
+        NSLayoutConstraint.createHeightConstraintForView(view: cancelButton,
                                                          height: 40).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.cancelButton,
-                                                             withCopyView: self.createExerciseButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
+                                                             withCopyView: createExerciseButton,
                                                              attribute: .width).isActive = true
     }
 }

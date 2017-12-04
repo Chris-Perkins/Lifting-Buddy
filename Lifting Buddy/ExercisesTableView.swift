@@ -11,7 +11,7 @@ import Realm
 import RealmSwift
 import SwiftCharts
 
-class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
+class ExercisesTableView: UITableView {
     
     // MARK: View Properties
     
@@ -72,37 +72,36 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         super.reloadData()
     }
     
-    // Deletion methods
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    // MARK: Custom functions
+    
+    // Retrieve workouts
+    public func getSortedData() -> [Exercise] {
+        return sortedData
+    }
+    
+    private func setupTableView() {
+        delegate = self
+        dataSource = self
+        allowsSelection = true
+        register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
+        backgroundColor = .clear
+    }
+}
+
+// MARK: TableViewDelegate Functions
+extension ExercisesTableView : UITableViewDelegate {
+    // Each cell has a height of cellHeight
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let pgmCount = CGFloat(sortedData[indexPath.row].getProgressionMethods().count)
         
-        if editingStyle == .delete {
-            
-            let exercise = sortedData[indexPath.row]
-            
-            let alert = UIAlertController(title: "Delete Exercise?",
-                                          message: "All history for '" + exercise.getName()!
-                                            + "' will be deleted.\n" +
-                "This cannot be undone. Continue?",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel",
-                                          style: .cancel,
-                                          handler: nil))
-            alert.addAction(
-                UIAlertAction(title: "Delete", style: .destructive, handler: {
-                    UIAlertAction -> Void in
-                    let realm = try! Realm()
-                    
-                    exercise.removeProgressionMethods()
-                    try! realm.write {
-                        realm.delete(exercise)
-                    }
-                    
-                    self.sortedData.remove(at: indexPath.row)
-                    self.reloadData()
-                }))
-            
-            viewController()?.present(alert, animated: true, completion: nil)
-        }
+        return indexPathForSelectedRow?.row == indexPath.row ?
+            // The height for when toggled depends on the number of progression methods.
+            // If there are no progression methods, no graph and no spacing occurs.
+            UITableViewCell.defaultHeight + PrettyButton.defaultHeight +
+                // + 10 as we add padding to the view.
+                (pgmCount > 0 ? ExerciseChartViewWithToggles.getNecessaryHeightForExerciseGraph(
+                    exercise: sortedData[indexPath.row]) : 0) + 10  :
+            UITableViewCell.defaultHeight
     }
     
     // On select, expand the cell.
@@ -139,6 +138,42 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         }
     }
     
+    // Deletion methods
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            
+            let exercise = sortedData[indexPath.row]
+            
+            let alert = UIAlertController(title: "Delete Exercise?",
+                                          message: "All history for '" + exercise.getName()!
+                                            + "' will be deleted.\n" +
+                "This cannot be undone. Continue?",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel",
+                                          style: .cancel,
+                                          handler: nil))
+            alert.addAction(
+                UIAlertAction(title: "Delete", style: .destructive, handler: {
+                    UIAlertAction -> Void in
+                    let realm = try! Realm()
+                    
+                    exercise.removeProgressionMethods()
+                    try! realm.write {
+                        realm.delete(exercise)
+                    }
+                    
+                    self.sortedData.remove(at: indexPath.row)
+                    self.reloadData()
+                }))
+            
+            viewController()?.present(alert, animated: true, completion: nil)
+        }
+    }
+}
+
+// MARK: UITableViewData source extension
+extension ExercisesTableView: UITableViewDataSource {
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortedData.count
@@ -156,34 +191,5 @@ class ExercisesTableView: UITableView, UITableViewDataSource, UITableViewDelegat
         cell.updateSelectedStatus()
         
         return cell
-    }
-    
-    // Each cell has a height of cellHeight
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let pgmCount = CGFloat(sortedData[indexPath.row].getProgressionMethods().count)
-        
-        return indexPathForSelectedRow?.row == indexPath.row ?
-            // The height for when toggled depends on the number of progression methods.
-            // If there are no progression methods, no graph and no spacing occurs.
-            UITableViewCell.defaultHeight + PrettyButton.defaultHeight +
-                // + 10 as we add padding to the view.
-                (pgmCount > 0 ? ExerciseChartViewWithToggles.getNecessaryHeightForExerciseGraph(
-                    exercise: sortedData[indexPath.row]) : 0) + 10  :
-            UITableViewCell.defaultHeight
-    }
-    
-    // MARK: Custom functions
-    
-    // Retrieve workouts
-    public func getSortedData() -> [Exercise] {
-        return sortedData
-    }
-    
-    private func setupTableView() {
-        delegate = self
-        dataSource = self
-        allowsSelection = true
-        register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
-        backgroundColor = .clear
     }
 }

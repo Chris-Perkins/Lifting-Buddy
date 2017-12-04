@@ -187,8 +187,8 @@ extension PrettyButton {
     }
     
     override func setDefaultProperties() {
-        backgroundColor = UIColor.niceBlue
-        setOverlayColor(color: UIColor.niceYellow)
+        backgroundColor = .niceBlue
+        setOverlayColor(color: .niceYellow)
         setOverlayStyle(style: .FADE)
         cornerRadius = 0
     }
@@ -282,7 +282,7 @@ extension UILabel {
     override func setDefaultProperties() {
         font = UIFont.boldSystemFont(ofSize: 18.0)
         textAlignment = .center
-        textColor = UIColor.niceBlue
+        textColor = .niceBlue
     }
 }
 
@@ -341,15 +341,15 @@ extension UITextField {
     
     @objc func textfieldSelected(sender: UITextField) {
         UIView.animate(withDuration: 0.1, animations: {
-            sender.backgroundColor = UIColor.niceYellow
-            sender.textColor = UIColor.white
+            sender.backgroundColor = .niceYellow
+            sender.textColor = .white
         })
     }
     
     @objc func textfieldDeselected(sender: UITextField) {
         UIView.animate(withDuration: 0.1, animations: {
-            sender.backgroundColor = UIColor.white
-            sender.textColor = UIColor.black
+            sender.backgroundColor = .white
+            sender.textColor = .black
         })
     }
 }

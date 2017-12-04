@@ -27,7 +27,7 @@ class SectionView: UIView {
     public enum ContentViews {
         case WORKOUTS
         case EXERCISES
-        case HELP
+        case ABOUT
     }
     
     
@@ -102,10 +102,9 @@ class SectionView: UIView {
             case (exercisesButton):
                 viewType = .EXERCISES
             case (aboutButton):
-                viewType = .HELP
+                viewType = .ABOUT
             default:
-                print("User pressed button that isn't set up")
-                exit(0)
+                fatalError("User requested view that isn't set up.")
             }
             
             mainViewController?.showContentView(viewType: viewType!)

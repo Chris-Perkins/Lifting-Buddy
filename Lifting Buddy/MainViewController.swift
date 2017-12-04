@@ -53,7 +53,7 @@ class MainViewController: UIViewController {
                 exercisesView = ExercisesView(frame: frame)
             }
             sectionContentView.addSubview(exercisesView!)
-        case SectionView.ContentViews.HELP:
+        case SectionView.ContentViews.ABOUT:
             if aboutView == nil {
                 aboutView = AboutView(frame: frame)
             }

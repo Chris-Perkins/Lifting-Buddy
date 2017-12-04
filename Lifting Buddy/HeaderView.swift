@@ -75,7 +75,7 @@ class HeaderView: UIView {
         backgroundColor = .niceBlue
         
         // title bar
-        titleBar.text = "Lifting Buddy [ALPHA]"
+        titleBar.text = "Lifting Buddy"
         titleBar.font = titleBar.font.withSize(20.0)
         titleBar.textColor = .white
         titleBar.textAlignment = .center

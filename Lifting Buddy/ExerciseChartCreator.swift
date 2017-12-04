@@ -228,7 +228,7 @@ private func createChartPoint(date: Date, value: Float, displayFormatter: DateFo
 
 private func createDateAxisValue(_ date: Date, displayFormatter: DateFormatter) -> ChartAxisValue {
     let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18),
-                                           fontColor: UIColor.niceBlue,
+                                           fontColor: .niceBlue,
                                            rotation: 90,
                                            rotationKeep: .top)
     return ChartAxisValueDate(date: date, formatter: displayFormatter, labelSettings: labelSettings)

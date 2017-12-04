@@ -85,6 +85,21 @@ class CreateExerciseView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        // If the exercise was deleted...
+        if editingExercise?.isInvalidated == true {
+            let alert = UIAlertController(title: "Exercise deleted",
+                                          message: "The exercise you were editing was deleted.",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok",
+                                          style: .default,
+                                          handler: nil))
+            self.viewController()?.present(alert,
+                                           animated: false,
+                                           completion: nil)
+            
+            self.removeFromSuperview()
+        }
+        
         // self stuff
         backgroundColor = .niceGray
         contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding

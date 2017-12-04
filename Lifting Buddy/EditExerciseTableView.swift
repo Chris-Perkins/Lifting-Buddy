@@ -14,7 +14,7 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource, UITableV
     // MARK: View properties
     public var heightConstraint: NSLayoutConstraint?
     
-    private var data:[Exercise] = [Exercise].init()
+    private var data:[Exercise] = [Exercise]()
     
     // MARK: Override Init
     
@@ -31,6 +31,20 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource, UITableV
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Override view functions
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // Refresh data in case an exercise was deleted
+        let totalDataCount = data.count
+        for (index, dataPiece) in data.reversed().enumerated() {
+            if dataPiece.isInvalidated {
+                deleteData(at: totalDataCount - index - 1)
+            }
+        }
+    }
+    
     // MARK: TableView Functions
     
     // Moved a cell (HPRTableview requirement for drag-and-drop)
@@ -43,10 +57,7 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            data.remove(at: indexPath.row)
-            
-            heightConstraint?.constant -= UITableViewCell.defaultHeight
-            reloadData()
+            deleteData(at: indexPath.row)
         }
     }
     
@@ -79,6 +90,14 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource, UITableV
     }
     
     // MARK: Custom functions
+    
+    // Removes a data piece at the given index
+    public func deleteData(at index: Int) {
+        data.remove(at: index)
+        
+        heightConstraint?.constant -= UITableViewCell.defaultHeight
+        reloadData()
+    }
     
     // Append some data to the tableView
     public func appendDataToTableView(data: Exercise) {

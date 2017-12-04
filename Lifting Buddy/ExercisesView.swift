@@ -78,9 +78,8 @@ class ExercisesView: UIView {
         backgroundColor = .niceGray
         
         createExerciseButton.setDefaultProperties()
-        createExerciseButton.setTitle(selectingExercise ?
-            "Add New Exercise" :
-            "Create New Exercise", for: .normal)
+        createExerciseButton.setTitle(selectingExercise ? "New Exercise" : "Create New Exercise",
+                                      for: .normal)
         
         if selectingExercise {
             cancelButton.setDefaultProperties()
@@ -139,28 +138,28 @@ class ExercisesView: UIView {
                            constant: 0).isActive = true
     }
     
-    // Cling to left,right of this view ; place above cancel button ; height of prettybutton default height
+    // Cling to right, bottom of this view ; place to right of cancelbutton ; height default
     private func createCreateExerciseButtonConstraints() {
         createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseButton,
                                                              withCopyView: self,
-                                                             attribute: .left).isActive = true
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseButton,
                                                              withCopyView: self,
-                                                             attribute: .right).isActive = true
+                                                             attribute: .bottom).isActive = true
         NSLayoutConstraint(item: cancelButton,
-                           attribute: .top,
+                           attribute: .right,
                            relatedBy: .equal,
                            toItem: createExerciseButton,
-                           attribute: .bottom,
+                           attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: createExerciseButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
     }
     
-    // cling to left, right, bottom of this view ; height of 0 or default height - 5 (depends on selecting exercise)
+    // cling to left, bottom of this view ; width 0.5 if selectingExercise else 0 ; height default
     private func createAndActivateCancelButtonConstraints() {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -169,13 +168,19 @@ class ExercisesView: UIView {
                                                              attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
                                                              withCopyView: self,
-                                                             attribute: .right).isActive = true
+                                                             attribute: .bottom).isActive = true
+        if selectingExercise {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
                                                              withCopyView: self,
-                                                             attribute: .bottom).isActive = true
+                                                             attribute: .width,
+                                                             multiplier: 0.5).isActive = true
+        } else {
+            NSLayoutConstraint.createWidthConstraintForView(view: cancelButton,
+                                                            width: 0).isActive = true
+        }
         // make this button basically invisible if we're not selecting an exercise
         NSLayoutConstraint.createHeightConstraintForView(view: cancelButton,
-                                                         height: selectingExercise ? PrettyButton.defaultHeight - 5 : 0).isActive = true
+                                                         height: PrettyButton.defaultHeight).isActive = true
     }
     
     // Center in view ; height 50 ; width of 85% of this view.

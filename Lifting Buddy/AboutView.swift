@@ -1,32 +1,50 @@
 //
-//  WorkoutView.swift
+//  AboutView.swift
 //  Lifting Buddy
 //
-//  Created by Christopher Perkins on 7/21/17.
+//  Created by Christopher Perkins on 12/01/17.
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
-
-/// View which shows information about a workout
 
 import UIKit
 import GBVersionTracking
 
+// A simple 'about' page.
+
 class AboutView: UIView {
     
-    // View properties
+    // MARK: View properties
     
-    // The button to create this workout
-    private let titleLabel: UILabel
+    // Height for version label
+    private static let versionLabelHeight: CGFloat = 40
+    // The height for github link view
+    private static let githubLinkViewHeight: CGFloat = 40
+    // The link url for the github project
+    private static let githubLinkURL = URL(string: "https://github.com/Chris-Perkins/Lifting-Buddy")!
     
+    // The version label
+    private let versionLabel: UILabel
+    // The about description
+    private let aboutDescription: UITextView
+    // The link to GitHub
+    private let githubLink: UITextView
+    
+    // MARK: View inits
     
     override init(frame: CGRect) {
-        titleLabel = UILabel()
+        versionLabel = UILabel()
+        aboutDescription = UITextView()
+        githubLink = UITextView()
         
         super.init(frame: frame)
         
-        addSubview(titleLabel)
+        addSubview(versionLabel)
+        addSubview(aboutDescription)
+        addSubview(githubLink)
         
-        createAndActivateTitleLabelConstraints()
+        createAndActivateVersionLabelConstraints()
+        createAndActivateAboutDescriptionConstraints()
+        createAndActivateGithubLinkConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,27 +56,98 @@ class AboutView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        titleLabel.setDefaultProperties()
-        titleLabel.text = "Lifting Buddy v\(GBVersionTracking.currentVersion() ?? "?")"
+        // Version label
+        
+        versionLabel.setDefaultProperties()
+        versionLabel.text = "v\(GBVersionTracking.currentVersion() ?? "?")"
+        versionLabel.backgroundColor = .white
+        
+        // About description
+        aboutDescription.backgroundColor = .niceGray
+        
+        
+        // Github Link
+        
+        let attStr = NSMutableAttributedString(string: "View code on GitHub")
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        
+        attStr.addAttributes([
+            .link: AboutView.githubLinkURL,
+            .font: UIFont.boldSystemFont(ofSize: 18),
+            .paragraphStyle: paragraphStyle
+        ], range: NSMakeRange(0, attStr.length))
+        githubLink.delegate = self
+        githubLink.attributedText = attStr
+        githubLink.isEditable = false
     }
     
     // MARK: Constraint functions
     
-    // Cling to top,left,right of workouttableview ; bottom is self view
-    private func createAndActivateTitleLabelConstraints() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    // cling to left, right, top of self ; height of 50
+    private func createAndActivateVersionLabelConstraints() {
+        versionLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: versionLabel,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: versionLabel,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: versionLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: titleLabel,
-                                                         height: 50).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: versionLabel,
+                                                         height: AboutView.versionLabelHeight
+                                                        ).isActive = true
+    }
+    
+    // Cling to left, right ; Place below versionLabel ; place about github link
+    private func createAndActivateAboutDescriptionConstraints() {
+        aboutDescription.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: aboutDescription,
+                                                             withCopyView: self,
+                                                             attribute: .leftMargin,
+                                                             plusConstant: 10).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: aboutDescription,
+                                                             withCopyView: self,
+                                                             attribute: .rightMargin,
+                                                             plusConstant: -10).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: aboutDescription,
+                                                         belowView: versionLabel).isActive = true
+        NSLayoutConstraint(item: githubLink,
+                           attribute: .top,
+                           relatedBy: .equal,
+                           toItem: aboutDescription,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+    }
+    
+    // Place between left, right, bottom margins. Height of githubviewheight
+    private func createAndActivateGithubLinkConstraints() {
+        githubLink.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: githubLink,
+                                                             withCopyView: self,
+                                                             attribute: .leftMargin).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: githubLink,
+                                                             withCopyView: self,
+                                                             attribute: .rightMargin).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: githubLink,
+                                                             withCopyView: self,
+                                                             attribute: .bottomMargin).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: githubLink,
+                                                         height: AboutView.githubLinkViewHeight
+                                                        ).isActive = true
+    }
+}
+
+extension AboutView: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL,
+                  in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return true
     }
 }
 

@@ -18,21 +18,21 @@ Expected / Hopeful release: December 20th
 | App Icon                  | 10/10                 |                                                |
 | Splash Screen             | 10/10                 |                                                |
 | Home Screen               | 10/10                 |                                                |
-| Workout Screen            | 9/10                  | Need search/filter bar.                        |
+| Workout Screen            | 9/10                  | Want search/filter bar.                        |
 | Exercise Screen           | 10/10                 |                                                |
 | Summary Screen            | 10/10                 |                                                |
 | Add Default Workouts      | 10/10                 |                                                |
-| About screen              | 2/10                  | In progress now                                |
+| About screen              | 8/10                  | In progress now                                |
 | Create “Session” View     | 2/10                  | I know how to do it, but no code yet.          |
 
 ### Known Bugs
 None at this time.
 
 ### Future plans
-Convert relevant UIViews into ViewControllers (good practice)
-    Update from 11/29 -- my shower thoughts said this wasn't a good idea. Reason being that containerviewcontrollers would require the frames to be set anyway, which is what I wanted to avoid.
-Add "Feature Poll", a poll that users can use to vote on for the next feature.
-Log in to sync and backup workouts
+* Convert relevant UIViews into ViewControllers (good practice)<br>
+    Update from 11/29 -- my shower thoughts said this wasn't a good idea. Reason being that containerviewcontrollers would require the frames to be set anyway, which is what I wanted to avoid<br>
+* Add "Feature Poll", a poll that users can use to vote on for the next feature<br>
+* Log in to sync and backup workouts
 
 #### Special Thanks
 Alex Bridgeman - For giving me the idea for this application. Also created the splash screen and launch screen!

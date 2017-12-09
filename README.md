@@ -30,8 +30,7 @@ None at this time.
 
 ### Future plans
 Convert relevant UIViews into ViewControllers (good practice)
-Update from 11/29 -- my shower thoughts said this wasn't a good idea.
-Reason being that containerviewcontrollers would require the frames to be set anyway, which is what I wanted to avoid.
+    Update from 11/29 -- my shower thoughts said this wasn't a good idea. Reason being that containerviewcontrollers would require the frames to be set anyway, which is what I wanted to avoid.
 Add "Feature Poll", a poll that users can use to vote on for the next feature.
 Log in to sync and backup workouts
 

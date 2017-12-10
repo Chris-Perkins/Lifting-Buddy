@@ -94,6 +94,7 @@ class WorkoutTableViewCell: UITableViewCell {
             editButton?.setTitle("Edit", for: .normal)
             
             startWorkoutButton?.setDefaultProperties()
+            startWorkoutButton?.backgroundColor = UIColor.niceGreen
             startWorkoutButton?.setTitle("Start Workout", for: .normal)
         }
         
@@ -104,11 +105,15 @@ class WorkoutTableViewCell: UITableViewCell {
             backgroundColor = UIColor.niceGreen
             
             cellTitle.textColor = .white
+            streakLabel.textColor = .white
             
             if (isSelected) {
                 for exerciseLabel in exerciseLabels {
                     exerciseLabel.textColor = .white
                 }
+                
+                // Make the start button visible (green on green is BAD)
+                startWorkoutButton?.backgroundColor = .niceBlue
             }
         } else {
             cellTitle.textColor = .niceBlue

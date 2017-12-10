@@ -184,6 +184,12 @@ class Workout: Object {
         return daysOfTheWeek[NSDate().getDayOfWeek(formatter.string(from: date))! - 1].value
     }
     
+    // Returns the date we last did this workout
+    public func getDateLastDone() -> Date? {
+        return dateLastDone
+    }
+    
+    // Sets the last date we've done a workout
     public func setDateLastDone(date: Date?) {
         let realm = try! Realm()
         try! realm.write {

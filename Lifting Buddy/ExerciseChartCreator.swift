@@ -42,29 +42,25 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
         minimumDate = min(minimumDate, exerciseHistoryEntry.date!)
         
         // Gets the max per progression method to be displayed
-        var maxPerProgressionMethod = Dictionary<ProgressionMethod, Float>()
         for exercisePiece in exerciseHistoryEntry.exerciseInfo {
             if !filterProgressionMethods.contains(exercisePiece.progressionMethod!) {
-                if let val = maxPerProgressionMethod[exercisePiece.progressionMethod!] {
-                    maxPerProgressionMethod[exercisePiece.progressionMethod!] = max(val, exercisePiece.value!.floatValue!)
+                guard let progressionMethod = exercisePiece.progressionMethod else {
+                    fatalError("Progression method nil while creating graph")
+                }
+                
+                let chartPoint = createChartPoint(date: exerciseHistoryEntry.date!,
+                                                  value: exercisePiece.value!.floatValue!,
+                                                  displayFormatter: displayFormatter)
+                
+                // If the key is in the dictionary, append it!
+                if let _ = pointDictionary[progressionMethod] {
+                    pointDictionary[progressionMethod]!.append(chartPoint)
                 } else {
-                    maxPerProgressionMethod[exercisePiece.progressionMethod!] = exercisePiece.value!.floatValue!
+                    pointDictionary[progressionMethod] = [chartPoint]
                 }
                 
                 maxDataValue = max(maxDataValue, exercisePiece.value!.floatValue!)
                 minDataValue = min(minDataValue, exercisePiece.value!.floatValue!)
-            }
-        }
-        
-        for key in maxPerProgressionMethod.keys {
-            let chartPoint = createChartPoint(date: exerciseHistoryEntry.date!,
-                                              value: maxPerProgressionMethod[key]!,
-                                              displayFormatter: displayFormatter)
-            
-            if var _ = pointDictionary[key] {
-                pointDictionary[key]!.append(chartPoint)
-            } else {
-                pointDictionary[key] = [chartPoint]
             }
         }
     }

@@ -76,7 +76,6 @@ class WorkoutTableViewCell: UITableViewCell {
         cellTitle.textColor = .niceBlue
         cellTitle.textAlignment = .left
         
-        
         // Don't show the streak if there is no streak
         if workout != nil && workout!.getCurSteak() > 0 {
             streakLabel.text = String(describing: workout!.getCurSteak())
@@ -89,19 +88,41 @@ class WorkoutTableViewCell: UITableViewCell {
             fireImage.alpha = 0
         }
         
-        if (isSelected) {
+        // Only layout if selected as they won't be visible
+        if isSelected {
             editButton?.setDefaultProperties()
-            editButton?.backgroundColor = .niceBlue
             editButton?.setTitle("Edit", for: .normal)
             
             startWorkoutButton?.setDefaultProperties()
-            startWorkoutButton?.cornerRadius = 0
-            startWorkoutButton?.backgroundColor = .niceGreen
             startWorkoutButton?.setTitle("Start Workout", for: .normal)
+        }
+        
+        // If the last time we did this workout was today...
+        if let dateLastDone = workout?.getDateLastDone(),
+            Calendar.current.isDateInToday(dateLastDone) {
             
-            backgroundColor = .niceLightGray
+            backgroundColor = UIColor.niceGreen
+            
+            cellTitle.textColor = .white
+            
+            if (isSelected) {
+                for exerciseLabel in exerciseLabels {
+                    exerciseLabel.textColor = .white
+                }
+            }
         } else {
-            backgroundColor = (workout?.getIfTodayWorkout())! ? .niceLightGreen : .white
+            cellTitle.textColor = .niceBlue
+            
+            if (isSelected) {
+                // Only set the color if labels visible. :)
+                for exerciseLabel in exerciseLabels {
+                    exerciseLabel.textColor = UIColor.niceBlue
+                }
+                
+                backgroundColor = .niceLightGray
+            } else {
+                backgroundColor = (workout?.getIfTodayWorkout())! ? .niceLightGreen : .white
+            }
         }
         
         super.layoutSubviews()

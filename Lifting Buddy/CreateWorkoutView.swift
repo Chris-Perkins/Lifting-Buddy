@@ -94,7 +94,7 @@ class CreateWorkoutView: UIScrollView {
         
         // If we're editing...
         if let workout = editingWorkout {
-            nameEntryField.textfield.text = workout.getName()!
+            nameEntryField.textfield.text = workout.getName()
             
             for exercise in workout.getExercises() {
                 editExerciseTableView.appendDataToTableView(data: exercise)

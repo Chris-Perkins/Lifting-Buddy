@@ -210,7 +210,7 @@ class CreateExerciseView: UIScrollView {
                 
                 cell.nameEntryField.backgroundColor = .niceRed
             }
-            if cell.pickUnitButton.titleLabel?.text == "Required: Unit" {
+            if cell.pickUnitButton.titleLabel?.text == "Pick Unit" {
                 fulfilled = false
                 
                 cell.pickUnitButton.backgroundColor = .niceRed

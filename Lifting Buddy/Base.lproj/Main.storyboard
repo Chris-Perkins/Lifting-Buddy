@@ -44,6 +44,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="headerView" destination="dBG-i1-qoX" id="ezF-vA-F38"/>
                         <outlet property="sectionContentView" destination="O4I-V8-PjE" id="nR9-gv-yIj"/>
                     </connections>
                 </viewController>

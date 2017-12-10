@@ -65,7 +65,7 @@ class WorkoutsView: UIView {
         
         createWorkoutView.dataDelegate = self
         
-        showView(view: createWorkoutView)
+        showView(createWorkoutView)
     }
     
     // MARK: Constraint functions
@@ -122,7 +122,7 @@ extension WorkoutsView: CreateWorkoutViewDelegate {
 
 extension WorkoutsView: ShowViewDelegate {
     // Shows a view over this view
-    func showView(view: UIView) {
+    func showView(_ view: UIView) {
         addSubview(view)
         
         view.frame = CGRect(x: 0,
@@ -136,20 +136,5 @@ extension WorkoutsView: ShowViewDelegate {
                                 width: self.frame.width,
                                 height: self.frame.height)
         })
-    }
-}
-
-extension WorkoutsView: WorkoutSessionStarter {
-    // Start the workout with workout or exercise
-    func startWorkout(workout: Workout?, exercise: Exercise?) {
-        let startWorkoutView = WorkoutSessionView(workout: workout,
-                                                  frame: .zero)
-        startWorkoutView.showViewDelegate = self
-        
-        if let appendedExercise = exercise {
-            startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
-        }
-        
-        showView(view: startWorkoutView)
     }
 }

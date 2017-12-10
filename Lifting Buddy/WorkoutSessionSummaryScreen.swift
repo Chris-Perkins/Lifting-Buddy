@@ -21,6 +21,8 @@ class WorkoutSessionSummaryView: UIView {
     // A button the user should press if we're trying to close this view
     private let closeButton: PrettyButton
     
+    public var workoutSessionDelegate: WorkoutSessionStarter?
+    
     // MARK: Init methods
     
     init(workout: Workout?, exercises: List<Exercise>) {
@@ -65,7 +67,7 @@ class WorkoutSessionSummaryView: UIView {
         
         // Close button
         closeButton.setDefaultProperties()
-        closeButton.setTitle("Return to Main View",
+        closeButton.setTitle("End Session",
                              for: .normal)
     }
     
@@ -74,6 +76,7 @@ class WorkoutSessionSummaryView: UIView {
     @objc private func buttonPress(sender: UIButton) {
         switch sender {
         case closeButton:
+            workoutSessionDelegate?.endSession!()
             removeSelfNicelyWithAnimation()
         default:
             fatalError("Button pressed that was not set up")

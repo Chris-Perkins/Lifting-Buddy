@@ -121,14 +121,13 @@ class WorkoutSessionView: UIScrollView {
     
     // Completes this workout, dismisses the view.
     private func completeWorkout() {
-        workoutSessionDelegate?.endWorkout!()
         saveWorkoutData()
         
         let view = WorkoutSessionSummaryView(workout: workout,
                                              exercises: workoutSessionTableView.getData())
-        showViewDelegate?.showView(view: view)
+        view.workoutSessionDelegate = workoutSessionDelegate
+        showViewDelegate?.showView(view)
         
-        removeSelfNicelyWithAnimation()
     }
     
     // MARK: Event functions
@@ -193,7 +192,7 @@ class WorkoutSessionView: UIScrollView {
             let okAction = UIAlertAction(title: "Ok",
                                          style: .default,
                                          handler: {(UIAlertAction) -> Void in
-                self.removeSelfNicelyWithAnimation()
+                self.workoutSessionDelegate?.endSession!()
             })
             
             alert.addAction(cancelAction)

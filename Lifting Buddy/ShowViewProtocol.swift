@@ -12,5 +12,5 @@ protocol ShowViewDelegate {
     /*
      * Tells the delegate to show the view
      */
-    func showView(view: UIView)
+    func showView(_ view: UIView)
 }

@@ -185,7 +185,7 @@ class Workout: Object {
     }
     
     // Returns the date we last did this workout
-    public func getDateLastDone() -> Date? {
+    @objc public func getDateLastDone() -> Date? {
         return dateLastDone
     }
     

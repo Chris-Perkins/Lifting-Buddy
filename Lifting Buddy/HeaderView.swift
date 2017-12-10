@@ -21,7 +21,7 @@ class HeaderView: UIView {
     // Dividing bar
     private let divideView: UIView
     // View for different buttons
-    private let sectionView: SectionView
+    public let sectionView: SectionView
     
     private let statusBarHeight = getStatusBarHeight()
     

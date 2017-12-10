@@ -252,12 +252,14 @@ class WorkoutTableViewCell: UITableViewCell {
     @objc func buttonPress(sender: UIButton) {
         switch(sender) {
         case startWorkoutButton!:
-            workoutSessionStarter?.startWorkout(workout: workout,
-                                                exercise: nil)
+            guard let mainViewController = viewController() as? MainViewController else {
+                fatalError("view controller is now main view controller?")
+            }
+            mainViewController.startSession(workout: workout, exercise: nil)
             break
         case editButton!:
-            showViewDelegate?.showView(view: CreateWorkoutView(workout: workout!,
-                                                               frame: .zero))
+            showViewDelegate?.showView(CreateWorkoutView(workout: workout!,
+                                                         frame: .zero))
             break
         default:
             fatalError("User pressed a button that does not exist?")
@@ -346,16 +348,4 @@ class WorkoutTableViewCell: UITableViewCell {
                            multiplier: 1,
                            constant: 0).isActive = true
     }
-}
-
-@objc protocol WorkoutSessionStarter {
-    /*
-     * Notified when a workout is starting
-     */
-    func startWorkout(workout: Workout?,
-                      exercise: Exercise?)
-    /*
-     * Notified when a workout is ending
-     */
-    @objc optional func endWorkout()
 }

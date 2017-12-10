@@ -99,11 +99,6 @@ class ExercisesView: UIView {
         removeSelfNicelyWithAnimation()
     }
     
-    // We must refresh in case a new exercise was created mid-workout
-    func endWorkout() {
-        exerciseTableView.reloadData()
-    }
-    
     // MARK: Event functions
     
     @objc func showCreateExerciseView(sender: PrettyButton) {
@@ -111,7 +106,7 @@ class ExercisesView: UIView {
         
         createExerciseView.dataDelegate = self
         
-        showView(view: createExerciseView)
+        showView(createExerciseView)
     }
     
     // MARK: Constraint functions
@@ -213,22 +208,6 @@ extension ExercisesView: ExercisePickerDelegate {
     }
 }
 
-extension ExercisesView: WorkoutSessionStarter {
-    // Starts a workout based on the information we're given
-    func startWorkout(workout: Workout?, exercise: Exercise?) {
-        let startWorkoutView = WorkoutSessionView(workout: workout,
-                                                  frame: .zero)
-        startWorkoutView.workoutSessionDelegate = self
-        startWorkoutView.showViewDelegate = self
-        
-        if let appendedExercise = exercise {
-            startWorkoutView.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
-        }
-        
-        showView(view: startWorkoutView)
-    }
-}
-
 extension ExercisesView: CreateExerciseViewDelegate {
     // Called when a workout is created from this view
     func finishedWithExercise(exercise: Exercise) {
@@ -245,7 +224,7 @@ extension ExercisesView: CreateExerciseViewDelegate {
 
 extension ExercisesView: ShowViewDelegate {
     // Shows a view over this one
-    func showView(view: UIView) {
+    func showView(_ view: UIView) {
         addSubview(view)
         
         view.frame = CGRect(x: 0,

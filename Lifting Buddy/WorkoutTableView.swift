@@ -90,8 +90,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
             alert.addAction(
                 UIAlertAction(title: "Delete",
                               style: .destructive,
-                              handler: {
-                    UIAlertAction -> Void in
+                              handler: { UIAlertAction -> Void in
                     let realm = try! Realm()
                     try! realm.write {
                         realm.delete(workout)

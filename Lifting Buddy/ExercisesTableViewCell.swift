@@ -157,9 +157,12 @@ class ExerciseTableViewCell: UITableViewCell {
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
         case startExerciseButton:
-            mainViewCellDelegate?.startWorkout(workout: nil, exercise: exercise)
+            guard let mainViewController = viewController() as? MainViewController else {
+                fatalError("view controller is now main view controller?")
+            }
+            mainViewController.startSession(workout: nil, exercise: exercise!)
         case editButton:
-            showViewDelegate?.showView(view: CreateExerciseView(exercise: exercise!, frame: .zero))
+            showViewDelegate?.showView(CreateExerciseView(exercise: exercise!, frame: .zero))
         default:
             fatalError("Button press not handled in exercisestableview!")
         }

@@ -182,7 +182,7 @@ class CreateWorkoutView: UIScrollView {
             let exercisePickerView = ExercisesView(selectingExercise: true,
                                                    frame: .zero)
             exercisePickerView.exercisePickerDelegate = self
-            showView(view: exercisePickerView)
+            showView(exercisePickerView)
             
         case createWorkoutButton:
             if checkRequirementsFulfilled() {
@@ -490,7 +490,7 @@ class CreateWorkoutView: UIScrollView {
 
 extension CreateWorkoutView: ShowViewDelegate {
     // Shows a view over this view
-    func showView(view: UIView) {
+    func showView(_ view: UIView) {
         superview!.addSubview(view)
         
         view.frame = CGRect(x: 0,

@@ -77,8 +77,8 @@ class EditExerciseTableViewCell: UITableViewCell {
     // MARK: Event Functions
     
     @objc func editPress(sender: UIButton) {
-        showViewDelegate?.showView(view: CreateExerciseView(exercise: exercise!,
-                                                            frame: .zero))
+        showViewDelegate?.showView(CreateExerciseView(exercise: exercise!,
+                                                      frame: .zero))
     }
     
     // MARK: Constraint functions

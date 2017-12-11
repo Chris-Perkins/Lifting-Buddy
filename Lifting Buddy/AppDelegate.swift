@@ -16,7 +16,8 @@ import GBVersionTracking
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    public static var sessionWorkout: Workout? = nil
+    public static var sessionExercises: Set<Exercise> = Set<Exercise>()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

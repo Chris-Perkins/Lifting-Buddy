@@ -145,29 +145,42 @@ extension ExercisesTableView : UITableViewDelegate {
             
             let exercise = sortedData[indexPath.row]
             
-            let alert = UIAlertController(title: "Delete Exercise?",
-                                          message: "All history for '" + exercise.getName()!
-                                            + "' will be deleted.\n" +
-                "This cannot be undone. Continue?",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel",
-                                          style: .cancel,
-                                          handler: nil))
-            alert.addAction(
-                UIAlertAction(title: "Delete", style: .destructive, handler: {
-                    UIAlertAction -> Void in
-                    let realm = try! Realm()
-                    
-                    exercise.removeProgressionMethods()
-                    try! realm.write {
-                        realm.delete(exercise)
-                    }
-                    
-                    self.sortedData.remove(at: indexPath.row)
-                    self.reloadData()
-                }))
-            
-            viewController()?.present(alert, animated: true, completion: nil)
+            if AppDelegate.sessionExercises.contains(exercise) {
+                let alert = UIAlertController(title: "Cannot Delete",
+                                              message: "The selected exercise cannot be deleted as it is being used in an active workout session.",
+                                              preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok",
+                                             style: .default,
+                                             handler: nil)
+                alert.addAction(okAction)
+                
+                viewController()?.present(alert, animated: true, completion: nil)
+                
+            } else {
+                let alert = UIAlertController(title: "Delete Exercise?",
+                                              message: "All history for '" + exercise.getName()!
+                                                + "' will be deleted.\n" +
+                    "This cannot be undone. Continue?",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel",
+                                              style: .cancel,
+                                              handler: nil))
+                alert.addAction(
+                    UIAlertAction(title: "Delete", style: .destructive, handler: {
+                        UIAlertAction -> Void in
+                        let realm = try! Realm()
+                        
+                        exercise.removeProgressionMethods()
+                        try! realm.write {
+                            realm.delete(exercise)
+                        }
+                        
+                        self.sortedData.remove(at: indexPath.row)
+                        self.reloadData()
+                    }))
+                
+                viewController()?.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }

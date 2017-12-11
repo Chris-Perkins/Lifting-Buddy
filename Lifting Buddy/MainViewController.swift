@@ -96,6 +96,15 @@ extension MainViewController: WorkoutSessionStarter {
                              exercise: Exercise?) {
         
         sectionContentView.removeAllSubviews()
+        AppDelegate.sessionWorkout = workout
+        if workout != nil {
+            for exercise in workout!.getExercises() {
+                AppDelegate.sessionExercises.insert(exercise)
+            }
+        }
+        if exercise != nil {
+            AppDelegate.sessionExercises.insert(exercise!)
+        }
         
         let frame: CGRect = CGRect(x: 0,
                                    y: 0,
@@ -117,6 +126,9 @@ extension MainViewController: WorkoutSessionStarter {
     
     // On workout end, navigate back to the workout view.
     func endSession() {
+        AppDelegate.sessionWorkout = nil
+        AppDelegate.sessionExercises.removeAll()
+        
         showContentView(viewType: SectionView.ContentViews.WORKOUTS)
         sessionView = nil
         headerView.sectionView.hideSessionButton()

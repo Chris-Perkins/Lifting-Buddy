@@ -111,7 +111,7 @@ extension MainViewController: WorkoutSessionStarter {
             sessionView!.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
         }
         
-        headerView.sectionView.createSessionButton()
+        headerView.sectionView.showSessionButton()
         showView(sessionView!)
     }
     
@@ -119,7 +119,7 @@ extension MainViewController: WorkoutSessionStarter {
     func endSession() {
         showContentView(viewType: SectionView.ContentViews.WORKOUTS)
         sessionView = nil
-        headerView.sectionView.removeSessionButton()
+        headerView.sectionView.hideSessionButton()
     }
 }
 

@@ -16,12 +16,19 @@ class SectionView: UIView {
     // Required view for modifying sectionContentView
     var mainViewController: MainViewController?
     // Our sections
-    private var sessionButton: PrettyButton?
+    private var sessionButton: PrettyButton
     private let workoutsButton: PrettyButton
     private let exercisesButton: PrettyButton
     private let aboutButton: PrettyButton
     
+    // The view that's currently being selected
     private var selectedView: PrettyButton?
+    
+    // Width constraints with a session active
+    var sessionWidthConstraints = [NSLayoutConstraint]()
+    // Width constraints with no session
+    var noSessionWidthConstraints = [NSLayoutConstraint]()
+    
     
     // MARK: Enums
     
@@ -36,17 +43,22 @@ class SectionView: UIView {
     // MARK: Init functions
     
     override init(frame: CGRect) {
+        sessionButton = PrettyButton()
         workoutsButton = PrettyButton()
         exercisesButton = PrettyButton()
         aboutButton = PrettyButton()
         
         super.init(frame: frame)
         
+        addSubview(sessionButton)
         addSubview(workoutsButton)
         addSubview(exercisesButton)
         addSubview(aboutButton)
         
-        createAndActivateButtonConstraints(buttons: [workoutsButton, exercisesButton, aboutButton])
+        createAndActivateButtonConstraints(buttons: [sessionButton,
+                                                     workoutsButton,
+                                                     exercisesButton,
+                                                     aboutButton])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,8 +70,11 @@ class SectionView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // TODO:... FIX THIS ABOMINATION. if possible.
-        mainViewController = (next?.next?.next?.next as! MainViewController)
+        mainViewController = (viewController() as! MainViewController)
+        
+        // Session button
+        setButtonProperties(button: sessionButton)
+        sessionButton.setTitle("session", for: .normal)
         
         // Workouts Button
         workoutsButton.setTitle("workouts", for: .normal)
@@ -85,23 +100,33 @@ class SectionView: UIView {
         button.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
-    public func createSessionButton() {
-        sessionButton = PrettyButton()
-        setButtonProperties(button: sessionButton!)
-        sessionButton!.setTitle("session", for: .normal)
+    public func showSessionButton() {
+        for constraint in noSessionWidthConstraints {
+            constraint.isActive = false
+        }
+        for constraint in sessionWidthConstraints {
+            constraint.isActive = true
+        }
+        UIView.animate(withDuration: 0.5, animations: {
+                self.layoutIfNeeded()
+            })
         
-        createAndActivateButtonConstraints(buttons: [sessionButton!, workoutsButton,
-                                                     exercisesButton, aboutButton])
         
         layoutSubviews()
         
-        buttonPress(sender: sessionButton!)
+        buttonPress(sender: sessionButton)
     }
     
-    public func removeSessionButton() {
-        sessionButton?.removeFromSuperview()
-        sessionButton = nil
-        createAndActivateButtonConstraints(buttons: [workoutsButton, exercisesButton, aboutButton])
+    public func hideSessionButton() {
+        for constraint in sessionWidthConstraints {
+            constraint.isActive = false
+        }
+        for constraint in noSessionWidthConstraints {
+            constraint.isActive = true
+        }
+        UIView.animate(withDuration: 0.5, animations: {
+            self.layoutIfNeeded()
+        })
     }
     
     // MARK: Event functions
@@ -115,6 +140,8 @@ class SectionView: UIView {
             var viewType: SectionView.ContentViews? = nil
             
             switch(sender) {
+            case sessionButton:
+                viewType = .SESSION
             case workoutsButton:
                 viewType = .WORKOUTS
             case exercisesButton:
@@ -122,12 +149,7 @@ class SectionView: UIView {
             case aboutButton:
                 viewType = .ABOUT
             default:
-                if let sessionButton = sessionButton,
-                       sender == sessionButton {
-                    viewType = .SESSION
-                } else {
-                    fatalError("User requested view that isn't set up.")
-                }
+                fatalError("User requested view that isn't set up.")
             }
             
             mainViewController?.showContentView(viewType: viewType!)
@@ -166,11 +188,31 @@ class SectionView: UIView {
             NSLayoutConstraint.createViewAttributeCopyConstraint(view: button,
                                                                  withCopyView: self,
                                                                  attribute: .bottom).isActive = true
-            NSLayoutConstraint.createViewAttributeCopyConstraint(view: button,
-                                                                 withCopyView: self,
-                                                                 attribute: .width,
-                                                                 multiplier: 1/CGFloat(buttons.count)
-                                                                ).isActive = true
+            if button == sessionButton {
+                let constraint = NSLayoutConstraint.createWidthConstraintForView(view: button,
+                                                                                 width: 0)
+                
+                constraint.isActive = true
+                noSessionWidthConstraints.append(constraint)
+                
+            } else {
+                let constraint = NSLayoutConstraint.createViewAttributeCopyConstraint(
+                    view: button,
+                    withCopyView: self,
+                    attribute: .width,
+                    multiplier: 1/CGFloat(buttons.count - 1)
+                )
+                
+                constraint.isActive = true
+                noSessionWidthConstraints.append(constraint)
+            }
+            sessionWidthConstraints.append(NSLayoutConstraint.createViewAttributeCopyConstraint(
+                                                            view: button,
+                                                            withCopyView: self,
+                                                            attribute: .width,
+                                                            multiplier: 1/CGFloat(buttons.count)
+                                                        )
+            )
             
             prevView = button
         }

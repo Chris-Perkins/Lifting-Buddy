@@ -60,10 +60,12 @@ class WorkoutsView: UIView {
     
     // MARK: Event functions
     
+    // Shows the create workout view
     @objc func showCreateWorkoutView(sender: PrettyButton) {
         let createWorkoutView: CreateWorkoutView = CreateWorkoutView(frame: .zero)
         
         createWorkoutView.dataDelegate = self
+        createWorkoutView.showViewDelegate = self
         
         showView(createWorkoutView)
     }

@@ -13,7 +13,7 @@ import RealmSwift
 class ProgressionMethodTableViewCell: UITableViewCell {
     
     // The currently selected progressionMethod
-    private var curSelect = -1
+    public var curSelect = -1
     // MARK: View properties
     private var loaded: Bool
     // Whether or not we chose a unit
@@ -75,7 +75,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         nameEntryField.textfield.text = self.progressionMethod?.getName()
         // Determine if the unit exists in our unit list
         pickUnitButton.setTitle(self.progressionMethod?.getUnit() ??
-            ((curSelect >= 0 && curSelect < ProgressionMethod.unitList.count) ? ProgressionMethod.unitList[curSelect] : "Required: Unit"),
+            ((curSelect >= 0 && curSelect < ProgressionMethod.unitList.count) ? ProgressionMethod.unitList[curSelect] : "Set Unit"),
                                 for: .normal)
         
         

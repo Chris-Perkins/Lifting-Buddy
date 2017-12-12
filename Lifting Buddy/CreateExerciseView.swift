@@ -197,10 +197,11 @@ class CreateExerciseView: UIScrollView {
     }
     
     // Checks if the requirements for this exercise are fulfilled
-    // Requirements:
-    // Non-empty name
-    // Integer or empty set/rep count
-    // Non-empty name and unit for every progression method
+    /* Requirements:
+         Non-empty name
+         Integer or empty set/rep count
+         Non-empty name and unit for every progression method
+    */
     private func requirementsFulfilled() -> Bool {
         var fulfilled = true
         
@@ -223,7 +224,7 @@ class CreateExerciseView: UIScrollView {
                 
                 cell.nameEntryField.backgroundColor = .niceRed
             }
-            if cell.pickUnitButton.titleLabel?.text == "Pick Unit" {
+            if cell.curSelect == -1 {
                 fulfilled = false
                 
                 cell.pickUnitButton.backgroundColor = .niceRed

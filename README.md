@@ -18,12 +18,12 @@ Expected / Hopeful release: December 20th
 | App Icon                  | 10/10                 |                                                |
 | Splash Screen             | 10/10                 |                                                |
 | Home Screen               | 10/10                 |                                                |
-| Workout Screen            | 9/10                  | Want search/filter bar.                        |
+| Workout Screen            | 9/10                  | Want search/filter bar?                        |
 | Exercise Screen           | 10/10                 |                                                |
 | Summary Screen            | 10/10                 |                                                |
 | Add Default Workouts      | 10/10                 |                                                |
 | About screen              | 8/10                  | In progress now                                |
-| Create “Session” View     | 2/10                  | I know how to do it, but no code yet.          |
+| Create “Session” View     | 10/10                 |                                                |
 
 ### Known Bugs
 None at this time.

@@ -124,33 +124,6 @@ extension WorkoutsView: ShowViewDelegate {
     // Shows a view over this view
     func showView(_ view: UIView) {
         addSubview(view)
-        
-        // Constraints take up the whole view. Start above the view (not visible)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
-                                                             withCopyView: self,
-                                                             attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
-                                                             withCopyView: self,
-                                                             attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
-                                                             withCopyView: self,
-                                                             attribute: .height).isActive = true
-        let heightConstraint = NSLayoutConstraint.createViewAttributeCopyConstraint(
-            view: view,
-            withCopyView: self,
-            attribute: .top,
-            plusConstant: -view.frame.height)
-        heightConstraint.isActive = true
-        // Activate these constraints
-        self.layoutIfNeeded()
-        
-        // Slides the view down upon calling layoutifneeded
-        heightConstraint.constant = 0
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.layoutIfNeeded()
-        })
+        UIView.slideView(view, overView: self)
     }
 }

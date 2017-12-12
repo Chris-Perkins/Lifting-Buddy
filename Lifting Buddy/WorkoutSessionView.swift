@@ -14,8 +14,6 @@ class WorkoutSessionView: UIScrollView {
     
     // MARK: View properties
     
-    public var showViewDelegate: ShowViewDelegate?
-    
     // Workout for this view
     private var workout: Workout?
     // Whether or not the workout is complete
@@ -127,11 +125,7 @@ class WorkoutSessionView: UIScrollView {
                                              exercises: workoutSessionTableView.getData())
         view.workoutSessionDelegate = workoutSessionDelegate
         
-        guard let showViewDelegate = showViewDelegate else {
-            fatalError("ShowViewDelegate not set for WorkoutSessionView")
-        }
-        showViewDelegate.showView(view)
-        
+        showView(view)
     }
     
     // MARK: Event functions
@@ -140,28 +134,10 @@ class WorkoutSessionView: UIScrollView {
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
         case addExerciseButton:
-            /*
-             * We use superview here as this view is a scrollview. This could
-             * alternatively be done by having an encasing view for every workoutview.
-             * That may be considered best practice... So, TODO
-             */
-            let frame = CGRect(x: 0,
-                               y: -superview!.frame.height,
-                               width: superview!.frame.width,
-                               height: superview!.frame.height)
-            
-            let chooseExerciseView = ExercisesView(selectingExercise: true, frame: frame)
+            let chooseExerciseView = ExercisesView(selectingExercise: true, frame: .zero)
             chooseExerciseView.layer.zPosition = 100
             chooseExerciseView.exercisePickerDelegate = self
-            superview!.addSubview(chooseExerciseView)
-            
-            UIView.animate(withDuration: 0.2, animations: {
-                chooseExerciseView.frame = CGRect(x: 0,
-                                                  y: 0,
-                                                  width: self.superview!.frame.width,
-                                                  height: self.superview!.frame.height)
-            })
-            break
+            showView(chooseExerciseView)
         case completeButton:
             if isComplete {
                 // If complete, we can just complete.
@@ -323,6 +299,15 @@ extension WorkoutSessionView: WorkoutSessionTableViewDelegate {
     // Height of this view changed
     func heightChange() {
         layoutSubviews()
+    }
+}
+
+extension WorkoutSessionView: ShowViewDelegate {
+    func showView(_ view: UIView) {
+        // Need to call upon the superview as this is a scroll view.
+        // Scroll views
+        self.superview?.addSubview(view)
+        UIView.slideView(view, overView: self.superview!)
     }
 }
 

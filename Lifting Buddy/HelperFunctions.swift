@@ -355,6 +355,44 @@ extension UITextField {
 }
 
 extension UIView {
+    // Shows a view over this view using constraints
+    static func slideView(_ coveringView: UIView, overView inView: UIView) {
+        inView.addSubview(coveringView)
+        
+        // Constraints take up the whole view. Start above the view (not visible)
+        coveringView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: coveringView,
+                                                             withCopyView: inView,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: coveringView,
+                                                             withCopyView: inView,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: coveringView,
+                                                             withCopyView: inView,
+                                                             attribute: .height).isActive = true
+        /*
+         We can use the inView's height as the basis for "above this view" since
+         coveringView's height is equal to the height of the inView
+        */
+        let heightConstraint = NSLayoutConstraint.createViewAttributeCopyConstraint(
+            view: coveringView,
+            withCopyView: inView,
+            attribute: .top,
+            plusConstant: -inView.frame.height)
+        heightConstraint.isActive = true
+        // Activate these constraints
+        inView.layoutIfNeeded()
+        
+        // Moves the view to the bottom upon calling layout if needed
+        heightConstraint.constant = 0
+        
+        // Animate the transition between top to bottom to slide down
+        UIView.animate(withDuration: 0.2, animations: {
+            inView.layoutIfNeeded()
+        })
+    }
+    
     @objc func setDefaultProperties() {
         // Override me!
     }

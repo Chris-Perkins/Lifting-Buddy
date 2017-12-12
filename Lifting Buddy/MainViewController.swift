@@ -88,12 +88,17 @@ extension MainViewController: WorkoutSessionStarter {
         }
     }
     
+    // Shows the session view given a workout an exercise
     private func showSession(workout: Workout?,
                              exercise: Exercise?) {
         
+        // First remove the subviews
         sectionContentView.removeAllSubviews()
+        
+        // Set the current session workout
         AppDelegate.sessionWorkout = workout
         if workout != nil {
+            // If non-nil, safely add all of it's exercises to used session exercises
             for exercise in workout!.getExercises() {
                 AppDelegate.sessionExercises.insert(exercise)
             }
@@ -104,8 +109,7 @@ extension MainViewController: WorkoutSessionStarter {
         
         sessionView = WorkoutSessionView(workout: workout,
                                          frame: .zero)
-        
-        sessionView!.showViewDelegate = self
+        // We need to set the session delegate to know when "endSession" is called
         sessionView?.workoutSessionDelegate = self
         
         if let appendedExercise = exercise {

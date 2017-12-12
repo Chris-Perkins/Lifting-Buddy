@@ -133,7 +133,7 @@ class HeaderView: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: divideView,
                                                              withCopyView: contentView,
                                                              attribute: .centerY,
-                                                             plusConstant: 10).isActive = true
+                                                             plusConstant: 5).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: divideView,
                                                              withCopyView: contentView,
                                                              attribute: .left).isActive = true

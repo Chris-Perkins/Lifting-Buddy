@@ -77,8 +77,12 @@ class EditExerciseTableViewCell: UITableViewCell {
     // MARK: Event Functions
     
     @objc func editPress(sender: UIButton) {
-        showViewDelegate?.showView(CreateExerciseView(exercise: exercise!,
-                                                      frame: .zero))
+        
+        guard let showViewDelegate = showViewDelegate else {
+            fatalError("ShowViewDelegate not set for CreateExercisePicker")
+        }
+        showViewDelegate.showView(CreateExerciseView(exercise: exercise!,
+                                                     frame: .zero))
     }
     
     // MARK: Constraint functions

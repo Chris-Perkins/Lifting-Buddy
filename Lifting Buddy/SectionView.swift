@@ -23,6 +23,8 @@ class SectionView: UIView {
     
     // The view that's currently being selected
     private var selectedView: PrettyButton?
+    // Determines if the subviews have been laid out
+    private var laidOutSubviews = false
     
     // Width constraints with a session active
     var sessionWidthConstraints = [NSLayoutConstraint]()
@@ -70,36 +72,42 @@ class SectionView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        mainViewController = (viewController() as! MainViewController)
+        // If this is the first time we laid out a subview, press the workout button
+        if !laidOutSubviews {
+            mainViewController = (viewController() as! MainViewController)
+            
+            // Session button
+            setButtonProperties(button: sessionButton)
+            sessionButton.setTitle("session", for: .normal)
+            
+            // Workouts Button
+            workoutsButton.setTitle("workouts", for: .normal)
+            setButtonProperties(button: workoutsButton)
+            
+            // Exercises Button
+            exercisesButton.setTitle("exercises", for: .normal)
+            setButtonProperties(button: exercisesButton)
+            
+            // Home button
+            aboutButton.setTitle("about", for: .normal)
+            setButtonProperties(button: aboutButton)
         
-        // Session button
-        setButtonProperties(button: sessionButton)
-        sessionButton.setTitle("session", for: .normal)
-        
-        // Workouts Button
-        workoutsButton.setTitle("workouts", for: .normal)
-        setButtonProperties(button: workoutsButton)
-        
-        // Exercises Button
-        exercisesButton.setTitle("exercises", for: .normal)
-        setButtonProperties(button: exercisesButton)
-        
-        // Home button
-        aboutButton.setTitle("about", for: .normal)
-        setButtonProperties(button: aboutButton)
-        
-        // Start on the workout screen
-        buttonPress(sender: workoutsButton)
+            laidOutSubviews = true
+            
+            imitateWorkoutButtonPress()
+        }
     }
     
     // MARK: Private functions
     
+    // Gives a button default properties, overlay of opacic white, and button press event.
     private func setButtonProperties(button: PrettyButton) {
         button.setDefaultProperties()
         button.setOverlayColor(color: UIColor.white.withAlphaComponent(0.25))
         button.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
+    // Shows the session button
     public func showSessionButton() {
         for constraint in noSessionWidthConstraints {
             constraint.isActive = false
@@ -117,7 +125,9 @@ class SectionView: UIView {
         buttonPress(sender: sessionButton)
     }
     
+    // Hides the session button
     public func hideSessionButton() {
+        // Animate constraints
         for constraint in sessionWidthConstraints {
             constraint.isActive = false
         }
@@ -127,6 +137,14 @@ class SectionView: UIView {
         UIView.animate(withDuration: 0.5, animations: {
             self.layoutIfNeeded()
         })
+        
+        // Go to workout view
+        imitateWorkoutButtonPress()
+    }
+    
+    // Acts like the workout button was pressed.
+    public func imitateWorkoutButtonPress() {
+        buttonPress(sender: workoutsButton)
     }
     
     // MARK: Event functions

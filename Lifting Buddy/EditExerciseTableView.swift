@@ -80,7 +80,7 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource, UITableV
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! EditExerciseTableViewCell
         cell.setExercise(exercise: data[indexPath.row])
-        cell.showViewDelegate = superview as? ShowViewDelegate
+        cell.showViewDelegate = superview?.superview as? ShowViewDelegate
         return cell
     }
     

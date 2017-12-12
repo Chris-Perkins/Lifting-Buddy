@@ -19,6 +19,8 @@ class CreateWorkoutView: UIScrollView {
     
     // Delegate that does something when workout complete
     public var dataDelegate: CreateWorkoutViewDelegate?
+    // Delegate to show a view
+    public var showViewDelegate: ShowViewDelegate?
     
     // holds the first char for the days of the week for repeat buttons
     private final let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]
@@ -182,7 +184,11 @@ class CreateWorkoutView: UIScrollView {
             let exercisePickerView = ExercisesView(selectingExercise: true,
                                                    frame: .zero)
             exercisePickerView.exercisePickerDelegate = self
-            showView(exercisePickerView)
+            
+            guard let showViewDelegate = showViewDelegate else {
+                fatalError("ShowViewDelegate not set for ExercisePicker")
+            }
+            showViewDelegate.showView(exercisePickerView)
             
         case createWorkoutButton:
             if checkRequirementsFulfilled() {
@@ -485,25 +491,6 @@ class CreateWorkoutView: UIScrollView {
                                                              withCopyView: createWorkoutButton,
                                                              attribute: .width,
                                                              plusConstant: 0).isActive = true
-    }
-}
-
-extension CreateWorkoutView: ShowViewDelegate {
-    // Shows a view over this view
-    func showView(_ view: UIView) {
-        superview!.addSubview(view)
-        
-        view.frame = CGRect(x: 0,
-                            y: -superview!.frame.height,
-                            width: superview!.frame.width,
-                            height: superview!.frame.height)
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            view.frame = CGRect(x: 0,
-                                y: 0,
-                                width: self.superview!.frame.width,
-                                height: self.superview!.frame.height)
-        })
     }
 }
 

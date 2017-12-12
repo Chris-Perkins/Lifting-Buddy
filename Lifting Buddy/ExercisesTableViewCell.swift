@@ -162,7 +162,10 @@ class ExerciseTableViewCell: UITableViewCell {
             }
             mainViewController.startSession(workout: nil, exercise: exercise!)
         case editButton:
-            showViewDelegate?.showView(CreateExerciseView(exercise: exercise!, frame: .zero))
+            guard let showViewDelegate = showViewDelegate else {
+                fatalError("ShowViewDelegate not set for CreateExerciseView")
+            }
+            showViewDelegate.showView(CreateExerciseView(exercise: exercise!, frame: .zero))
         default:
             fatalError("Button press not handled in exercisestableview!")
         }

@@ -27,8 +27,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .niceGray
-        
-        let _ = view
     }
     
     // MARK: View functions
@@ -36,30 +34,28 @@ class MainViewController: UIViewController {
     func showContentView(viewType: SectionView.ContentViews) {
         sectionContentView.removeAllSubviews()
         
-        let frame: CGRect = CGRect(x: 0,
-                                   y: 0,
-                                   width: sectionContentView.frame.size.width,
-                                   height: sectionContentView.frame.size.height)
-        
         switch(viewType) {
         case SectionView.ContentViews.SESSION:
             guard let sessionView = sessionView else {
                 fatalError("Session view called, but is nil!")
             }
-            sectionContentView.addSubview(sessionView)
+            showView(sessionView)
+            
         case SectionView.ContentViews.WORKOUTS:
             if workoutView == nil {
-                workoutView = WorkoutsView(frame: frame)
+                workoutView = WorkoutsView(frame: .zero)
             }
-            sectionContentView.addSubview(workoutView!)
+            showView(workoutView!)
+            
         case SectionView.ContentViews.EXERCISES:
             if exercisesView == nil {
-                exercisesView = ExercisesView(frame: frame)
+                exercisesView = ExercisesView(frame: .zero)
             }
-            sectionContentView.addSubview(exercisesView!)
+            showView(exercisesView!)
+            
         case SectionView.ContentViews.ABOUT:
             if aboutView == nil {
-                aboutView = AboutView(frame: frame)
+                aboutView = AboutView(frame: .zero)
             }
             showView(aboutView!)
         }
@@ -106,13 +102,9 @@ extension MainViewController: WorkoutSessionStarter {
             AppDelegate.sessionExercises.insert(exercise!)
         }
         
-        let frame: CGRect = CGRect(x: 0,
-                                   y: 0,
-                                   width: sectionContentView.frame.size.width,
-                                   height: sectionContentView.frame.size.height)
-        
         sessionView = WorkoutSessionView(workout: workout,
-                                         frame: frame)
+                                         frame: .zero)
+        
         sessionView!.showViewDelegate = self
         sessionView?.workoutSessionDelegate = self
         
@@ -137,13 +129,10 @@ extension MainViewController: WorkoutSessionStarter {
 
 extension MainViewController: ShowViewDelegate {
     func showView(_ view: UIView) {
-        let frame: CGRect = CGRect(x: 0,
-                                   y: 0,
-                                   width: sectionContentView.frame.size.width,
-                                   height: sectionContentView.frame.size.height)
-        view.frame = frame
-        
         sectionContentView.addSubview(view)
+        
+        NSLayoutConstraint.clingViewToView(view: view,
+                                           toView: sectionContentView)
     }
 }
 

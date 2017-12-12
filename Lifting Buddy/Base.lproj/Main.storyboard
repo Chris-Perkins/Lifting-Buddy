@@ -22,14 +22,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dBG-i1-qoX" customClass="HeaderView" customModule="Lifting_Buddy" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="125"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
                                 <color key="backgroundColor" red="0.29126899290000002" green="0.4598940299" blue="0.90986615420000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="125" id="SEB-YA-e1Z"/>
+                                    <constraint firstAttribute="height" constant="100" id="SEB-YA-e1Z"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4I-V8-PjE">
-                                <rect key="frame" x="0.0" y="125" width="414" height="611"/>
+                                <rect key="frame" x="0.0" y="100" width="414" height="636"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>

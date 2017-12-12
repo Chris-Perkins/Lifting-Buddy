@@ -260,8 +260,10 @@ class WorkoutTableViewCell: UITableViewCell {
             mainViewController.startSession(workout: workout, exercise: nil)
         case editButton!:
             if workout?.canModifyCoreProperties ?? true {
-                showViewDelegate?.showView(CreateWorkoutView(workout: workout!,
-                                                             frame: .zero))
+                let createWorkoutView = CreateWorkoutView(workout: workout!,
+                                                          frame: .zero)
+                createWorkoutView.showViewDelegate = showViewDelegate
+                showViewDelegate?.showView(createWorkoutView)
             } else {
                 let alert = UIAlertController(title: "Cannot Edit Workout",
                                               message: "You cannot edit the workout from this view while the workout is in an active session.", preferredStyle: .alert)

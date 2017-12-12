@@ -227,16 +227,32 @@ extension ExercisesView: ShowViewDelegate {
     func showView(_ view: UIView) {
         addSubview(view)
         
-        view.frame = CGRect(x: 0,
-                            y: -frame.height,
-                            width: frame.width,
-                            height: frame.height)
+        // Constraints take up the whole view. Start above the view (not visible)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                             withCopyView: self,
+                                                             attribute: .height).isActive = true
+        let heightConstraint = NSLayoutConstraint.createViewAttributeCopyConstraint(
+                                                            view: view,
+                                                            withCopyView: self,
+                                                            attribute: .top,
+                                                            plusConstant: -view.frame.height)
+        heightConstraint.isActive = true
+        // Activate these constraints
+        self.layoutIfNeeded()
+        
+        // Slides the view down upon calling layoutifneeded
+        heightConstraint.constant = 0
         
         UIView.animate(withDuration: 0.2, animations: {
-            view.frame = CGRect(x: 0,
-                                y: 0,
-                                width: self.frame.width,
-                                height: self.frame.height)
+            self.layoutIfNeeded()
         })
     }
 }

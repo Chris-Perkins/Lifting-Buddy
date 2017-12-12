@@ -126,7 +126,11 @@ class WorkoutSessionView: UIScrollView {
         let view = WorkoutSessionSummaryView(workout: workout,
                                              exercises: workoutSessionTableView.getData())
         view.workoutSessionDelegate = workoutSessionDelegate
-        showViewDelegate?.showView(view)
+        
+        guard let showViewDelegate = showViewDelegate else {
+            fatalError("ShowViewDelegate not set for WorkoutSessionView")
+        }
+        showViewDelegate.showView(view)
         
     }
     

@@ -59,14 +59,20 @@ extension ProgressionsMethodTableView: UITableViewDataSource {
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Cell does not exist; create it.
+        var cell: ProgressionMethodTableViewCell? = nil
         if cells.count > indexPath.row {
-            return cells[indexPath.row]
+            cell = cells[indexPath.row]
         } else {
-            let cell = ProgressionMethodTableViewCell(style: .default, reuseIdentifier: nil)
-            cell.setProgressionMethod(progressionMethod: data[indexPath.row])
-            cells.append(cell)
-            return cell
+            let newCell = ProgressionMethodTableViewCell(style: .default, reuseIdentifier: nil)
+            newCell.setProgressionMethod(progressionMethod: data[indexPath.row])
+            cells.append(newCell)
+            cell = newCell
         }
+        
+        cell?.nameEntryField.textfield.textColor = isUserInteractionEnabled ? .black : .niceGray
+        cell?.pickUnitButton.backgroundColor = isUserInteractionEnabled ? .niceBlue : .niceGray
+        
+        return cell!
     }
     
     // Deletion methods

@@ -14,6 +14,11 @@ import Realm
 class Exercise: Object {
     // MARK: View properties
     
+    // We can't modify the core properties if being used in an active session
+    public var canModifyCoreProperties: Bool {
+        return !AppDelegate.sessionExercises.contains(self)
+    }
+    
     // Assign UUID to this object
     @objc dynamic private var identifier: String = UUID().uuidString
     

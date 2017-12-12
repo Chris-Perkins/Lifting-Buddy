@@ -15,6 +15,10 @@ import Realm
 class Workout: Object {
     // MARK: View properties
     
+    public var canModifyCoreProperties: Bool {
+        return AppDelegate.sessionWorkout != self
+    }
+    
     // Assign UUID to this object
     @objc dynamic private var identifier: String = UUID().uuidString
     

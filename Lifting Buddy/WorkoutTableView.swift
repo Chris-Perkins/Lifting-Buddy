@@ -79,17 +79,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
             
             let workout = sortedData[indexPath.row]
             
-            if workout == AppDelegate.sessionWorkout {
-                let alert = UIAlertController(title: "Cannot Delete",
-                                              message: "The selected workout cannot be deleted as it is being used in an active workout session.",
-                                              preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ok",
-                                             style: .default,
-                                             handler: nil)
-                alert.addAction(okAction)
-                
-                viewController()?.present(alert, animated: true, completion: nil)
-            } else {
+            if workout.canModifyCoreProperties {
                 let alert = UIAlertController(title: "Delete Workout?",
                                               message: "All history for '" + workout.getName()!
                                                 + "' will be deleted.\n" +
@@ -102,16 +92,27 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
                     UIAlertAction(title: "Delete",
                                   style: .destructive,
                                   handler: { UIAlertAction -> Void in
-                        let realm = try! Realm()
-                        try! realm.write {
-                            realm.delete(workout)
-                        }
-                        
-                        self.sortedData.remove(at: indexPath.row)
-                        self.reloadData()
+                                    let realm = try! Realm()
+                                    try! realm.write {
+                                        realm.delete(workout)
+                                    }
+                                    
+                                    self.sortedData.remove(at: indexPath.row)
+                                    self.reloadData()
                     }))
                 
                 viewController()?.present(alert, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "Cannot Delete",
+                                              message: "The selected workout cannot be deleted as it is being used in an active workout session.",
+                                              preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok",
+                                             style: .default,
+                                             handler: nil)
+                alert.addAction(okAction)
+                
+                viewController()?.present(alert, animated: true, completion: nil)
+
             }
         }
     }

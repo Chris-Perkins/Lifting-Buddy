@@ -70,7 +70,9 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // MARK: View overrides
     
-    override func layoutIfNeeded() {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
         clipsToBounds = true
         
         cellTitle.textColor = .niceBlue
@@ -91,6 +93,8 @@ class WorkoutTableViewCell: UITableViewCell {
         // Only layout if selected as they won't be visible
         if isSelected {
             editButton?.setDefaultProperties()
+            editButton?.backgroundColor =
+                (workout?.canModifyCoreProperties ?? true) ? .niceBlue : .niceLightBlue
             editButton?.setTitle("Edit", for: .normal)
             
             startWorkoutButton?.setDefaultProperties()
@@ -129,8 +133,6 @@ class WorkoutTableViewCell: UITableViewCell {
                 backgroundColor = (workout?.getIfTodayWorkout())! ? .niceLightGreen : .white
             }
         }
-        
-        super.layoutSubviews()
     }
     
     // MARK: Encapsulated methods
@@ -256,11 +258,18 @@ class WorkoutTableViewCell: UITableViewCell {
                 fatalError("view controller is now main view controller?")
             }
             mainViewController.startSession(workout: workout, exercise: nil)
-            break
         case editButton!:
-            showViewDelegate?.showView(CreateWorkoutView(workout: workout!,
-                                                         frame: .zero))
-            break
+            if workout?.canModifyCoreProperties ?? true {
+                showViewDelegate?.showView(CreateWorkoutView(workout: workout!,
+                                                             frame: .zero))
+            } else {
+                let alert = UIAlertController(title: "Cannot Edit Workout",
+                                              message: "You cannot edit the workout from this view while the workout is in an active session.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                alert.addAction(okAction)
+                
+                viewController()?.present(alert, animated: true, completion: nil)
+            }
         default:
             fatalError("User pressed a button that does not exist?")
         }

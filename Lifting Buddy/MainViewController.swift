@@ -74,7 +74,7 @@ extension MainViewController: WorkoutSessionStarter {
                              exercise: exercise)
         } else {
             let alert = UIAlertController(title: "Quit current workout session?",
-                                          message: "To start a new session, you must end your current session. All data from the active session will not be saved. Continue?",
+                                          message: "To start a new session, you must end your current session. All data from the active workout session will not be saved. Continue?",
                                           preferredStyle: .alert)
             let cancelButton = UIAlertAction(title: "Cancel",
                                              style: .cancel,

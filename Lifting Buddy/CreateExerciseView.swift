@@ -85,6 +85,8 @@ class CreateExerciseView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        progressionsTableView.isUserInteractionEnabled = editingExercise?.canModifyCoreProperties ?? true
+        
         // If the exercise was deleted...
         if editingExercise?.isInvalidated == true {
             let alert = UIAlertController(title: "Exercise deleted",
@@ -125,6 +127,10 @@ class CreateExerciseView: UIScrollView {
         
         // Add progression method button
         addProgressionTrackerButton.setDefaultProperties()
+        addProgressionTrackerButton.backgroundColor =
+                        (editingExercise?.canModifyCoreProperties ?? true) ?
+                            .niceBlue : .niceLightBlue
+            
         addProgressionTrackerButton.setTitle("Add Progression Tracker", for: .normal)
         
         // Create exercise button
@@ -143,8 +149,17 @@ class CreateExerciseView: UIScrollView {
     @objc func buttonPress(sender: UIButton) {
         switch(sender){
         case addProgressionTrackerButton:
-            progressionsTableView.appendDataToTableView(data: ProgressionMethod())
-            break
+            if editingExercise?.canModifyCoreProperties ?? true {
+                progressionsTableView.appendDataToTableView(data: ProgressionMethod())
+            } else {
+                let alert = UIAlertController(title: "Cannot Add Progression Method",
+                                              message: "This exercise's progression methods cannot be modified as it is being used in an active workout session.",
+                                              preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                alert.addAction(okAction)
+                
+                viewController()?.present(alert, animated: true, completion: nil)
+            }
         case createExerciseButton:
             // Send info to delegate, animate up then remove self
             if requirementsFulfilled() {
@@ -154,10 +169,8 @@ class CreateExerciseView: UIScrollView {
                 dataDelegate?.finishedWithExercise(exercise: exerciseCreated)
                 removeSelfNicelyWithAnimation()
             }
-            break
         case cancelButton:
             removeSelfNicelyWithAnimation()
-            break
         default:
             fatalError("User pressed a button that does not exist in switch?")
         }
@@ -233,22 +246,25 @@ class CreateExerciseView: UIScrollView {
             createdExercise.setSetCount(setCount: 0)
         }
         
-        // Progression Methods that we need to delete from history
-        var progressionMethodsToDelete = Set(createdExercise.getProgressionMethods())
-        
-        createdExercise.removeProgressionMethods()
-        // Add all progression methods from this cell
-        for (index, cell) in (progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]).enumerated() {
-            let progressionMethod = cell.saveAndReturnProgressionMethod()
-            progressionMethod.setIndex(index: index)
+        // If we can modify core properties
+        if editingExercise?.canModifyCoreProperties ?? true {
+            // Progression Methods that we need to delete from history
+            var progressionMethodsToDelete = Set(createdExercise.getProgressionMethods())
             
-            // do not delete anything still in the exercise
-            progressionMethodsToDelete.remove(progressionMethod)
+            createdExercise.removeProgressionMethods()
+            // Add all progression methods from this cell
+            for (index, cell) in (progressionsTableView.getAllCells() as! [ProgressionMethodTableViewCell]).enumerated() {
+                let progressionMethod = cell.saveAndReturnProgressionMethod()
+                progressionMethod.setIndex(index: index)
+                
+                // do not delete anything still in the exercise
+                progressionMethodsToDelete.remove(progressionMethod)
+                
+                createdExercise.appendProgressionMethod(progressionMethod: progressionMethod)
+            }
             
-            createdExercise.appendProgressionMethod(progressionMethod: progressionMethod)
+            createdExercise.removeProgressionMethodsFromHistory(progressionMethodsToDelete: progressionMethodsToDelete)
         }
-        
-        createdExercise.removeProgressionMethodsFromHistory(progressionMethodsToDelete: progressionMethodsToDelete)
         
         // If this is a new exercise, create it!
         if editingExercise == nil {

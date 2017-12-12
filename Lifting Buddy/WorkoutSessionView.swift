@@ -167,6 +167,7 @@ class WorkoutSessionView: UIScrollView {
                 let alert = UIAlertController(title: "Complete Workout Prematurely?",
                                               message: "Not all workouts are complete.\nDo you really want to finish this workout?",
                                               preferredStyle: .alert)
+                
                 let cancelAction = UIAlertAction(title: "Cancel",
                                                  style: .cancel,
                                                  handler: nil)
@@ -184,8 +185,9 @@ class WorkoutSessionView: UIScrollView {
         case cancelButton:
             // Confirm that the user indeed wants to cancel this workout
             let alert = UIAlertController(title: "Cancel Workout?",
-                                          message: "Canceling will not save any data about this workout. Continue?",
+                                          message: "Canceling will cause all data from this workout to be lost. Continue?",
                                           preferredStyle: .alert)
+            
             let cancelAction = UIAlertAction(title: "Cancel",
                                              style: .cancel,
                                              handler: nil)
@@ -324,6 +326,7 @@ extension WorkoutSessionView: ExercisePickerDelegate {
     // Add this data to our tableview
     func didSelectExercise(exercise: Exercise) {
         workoutSessionTableView.appendDataToTableView(data: exercise)
+        AppDelegate.sessionExercises.insert(exercise)
     }
 
 }

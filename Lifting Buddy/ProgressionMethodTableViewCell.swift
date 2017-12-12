@@ -62,17 +62,18 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         clipsToBounds = true
         backgroundColor = UIColor.white.withAlphaComponent(0.5)
         
-        // MARK: Pick Unit button
-        
         pickUnitButton.setDefaultProperties()
     }
     
     // MARK: Custom view functions
     
+    // Set associated view properties to the progressionmethod
     public func setProgressionMethod(progressionMethod: ProgressionMethod) {
         self.progressionMethod = progressionMethod
         
+        
         nameEntryField.textfield.text = self.progressionMethod?.getName()
+        // Determine if the unit exists in our unit list
         pickUnitButton.setTitle(self.progressionMethod?.getUnit() ??
             ((curSelect >= 0 && curSelect < ProgressionMethod.unitList.count) ? ProgressionMethod.unitList[curSelect] : "Required: Unit"),
                                 for: .normal)

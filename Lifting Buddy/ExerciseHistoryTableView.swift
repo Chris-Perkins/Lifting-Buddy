@@ -49,8 +49,8 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // allow cell deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            tableViewDelegate?.dataDeleted(deletedData: data[indexPath.row])
             data.remove(at: indexPath.row)
-            tableViewDelegate?.cellDeleted()
             reloadData()
         }
     }
@@ -91,9 +91,6 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // Append some data to the tableView
     public func appendDataToTableView(data: ExerciseHistoryEntry) {
         
-        let realm = try! Realm()
-        print(realm.objects(ExerciseHistoryEntry.self))
-        
         self.data.append(data)
         
         reloadData()
@@ -117,5 +114,5 @@ protocol TableViewDelegate {
     /*
      * Inform when a cell is deleted
      */
-    func cellDeleted()
+    func dataDeleted(deletedData: ExerciseHistoryEntry)
 }

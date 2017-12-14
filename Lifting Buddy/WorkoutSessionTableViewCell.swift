@@ -219,11 +219,11 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         }
         
         if canAddSet {
+            // Add the set to our exerciseHistory. But first, create it.
             let progressionMethods = exercise.getProgressionMethods()
             let exerciseEntry = ExerciseHistoryEntry()
             exerciseEntry.date = Date(timeIntervalSinceNow: 0)
             exerciseEntry.exerciseInfo = List<RLMExercisePiece>()
-            
             
             for (index, exerciseInputField) in exerciseInputFields.enumerated() {
                 let exercisePiece = RLMExercisePiece()
@@ -235,7 +235,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
                 progressionMethods[index].setDefaultValue(defaultValue: exerciseInputField.getValue())
             }
             
-            exercise.appendExerciseHistoryEntry(exerciseHistoryEntry: exerciseEntry)
+            exercise.appendExerciseHistoryEntry(exerciseEntry)
             
             exerciseHistoryTableView.appendDataToTableView(data: exerciseEntry)
         }
@@ -250,28 +250,6 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
             isComplete = newComplete
             delegate?.cellCompleteStatusChanged(complete: isComplete)
             layoutIfNeeded()
-        }
-    }
-    
-    // adds workout data to history
-    public func saveWorkoutData() {
-        
-        for exerciseHistoryCell in exerciseHistoryTableView.getAllCells() as! [ExerciseHistoryTableViewCell] {
-            let exerciseEntry = ExerciseHistoryEntry()
-            exerciseEntry.date = Date(timeIntervalSinceNow: 0)
-            exerciseEntry.exerciseInfo = List<RLMExercisePiece>()
-            
-            for data in exerciseHistoryCell.getData() {
-                let exercisePiece = RLMExercisePiece()
-                exercisePiece.progressionMethod = data.0
-                exercisePiece.value = data.1
-                
-                exerciseEntry.exerciseInfo.append(exercisePiece)
-                
-                data.0.setDefaultValue(defaultValue: data.1)
-            }
-            
-            exercise.appendExerciseHistoryEntry(exerciseHistoryEntry: exerciseEntry)
         }
     }
     
@@ -302,6 +280,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         updateToggledStatus()
     }
     
+    // Returns whether or not this exercise is complete (did all sets)
     public func getIsComplete() -> Bool {
         return isComplete
     }
@@ -309,7 +288,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     // MARK: TableViewDelegate Functions
     
     // Called when a cell is deleted
-    func cellDeleted() {
+    func dataDeleted(deletedData: ExerciseHistoryEntry) {
         layoutIfNeeded()
         updateCompleteStatus()
     }

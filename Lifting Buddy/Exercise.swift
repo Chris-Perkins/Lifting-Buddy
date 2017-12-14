@@ -135,10 +135,17 @@ class Exercise: Object {
     }
     
     // Adds an entry to this exercise
-    public func appendExerciseHistoryEntry(exerciseHistoryEntry: ExerciseHistoryEntry) {
+    public func appendExerciseHistoryEntry(_ exerciseHistoryEntry: ExerciseHistoryEntry) {
         let realm = try! Realm()
         try! realm.write {
             exerciseHistory.append(exerciseHistoryEntry)
+        }
+    }
+    
+    public func removeExerciseHistoryEntry(atIndex index: Int) {
+        let realm = try! Realm()
+        try! realm.write {
+            exerciseHistory.remove(at: index)
         }
     }
     

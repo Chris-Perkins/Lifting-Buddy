@@ -80,18 +80,19 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
         // The previous entry to the newest one (second to last)
         var prevEntryToNewest: ExerciseHistoryEntry? = nil
         
+        // Check if there's even history to access so we don't go out of bounds below.
         if exerciseHistory.count >= 1 {
-            // If the exercise info was submitted less than 2 seconds ago,
-            // we assume this is the exercise we're attempting to access.
+            // If the exercise info was submitted when the workout first began (withDateRecorded is that value),
+            // we assume this is an exercise we're attempting to access.
             // Otherwise, we skipped this workout.
-            if exerciseHistory[exerciseHistory.count - 1].date!.seconds(from: withDateRecorded) > -2 {
+            if exerciseHistory[exerciseHistory.count - 1].date!.seconds(from: withDateRecorded) >= 0 {
                 newestEntry = exerciseHistory[exerciseHistory.count - 1]
                 
                 for exerciseEntry in exerciseHistory.reversed() {
                     // If we found something that was not done in the past few seconds
                     // it must be our previous entry!
                     // (small bugs can occur here. Don't think about it too hard.)
-                    if exerciseEntry.date!.seconds(from: withDateRecorded) < -2 {
+                    if exerciseEntry.date!.seconds(from: withDateRecorded) <= 0 {
                         prevEntryToNewest = exerciseEntry
                         break
                     }
@@ -102,10 +103,13 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
         
         // Just used to map everything out while we iterate.
         var dict = Dictionary<ProgressionMethod, (CGFloat?, CGFloat?)>()
+        
+        // Initialize every progression method to have a new value, old value deal.
         for progressionMethod in forExercise.getProgressionMethods() {
-            dict[progressionMethod] = (nil, nil)
+            dict[progressionMethod] = (nil /* new value */, nil /* old value */)
         }
         
+        // TODO: Fetch maximum value per progressionMethod
         if newestEntry != nil {
             for entryPiece in newestEntry!.exerciseInfo {
                 dict[entryPiece.progressionMethod!]!.0 = CGFloat(entryPiece.value!.floatValue!)

@@ -225,6 +225,8 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
             exerciseEntry.date = Date(timeIntervalSinceNow: 0)
             exerciseEntry.exerciseInfo = List<RLMExercisePiece>()
             
+            // For every progressionMethod, set the associated value
+            // TODO: Convert the input views to a tableview to make this less spaghetti.
             for (index, exerciseInputField) in exerciseInputFields.enumerated() {
                 let exercisePiece = RLMExercisePiece()
                 exercisePiece.progressionMethod = progressionMethods[index]
@@ -232,6 +234,8 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
                 
                 exerciseEntry.exerciseInfo.append(exercisePiece)
                 
+                // Set the progressionmethod default value to whatever was entered.
+                // This allows the user to see what value they entered the next time they do their workout.
                 progressionMethods[index].setDefaultValue(defaultValue: exerciseInputField.getValue())
             }
             

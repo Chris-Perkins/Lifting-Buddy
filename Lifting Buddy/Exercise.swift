@@ -209,6 +209,15 @@ public class RLMExercisePiece: Object {
 }
 
 public class ExerciseHistoryEntry: Object {
+    
     @objc public dynamic var date: Date?
     public var exerciseInfo: List<RLMExercisePiece> = List<RLMExercisePiece>()
+    
+    // MARK: Primary key set up
+    // Assign UUID to this object as primary key
+    @objc dynamic private var identifier: String = UUID().uuidString
+    
+    override public static func primaryKey() -> String? {
+        return "identifier"
+    }
 }

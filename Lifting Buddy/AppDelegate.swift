@@ -33,22 +33,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
             // version (if you've never set a schema version before, the version is 0).
-            schemaVersion: 0,
+            schemaVersion: 1,
             
             // Set the block which will be called automatically when opening a Realm with
             // a schema version lower than the one set above
             migrationBlock: { migration, oldSchemaVersion in
-                // We haven’t migrated anything yet, so oldSchemaVersion == 0
-                switch oldSchemaVersion {
-                case 1:
-                    break
-                default:
-                    // TODO: Perform migration
-                    break
+                if oldSchemaVersion <= 0 { // original version
+                    // don't have to do anything! first created.
                 }
-        })
+                if oldSchemaVersion < 1 { // current version ; exercisehistoryentry's now have a fixed primarykey
+                    migration.enumerateObjects(ofType: ExerciseHistoryEntry.className(), { (oldEntry, newEntry) in
+                        newEntry!["identifier"] = UUID().uuidString
+                    })
+                }
+            }
+        )
         
-        let _ = try! Realm(configuration: config) // Invoke migration block if needed
+        let realm = try! Realm(configuration: config) // Invoke migration block if needed
         
         return true
     }

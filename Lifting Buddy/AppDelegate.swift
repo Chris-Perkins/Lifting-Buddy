@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     public static var sessionExercises: Set<Exercise> = Set<Exercise>()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // We need this for views to not be hidden under the keyboard
         IQKeyboardManager.sharedManager().enable = true
         // Start tracking version
         GBVersionTracking.track()
@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Workout.createDefaultWorkouts()
         }
         
+        // Realm migration performing is here
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
             // version (if you've never set a schema version before, the version is 0).
@@ -42,14 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     // don't have to do anything! first created.
                 }
                 if oldSchemaVersion < 1 { // current version ; exercisehistoryentry's now have a fixed primarykey
-                    migration.enumerateObjects(ofType: ExerciseHistoryEntry.className(), { (oldEntry, newEntry) in
+                    migration.enumerateObjects(ofType: ExerciseHistoryEntry.className(), { (nil, newEntry) in
                         newEntry!["identifier"] = UUID().uuidString
                     })
                 }
             }
         )
-        
-        let realm = try! Realm(configuration: config) // Invoke migration block if needed
+        Realm.Configuration.defaultConfiguration = config
+        let _ = try! Realm()
         
         return true
     }

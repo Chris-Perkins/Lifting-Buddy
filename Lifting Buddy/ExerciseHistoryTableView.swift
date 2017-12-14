@@ -19,13 +19,13 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // holds the progressionmethods for this history piece
     private let progressionMethods: List<ProgressionMethod>
     // holds all the values for data
-    private var data: [[String]]
+    private var data: [ExerciseHistoryEntry]
     
     // MARK: Initializers
     
-    init(forExercise: Exercise, style: UITableViewStyle) {
-        progressionMethods = forExercise.getProgressionMethods()
-        data = [[String]]()
+    init(forExercise exercise: Exercise, style: UITableViewStyle) {
+        progressionMethods = exercise.getProgressionMethods()
+        data = [ExerciseHistoryEntry]()
         
         super.init(frame: .zero, style: style)
         
@@ -65,9 +65,9 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         var dataToSend = [(ProgressionMethod, String)]()
         
         // The first progressionMethod will always be reps.
-        for (index, dataPiece) in data[indexPath.row].enumerated() {
+        for (index, dataPiece) in data[indexPath.row].exerciseInfo.enumerated() {
             dataToSend.append((progressionMethods[index],
-                               dataPiece))
+                               dataPiece.value!))
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ExerciseHistoryTableViewCell
@@ -89,14 +89,18 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // MARK: Custom functions
     
     // Append some data to the tableView
-    public func appendDataToTableView(data: [String]) {
+    public func appendDataToTableView(data: ExerciseHistoryEntry) {
+        
+        let realm = try! Realm()
+        print(realm.objects(ExerciseHistoryEntry.self))
+        
         self.data.append(data)
         
         reloadData()
     }
     
     // Retrieve workouts
-    public func getData() -> [[String]] {
+    public func getData() -> [ExerciseHistoryEntry] {
         return data
     }
     

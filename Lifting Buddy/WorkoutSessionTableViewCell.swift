@@ -208,22 +208,36 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // saves workout data
     // Returns true if successful
-    private func addWorkoutDataToTableIfPossible() {
+    private func saveWorkoutDataIfPossible() {
         var canAddSet = true
         for inputField in exerciseInputFields {
+            // Cannot just return here ; all fields will be marked red.
+            // Not all fields are marked red if we return immediately.
             if !(inputField.areFieldsValid()) {
                 canAddSet = false
             }
         }
         
         if canAddSet {
-            var exerciseData = [String]()
-            // todo: add to tableview
-            for inputField in exerciseInputFields {
-                exerciseData.append(inputField.getValue())
+            let progressionMethods = exercise.getProgressionMethods()
+            let exerciseEntry = ExerciseHistoryEntry()
+            exerciseEntry.date = Date(timeIntervalSinceNow: 0)
+            exerciseEntry.exerciseInfo = List<RLMExercisePiece>()
+            
+            
+            for (index, exerciseInputField) in exerciseInputFields.enumerated() {
+                let exercisePiece = RLMExercisePiece()
+                exercisePiece.progressionMethod = progressionMethods[index]
+                exercisePiece.value = exerciseInputField.getValue()
+                
+                exerciseEntry.exerciseInfo.append(exercisePiece)
+                
+                progressionMethods[index].setDefaultValue(defaultValue: exerciseInputField.getValue())
             }
             
-            exerciseHistoryTableView.appendDataToTableView(data: exerciseData)
+            exercise.appendExerciseHistoryEntry(exerciseHistoryEntry: exerciseEntry)
+            
+            exerciseHistoryTableView.appendDataToTableView(data: exerciseEntry)
         }
     }
     
@@ -270,7 +284,7 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
             isToggled = !isToggled
             updateToggledStatus()
         case addSetButton:
-            addWorkoutDataToTableIfPossible()
+            saveWorkoutDataIfPossible()
             exerciseHistoryTableView.layoutIfNeeded()
             exerciseHistoryTableView.reloadData()
             updateCompleteStatus()

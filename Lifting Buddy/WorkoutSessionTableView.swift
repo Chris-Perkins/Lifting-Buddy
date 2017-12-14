@@ -175,13 +175,6 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
             viewDelegate?.updateCompleteStatus(isComplete: false)
         }
     }
-    
-    // Saves the workout data
-    public func saveWorkoutData() {
-        for cell in cells {
-            cell.saveWorkoutData()
-        }
-    }
 }
 
 extension WorkoutSessionTableView: WorkoutSessionTableViewCellDelegate {

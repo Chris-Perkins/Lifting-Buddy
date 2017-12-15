@@ -85,8 +85,6 @@ class CreateExerciseView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        progressionsTableView.isUserInteractionEnabled = editingExercise?.canModifyCoreProperties ?? true
-        
         // If the exercise was deleted...
         if editingExercise?.isInvalidated == true {
             let alert = UIAlertController(title: "Exercise deleted",
@@ -121,9 +119,12 @@ class CreateExerciseView: UIScrollView {
         
         // Progressions Table View
         // Prevent clipping as we can click and drag cells
+        // Prevent interaction if we can't modify progressionMethods
         progressionsTableView.clipsToBounds = false
         progressionsTableView.isScrollEnabled = false
         progressionsTableView.backgroundColor = .clear
+        progressionsTableView.isUserInteractionEnabled = editingExercise?.canModifyCoreProperties ?? true
+        progressionsTableView.alpha = (editingExercise?.canModifyCoreProperties ?? true) ? 1 : 0.75
         
         // Add progression method button
         addProgressionTrackerButton.setDefaultProperties()
@@ -170,6 +171,7 @@ class CreateExerciseView: UIScrollView {
                 removeSelfNicelyWithAnimation()
             }
         case cancelButton:
+            // Just close.
             removeSelfNicelyWithAnimation()
         default:
             fatalError("User pressed a button that does not exist in switch?")

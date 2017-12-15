@@ -14,6 +14,18 @@ class WorkoutSessionSummaryView: UIView {
     
     // MARK: View properties
     
+    // The delegate for who's handling when this session ends
+    public var workoutSessionDelegate: WorkoutSessionStarter?
+    
+    // Please make sure the below views add up to something below 1, or you'll face weird constraints.
+    // any remaining space will go towards the gain label.
+    // The width compared to this view's width
+    public static let pgmLabelWidthOfView: CGFloat = 0.5
+    //  The width of dataView compared to this view's width
+    public static let newDataLabelWidthOfView: CGFloat = 0.25
+    
+    // The view which contains all header information
+    private let headerView: UIView
     // The title label for this view
     private let titleLabel: UILabel
     // The table view holding all the data of this past workout
@@ -21,11 +33,16 @@ class WorkoutSessionSummaryView: UIView {
     // A button the user should press if we're trying to close this view
     private let closeButton: PrettyButton
     
-    public var workoutSessionDelegate: WorkoutSessionStarter?
+    private var workout: Workout?
+    private var exercises: List<Exercise>
     
     // MARK: Init methods
     
     init(workout: Workout?, exercises: List<Exercise>) {
+        self.workout = workout
+        self.exercises = exercises
+        
+        headerView = UIView()
         titleLabel = UILabel()
         summaryTableView = WorkoutSessionSummaryTableView(workout: workout,
                                                           exercises: exercises,
@@ -34,7 +51,8 @@ class WorkoutSessionSummaryView: UIView {
         
         super.init(frame: .zero)
         
-        addSubview(titleLabel)
+        addSubview(headerView)
+            headerView.addSubview(titleLabel)
         addSubview(summaryTableView)
         addSubview(closeButton)
         
@@ -42,6 +60,7 @@ class WorkoutSessionSummaryView: UIView {
                               action: #selector(buttonPress(sender:)),
                               for: .touchUpInside)
         
+        createAndActivateHeaderViewConstraints()
         createAndActivateTitleLabelConstraints()
         createAndActivateSummaryTableViewConstraints()
         createAndActivateCloseButtonConstraints()
@@ -59,10 +78,12 @@ class WorkoutSessionSummaryView: UIView {
         // This view's layout
         backgroundColor = .niceGray
         
+        // Header View
+        headerView.backgroundColor = .niceLightBlue
+        
         // Title label
         titleLabel.setDefaultProperties()
         titleLabel.textColor = .white
-        titleLabel.backgroundColor = .niceLightBlue
         titleLabel.text = "Workout Summary"
         
         // Close button
@@ -76,7 +97,7 @@ class WorkoutSessionSummaryView: UIView {
     @objc private func buttonPress(sender: UIButton) {
         switch sender {
         case closeButton:
-            workoutSessionDelegate?.endSession!()
+            workoutSessionDelegate?.endSession(workout: workout, exercises: exercises)
             removeSelfNicelyWithAnimation()
         default:
             fatalError("Button pressed that was not set up")
@@ -86,20 +107,39 @@ class WorkoutSessionSummaryView: UIView {
     // MARK: Constraint Functions
     
     // Cling to top, left, right ; height 30
-    private func createAndActivateTitleLabelConstraints() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func createAndActivateHeaderViewConstraints() {
+        headerView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: headerView,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: headerView,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: headerView,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: titleLabel,
                                                          height: 30).isActive = true
+    }
+    
+    
+    private func createAndActivateTitleLabelConstraints() {
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .width,
+                                                             multiplier: WorkoutSessionSummaryView.pgmLabelWidthOfView).isActive = true
     }
     
     // Below title label ; Cling to left, right. Place above the close button
@@ -107,7 +147,7 @@ class WorkoutSessionSummaryView: UIView {
         summaryTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewBelowViewConstraint(view: summaryTableView,
-                                                         belowView: titleLabel).isActive = true
+                                                         belowView: headerView).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: summaryTableView,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true

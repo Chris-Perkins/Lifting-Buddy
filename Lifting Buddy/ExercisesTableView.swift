@@ -145,9 +145,9 @@ extension ExercisesTableView : UITableViewDelegate {
             
             let exercise = sortedData[indexPath.row]
             
-            if exercise.canModifyCoreProperties {
+            if !exercise.canModifyCoreProperties {
                 let alert = UIAlertController(title: "Cannot Delete",
-                                              message: "The selected exercise cannot be deleted as it is being used in an active workout session.",
+                                              message: "The selected exercise cannot be deleted as it is being used in an active workout.",
                                               preferredStyle: .alert)
                 
                 let okAction = UIAlertAction(title: "Ok",

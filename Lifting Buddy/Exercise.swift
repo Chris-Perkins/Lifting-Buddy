@@ -142,10 +142,19 @@ class Exercise: Object {
         }
     }
     
-    public func removeExerciseHistoryEntry(atIndex index: Int) {
+    public func removeExerciseHistoryEntry(_ removeEntry: ExerciseHistoryEntry) {
         let realm = try! Realm()
         try! realm.write {
-            exerciseHistory.remove(at: index)
+            // We go in reverse because it's MOST likely we're calling this from
+            // an active workout session, where all entries are newly created (in the back).
+            for (index, entry) in exerciseHistory.enumerated().reversed() {
+                if entry == removeEntry {
+                    exerciseHistory.remove(at: index)
+                    // Only delete if this is the right entry.
+                    realm.delete(entry)
+                    break
+                }
+            }
         }
     }
     

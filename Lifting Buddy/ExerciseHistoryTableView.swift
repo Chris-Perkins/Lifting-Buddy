@@ -49,8 +49,11 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // allow cell deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            tableViewDelegate?.dataDeleted(deletedData: data[indexPath.row])
+            let deletionData = data[indexPath.row]
+            
+            // Have to remove data beforehand otherwise the cell completestatus doesn't update properly.
             data.remove(at: indexPath.row)
+            tableViewDelegate?.dataDeleted(deletedData: deletionData)
             reloadData()
         }
     }

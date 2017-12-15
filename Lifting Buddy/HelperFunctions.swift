@@ -367,7 +367,7 @@ extension UIView {
                                                              attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: coveringView,
                                                              withCopyView: inView,
-                                                             attribute: .right).isActive = true
+                                                             attribute: .width).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: coveringView,
                                                              withCopyView: inView,
                                                              attribute: .height).isActive = true

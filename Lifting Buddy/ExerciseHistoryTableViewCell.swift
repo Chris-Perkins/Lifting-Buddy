@@ -46,6 +46,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     
     // MARK: Encapsulated Methods
     
+    // Sets the data to be shown in this view ; causes all views to update.
     public func setData(data: [(ProgressionMethod, String)]) {
         removeAllSubviews()
         addSubview(setLabel)
@@ -53,6 +54,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
         createAndActivateDataDisplayConstraints(withData: data)
     }
     
+    // Simply returns out data
     public func getData() -> [(ProgressionMethod, String)] {
         return data
     }
@@ -77,18 +79,22 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     }
     
     // Bind to view; place below the UIView
+    // We do this all in one shot to simplify the code a little more.
     private func createAndActivateDataDisplayConstraints(withData: [(ProgressionMethod, String)]) {
         data = withData
         var prevView: UIView = setLabel
         
+        // First, gather every data piece of progressionmethods and values.
         for dataPiece in withData {
             let progressionMethodLabel = UILabel()
             displayViews.append(progressionMethodLabel)
             
-            progressionMethodLabel.text = dataPiece.0.getName()!
+            // Set the label to display the progression method's name
             progressionMethodLabel.setDefaultProperties()
+            progressionMethodLabel.text = dataPiece.0.getName()!
             progressionMethodLabel.font = UIFont.systemFont(ofSize: 18.0)
             
+            // The label that displays the data we're displaying
             let dataLabel = UILabel()
             displayViews.append(dataLabel)
             dataLabel.textColor = UIColor.black.withAlphaComponent(0.25)
@@ -98,8 +104,11 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
             addSubview(progressionMethodLabel)
             addSubview(dataLabel)
             
+            /// Progression Method Label Constraints
+            
             progressionMethodLabel.translatesAutoresizingMaskIntoConstraints = false
             
+            // The pgm label should take up half of this view's width ; clings to right, top, bottom of this view.
             NSLayoutConstraint.createViewAttributeCopyConstraint(view: progressionMethodLabel,
                                                                  withCopyView: self,
                                                                  attribute: .right).isActive = true
@@ -118,11 +127,21 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
                                                              height: ExerciseHistoryTableViewCell.heightPerProgressionMethod
                 ).isActive = true
             
+            
+            /// Data Label Constraints
+            
             dataLabel.translatesAutoresizingMaskIntoConstraints = false
             
+            // cling to left, top, bottom of this view ; right edge clings to progression method left edge.
             NSLayoutConstraint.createViewAttributeCopyConstraint(view: dataLabel,
                                                                  withCopyView: self,
                                                                  attribute: .left).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: dataLabel,
+                                                                 withCopyView: progressionMethodLabel,
+                                                                 attribute: .top).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: dataLabel,
+                                                                 withCopyView: progressionMethodLabel,
+                                                                 attribute: .bottom).isActive = true
             NSLayoutConstraint(item: progressionMethodLabel,
                                attribute: .left,
                                relatedBy: .equal,
@@ -130,12 +149,6 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
                                attribute: .right,
                                multiplier: 1,
                                constant: 0).isActive = true
-            NSLayoutConstraint.createViewAttributeCopyConstraint(view: dataLabel,
-                                                                 withCopyView: progressionMethodLabel,
-                                                                 attribute: .top).isActive = true
-            NSLayoutConstraint.createViewAttributeCopyConstraint(view: dataLabel,
-                                                                 withCopyView: progressionMethodLabel,
-                                                                 attribute: .bottom).isActive = true
             
             prevView = progressionMethodLabel
         }

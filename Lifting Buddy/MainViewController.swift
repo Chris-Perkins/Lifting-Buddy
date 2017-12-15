@@ -11,10 +11,13 @@ import RealmSwift
 import Realm
 
 class MainViewController: UIViewController {
+    
     // MARK: IBOutlets
     
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var sectionContentView: UIView!
+    
+    // MARK: View properties
     
     private var sessionView: WorkoutSessionView? = nil
     private var workoutView: WorkoutsView? = nil
@@ -70,7 +73,7 @@ extension MainViewController: WorkoutSessionStarter {
                              exercise: exercise)
         } else {
             let alert = UIAlertController(title: "Quit current workout session?",
-                                          message: "To start a new session, you must end your current session. All data from the active workout session will not be saved. Continue?",
+                                          message: "To start a new session, you must end your current session. Continue?",
                                           preferredStyle: .alert)
             let cancelButton = UIAlertAction(title: "Cancel",
                                              style: .cancel,
@@ -78,6 +81,7 @@ extension MainViewController: WorkoutSessionStarter {
             let continueButton = UIAlertAction(title: "Continue",
                                                style: .destructive,
                                                handler: { UIAlertAction -> Void in
+                    self.sessionView?.endSession()
                     self.showSession(workout: workout,
                                     exercise: exercise)
                 })
@@ -121,9 +125,11 @@ extension MainViewController: WorkoutSessionStarter {
     }
     
     // On workout end, navigate back to the workout view.
-    func endSession() {
+    func endSession(workout: Workout?, exercises: List<Exercise>) {
         AppDelegate.sessionWorkout = nil
-        AppDelegate.sessionExercises.removeAll()
+        for exercise in exercises {
+            AppDelegate.sessionExercises.remove(exercise)
+        }
         
         showContentView(viewType: SectionView.ContentViews.WORKOUTS)
         sessionView = nil
@@ -140,7 +146,7 @@ extension MainViewController: ShowViewDelegate {
     }
 }
 
-@objc protocol WorkoutSessionStarter {
+protocol WorkoutSessionStarter {
     /*
      * Notified when a workout is starting
      */
@@ -149,5 +155,5 @@ extension MainViewController: ShowViewDelegate {
     /*
      * Notified when a workout is ending
      */
-    @objc optional func endSession()
+    func endSession(workout withWorkout: Workout?, exercises: List<Exercise>)
 }

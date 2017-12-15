@@ -293,6 +293,13 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     
     // Called when a cell is deleted
     func dataDeleted(deletedData: ExerciseHistoryEntry) {
+        let realm = try! Realm()
+        print(realm.objects(ExerciseHistoryEntry.self))
+        
+        exercise.removeExerciseHistoryEntry(deletedData)
+        
+        print(realm.objects(ExerciseHistoryEntry.self))
+        
         layoutIfNeeded()
         updateCompleteStatus()
     }

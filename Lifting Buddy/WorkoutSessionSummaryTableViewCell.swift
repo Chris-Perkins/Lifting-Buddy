@@ -315,7 +315,7 @@ class ProgressionMethodSummaryView: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
                                                              withCopyView: self,
                                                              attribute: .width,
-                                                             multiplier: 0.5).isActive = true
+                                                             multiplier: WorkoutSessionSummaryView.pgmLabelWidthOfView).isActive = true
     }
     
     // Cling to top, bottom ; cling to right of titlelabel ; width of this view * 0.25
@@ -338,7 +338,7 @@ class ProgressionMethodSummaryView: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: newValueLabel,
                                                              withCopyView: self,
                                                              attribute: .width,
-                                                             multiplier: 0.25).isActive = true
+                                                             multiplier: WorkoutSessionSummaryView.newDataLabelWidthOfView).isActive = true
     }
     
     // Cling to right, top, bottom of view ; cling to right of newresultlabel

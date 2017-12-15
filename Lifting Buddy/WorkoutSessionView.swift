@@ -17,24 +17,24 @@ class WorkoutSessionView: UIScrollView {
     // The date we last initialized this view
     public static var dateLastInitialized: Date = Date.init(timeIntervalSinceNow: 0)
     
+    // Delegate to notify on workout start
+    public var workoutSessionDelegate: WorkoutSessionStarter?
+    
     // Workout for this view
     private var workout: Workout?
     // Whether or not the workout is complete
     private var isComplete: Bool = false
     
-    // The name label for this exercise
-    private let workoutNameLabel: UILabel
     // The tableview holding EVERYTHING!!!
     public let workoutSessionTableView: WorkoutSessionTableView
+    // The name label for this exercise
+    private let workoutNameLabel: UILabel
     // Button press to add an exercise to this workout
     private let addExerciseButton: PrettyButton
     // the complete button for the exercise
     private let completeButton: PrettyButton
     // A button we can press to hide this view
     private let cancelButton: PrettyButton
-    
-    // Delegate to notify on workout start
-    public var workoutSessionDelegate: WorkoutSessionStarter?
     
     // MARK: Inits
     
@@ -88,27 +88,32 @@ class WorkoutSessionView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        // Self stuff
+        contentSize = CGSize(width: frame.width,
+                             height: cancelButton.frame.maxY + 20)
+        
+        // Workout Name Label
         workoutNameLabel.setDefaultProperties()
         workoutNameLabel.text = workout?.getName() ?? "Custom Workout"
         //workoutNameLabel.backgroundColor = .white
         
+        // Add Exercise Button
         addExerciseButton.setDefaultProperties()
         addExerciseButton.setTitle("Add Exercise to Workout",
                                    for: .normal)
         
+        // Complete button
         // Modified by another method based on current complete
         completeButton.setOverlayStyle(style: .FADE)
         completeButton.setOverlayColor(color: .niceYellow)
         completeButton.setTitle("Finish Workout",
                                 for: .normal)
         
+        // Cancel Button
         cancelButton.setDefaultProperties()
         cancelButton.backgroundColor = .niceRed
         cancelButton.setTitle("Cancel Workout",
                               for: .normal)
-        
-        contentSize = CGSize(width: frame.width,
-                             height: cancelButton.frame.maxY + 20)
     }
     
     // MARK: Private functions
@@ -164,7 +169,7 @@ class WorkoutSessionView: UIScrollView {
         case cancelButton:
             // Confirm that the user indeed wants to cancel this workout
             let alert = UIAlertController(title: "Cancel Workout?",
-                                          message: "Canceling will cause all data from this workout to be lost. Continue?",
+                                          message: "This will not delete any previously saved set data. Continue?",
                                           preferredStyle: .alert)
             
             let cancelAction = UIAlertAction(title: "Cancel",
@@ -173,7 +178,7 @@ class WorkoutSessionView: UIScrollView {
             let okAction = UIAlertAction(title: "Ok",
                                          style: .default,
                                          handler: {(UIAlertAction) -> Void in
-                self.workoutSessionDelegate?.endSession!()
+                         self.endSession()
             })
             
             alert.addAction(cancelAction)
@@ -183,6 +188,11 @@ class WorkoutSessionView: UIScrollView {
         default:
             fatalError("Button pressed that does not exist?")
         }
+    }
+    
+    // Ends the session by calling delegate
+    public func endSession() {
+        self.workoutSessionDelegate?.endSession(workout: workout, exercises: workoutSessionTableView.getData())
     }
     
     // MARK: View Constraints
@@ -302,11 +312,12 @@ extension WorkoutSessionView: WorkoutSessionTableViewDelegate {
 }
 
 extension WorkoutSessionView: ShowViewDelegate {
+    // Should only be called by a session view. slide it over.
     func showView(_ view: UIView) {
         // Need to call upon the superview as this is a scroll view.
         // Scroll views
-        self.superview?.addSubview(view)
-        UIView.slideView(view, overView: self.superview!)
+        addSubview(view)
+        UIView.slideView(view, overView: self)
     }
 }
 
@@ -314,6 +325,7 @@ extension WorkoutSessionView: ExercisePickerDelegate {
     // Add this data to our tableview
     func didSelectExercise(exercise: Exercise) {
         workoutSessionTableView.appendDataToTableView(data: exercise)
+        // Since this exercise is now a part of the workout, we should add it as such.
         AppDelegate.sessionExercises.insert(exercise)
     }
 

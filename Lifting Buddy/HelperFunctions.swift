@@ -357,6 +357,9 @@ extension UITextField {
 extension UIView {
     // Shows a view over this view using constraints
     static func slideView(_ coveringView: UIView, overView inView: UIView) {
+        // Don't want user interacting with the view if it shouldn't be interactable at this time.
+        inView.isUserInteractionEnabled = false
+        
         inView.addSubview(coveringView)
         
         // Constraints take up the whole view. Start above the view (not visible)
@@ -390,6 +393,8 @@ extension UIView {
         // Animate the transition between top to bottom to slide down
         UIView.animate(withDuration: 0.2, animations: {
             inView.layoutIfNeeded()
+        }, completion: {Bool in
+            inView.isUserInteractionEnabled = true
         })
     }
     

@@ -90,11 +90,12 @@ class ExercisesTableView: UITableView {
 
 // MARK: TableViewDelegate Functions
 extension ExercisesTableView : UITableViewDelegate {
-    // Each cell has a height of cellHeight
+    // If the cell is selected, it should be expanded if we're not selecting an exercise.
+    // Otherwise, give it the default cell height.
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let pgmCount = CGFloat(sortedData[indexPath.row].getProgressionMethods().count)
         
-        return indexPathForSelectedRow?.row == indexPath.row ?
+        return indexPathForSelectedRow?.row == indexPath.row && !selectingExercise ?
             // The height for when toggled depends on the number of progression methods.
             // If there are no progression methods, no graph and no spacing occurs.
             UITableViewCell.defaultHeight + PrettyButton.defaultHeight +
@@ -104,7 +105,7 @@ extension ExercisesTableView : UITableViewDelegate {
             UITableViewCell.defaultHeight
     }
     
-    // On select, expand the cell.
+    // On select, expand the cell if we're not selecting an exercise
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let cell = cellForRow(at: indexPath) as! ExerciseTableViewCell
         
@@ -131,7 +132,7 @@ extension ExercisesTableView : UITableViewDelegate {
         }
     }
     
-    // Selected a table view cell
+    // Selected a table view cell; if selectingexercise, return it.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectingExercise {
             exercisePickerDelegate?.didSelectExercise(exercise: sortedData[indexPath.row])

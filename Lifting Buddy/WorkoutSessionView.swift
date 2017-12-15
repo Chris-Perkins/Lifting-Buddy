@@ -128,11 +128,13 @@ class WorkoutSessionView: UIScrollView {
         workout?.incrementWorkoutCount()
         workout?.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
         
-        let view = WorkoutSessionSummaryView(workout: workout,
-                                             exercises: workoutSessionTableView.getData())
-        view.workoutSessionDelegate = workoutSessionDelegate
+        let summaryView = WorkoutSessionSummaryView(workout: workout,
+                                                    exercises: workoutSessionTableView.getData())
+        summaryView.workoutSessionDelegate = workoutSessionDelegate
         
-        showView(view)
+        showView(summaryView)
+        
+        workoutSessionDelegate?.sessionViewChanged(toView: summaryView)
     }
     
     // MARK: Event functions
@@ -318,9 +320,8 @@ extension WorkoutSessionView: ShowViewDelegate {
     // Should only be called by a session view. slide it over.
     func showView(_ view: UIView) {
         // Need to call upon the superview as this is a scroll view.
-        // Scroll views
-        addSubview(view)
-        UIView.slideView(view, overView: self)
+        superview!.addSubview(view)
+        UIView.slideView(view, overView: superview!)
     }
 }
 

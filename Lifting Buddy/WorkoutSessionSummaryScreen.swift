@@ -92,6 +92,13 @@ class WorkoutSessionSummaryView: UIView {
                              for: .normal)
     }
     
+    // MARK: Custom functions
+    
+    public func endSession() {
+        workoutSessionDelegate?.endSession(workout: workout, exercises: exercises)
+        removeSelfNicelyWithAnimation()
+    }
+    
     // MARK: Event functions
     
     @objc private func buttonPress(sender: UIButton) {

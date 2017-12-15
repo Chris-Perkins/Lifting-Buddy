@@ -19,7 +19,11 @@ class MainViewController: UIViewController {
     
     // MARK: View properties
     
-    private var sessionView: WorkoutSessionView? = nil
+    // Cache the views so data is stored between user navigation.
+    
+    // The session view is special since it's main view can change.
+    // Possibilities are workoutsession or summaryscreen.
+    private var sessionView: UIView? = nil
     private var workoutView: WorkoutsView? = nil
     private var exercisesView: ExercisesView? = nil
     private var aboutView: AboutView? = nil
@@ -73,7 +77,8 @@ extension MainViewController: WorkoutSessionStarter {
                              exercise: exercise)
         } else {
             let alert = UIAlertController(title: "Quit current workout session?",
-                                          message: "To start a new session, you must end your current session. Continue?",
+                                          message: "To start a new session, you must end your current session.\n" +
+                                                    "You will not gain streak progress. Continue?",
                                           preferredStyle: .alert)
             let cancelButton = UIAlertAction(title: "Cancel",
                                              style: .cancel,
@@ -81,7 +86,10 @@ extension MainViewController: WorkoutSessionStarter {
             let continueButton = UIAlertAction(title: "Continue",
                                                style: .destructive,
                                                handler: { UIAlertAction -> Void in
-                    self.sessionView?.endSession()
+                    // Note: The below lines are done to free the AppDelegate lock
+                    // On workouts whose sessions have not ended.
+                    (self.sessionView as? WorkoutSessionView)?.endSession()
+                    (self.sessionView as? WorkoutSessionSummaryView)?.endSession()
                     self.showSession(workout: workout,
                                     exercise: exercise)
                 })
@@ -114,10 +122,10 @@ extension MainViewController: WorkoutSessionStarter {
         sessionView = WorkoutSessionView(workout: workout,
                                          frame: .zero)
         // We need to set the session delegate to know when "endSession" is called
-        sessionView?.workoutSessionDelegate = self
+        (sessionView as! WorkoutSessionView).workoutSessionDelegate = self
         
         if let appendedExercise = exercise {
-            sessionView!.workoutSessionTableView.appendDataToTableView(data: appendedExercise)
+            (sessionView as! WorkoutSessionView).workoutSessionTableView.appendDataToTableView(data: appendedExercise)
         }
         
         headerView.sectionView.showSessionButton()
@@ -134,6 +142,10 @@ extension MainViewController: WorkoutSessionStarter {
         showContentView(viewType: SectionView.ContentViews.WORKOUTS)
         sessionView = nil
         headerView.sectionView.hideSessionButton()
+    }
+    
+    func sessionViewChanged(toView view: UIView) {
+        sessionView = view
     }
 }
 
@@ -156,4 +168,9 @@ protocol WorkoutSessionStarter {
      * Notified when a workout is ending
      */
     func endSession(workout withWorkout: Workout?, exercises: List<Exercise>)
+    
+    /*
+     * Notified when the sessionview's mainview changed
+     */
+    func sessionViewChanged(toView view: UIView)
 }

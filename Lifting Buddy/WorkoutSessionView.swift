@@ -123,8 +123,11 @@ class WorkoutSessionView: UIScrollView {
         workout?.incrementWorkoutCount()
     }
     
-    // Completes this workout, dismisses the view.
+    // When we complete the workout, show the summary screen.
     private func completeWorkout() {
+        workout?.incrementWorkoutCount()
+        workout?.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
+        
         let view = WorkoutSessionSummaryView(workout: workout,
                                              exercises: workoutSessionTableView.getData())
         view.workoutSessionDelegate = workoutSessionDelegate

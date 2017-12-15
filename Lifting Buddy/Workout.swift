@@ -404,7 +404,7 @@ class Workout: Object {
         repsPGM.setDefaultValue(defaultValue: "10")
         
         weightPGM = ProgressionMethod.createWeightPGM()
-        weightPGM.setIndex(index: 0)
+        weightPGM.setIndex(index: 1)
         
         legCurls.appendProgressionMethod(progressionMethod: repsPGM)
         legCurls.appendProgressionMethod(progressionMethod: weightPGM)

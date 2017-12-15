@@ -13,7 +13,7 @@ import RealmSwift
 func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                     filterProgressionMethods: Set<ProgressionMethod> = Set<ProgressionMethod>(),
                                     timeAmount: TimeAmount,
-                                    frame: CGRect) -> Chart {
+                                    frame: CGRect) -> (Chart, Bool) {
     
     let labelSettings = ChartLabelSettings(font: UIFont.systemFont(ofSize: 18),
                                            fontColor: .niceBlue)
@@ -33,13 +33,21 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     
     // the minimum date we've encountered (used in displaying all-time)
     var minimumDate = Date.init(timeIntervalSinceNow: 0)
+    var maximumDate = Date.init(timeIntervalSince1970: 0)
+    
+    // Used in determining the y-axis maximum and minimums for graphing
     var maxDataValue: Float = 0
     var minDataValue: Float = 0
     
+    // If we have multiple of the same chart, we can graph.
+    // If we don't, we can't graph (lines require 2 points)
+    var containsLine = false
     
+    // This for loop gets all points for all progressionmethods in the history
     for exerciseHistoryEntry in exerciseHistory {
         // Update the minimum date
         minimumDate = min(minimumDate, exerciseHistoryEntry.date!)
+        maximumDate = max(maximumDate, exerciseHistoryEntry.date!)
         
         // Gets the max per progression method to be displayed
         for exercisePiece in exerciseHistoryEntry.exerciseInfo {
@@ -53,8 +61,10 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                                   displayFormatter: displayFormatter)
                 
                 // If the key is in the dictionary, append it!
+                // This also means a line exists (point already appended before)
                 if let _ = pointDictionary[progressionMethod] {
                     pointDictionary[progressionMethod]!.append(chartPoint)
+                    containsLine = true
                 } else {
                     pointDictionary[progressionMethod] = [chartPoint]
                 }
@@ -64,7 +74,8 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
             }
         }
     }
-    
+
+    // Now create line models for every progression method
     for (progressionMethod, points) in pointDictionary {
         lineModels.append(ChartLineModel(chartPoints: points,
                                          lineColors: getLineColorsForProgressionMethod(progressionMethod: progressionMethod),
@@ -144,17 +155,21 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
                                                      yAxisLayer: yAxisLayer,
                                                      settings: settings)
     
-    return Chart(
-        frame: chartFrame,
-        innerFrame: innerFrame,
-        settings: chartSettings,
-        layers: [
-            xAxisLayer,
-            yAxisLayer,
-            guidelinesLayer,
-            chartPointsLineLayer
-        ]
-    )
+    return (Chart(
+                frame: chartFrame,
+                innerFrame: innerFrame,
+                settings: chartSettings,
+                layers: [
+                    xAxisLayer,
+                    yAxisLayer,
+                    guidelinesLayer,
+                    chartPointsLineLayer
+                ]
+            ),
+            // If we did a workout at least twenty-four hours afterward, we can view distance on the graph.
+            // Also, make sure there is a valid line to graph. Otherwise... Why graph?
+            (maximumDate.seconds(from: minimumDate) >= 24 * 60 * 60) && containsLine
+        )
 }
 
 func getLineColorsForProgressionMethod(progressionMethod: ProgressionMethod) -> [UIColor] {

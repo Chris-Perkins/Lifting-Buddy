@@ -78,31 +78,48 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
     
     // MARK: Custom view functions
     
+    /*
+     Every progression method gets a button of some height (lines 1 + 2)
+     Also, every graph needs a time selection view and the chart height (line 3)
+     Totals up to what this return statement says.
+     */
     static func getNecessaryHeightForExerciseGraph(exercise: Exercise) -> CGFloat {
-        // If we have stuff to graph, get height necessary
-        if exercise.getExerciseHistory().count > 1 {
-            return CGFloat(exercise.getProgressionMethods().count) *
+        return CGFloat(exercise.getProgressionMethods().count) *
                 ExerciseChartViewWithToggles.heightPerProgressionMethodButton +
                 PrettySegmentedControl.defaultHeight + Chart.defaultHeight
-        } else {
-            // Otherwise, there is nothing to graph. Show nothing.
-            return 0
-        }
     }
     
     // Creates a chart with the given selected information
     public func createChart() {
-        chart?.view.removeFromSuperview()
+        // Remove any view from chart frame so we don't draw over and over
+        chartFrame.removeAllSubviews()
         
-        chart = createChartFromExerciseHistory(exerciseHistory: exercise.getExerciseHistory(),
-                                               filterProgressionMethods: filterProgressionMethods,
-                                               timeAmount: selectedTimeAmount,
-                                               frame: CGRect(x: 0,
-                                                             y: 0,
-                                                             width: chartWidth,
-                                                             height: Chart.defaultHeight))
-        chart!.view.backgroundColor = .white
-        chartFrame.addSubview(chart!.view)
+        let frame = CGRect(x: 0,
+                           y: 0,
+                           width: chartWidth,
+                           height: Chart.defaultHeight)
+        
+        // Create chart returns (chart, bool) representing the chart, and if the graph is viewable to the user.
+        let chartInfo = createChartFromExerciseHistory(exerciseHistory: exercise.getExerciseHistory(),
+                                                       filterProgressionMethods: filterProgressionMethods,
+                                                       timeAmount: selectedTimeAmount,
+                                                       frame: frame)
+        // If the graph is viewable to the user, work it!
+        if chartInfo.1 {
+            chart = chartInfo.0
+            chart!.view.backgroundColor = .white
+            chartFrame.addSubview(chart!.view)
+        } else {
+            let cannotGraphView = UILabel(frame: frame)
+            cannotGraphView.backgroundColor = UIColor.niceGray
+            cannotGraphView.textColor = UIColor.niceBlue
+            cannotGraphView.textAlignment = .center
+            cannotGraphView.numberOfLines = 3
+            cannotGraphView.text = "Not enough information to graph.\n" +
+                                    "Please complete this exercise on multiple different days."
+            
+            chartFrame.addSubview(cannotGraphView)
+        }
         
         layoutSubviews()
     }
@@ -112,6 +129,7 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
         if chart != nil {
             chart?.view.removeFromSuperview()
             chart = nil
+            chartFrame.removeAllSubviews()
             layoutSubviews()
         }
     }

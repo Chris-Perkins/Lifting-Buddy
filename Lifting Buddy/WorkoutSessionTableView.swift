@@ -98,11 +98,6 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             deleteData(at: indexPath.row)
-            
-            let realm = try! Realm()
-            try! realm.write {
-                data.remove(at: indexPath.row)
-            }
         }
     }
     
@@ -198,6 +193,9 @@ extension WorkoutSessionTableView: WorkoutSessionTableViewCellDelegate {
 extension WorkoutSessionTableView: CellDeletionDelegate {
     // Deletes all data that we can
     func deleteData(at index: Int) {
+        /*
+            We need check if < cells.count because cells are not all generated at once.
+        */
         if index < cells.count {
             if cells[index].getIsComplete() {
                 /* if this cell was complete, make sure that we remove it from curComplete int! */
@@ -207,6 +205,10 @@ extension WorkoutSessionTableView: CellDeletionDelegate {
             cells.remove(at: index)
         }
         
+        let realm = try! Realm()
+        try! realm.write {
+            data.remove(at: index)
+        }
         heights.remove(at: index)
         checkComplete()
         reloadData()

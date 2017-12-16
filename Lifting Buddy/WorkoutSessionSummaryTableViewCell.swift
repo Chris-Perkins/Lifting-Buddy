@@ -256,7 +256,7 @@ class ProgressionMethodSummaryView: UIView {
         
         if let newValue = newValue {
             newValueLabel.textColor = .niceBlue
-            newValueLabel.text = String(describing: newValue)
+            newValueLabel.text = String(format: "%.1f", newValue)
             newValueLabel.backgroundColor = UIColor.niceLightBlue.withAlphaComponent(0.2)
             
             if let oldValue = oldValue {
@@ -274,11 +274,11 @@ class ProgressionMethodSummaryView: UIView {
                 
                 // Add a "+" char to symbolize that we gained some weight
                 differenceLabel.text = (newValue >= oldValue ? "+" : "") +
-                    String(describing: newValue - oldValue)
+                    String(format: "%.1f", newValue - oldValue)
             } else {
                 differenceLabel.textColor = .niceGreen
                 differenceLabel.backgroundColor = UIColor.niceGreen.withAlphaComponent(0.2)
-                differenceLabel.text = String(describing: newValue)
+                differenceLabel.text = String(format: "%.1f", newValue)
             }
         } else {
             differenceLabel.textColor = .niceRed

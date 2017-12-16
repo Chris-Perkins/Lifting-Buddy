@@ -47,11 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         newEntry!["identifier"] = UUID().uuidString
                     })
                 }
-                if oldSchemaVersion < 2 { // progressionmethods are given a maximum value
+                /*if oldSchemaVersion < 2 { // progressionmethods are given a maximum value
                     migration.enumerateObjects(ofType: ProgressionMethod.className(), { (nil, newEntry) in
                         newEntry!["maxValue"] = nil
                     })
-                }
+                }*/
             }
         )
         Realm.Configuration.defaultConfiguration = config

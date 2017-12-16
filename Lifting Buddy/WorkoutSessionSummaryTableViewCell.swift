@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
@@ -68,62 +70,51 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
     // Gets the progression method, new value, and old value for data based on an exercise.
     private func getDataForSummaryViews(forExercise: Exercise,
-                                        withDateRecorded: Date) -> [(ProgressionMethod, CGFloat?, CGFloat?)] {
+                                        withDateRecorded: Date) -> [(ProgressionMethod, Float?, Float?)] {
         // The data we'll be returning
-        var returnData = [(ProgressionMethod, CGFloat?, CGFloat?)]()
+        var returnData = [(ProgressionMethod, Float?, Float?)]()
         
         // A shorter name for easier calls
         let exerciseHistory = forExercise.getExerciseHistory()
         
-        // The newest entry (the one we should have just entered...)
-        var newestEntry: ExerciseHistoryEntry? = nil
-        // The previous entry to the newest one (second to last)
-        var prevEntryToNewest: ExerciseHistoryEntry? = nil
-        
-        // Check if there's even history to access so we don't go out of bounds below.
-        if exerciseHistory.count >= 1 {
-            // If the exercise info was submitted when the workout first began (withDateRecorded is that value),
-            // we assume this is an exercise we're attempting to access.
-            // Otherwise, we skipped this workout.
-            if exerciseHistory[exerciseHistory.count - 1].date!.seconds(from: withDateRecorded) >= 0 {
-                newestEntry = exerciseHistory[exerciseHistory.count - 1]
+        /*
+            Get the history after the session began.
+            We use this data to get the maximum from the workout for display
+        */
+        let historyAfterSessionBegin = List<ExerciseHistoryEntry>()
                 
-                for exerciseEntry in exerciseHistory.reversed() {
-                    // If we found something that was not done in the past few seconds
-                    // it must be our previous entry!
-                    // (small bugs can occur here. Don't think about it too hard.)
-                    if exerciseEntry.date!.seconds(from: withDateRecorded) <= 0 {
-                        prevEntryToNewest = exerciseEntry
-                        break
-                    }
-                }
-            }
+        for exerciseEntry in exerciseHistory.reversed() {
             
+            /*
+                If we found something that was not done after the workout began,
+                it must not be a part of this workout!
+                We break whenever an entry was not in the history
+                Bugs can occur here if the user decides that they want to
+                move the calendar time up then back to the current date.
+                I'm not worried about that possibility for now.
+            */
+            if exerciseEntry.date!.seconds(from: withDateRecorded) >= 0 {
+                historyAfterSessionBegin.append(exerciseEntry)
+            } else {
+                break
+            }
         }
+        
+        // Get the maximum for the progression methods after the session began.
+        let maxForHistoryAfterSessionBegin = ProgressionMethod.getMaxValueForProgressionMethods(fromHistory: historyAfterSessionBegin)
         
         // Just used to map everything out while we iterate.
-        var dict = Dictionary<ProgressionMethod, (CGFloat?, CGFloat?)>()
+        // Data will be sent to the cells
+        var pgmToNewOldValues = Dictionary<ProgressionMethod, (Float?, Float?)>()
         
         // Initialize every progression method to have a new value, old value deal.
-        for progressionMethod in forExercise.getProgressionMethods() {
-            dict[progressionMethod] = (nil /* new value */, nil /* old value */)
-        }
-        
-        // TODO: Fetch maximum value per progressionMethod
-        if newestEntry != nil {
-            for entryPiece in newestEntry!.exerciseInfo {
-                dict[entryPiece.progressionMethod!]!.0 = CGFloat(entryPiece.value!.floatValue!)
-            }
-            
-            if prevEntryToNewest != nil {
-                for entryPiece in prevEntryToNewest!.exerciseInfo {
-                    dict[entryPiece.progressionMethod!]!.1 = CGFloat(entryPiece.value!.floatValue!)
-                }
-            }
+        for pgm in forExercise.getProgressionMethods() {
+            pgmToNewOldValues[pgm] = (maxForHistoryAfterSessionBegin[pgm] /* new value */,
+                                        pgm.getMaxValue()/* old value */)
         }
         
         for pgm in forExercise.getProgressionMethods() {
-            returnData.append((pgm, dict[pgm]!.0, dict[pgm]!.1))
+            returnData.append((pgm, pgmToNewOldValues[pgm]?.0, pgmToNewOldValues[pgm]?.1))
         }
         
         return returnData
@@ -131,8 +122,8 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
     // Creates the progression method data views
     private func createProgressionMethodSummaryViews(data: [(ProgressionMethod, // Progression method
-        CGFloat?,          // New data
-        CGFloat?)          // Old data
+        Float?,          // New data
+        Float?)          // Old data
         ]) {
         var prevView: UIView = cellTitleLabel
         
@@ -209,9 +200,9 @@ class ProgressionMethodSummaryView: UIView {
     // The progression method associated with this summary
     private let progressionMethod: ProgressionMethod
     // The value just added to the workout
-    private let newValue: CGFloat?
+    private let newValue: Float?
     // The old value associated with the workout
-    private let oldValue: CGFloat?
+    private let oldValue: Float?
     
     // The title label associated with this progressionMethod
     private let titleLabel: UILabel
@@ -222,7 +213,7 @@ class ProgressionMethodSummaryView: UIView {
     
     // MARK: View inits
     
-    init(progressionMethod: ProgressionMethod, newValue: CGFloat?, oldValue: CGFloat?, frame: CGRect) {
+    init(progressionMethod: ProgressionMethod, newValue: Float?, oldValue: Float?, frame: CGRect) {
         self.progressionMethod = progressionMethod
         self.newValue = newValue
         self.oldValue = oldValue

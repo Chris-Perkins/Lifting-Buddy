@@ -135,8 +135,20 @@ extension MainViewController: WorkoutSessionStarter {
     // On workout end, navigate back to the workout view.
     func endSession(workout: Workout?, exercises: List<Exercise>) {
         AppDelegate.sessionWorkout = nil
+        
         for exercise in exercises {
             AppDelegate.sessionExercises.remove(exercise)
+        }
+        
+        // Asynchronously find the new maximum for each progressionmethod
+        // Done async to prevent the application from stalling while the max is being set.
+        DispatchQueue.main.async {
+            for exercise in exercises {
+                let maxValuePerPGM = ProgressionMethod.getMaxValueForProgressionMethods(fromHistory: exercise.getExerciseHistory())
+                for pgm in maxValuePerPGM.keys {
+                    pgm.setMaxIfNewMax(newMax: maxValuePerPGM[pgm]!)
+                }
+            }
         }
         
         showContentView(viewType: SectionView.ContentViews.WORKOUTS)

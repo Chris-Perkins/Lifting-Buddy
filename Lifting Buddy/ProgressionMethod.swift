@@ -21,9 +21,12 @@ class ProgressionMethod: Object {
     
     // Units for reps (seconds, kilos, etc)
     @objc dynamic private var unit: String?
+    // The default value (what shows up in the text fields by default
     @objc dynamic private var defaultValue: String?
     // The index of the progressionMethod. Denotes line color in graphs
     @objc dynamic private var index: String?
+    // The maximum we've ever done for this progressionMethod
+    @objc dynamic private var max: String?
     
     public enum Unit: String {
         case WEIGHT     = "weight"
@@ -115,6 +118,48 @@ class ProgressionMethod: Object {
         return indexInt
     }
     
+    // Sets the new maximum value if this is indeed a maximum value.
+    // TODO: Make this self max is indeed a float value for reusability
+    // For now, this is fine since we know we can only ever set to a float value
+    public func setMaxIfNewMax(newMax: Float) {
+        if max == nil || newMax > max!.floatValue! {
+            let realm = try! Realm()
+            try! realm.write {
+                max = String(describing: newMax)
+            }
+        }
+    }
+    
+    public func getMaxValue() -> Float? {
+        return max?.floatValue
+    }
+    
+    // MARK: Static methods
+    
+    public static func getMaxValueForProgressionMethods(fromHistory history: List<ExerciseHistoryEntry>) -> Dictionary<ProgressionMethod, Float> {
+        var maxPerProgressionMethod = Dictionary<ProgressionMethod, Float>()
+        
+        // Go through every entry in the exercise. requires us to go through all history
+        for historyPiece in history {
+            for entry in historyPiece.exerciseInfo {
+                // The progression method associated to this piece
+                let pgm: ProgressionMethod = entry.progressionMethod!
+                let value: Float! = entry.value!.floatValue!
+                
+                if !maxPerProgressionMethod.keys.contains(pgm) {
+                    maxPerProgressionMethod[pgm] = entry.value!.floatValue!
+                } else {
+                    // If it's greater than the value in the dictionary, return it.
+                    if value > maxPerProgressionMethod[pgm]! {
+                        maxPerProgressionMethod[pgm] = value
+                    }
+                }
+            }
+        }
+        
+        return maxPerProgressionMethod
+    }
+    
     // MARK: Default workout creation
     
     // Create a reps pgm
@@ -135,4 +180,9 @@ class ProgressionMethod: Object {
         
         return weightPGM
     }
+}
+
+public class RLMExercisePiece: Object {
+    @objc internal dynamic var  progressionMethod: ProgressionMethod? = nil
+    @objc internal dynamic var value: String? = nil
 }

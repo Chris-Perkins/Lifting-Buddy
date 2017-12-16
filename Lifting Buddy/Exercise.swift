@@ -212,11 +212,6 @@ class Exercise: Object {
 // Answer:
 // Because realm does not support RLMArrays/Lists of primitive types.
 
-public class RLMExercisePiece: Object {
-    @objc internal dynamic var  progressionMethod: ProgressionMethod? = nil
-    @objc internal dynamic var value: String? = nil
-}
-
 public class ExerciseHistoryEntry: Object {
     
     @objc public dynamic var date: Date?

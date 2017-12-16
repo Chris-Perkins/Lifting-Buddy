@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
             // version (if you've never set a schema version before, the version is 0).
-            schemaVersion: 1,
+            schemaVersion: 2,
             
             // Set the block which will be called automatically when opening a Realm with
             // a schema version lower than the one set above
@@ -42,9 +42,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if oldSchemaVersion <= 0 { // original version
                     // don't have to do anything! first created.
                 }
-                if oldSchemaVersion < 1 { // current version ; exercisehistoryentry's now have a fixed primarykey
+                if oldSchemaVersion < 1 { // exercisehistoryentry's now have a fixed primarykey
                     migration.enumerateObjects(ofType: ExerciseHistoryEntry.className(), { (nil, newEntry) in
                         newEntry!["identifier"] = UUID().uuidString
+                    })
+                }
+                if oldSchemaVersion < 2 { // progressionmethods are given a maximum value
+                    migration.enumerateObjects(ofType: ProgressionMethod.className(), { (nil, newEntry) in
+                        newEntry!["maxValue"] = nil
                     })
                 }
             }

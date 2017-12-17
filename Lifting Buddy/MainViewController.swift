@@ -70,7 +70,7 @@ class MainViewController: UIViewController {
             }
             showView(exercisesView!)
             
-        case SectionView.ContentViews.ABOUT:
+        /*case SectionView.ContentViews.ABOUT:
             /*if aboutView == nil {
                 aboutView = AboutView(frame: .zero)
             }
@@ -85,7 +85,7 @@ class MainViewController: UIViewController {
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceBlue,
                                                 handler: nil))
-            alert.show()
+            alert.show()*/
         }
     }
 }
@@ -97,21 +97,25 @@ extension MainViewController: WorkoutSessionStarter {
             self.showSession(workout: workout,
                              exercise: exercise)
         } else {
-            let alert = CDAlertView(title: "Quit current workout session?",
+            let alert = CDAlertView(title: "Quit Current Workout Session?",
                                     message: "To start a new session, you must end your current session.\n" +
-                                        "You will not gain streak progress. Continue?",
+                                        "You will not gain streak progress.",
                                     type: CDAlertViewType.warning)
             alert.add(action: CDAlertViewAction(title: "Cancel",
                                                 font: nil,
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceBlue, handler: nil))
-            alert.add(action: CDAlertViewAction(title: "Continue",
+            alert.add(action: CDAlertViewAction(title: "Quit",
                                                 font: nil,
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceRed,
                                                 handler: { (CDAlertViewAction) in
-                                                    // Note: The below lines are done to free the AppDelegate lock
-                                                    // On workouts whose sessions have not ended.
+                                                    /*
+                                                        Note: The below lines are done to
+                                                        free the AppDelegate lock
+                                                        on workouts whose sessions
+                                                        have not ended.
+                                                    */
                                                     (self.sessionView as? WorkoutSessionView)?.endSession()
                                                     (self.sessionView as? WorkoutSessionSummaryView)?.endSession()
                                                     self.showSession(workout: workout,

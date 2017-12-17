@@ -81,9 +81,9 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
             let workout = sortedData[indexPath.row]
             
             if workout.canModifyCoreProperties {
-                let alert = CDAlertView(title: "Delete Workout",
+                let alert = CDAlertView(title: "Delete Workout?",
                                         message: "All history for '\(workout.getName()!)' will be deleted.\n" +
-                                            "This action cannot be undone. Continue?",
+                                            "This action cannot be undone.",
                                         type: CDAlertViewType.warning)
                 alert.add(action: CDAlertViewAction(title: "Cancel",
                                                     font: nil,
@@ -105,7 +105,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
                 }))
                 alert.show()
             } else {
-                let alert = CDAlertView(title: "Cannot Delete",
+                let alert = CDAlertView(title: "Cannot Delete Workout",
                                         message: "The selected workout cannot be deleted as it is being used in an active workout session.",
                                         type: CDAlertViewType.error)
                 alert.add(action: CDAlertViewAction(title: "Ok",

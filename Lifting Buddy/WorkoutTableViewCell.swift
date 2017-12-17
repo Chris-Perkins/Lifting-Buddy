@@ -267,7 +267,7 @@ class WorkoutTableViewCell: UITableViewCell {
                 showViewDelegate?.showView(createWorkoutView)
             } else {
                 let alert = CDAlertView(title: "Cannot Edit Workout",
-                                        message: "You cannot edit the selected workout from this view while the workout is in an active session.",
+                                        message: "You cannot edit the selected workout from this view while the workout is in an active session. Please modify the workout from the active session view.",
                                         type: CDAlertViewType.error)
                 alert.add(action: CDAlertViewAction(title: "Ok",
                                                     font: nil,

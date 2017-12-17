@@ -89,7 +89,7 @@ class CreateExerciseView: UIScrollView {
         // If the exercise was deleted from another screen,
         // We have to close this view so we don't error out.
         if editingExercise?.isInvalidated == true {
-            let alert = CDAlertView(title: "Exercise deleted",
+            let alert = CDAlertView(title: "Exercise Deleted",
                                     message: "The exercise you were editing was deleted.",
                                     type: CDAlertViewType.error)
             alert.add(action: CDAlertViewAction(title: "Ok",

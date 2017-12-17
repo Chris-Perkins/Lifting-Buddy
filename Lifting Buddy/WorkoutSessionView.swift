@@ -184,7 +184,7 @@ class WorkoutSessionView: UIScrollView {
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceBlue,
                                                 handler: nil))
-            alert.add(action: CDAlertViewAction(title: "Continue",
+            alert.add(action: CDAlertViewAction(title: "End",
                                                 font: nil,
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceRed,

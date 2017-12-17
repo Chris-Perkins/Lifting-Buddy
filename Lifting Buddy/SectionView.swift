@@ -19,7 +19,6 @@ class SectionView: UIView {
     private var sessionButton: PrettyButton
     private let workoutsButton: PrettyButton
     private let exercisesButton: PrettyButton
-    private let aboutButton: PrettyButton
     
     // The view that's currently being selected
     private var selectedView: PrettyButton?
@@ -38,7 +37,6 @@ class SectionView: UIView {
         case SESSION
         case WORKOUTS
         case EXERCISES
-        case ABOUT
     }
     
     
@@ -48,19 +46,16 @@ class SectionView: UIView {
         sessionButton = PrettyButton()
         workoutsButton = PrettyButton()
         exercisesButton = PrettyButton()
-        aboutButton = PrettyButton()
         
         super.init(frame: frame)
         
         addSubview(sessionButton)
         addSubview(workoutsButton)
         addSubview(exercisesButton)
-        addSubview(aboutButton)
         
         createAndActivateButtonConstraints(buttons: [sessionButton,
                                                      workoutsButton,
-                                                     exercisesButton,
-                                                     aboutButton])
+                                                     exercisesButton])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -88,10 +83,7 @@ class SectionView: UIView {
             exercisesButton.setTitle("exercises", for: .normal)
             setButtonProperties(button: exercisesButton)
             
-            // Home button
-            aboutButton.setTitle("about", for: .normal)
-            setButtonProperties(button: aboutButton)
-        
+            // Only sets properties once.
             laidOutSubviews = true
             
             imitateWorkoutButtonPress()
@@ -164,8 +156,6 @@ class SectionView: UIView {
                 viewType = .WORKOUTS
             case exercisesButton:
                 viewType = .EXERCISES
-            case aboutButton:
-                viewType = .ABOUT
             default:
                 fatalError("User requested view that isn't set up.")
             }
@@ -206,6 +196,10 @@ class SectionView: UIView {
             NSLayoutConstraint.createViewAttributeCopyConstraint(view: button,
                                                                  withCopyView: self,
                                                                  attribute: .bottom).isActive = true
+            // The session button is treated differently.
+            // At the start, it should not be visible.
+            // This means that the session button is always there, but not clickable.
+            // It should only be visible when there is an active session.
             if button == sessionButton {
                 let constraint = NSLayoutConstraint.createWidthConstraintForView(view: button,
                                                                                  width: 0)

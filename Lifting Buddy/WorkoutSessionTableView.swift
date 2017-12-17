@@ -205,10 +205,21 @@ extension WorkoutSessionTableView: CellDeletionDelegate {
             cells.remove(at: index)
         }
         
+        // Attempt to remove the exercise from AppDelegate + realm
+        let exercise = data[index]
+        AppDelegate.sessionExercises.remove(exercise)
         let realm = try! Realm()
         try! realm.write {
             data.remove(at: index)
         }
+        
+        // If still in realm, the exercise had multiple of the exercise.
+        // So, don't delete the exercise from the set.
+        if data.contains(exercise) {
+            AppDelegate.sessionExercises.insert(exercise)
+        }
+        
+        
         heights.remove(at: index)
         checkComplete()
         reloadData()

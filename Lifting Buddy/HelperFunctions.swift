@@ -49,12 +49,6 @@ extension BetterTextField {
     }
 }
 
-extension CDAlertView {
-    //override func show() {
-        
-    //}
-}
-
 extension Chart {
     public static var defaultHeight: CGFloat {
         return 300

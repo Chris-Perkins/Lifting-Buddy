@@ -69,6 +69,7 @@ class MainViewController: UIViewController {
                 exercisesView = ExercisesView(frame: .zero)
             }
             showView(exercisesView!)
+            exercisesView?.layoutSubviews()
             
         /*case SectionView.ContentViews.ABOUT:
             /*if aboutView == nil {

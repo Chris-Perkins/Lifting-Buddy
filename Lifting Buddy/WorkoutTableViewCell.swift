@@ -9,6 +9,7 @@
 import UIKit
 import Realm
 import RealmSwift
+import CDAlertView
 
 class WorkoutTableViewCell: UITableViewCell {
     
@@ -265,12 +266,15 @@ class WorkoutTableViewCell: UITableViewCell {
                 createWorkoutView.showViewDelegate = showViewDelegate
                 showViewDelegate?.showView(createWorkoutView)
             } else {
-                let alert = UIAlertController(title: "Cannot Edit Workout",
-                                              message: "You cannot edit the workout from this view while the workout is in an active session.", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                alert.addAction(okAction)
-                
-                viewController()?.present(alert, animated: true, completion: nil)
+                let alert = CDAlertView(title: "Cannot Edit Workout",
+                                        message: "You cannot edit the selected workout from this view while the workout is in an active session.",
+                                        type: CDAlertViewType.error)
+                alert.add(action: CDAlertViewAction(title: "Ok",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceBlue,
+                                                    handler: nil))
+                alert.show()
             }
         default:
             fatalError("User pressed a button that does not exist?")

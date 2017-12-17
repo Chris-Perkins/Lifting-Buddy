@@ -9,6 +9,7 @@
 import UIKit
 import Realm
 import RealmSwift
+import CDAlertView
 
 class CreateExerciseView: UIScrollView {
     
@@ -85,17 +86,18 @@ class CreateExerciseView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // If the exercise was deleted...
+        // If the exercise was deleted from another screen,
+        // We have to close this view so we don't error out.
         if editingExercise?.isInvalidated == true {
-            let alert = UIAlertController(title: "Exercise deleted",
-                                          message: "The exercise you were editing was deleted.",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok",
-                                          style: .default,
-                                          handler: nil))
-            self.viewController()?.present(alert,
-                                           animated: false,
-                                           completion: nil)
+            let alert = CDAlertView(title: "Exercise deleted",
+                                    message: "The exercise you were editing was deleted.",
+                                    type: CDAlertViewType.error)
+            alert.add(action: CDAlertViewAction(title: "Ok",
+                                                font: nil,
+                                                textColor: UIColor.white,
+                                                backgroundColor: UIColor.niceBlue,
+                                                handler: nil))
+            alert.show()
             
             self.removeFromSuperview()
         }
@@ -153,13 +155,15 @@ class CreateExerciseView: UIScrollView {
             if editingExercise?.canModifyCoreProperties ?? true {
                 progressionsTableView.appendDataToTableView(data: ProgressionMethod())
             } else {
-                let alert = UIAlertController(title: "Cannot Add Progression Method",
-                                              message: "This exercise's progression methods cannot be modified as it is being used in an active workout session.",
-                                              preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                alert.addAction(okAction)
-                
-                viewController()?.present(alert, animated: true, completion: nil)
+                let alert = CDAlertView(title: "Cannot Add Progression Method",
+                                        message: "This exercise's progression methods cannot be modified as it is being used in an active workout session.",
+                                        type: CDAlertViewType.error)
+                alert.add(action: CDAlertViewAction(title: "Ok",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceBlue,
+                                                    handler: nil))
+                alert.show()
             }
         case createExerciseButton:
             // Send info to delegate, animate up then remove self

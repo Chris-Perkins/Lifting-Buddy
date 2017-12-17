@@ -20,4 +20,7 @@ target 'Lifting Buddy' do
   # For tableview reordering
   pod 'HPReorderTableView', '~> 0.2'
 
+  # For custom alerts
+  pod 'CDAlertView'
+
 end

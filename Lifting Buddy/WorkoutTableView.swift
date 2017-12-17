@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Realm
+import CDAlertView
 
 class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
     
@@ -80,39 +81,39 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
             let workout = sortedData[indexPath.row]
             
             if workout.canModifyCoreProperties {
-                let alert = UIAlertController(title: "Delete Workout?",
-                                              message: "All history for '" + workout.getName()!
-                                                + "' will be deleted.\n" +
-                    "This cannot be undone. Continue?",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel",
-                                              style: .cancel,
-                                              handler: nil))
-                alert.addAction(
-                    UIAlertAction(title: "Delete",
-                                  style: .destructive,
-                                  handler: { UIAlertAction -> Void in
-                                    let realm = try! Realm()
-                                    try! realm.write {
-                                        realm.delete(workout)
-                                    }
-                                    
-                                    self.sortedData.remove(at: indexPath.row)
-                                    self.reloadData()
-                    }))
-                
-                viewController()?.present(alert, animated: true, completion: nil)
+                let alert = CDAlertView(title: "Delete Workout",
+                                        message: "All history for '\(workout.getName()!)' will be deleted.\n" +
+                                            "This action cannot be undone. Continue?",
+                                        type: CDAlertViewType.warning)
+                alert.add(action: CDAlertViewAction(title: "Cancel",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceBlue,
+                                                    handler: nil))
+                alert.add(action: CDAlertViewAction(title: "Delete",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceRed,
+                                                    handler: { (CDAlertViewAction) in
+                                                        let realm = try! Realm()
+                                                        try! realm.write {
+                                                            realm.delete(workout)
+                                                        }
+                                                        
+                                                        self.sortedData.remove(at: indexPath.row)
+                                                        self.reloadData()
+                }))
+                alert.show()
             } else {
-                let alert = UIAlertController(title: "Cannot Delete",
-                                              message: "The selected workout cannot be deleted as it is being used in an active workout session.",
-                                              preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ok",
-                                             style: .default,
-                                             handler: nil)
-                alert.addAction(okAction)
-                
-                viewController()?.present(alert, animated: true, completion: nil)
-
+                let alert = CDAlertView(title: "Cannot Delete",
+                                        message: "The selected workout cannot be deleted as it is being used in an active workout session.",
+                                        type: CDAlertViewType.error)
+                alert.add(action: CDAlertViewAction(title: "Ok",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceBlue,
+                                                    handler: nil))
+                alert.show()
             }
         }
     }

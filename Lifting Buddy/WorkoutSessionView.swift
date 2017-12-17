@@ -9,6 +9,7 @@
 import UIKit
 import Realm
 import RealmSwift
+import CDAlertView
 
 class WorkoutSessionView: UIScrollView {
     
@@ -153,43 +154,45 @@ class WorkoutSessionView: UIScrollView {
                 completeWorkout()
             } else {
                 // Otherwise, prompt for confirmation that we want to complete the workout.
-                let alert = UIAlertController(title: "Complete Workout Prematurely?",
-                                              message: "Not all workouts are complete.\nDo you really want to finish this workout?",
-                                              preferredStyle: .alert)
+                let alert = CDAlertView(title: "Complete Workout Prematurely?",
+                                        message: "Not all exercises are complete.\n" +
+                                            "Complete the workout anyways?",
+                                        type: CDAlertViewType.warning)
                 
-                let cancelAction = UIAlertAction(title: "Cancel",
-                                                 style: .cancel,
-                                                 handler: nil)
-                let okAction = UIAlertAction(title: "Ok",
-                                             style: .default,
-                                             handler: {(UIAlertAction) -> Void in
-                                                self.completeWorkout()
-                })
+                alert.add(action: CDAlertViewAction(title: "Cancel",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceBlue,
+                                                    handler: nil))
                 
-                alert.addAction(cancelAction)
-                alert.addAction(okAction)
-                
-                viewController()!.present(alert, animated: true, completion: nil)
+                alert.add(action: CDAlertViewAction(title: "Complete",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceRed,
+                                                    handler: { (CDAlertViewAction) in
+                                                        self.completeWorkout()
+                }))
+                alert.show()
             }
         case cancelButton:
             // Confirm that the user indeed wants to cancel this workout
-            let alert = UIAlertController(title: "Cancel Workout?",
-                                          message: "This will not delete any previously saved set data. Continue?",
-                                          preferredStyle: .alert)
+            let alert = CDAlertView(title: "End Session?",
+                                    message: "This will not delete any previously saved set data.",
+                                    type: CDAlertViewType.warning)
+            alert.add(action: CDAlertViewAction(title: "Cancel",
+                                                font: nil,
+                                                textColor: UIColor.white,
+                                                backgroundColor: UIColor.niceBlue,
+                                                handler: nil))
+            alert.add(action: CDAlertViewAction(title: "Continue",
+                                                font: nil,
+                                                textColor: UIColor.white,
+                                                backgroundColor: UIColor.niceRed,
+                                                handler: { (CDAlertViewAction) in
+                                                    self.endSession()
+            }))
             
-            let cancelAction = UIAlertAction(title: "Cancel",
-                                             style: .cancel,
-                                             handler: nil)
-            let okAction = UIAlertAction(title: "Ok",
-                                         style: .default,
-                                         handler: {(UIAlertAction) -> Void in
-                         self.endSession()
-            })
-            
-            alert.addAction(cancelAction)
-            alert.addAction(okAction)
-            
-            viewController()!.present(alert, animated: true, completion: nil)
+            alert.show()
         default:
             fatalError("Button pressed that does not exist?")
         }

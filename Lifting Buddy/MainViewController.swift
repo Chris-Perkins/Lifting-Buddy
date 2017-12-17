@@ -9,6 +9,8 @@
 import UIKit
 import RealmSwift
 import Realm
+import CDAlertView
+import GBVersionTracking
 
 class MainViewController: UIViewController {
     
@@ -36,6 +38,14 @@ class MainViewController: UIViewController {
         view.backgroundColor = .niceGray
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "aboutSegue" {
+            let popoverViewController = segue.destination
+            popoverViewController.modalPresentationStyle = .popover
+            popoverViewController.popoverPresentationController!.delegate = self
+        }
+    }
+    
     // MARK: View functions
     
     func showContentView(viewType: SectionView.ContentViews) {
@@ -61,10 +71,21 @@ class MainViewController: UIViewController {
             showView(exercisesView!)
             
         case SectionView.ContentViews.ABOUT:
-            if aboutView == nil {
+            /*if aboutView == nil {
                 aboutView = AboutView(frame: .zero)
             }
-            showView(aboutView!)
+            showView(aboutView!)*/
+            let alert = CDAlertView(title: "Lifting Buddy " +
+                                        "v\(GBVersionTracking.currentVersion()!)",
+                                    message: "Your free, open-source workout tracking application.\n\n" +
+                                        "Email Support:\nchris@chrisperkins.me",
+                                    type: CDAlertViewType.custom(image: #imageLiteral(resourceName: "LiftingBuddyImage")))
+            alert.add(action: CDAlertViewAction(title: "Close",
+                                                font: nil,
+                                                textColor: UIColor.white,
+                                                backgroundColor: UIColor.niceBlue,
+                                                handler: nil))
+            alert.show()
         }
     }
 }
@@ -76,27 +97,27 @@ extension MainViewController: WorkoutSessionStarter {
             self.showSession(workout: workout,
                              exercise: exercise)
         } else {
-            let alert = UIAlertController(title: "Quit current workout session?",
-                                          message: "To start a new session, you must end your current session.\n" +
-                                                    "You will not gain streak progress. Continue?",
-                                          preferredStyle: .alert)
-            let cancelButton = UIAlertAction(title: "Cancel",
-                                             style: .cancel,
-                                             handler: nil)
-            let continueButton = UIAlertAction(title: "Continue",
-                                               style: .destructive,
-                                               handler: { UIAlertAction -> Void in
-                    // Note: The below lines are done to free the AppDelegate lock
-                    // On workouts whose sessions have not ended.
-                    (self.sessionView as? WorkoutSessionView)?.endSession()
-                    (self.sessionView as? WorkoutSessionSummaryView)?.endSession()
-                    self.showSession(workout: workout,
-                                    exercise: exercise)
-                })
-            alert.addAction(cancelButton)
-            alert.addAction(continueButton)
-            
-            self.present(alert, animated: true, completion: nil)
+            let alert = CDAlertView(title: "Quit current workout session?",
+                                    message: "To start a new session, you must end your current session.\n" +
+                                        "You will not gain streak progress. Continue?",
+                                    type: CDAlertViewType.warning)
+            alert.add(action: CDAlertViewAction(title: "Cancel",
+                                                font: nil,
+                                                textColor: UIColor.white,
+                                                backgroundColor: UIColor.niceBlue, handler: nil))
+            alert.add(action: CDAlertViewAction(title: "Continue",
+                                                font: nil,
+                                                textColor: UIColor.white,
+                                                backgroundColor: UIColor.niceRed,
+                                                handler: { (CDAlertViewAction) in
+                                                    // Note: The below lines are done to free the AppDelegate lock
+                                                    // On workouts whose sessions have not ended.
+                                                    (self.sessionView as? WorkoutSessionView)?.endSession()
+                                                    (self.sessionView as? WorkoutSessionSummaryView)?.endSession()
+                                                    self.showSession(workout: workout,
+                                                                     exercise: exercise)
+            }))
+            alert.show()
         }
     }
     
@@ -167,6 +188,12 @@ extension MainViewController: ShowViewDelegate {
         
         NSLayoutConstraint.clingViewToView(view: view,
                                            toView: sectionContentView)
+    }
+}
+
+extension MainViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .popover
     }
 }
 

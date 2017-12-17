@@ -10,6 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 import SwiftCharts
+import CDAlertView
 
 class ExercisesTableView: UITableView {
     
@@ -147,41 +148,41 @@ extension ExercisesTableView : UITableViewDelegate {
             let exercise = sortedData[indexPath.row]
             
             if !exercise.canModifyCoreProperties {
-                let alert = UIAlertController(title: "Cannot Delete",
-                                              message: "The selected exercise cannot be deleted as it is being used in an active workout.",
-                                              preferredStyle: .alert)
-                
-                let okAction = UIAlertAction(title: "Ok",
-                                             style: .default,
-                                             handler: nil)
-                alert.addAction(okAction)
-                
-                viewController()?.present(alert, animated: true, completion: nil)
-                
+                let alert = CDAlertView(title: "Cannot Delete Exercise",
+                                        message: "The selected exercise cannot be deleted as it is being used in an active workout.",
+                                        type: CDAlertViewType.error)
+                alert.add(action: CDAlertViewAction(title: "Ok",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceBlue,
+                                                    handler: nil))
+                alert.show()
             } else {
-                let alert = UIAlertController(title: "Delete Exercise?",
-                                              message: "All history for '" + exercise.getName()!
-                                                + "' will be deleted.\n" +
-                    "This cannot be undone. Continue?",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel",
-                                              style: .cancel,
-                                              handler: nil))
-                alert.addAction(
-                    UIAlertAction(title: "Delete", style: .destructive, handler: {
-                        UIAlertAction -> Void in
-                        let realm = try! Realm()
-                        
-                        exercise.removeProgressionMethods()
-                        try! realm.write {
-                            realm.delete(exercise)
-                        }
-                        
-                        self.sortedData.remove(at: indexPath.row)
-                        self.reloadData()
-                    }))
-                
-                viewController()?.present(alert, animated: true, completion: nil)
+                let alert = CDAlertView(title: "Delete Exercise?",
+                                        message: "All history for '\(exercise.getName()!)' will be deleted.\n" +
+                                            "This action cannot be undone.",
+                                        type: CDAlertViewType.warning)
+                alert.add(action: CDAlertViewAction(title: "Cancel",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceBlue,
+                                                    handler: nil))
+                alert.add(action: CDAlertViewAction(title: "Delete",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceRed,
+                                                    handler: { (CDAlertViewAction) in
+                                                        let realm = try! Realm()
+                                                        
+                                                        exercise.removeProgressionMethods()
+                                                        try! realm.write {
+                                                            realm.delete(exercise)
+                                                        }
+                                                        
+                                                        self.sortedData.remove(at: indexPath.row)
+                                                        self.reloadData()
+                }))
+                alert.show()
             }
         }
     }

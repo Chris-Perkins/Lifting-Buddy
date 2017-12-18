@@ -290,6 +290,8 @@ class ProgressionMethodSummaryView: UIView {
         }
     }
     
+    // Gets displayed the value for a value in the gain/value label
+    // Just used for standardization.
     private func getDisplayValue(forProgressionMethod pgm: ProgressionMethod, value: Float) -> String {
         var returnStr = ""
         

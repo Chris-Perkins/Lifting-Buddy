@@ -131,7 +131,7 @@ class WorkoutTableViewCell: UITableViewCell {
                 
                 backgroundColor = .niceLightGray
             } else {
-                backgroundColor = (workout?.getIfTodayWorkout())! ? .niceLightGreen : .white
+                backgroundColor = (workout?.getIfTodayWorkout())! ? .niceLightGray : .white
             }
         }
     }

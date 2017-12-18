@@ -70,23 +70,6 @@ class MainViewController: UIViewController {
             }
             showView(exercisesView!)
             exercisesView?.layoutSubviews()
-            
-        /*case SectionView.ContentViews.ABOUT:
-            /*if aboutView == nil {
-                aboutView = AboutView(frame: .zero)
-            }
-            showView(aboutView!)*/
-            let alert = CDAlertView(title: "Lifting Buddy " +
-                                        "v\(GBVersionTracking.currentVersion()!)",
-                                    message: "Your free, open-source workout tracking application.\n\n" +
-                                        "Email Support:\nchris@chrisperkins.me",
-                                    type: CDAlertViewType.custom(image: #imageLiteral(resourceName: "LiftingBuddyImage")))
-            alert.add(action: CDAlertViewAction(title: "Close",
-                                                font: nil,
-                                                textColor: UIColor.white,
-                                                backgroundColor: UIColor.niceBlue,
-                                                handler: nil))
-            alert.show()*/
         }
     }
 }

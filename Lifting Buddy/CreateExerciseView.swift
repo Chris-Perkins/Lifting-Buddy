@@ -156,7 +156,7 @@ class CreateExerciseView: UIScrollView {
                 progressionsTableView.appendDataToTableView(data: ProgressionMethod())
             } else {
                 let alert = CDAlertView(title: "Cannot Add Progression Method",
-                                        message: "This exercise's progression methods cannot be modified as it is being used in an active workout session.",
+                                        message: "This exercise's progression methods cannot be modified as it is being used in an active session.",
                                         type: CDAlertViewType.error)
                 alert.add(action: CDAlertViewAction(title: "Ok",
                                                     font: nil,

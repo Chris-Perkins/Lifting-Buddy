@@ -106,7 +106,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
                 alert.show()
             } else {
                 let alert = CDAlertView(title: "Cannot Delete Workout",
-                                        message: "The selected workout cannot be deleted as it is being used in an active workout session.",
+                                        message: "The selected workout cannot be deleted as it is being used in an active session.",
                                         type: CDAlertViewType.error)
                 alert.add(action: CDAlertViewAction(title: "Ok",
                                                     font: nil,

@@ -149,7 +149,7 @@ extension ExercisesTableView : UITableViewDelegate {
             
             if !exercise.canModifyCoreProperties {
                 let alert = CDAlertView(title: "Cannot Delete Exercise",
-                                        message: "The selected exercise cannot be deleted as it is being used in an active workout.",
+                                        message: "The selected exercise cannot be deleted as it is being used in an active session.",
                                         type: CDAlertViewType.error)
                 alert.add(action: CDAlertViewAction(title: "Ok",
                                                     font: nil,

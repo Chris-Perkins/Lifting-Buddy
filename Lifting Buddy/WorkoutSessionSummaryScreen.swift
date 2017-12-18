@@ -28,6 +28,10 @@ class WorkoutSessionSummaryView: UIView {
     private let headerView: UIView
     // The title label for this view
     private let titleLabel: UILabel
+    // The value label for what we did during the workout
+    private let valueLabel: UILabel
+    // The label for gain/less
+    private let gainLabel: UILabel
     // The table view holding all the data of this past workout
     private let summaryTableView: WorkoutSessionSummaryTableView
     // A button the user should press if we're trying to close this view
@@ -44,6 +48,8 @@ class WorkoutSessionSummaryView: UIView {
         
         headerView = UIView()
         titleLabel = UILabel()
+        valueLabel = UILabel()
+        gainLabel = UILabel()
         summaryTableView = WorkoutSessionSummaryTableView(workout: workout,
                                                           exercises: exercises,
                                                           style: .plain)
@@ -53,6 +59,8 @@ class WorkoutSessionSummaryView: UIView {
         
         addSubview(headerView)
             headerView.addSubview(titleLabel)
+            headerView.addSubview(valueLabel)
+            headerView.addSubview(gainLabel)
         addSubview(summaryTableView)
         addSubview(closeButton)
         
@@ -62,6 +70,8 @@ class WorkoutSessionSummaryView: UIView {
         
         createAndActivateHeaderViewConstraints()
         createAndActivateTitleLabelConstraints()
+        createAndActivateValueLabelConstraints()
+        createAndActivateGainLabelConstraints()
         createAndActivateSummaryTableViewConstraints()
         createAndActivateCloseButtonConstraints()
     }
@@ -79,12 +89,22 @@ class WorkoutSessionSummaryView: UIView {
         backgroundColor = .niceGray
         
         // Header View
-        headerView.backgroundColor = .niceLightBlue
+        headerView.backgroundColor = .niceGreen
         
         // Title label
         titleLabel.setDefaultProperties()
         titleLabel.textColor = .white
-        titleLabel.text = "Workout Summary"
+        titleLabel.text = "Tracker Name"
+        
+        // Value label
+        valueLabel.setDefaultProperties()
+        valueLabel.textColor = .white
+        valueLabel.text = "Value"
+        
+        // Gain label constraints
+        gainLabel.setDefaultProperties()
+        gainLabel.textColor = .white
+        gainLabel.text = "vs. Max"
         
         // Close button
         closeButton.setDefaultProperties()
@@ -130,7 +150,7 @@ class WorkoutSessionSummaryView: UIView {
                                                          height: 30).isActive = true
     }
     
-    
+    // Cling to top, left, bottom of headerview ; width of pgmLabel
     private func createAndActivateTitleLabelConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -146,7 +166,54 @@ class WorkoutSessionSummaryView: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
                                                              withCopyView: headerView,
                                                              attribute: .width,
-                                                             multiplier: WorkoutSessionSummaryView.pgmLabelWidthOfView).isActive = true
+                                                             multiplier: WorkoutSessionSummaryView.pgmLabelWidthOfView
+                                                            ).isActive = true
+    }
+    
+    // Cling to top, bottom of headerview ; width of newdatalabelwidth ; cling to right of titlelabel
+    private func createAndActivateValueLabelConstraints() {
+        valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: valueLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: valueLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: valueLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .width,
+                                                             multiplier: WorkoutSessionSummaryView.newDataLabelWidthOfView
+                                                            ).isActive = true
+        NSLayoutConstraint(item: titleLabel,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: valueLabel,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+    }
+    
+    // Cling to top, bottom, right of headerview ; cling to right of valuelabel
+    private func createAndActivateGainLabelConstraints() {
+        gainLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: gainLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: gainLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: gainLabel,
+                                                             withCopyView: headerView,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint(item: valueLabel,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: gainLabel,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
     
     // Below title label ; Cling to left, right. Place above the close button

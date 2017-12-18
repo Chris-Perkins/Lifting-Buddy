@@ -114,9 +114,10 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
             cannotGraphView.backgroundColor = UIColor.niceGray
             cannotGraphView.textColor = UIColor.niceBlue
             cannotGraphView.textAlignment = .center
-            cannotGraphView.numberOfLines = 3
+            // 8 is chosen arbitrarily.
+            cannotGraphView.numberOfLines = 8
             cannotGraphView.text = "Not enough information to graph.\n" +
-                                    "Please complete this exercise on multiple different days."
+                                    "Please complete this exercise on multiple different days to track your progress."
             
             chartFrame.addSubview(cannotGraphView)
         }

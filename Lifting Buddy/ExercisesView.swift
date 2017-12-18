@@ -25,6 +25,8 @@ class ExercisesView: UIView {
     
     // The workouts for this view
     private let exerciseTableView: ExercisesTableView
+    // The view where our buttons go
+    private let footerView: UIView
     // The button to create this workout
     private let createExerciseButton: PrettyButton
     // A button to cancel this view (only visible if selecting exercise)
@@ -41,18 +43,21 @@ class ExercisesView: UIView {
         exerciseTableView = ExercisesTableView(exercises: AnyRealmCollection(exercises),
                                                selectingExercise: selectingExercise,
                                                style: UITableViewStyle.plain)
+        footerView = UIView()
         createExerciseButton = PrettyButton()
         cancelButton = PrettyButton()
         
         
         super.init(frame: frame)
         
+        addSubview(footerView)
+            footerView.addSubview(createExerciseButton)
+            footerView.addSubview(cancelButton)
         addSubview(exerciseTableView)
-        addSubview(createExerciseButton)
-        addSubview(cancelButton)
         
+        createAndActivateFooterViewConstraints()
         createAndActivateCancelButtonConstraints()
-        createCreateExerciseButtonConstraints()
+        createAndActivateCreateExerciseButtonConstraints()
         createAndActivateExerciseTableViewConstraints()
         
         exerciseTableView.exercisePickerDelegate = self
@@ -111,6 +116,23 @@ class ExercisesView: UIView {
     
     // MARK: Constraint functions
     
+    // Cling to bottom, left, right of view ; height of default prettybutton height
+    private func createAndActivateFooterViewConstraints() {
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: footerView,
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: footerView,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: footerView,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: footerView,
+                                                         height: PrettyButton.defaultHeight).isActive = true
+    }
+    
     // Cling to top, left, right of this view ; bottom of this view @ createButton
     private func createAndActivateExerciseTableViewConstraints() {
         exerciseTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +146,7 @@ class ExercisesView: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseTableView,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint(item: createExerciseButton,
+        NSLayoutConstraint(item: footerView,
                            attribute: .top,
                            relatedBy: .equal,
                            toItem: exerciseTableView,
@@ -133,16 +155,13 @@ class ExercisesView: UIView {
                            constant: 0).isActive = true
     }
     
-    // Cling to right, bottom of this view ; place to right of cancelbutton ; height default
-    private func createCreateExerciseButtonConstraints() {
+    // Cling to right, top, bottom of footer ; place to right of cancelbutton
+    private func createAndActivateCreateExerciseButtonConstraints() {
         createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseButton,
-                                                             withCopyView: self,
+                                                             withCopyView: footerView,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseButton,
-                                                             withCopyView: self,
-                                                             attribute: .bottom).isActive = true
         NSLayoutConstraint(item: cancelButton,
                            attribute: .right,
                            relatedBy: .equal,
@@ -150,32 +169,36 @@ class ExercisesView: UIView {
                            attribute: .left,
                            multiplier: 1,
                            constant: 0).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: createExerciseButton,
-                                                         height: PrettyButton.defaultHeight).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseButton,
+                                                             withCopyView: footerView,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseButton,
+                                                             withCopyView: footerView,
+                                                             attribute: .bottom).isActive = true
     }
     
-    // cling to left, bottom of this view ; width 0.5 if selectingExercise else 0 ; height default
+    // cling to left, top, bottom of this view ; width 0.5 if selectingExercise else 0
     private func createAndActivateCancelButtonConstraints() {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
-                                                             withCopyView: self,
+                                                             withCopyView: footerView,
                                                              attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
-                                                             withCopyView: self,
+                                                             withCopyView: footerView,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
+                                                             withCopyView: footerView,
                                                              attribute: .bottom).isActive = true
         if selectingExercise {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
-                                                             withCopyView: self,
+                                                             withCopyView: footerView,
                                                              attribute: .width,
                                                              multiplier: 0.5).isActive = true
         } else {
             NSLayoutConstraint.createWidthConstraintForView(view: cancelButton,
                                                             width: 0).isActive = true
         }
-        // make this button basically invisible if we're not selecting an exercise
-        NSLayoutConstraint.createHeightConstraintForView(view: cancelButton,
-                                                         height: PrettyButton.defaultHeight).isActive = true
     }
     
     // Center in view ; height 50 ; width of 85% of this view.

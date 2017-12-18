@@ -256,7 +256,8 @@ class ProgressionMethodSummaryView: UIView {
         
         if let newValue = newValue {
             newValueLabel.textColor = .niceBlue
-            newValueLabel.text = String(format: "%.1f", newValue)
+            newValueLabel.text = getDisplayValue(forProgressionMethod: progressionMethod,
+                                                 value: newValue)
             newValueLabel.backgroundColor = UIColor.niceLightBlue.withAlphaComponent(0.2)
             
             if let oldValue = oldValue {
@@ -274,17 +275,37 @@ class ProgressionMethodSummaryView: UIView {
                 
                 // Add a "+" char to symbolize that we gained some weight
                 differenceLabel.text = (newValue >= oldValue ? "+" : "") +
-                    String(format: "%.1f", newValue - oldValue)
+                    getDisplayValue(forProgressionMethod: progressionMethod,
+                                    value: newValue - oldValue)
             } else {
                 differenceLabel.textColor = .niceGreen
                 differenceLabel.backgroundColor = UIColor.niceGreen.withAlphaComponent(0.2)
-                differenceLabel.text = String(format: "%.1f", newValue)
+                differenceLabel.text = getDisplayValue(forProgressionMethod: progressionMethod,
+                                                       value: newValue)
             }
         } else {
             differenceLabel.textColor = .niceRed
             differenceLabel.backgroundColor = UIColor.niceRed.withAlphaComponent(0.2)
             differenceLabel.text = "Skipped"
         }
+    }
+    
+    private func getDisplayValue(forProgressionMethod pgm: ProgressionMethod, value: Float) -> String {
+        var returnStr = ""
+        
+        if pgm.getUnit()?.lowercased() == ProgressionMethod.Unit.TIME.rawValue.lowercased() {
+            if abs(value) >= 60 * 60 {   // If value is in hours...
+                returnStr = String(format: "%.1fh", value / (60.0 * 60.0))
+            } else if abs(value) >= 60 { // If value is in minutes...
+                returnStr = String(format: "%.1fm", value / 60.0)
+            } else {                // If value is in seconds...
+                returnStr = String(format: "%.1fs", value)
+            }
+        } else {
+            returnStr = String(format: "%.1f", value)
+        }
+        
+        return returnStr
     }
     
     // MARK: Constraint functions

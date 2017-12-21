@@ -4,7 +4,7 @@ To run this application, you will need to have CocoaPods installed.
 
 In the project directory, run the command "pod install".
 
-Expected / Hopeful Submission: December 20th
+Submitted for Review December 21st, 2017
 
 ## Road Map:
 
@@ -26,7 +26,7 @@ Expected / Hopeful Submission: December 20th
 | Create “Session” View     | 10/10                 |                                                |
 
 ### Known Bugs
-None at this time.
+Reordering tableviews when toggled causes improper expansion. Need to reload tableview.
 
 ### Future plans
 * Convert relevant UIViews into ViewControllers (good practice)<br>

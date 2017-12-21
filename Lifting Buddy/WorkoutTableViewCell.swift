@@ -99,7 +99,7 @@ class WorkoutTableViewCell: UITableViewCell {
             editButton?.setTitle("Edit", for: .normal)
             
             startWorkoutButton?.setDefaultProperties()
-            startWorkoutButton?.backgroundColor = UIColor.niceGreen
+            startWorkoutButton?.backgroundColor = .niceBlue
             startWorkoutButton?.setTitle("Start Workout", for: .normal)
         }
         

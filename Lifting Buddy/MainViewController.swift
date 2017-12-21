@@ -28,7 +28,6 @@ class MainViewController: UIViewController {
     private var sessionView: UIView? = nil
     private var workoutView: WorkoutsView? = nil
     private var exercisesView: ExercisesView? = nil
-    private var aboutView: AboutView? = nil
     
     // MARK: Override functions
     

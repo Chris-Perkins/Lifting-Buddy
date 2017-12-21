@@ -16,6 +16,9 @@ class HeaderView: UIView {
     
     // MARK: View properties
     
+    // Lifting Buddy's URL
+    private static let appURL = URL(string: "http://chrisperkins.me/LiftingBuddy/")!
+    
     // Bar below status bar
     private let contentView: UIView
     // Bar that displays title of app
@@ -122,6 +125,16 @@ class HeaderView: UIView {
                                             textColor: UIColor.white,
                                             backgroundColor: UIColor.niceBlue,
                                             handler: nil))
+        alert.add(action: CDAlertViewAction(title: "View website",
+                                            font: nil,
+                                            textColor: UIColor.white,
+                                            backgroundColor: UIColor.niceBlue,
+                                            handler: { (CDAlertViewAction) in
+                                                // Open the app's URL
+                                                UIApplication.shared.open(HeaderView.appURL,
+                                                                          options: [:],
+                                                                          completionHandler: nil)
+        }))
         alert.show()
     }
     

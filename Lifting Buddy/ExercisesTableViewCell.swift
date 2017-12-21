@@ -93,7 +93,7 @@ class ExerciseTableViewCell: UITableViewCell {
             editButton.setTitle("Edit", for: .normal)
             
             startExerciseButton.setDefaultProperties()
-            startExerciseButton.backgroundColor = UIColor.niceGreen
+            startExerciseButton.backgroundColor = .niceBlue
             startExerciseButton.setTitle("Start Exercise", for: .normal)
             
             backgroundColor = .niceLightGray

@@ -4,7 +4,7 @@ To run this application, you will need to have CocoaPods installed.
 
 In the project directory, run the command "pod install".
 
-Expected / Hopeful Submission: December 20th
+Submitted for review on December 21st, 2017.
 
 ## Road Map:
 
@@ -22,11 +22,10 @@ Expected / Hopeful Submission: December 20th
 | Exercise Screen           | 10/10                 |                                                |
 | Summary Screen            | 10/10                 |                                                |
 | Add Default Workouts      | 10/10                 |                                                |
-| About screen              | 8/10                  | In progress now                                |
 | Create “Session” View     | 10/10                 |                                                |
 
 ### Known Bugs
-None at this time.
+Cells improperly think they are still expanded after being reordered
 
 ### Future plans
 * Convert relevant UIViews into ViewControllers (good practice)<br>

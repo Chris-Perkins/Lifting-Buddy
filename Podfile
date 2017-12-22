@@ -17,9 +17,6 @@ target 'Lifting Buddy' do
   # For tracking app run history
   pod 'GBVersionTracking'
 
-  # For tableview reordering
-  pod 'HPReorderTableView', '~> 0.2'
-
   # For custom alerts
   pod 'CDAlertView'
 

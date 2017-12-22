@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		220A94251F95146400B5CF60 /* ExerciseHistoryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */; };
+		221A41FC1FED97FA005C0B01 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 221A41F61FED97FA005C0B01 /* LICENSE */; };
+		221A41FD1FED97FA005C0B01 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 221A41F81FED97FA005C0B01 /* README.md */; };
+		221A41FE1FED97FA005C0B01 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 221A41F91FED97FA005C0B01 /* .gitignore */; };
+		221A41FF1FED97FA005C0B01 /* HPReorderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 221A41FA1FED97FA005C0B01 /* HPReorderTableView.m */; };
+		221A42001FED97FA005C0B01 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 221A41FB1FED97FA005C0B01 /* .travis.yml */; };
+		221A42011FED9872005C0B01 /* HPReorderTableView.h in Sources */ = {isa = PBXBuildFile; fileRef = 221A41F71FED97FA005C0B01 /* HPReorderTableView.h */; };
 		223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223590901F427D1A002BE0BF /* EditExerciseTableView.swift */; };
 		224153761F1EE12B00F7B82B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153751F1EE12B00F7B82B /* Workout.swift */; };
 		224153781F1EE1F000F7B82B /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153771F1EE1F000F7B82B /* Exercise.swift */; };
@@ -56,6 +62,12 @@
 /* Begin PBXFileReference section */
 		07EAE38F8336E92D79D24030 /* Pods-Lifting Buddy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.debug.xcconfig"; sourceTree = "<group>"; };
 		220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryTableView.swift; sourceTree = "<group>"; };
+		221A41F61FED97FA005C0B01 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		221A41F71FED97FA005C0B01 /* HPReorderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPReorderTableView.h; sourceTree = "<group>"; };
+		221A41F81FED97FA005C0B01 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		221A41F91FED97FA005C0B01 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		221A41FA1FED97FA005C0B01 /* HPReorderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPReorderTableView.m; sourceTree = "<group>"; };
+		221A41FB1FED97FA005C0B01 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		223590901F427D1A002BE0BF /* EditExerciseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableView.swift; sourceTree = "<group>"; };
 		223CF15F1FCC9C2F0093BBC7 /* Lifting-Buddy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Lifting-Buddy-Bridging-Header.h"; path = "Lifting Buddy/Lifting-Buddy-Bridging-Header.h"; sourceTree = "<group>"; };
 		224153751F1EE12B00F7B82B /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
@@ -117,6 +129,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		221A41F41FED97F9005C0B01 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				221A41F51FED97F9005C0B01 /* HPReorderTableView */,
+			);
+			path = Externals;
+			sourceTree = SOURCE_ROOT;
+		};
+		221A41F51FED97F9005C0B01 /* HPReorderTableView */ = {
+			isa = PBXGroup;
+			children = (
+				221A41FA1FED97FA005C0B01 /* HPReorderTableView.m */,
+				221A41F71FED97FA005C0B01 /* HPReorderTableView.h */,
+				221A41F61FED97FA005C0B01 /* LICENSE */,
+				221A41F81FED97FA005C0B01 /* README.md */,
+				221A41F91FED97FA005C0B01 /* .gitignore */,
+				221A41FB1FED97FA005C0B01 /* .travis.yml */,
+			);
+			path = HPReorderTableView;
+			sourceTree = "<group>";
+		};
 		224153791F1EE2C500F7B82B /* Workout Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +182,7 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
+				221A41F41FED97F9005C0B01 /* Externals */,
 				224697C51F19843A0089C7CA /* AppDelegate.swift */,
 				22AA6D0F1F2184A400624744 /* View Controllers */,
 				225D44101F510FD700B35D80 /* Custom UITypes */,
@@ -366,6 +400,10 @@
 			files = (
 				224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */,
 				224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */,
+				221A41FD1FED97FA005C0B01 /* README.md in Resources */,
+				221A41FC1FED97FA005C0B01 /* LICENSE in Resources */,
+				221A41FE1FED97FA005C0B01 /* .gitignore in Resources */,
+				221A42001FED97FA005C0B01 /* .travis.yml in Resources */,
 				224697CB1F19843A0089C7CA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,7 +420,6 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CDAlertView/CDAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/GBVersionTracking/GBVersionTracking.framework",
-				"${BUILT_PRODUCTS_DIR}/HPReorderTableView/HPReorderTableView.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -392,7 +429,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CDAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GBVersionTracking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HPReorderTableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -443,6 +479,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				221A42011FED9872005C0B01 /* HPReorderTableView.h in Sources */,
 				22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */,
 				227981421F4D13BE0010DA18 /* ProgressionMethodsTableView.swift in Sources */,
 				2250CAE01FC2632C00B21C4A /* WorkoutSessionSummaryScreen.swift in Sources */,
@@ -483,6 +520,7 @@
 				225D26B61F76D6BA00F047D9 /* ToggleablePrettyButton.swift in Sources */,
 				22CDEFF41FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift in Sources */,
 				226B11A11F96E1750013139B /* InputViewProtocol.swift in Sources */,
+				221A41FF1FED97FA005C0B01 /* HPReorderTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,6 +665,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5cfc06a1-cbab-4655-9f8a-8ae41b97168a";
 				PROVISIONING_PROFILE_SPECIFIER = "Lifting Buddy Development";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/chrisperkins/Desktop/Lifting-Buddy/Lifting Buddy/Lifting-Buddy-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -647,6 +686,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b428b2d3-6239-4915-a3a9-9c8891da02b7";
 				PROVISIONING_PROFILE_SPECIFIER = "Lifting Buddy Distribution";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/chrisperkins/Desktop/Lifting-Buddy/Lifting Buddy/Lifting-Buddy-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;

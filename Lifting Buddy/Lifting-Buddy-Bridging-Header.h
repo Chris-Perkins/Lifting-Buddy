@@ -9,7 +9,6 @@
 #ifndef Lifting_Buddy_Bridging_Header_h
 #define Lifting_Buddy_Bridging_Header_h
 
-#import <GBVersionTracking/GBVersionTracking.h>
-#import <HPReorderTableView/HPReorderTableView.h>
+#import "HPReorderTableView.h"
 
 #endif /* Lifting_Buddy_Bridging_Header_h */

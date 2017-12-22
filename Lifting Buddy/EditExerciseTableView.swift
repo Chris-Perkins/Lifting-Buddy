@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import HPReorderTableView
 
 class EditExerciseTableView: HPReorderTableView, UITableViewDataSource, UITableViewDelegate {
     

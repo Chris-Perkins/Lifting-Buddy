@@ -9,7 +9,6 @@
 import UIKit
 import Realm
 import RealmSwift
-import HPReorderTableView
 
 class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableViewDataSource {
     

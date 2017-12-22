@@ -1,0 +1,3 @@
+[submodule "Externals/HPReorderTableView"]
+	path = Externals/HPReorderTableView
+	url = https://github.com/Chris-Perkins/HPReorderTableView.git

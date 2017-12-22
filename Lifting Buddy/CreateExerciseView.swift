@@ -86,22 +86,6 @@ class CreateExerciseView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // If the exercise was deleted from another screen,
-        // We have to close this view so we don't error out.
-        if editingExercise?.isInvalidated == true {
-            let alert = CDAlertView(title: "Exercise Deleted",
-                                    message: "The exercise you were editing was deleted.",
-                                    type: CDAlertViewType.error)
-            alert.add(action: CDAlertViewAction(title: "Ok",
-                                                font: nil,
-                                                textColor: UIColor.white,
-                                                backgroundColor: UIColor.niceBlue,
-                                                handler: nil))
-            alert.show()
-            
-            self.removeFromSuperview()
-        }
-        
         // self stuff
         backgroundColor = .niceGray
         contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
@@ -150,6 +134,8 @@ class CreateExerciseView: UIScrollView {
     // MARK: Event functions
     
     @objc func buttonPress(sender: UIButton) {
+        checkIfExerciseInvalidated()
+        
         switch(sender){
         case addProgressionTrackerButton:
             if editingExercise?.canModifyCoreProperties ?? true {
@@ -210,6 +196,10 @@ class CreateExerciseView: UIScrollView {
     */
     private func requirementsFulfilled() -> Bool {
         var fulfilled = true
+        
+        if editingExercise?.isInvalidated ?? false {
+            fulfilled = false
+        }
         
         if nameEntryField.textfield.text?.count == 0 {
             fulfilled = false
@@ -282,6 +272,26 @@ class CreateExerciseView: UIScrollView {
         }
         
         return createdExercise
+    }
+    
+    // Determines if the exercise was invalidated.
+    // If it was, hide the view and display an error dialog.
+    private func checkIfExerciseInvalidated() {
+        // If the exercise was deleted from another screen,
+        // We have to close this view so we don't error out.
+        if editingExercise?.isInvalidated == true {
+            let alert = CDAlertView(title: "Exercise Deleted",
+                                    message: "The exercise you were editing was deleted.",
+                                    type: CDAlertViewType.error)
+            alert.add(action: CDAlertViewAction(title: "Ok",
+                                                font: nil,
+                                                textColor: UIColor.white,
+                                                backgroundColor: UIColor.niceBlue,
+                                                handler: nil))
+            alert.show()
+            
+            self.removeFromSuperview()
+        }
     }
     
     // MARK: Constraints

@@ -4,7 +4,7 @@ To run this application, you will need to have CocoaPods installed.
 
 In the project directory, run the command "pod install".
 
-Submitted for review on December 21st, 2017.
+Submitted for Review December 21st, 2017
 
 ## Road Map:
 
@@ -22,17 +22,18 @@ Submitted for review on December 21st, 2017.
 | Exercise Screen           | 10/10                 |                                                |
 | Summary Screen            | 10/10                 |                                                |
 | Add Default Workouts      | 10/10                 |                                                |
+| About screen              | 8/10                  | In progress now                                |
 | Create “Session” View     | 10/10                 |                                                |
 
 ### Known Bugs
-Cells improperly think they are still expanded after being reordered
+Reordering tableviews when toggled causes improper expansion. Need to reload tableview.
 
 ### Future plans
 * Convert relevant UIViews into ViewControllers (good practice)<br>
-    Update from 11/29 -- my shower thoughts said this wasn't a good idea. Reason being that containerviewcontrollers would require the frames to be set anyway, which is what I wanted to avoid<br>
-* Add "Feature Poll", a poll that users can use to vote on for the next feature<br>
-* Log in to sync and backup workouts
-
-#### Special Thanks
-Alex Bridgeman - For giving me the idea for this application. Also created the splash screen and launch screen!
-
+   Update from 11/29 -- my shower thoughts said this wasn't a good idea. Reason being that containerviewcontrollers would require the frames to be set anyway, which is what I wanted to avoid<br>
+   * Add "Feature Poll", a poll that users can use to vote on for the next feature<br>
+   * Log in to sync and backup workouts
+   
+   #### Special Thanks
+   Alex Bridgeman - For giving me the idea for this application. Also created the splash screen and launch screen!
+   

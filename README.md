@@ -15,7 +15,7 @@ v1.0.0 Released on
 | Workout Start             | 9/10                  | Going to rework UI                             |
 
 ### Known Bugs
-Reordering tableviews when toggled causes improper expansion. Need to reload tableview.
+None outstanding bugs at this time.
 
 ### Future plans
 * Convert relevant UIViews into ViewControllers (good practice)<br>

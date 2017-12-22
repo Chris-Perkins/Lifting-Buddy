@@ -91,6 +91,7 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
         }
         
         cells.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        heights.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
     
     // Deletion methods

@@ -663,7 +663,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ChrisPerkins.Lifting-Buddy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5cfc06a1-cbab-4655-9f8a-8ae41b97168a";
+				PROVISIONING_PROFILE = "cf07ed0e-81be-4489-9069-3d65fcfe0bd4";
 				PROVISIONING_PROFILE_SPECIFIER = "Lifting Buddy Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/chrisperkins/Desktop/Lifting-Buddy/Lifting Buddy/Lifting-Buddy-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -684,7 +684,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ChrisPerkins.Lifting-Buddy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b428b2d3-6239-4915-a3a9-9c8891da02b7";
+				PROVISIONING_PROFILE = "d9ce4a88-1707-4111-bb4f-10c286195a6b";
 				PROVISIONING_PROFILE_SPECIFIER = "Lifting Buddy Distribution";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/chrisperkins/Desktop/Lifting-Buddy/Lifting Buddy/Lifting-Buddy-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;

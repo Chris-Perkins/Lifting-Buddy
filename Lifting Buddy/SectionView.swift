@@ -16,9 +16,9 @@ class SectionView: UIView {
     // Required view for modifying sectionContentView
     var mainViewController: MainViewController?
     // Our sections
-    private var sessionButton: PrettyButton
-    private let workoutsButton: PrettyButton
-    private let exercisesButton: PrettyButton
+    public let sessionButton: PrettyButton
+    public let workoutsButton: PrettyButton
+    public let exercisesButton: PrettyButton
     
     // The view that's currently being selected
     private var selectedView: PrettyButton?
@@ -86,7 +86,7 @@ class SectionView: UIView {
             // Only sets properties once.
             laidOutSubviews = true
             
-            imitateWorkoutButtonPress()
+            imitateButtonPress(forButton: workoutsButton)
         }
     }
     
@@ -131,12 +131,12 @@ class SectionView: UIView {
         })
         
         // Go to workout view
-        imitateWorkoutButtonPress()
+        imitateButtonPress(forButton: workoutsButton)
     }
     
     // Acts like the workout button was pressed.
-    public func imitateWorkoutButtonPress() {
-        buttonPress(sender: workoutsButton)
+    public func imitateButtonPress(forButton button: PrettyButton) {
+        buttonPress(sender: button)
     }
     
     // MARK: Event functions

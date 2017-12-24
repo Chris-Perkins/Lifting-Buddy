@@ -77,8 +77,12 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
 
     // Now create line models for every progression method
     for (progressionMethod, points) in pointDictionary {
+        guard var index: Int = progressionMethod.getIndex() else {
+            fatalError("Proper index not assigned! Index int returned nil.")
+        }
+        
         lineModels.append(ChartLineModel(chartPoints: points,
-                                         lineColors: getLineColorsForProgressionMethod(progressionMethod: progressionMethod),
+                                         lineColors: getColorsForIndex(index),
                                          lineWidth: 3,
                                          animDuration: 0,
                                          animDelay: 0))
@@ -170,65 +174,6 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
             // Also, make sure there is a valid line to graph. Otherwise... Why graph?
             (maximumDate.seconds(from: minimumDate) >= 24 * 60 * 60) && containsLine
         )
-}
-
-func getLineColorsForProgressionMethod(progressionMethod: ProgressionMethod) -> [UIColor] {
-    var colors = [UIColor]()
-    let modCount = 10
-    
-    guard var index: Int = progressionMethod.getIndex() else {
-        fatalError("Proper index not assigned! Index int returned nil.")
-    }
-    
-    // + 1 so index starting at 0 is given a color
-    index += 1
-    var i = 0
-    var previousColor = -1
-    while index > 0 {
-        var color: UIColor?
-        var colorIndex = mod(x: index, m: modCount)
-        if colorIndex == previousColor {
-            colorIndex = mod(x: colorIndex + 1, m: modCount)
-        }
-        
-        switch (colorIndex) {
-        case 0:
-            color = .niceRed
-        case 1:
-            color = .niceBlue
-        case 2:
-            color = .niceGreen
-        case 3:
-            color = .niceYellow
-        case 4:
-            color = .niceCyan
-        case 5:
-            color = .niceBrown
-        case 6:
-            color = .nicePurple
-        case 7:
-            color = .niceMediterranean
-        case 8:
-            color = .niceMaroon
-        case 9:
-            color = .niceOrange
-        default:
-            fatalError("Modulo returned OOB value. Check case amount in ExerciseChartCreator -> GetLineColor Method")
-        }
-        
-        i += 1
-        // Up this based on mod count. Should be the ceil of closest 10 to modCount
-        // Ex: modCount 9 -> 10, modCount 11 -> 100
-        index = index / 10^^i
-        previousColor = colorIndex
-        colors.append(color!)
-    }
-    return colors
-}
-
-private func mod(x: Int, m: Int) -> Int {
-    let r = x % m
-    return r < 0 ? r + m : r
 }
 
 private func createChartPoint(date: Date, value: Float, displayFormatter: DateFormatter) -> ChartPoint {

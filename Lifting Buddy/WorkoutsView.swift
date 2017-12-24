@@ -14,13 +14,18 @@ import Realm
 
 class WorkoutsView: UIView {
     
-    // View properties
+    // MARK: View properties
+    
+    // The delegate to display an exercise
+    public var exerciseDisplayer: ExerciseDisplayer?
     
     // The workouts for this view
     private let workoutTableView: WorkoutTableView
     // The button to create this workout
     private let createWorkoutButton: PrettyButton
     
+    
+    // MARK: View inits
     
     override init(frame: CGRect) {
         workoutTableView = WorkoutTableView(style: UITableViewStyle.plain)
@@ -127,5 +132,12 @@ extension WorkoutsView: ShowViewDelegate {
     func showView(_ view: UIView) {
         addSubview(view)
         UIView.slideView(view, overView: self)
+    }
+}
+
+extension WorkoutsView: ExerciseDisplayer {
+    // Calls this delegate to display the exercise
+    func displayExercise(_ exercise: Exercise) {
+        exerciseDisplayer?.displayExercise(exercise)
     }
 }

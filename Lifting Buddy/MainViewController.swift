@@ -37,14 +37,6 @@ class MainViewController: UIViewController {
         view.backgroundColor = .niceGray
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "aboutSegue" {
-            let popoverViewController = segue.destination
-            popoverViewController.modalPresentationStyle = .popover
-            popoverViewController.popoverPresentationController!.delegate = self
-        }
-    }
-    
     // MARK: View functions
     
     func showContentView(viewType: SectionView.ContentViews) {
@@ -60,6 +52,7 @@ class MainViewController: UIViewController {
         case SectionView.ContentViews.WORKOUTS:
             if workoutView == nil {
                 workoutView = WorkoutsView(frame: .zero)
+                workoutView?.exerciseDisplayer = self
             }
             showView(workoutView!)
             
@@ -178,9 +171,10 @@ extension MainViewController: ShowViewDelegate {
     }
 }
 
-extension MainViewController: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .popover
+extension MainViewController: ExerciseDisplayer {
+    func displayExercise(_ exercise: Exercise) {
+        headerView.sectionView.imitateButtonPress(forButton: headerView.sectionView.exercisesButton)
+        exercisesView?.selectExercise(exercise: exercise)
     }
 }
 
@@ -199,4 +193,11 @@ protocol WorkoutSessionStarter {
      * Notified when the sessionview's mainview changed
      */
     func sessionViewChanged(toView view: UIView)
+}
+
+protocol ExerciseDisplayer {
+    /*
+     * Tells our view to display an exercise
+     */
+    func displayExercise(_ exercise: Exercise)
 }

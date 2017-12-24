@@ -15,6 +15,8 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
+    public static let heightPerExercise: CGFloat = 40.0
+    
     // The workout associated with each cell
     private var workout: Workout?
     
@@ -27,12 +29,12 @@ class WorkoutTableViewCell: UITableViewCell {
     // An indicator on whether or not the cell is expanded
     private let expandImage: UIImageView
     // The labels for every exercise
-    private var exerciseLabels: [UILabel]
+    private var exerciseLabels: [LabelWithPrettyButtonView]
     
-    // A delegate notified whenever we start a workout
-    public var workoutSessionStarter: WorkoutSessionStarter?
     // A delegate to show a view for us
     public var showViewDelegate: ShowViewDelegate?
+    // A delegate to display an exercise in the tableview
+    public var exerciseDisplayer: ExerciseDisplayer?
     
     // The button stating whether or not we want to edit this workout
     private var editButton: PrettyButton?
@@ -48,7 +50,7 @@ class WorkoutTableViewCell: UITableViewCell {
         fireImage = UIImageView(image: #imageLiteral(resourceName: "Fire"))
         streakLabel = UILabel()
         expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
-        exerciseLabels = [UILabel]()
+        exerciseLabels = [LabelWithPrettyButtonView]()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -114,7 +116,7 @@ class WorkoutTableViewCell: UITableViewCell {
             
             if (isSelected) {
                 for exerciseLabel in exerciseLabels {
-                    exerciseLabel.textColor = .white
+                    exerciseLabel.label.textColor = .white
                 }
                 
                 // Make the start button visible (green on green is BAD)
@@ -126,7 +128,7 @@ class WorkoutTableViewCell: UITableViewCell {
             if (isSelected) {
                 // Only set the color if labels visible. :)
                 for exerciseLabel in exerciseLabels {
-                    exerciseLabel.textColor = UIColor.niceBlue
+                    exerciseLabel.label.textColor = .niceBlue
                 }
                 
                 backgroundColor = .niceLightGray
@@ -167,38 +169,49 @@ class WorkoutTableViewCell: UITableViewCell {
         var prevLabel: UIView = cellTitle
         
         exercises = workout.getExercises()
-        for exercise in exercises {
-            let exerLabel = UILabel()
-            exerLabel.text = "- " + exercise.getName()!
-            exerLabel.textColor = .niceBlue
-            exerLabel.textAlignment = .left
-            addSubview(exerLabel)
+        for (index, exercise) in exercises.enumerated() {
+            let exerciseView = LabelWithPrettyButtonView()
+            
+            exerciseView.label.text = exercise.getName()!
+            exerciseView.label.textColor = .niceBlue
+            exerciseView.label.textAlignment = .left
+            if index & 1 == 1 {
+                exerciseView.label.backgroundColor = UIColor.niceGray.withAlphaComponent(0.35)
+            }
+            
+            exerciseView.button.setDefaultProperties()
+            exerciseView.button.setTitle("View", for: .normal)
+            exerciseView.button.tag = index
+            exerciseView.button.addTarget(self,
+                                          action: #selector(labelButtonPress(sender:)),
+                                          for: .touchUpInside)
+            
+            addSubview(exerciseView)
             
             // Constraints for this exercise label.
             // Place 10 from left/right of the cell
             // Place 10 below above view, height of 20
             
-            exerLabel.translatesAutoresizingMaskIntoConstraints = false
+            exerciseView.translatesAutoresizingMaskIntoConstraints = false
             
             
-            NSLayoutConstraint.createViewBelowViewConstraint(view: exerLabel,
-                                                             belowView: prevLabel,
-                                                             withPadding: 10).isActive = true
-            NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerLabel,
+            NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseView,
+                                                             belowView: prevLabel).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseView,
                                                                  withCopyView: self,
                                                                  attribute: .left,
                                                                  plusConstant: 20).isActive = true
-            NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerLabel,
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseView,
                                                                  withCopyView: self,
                                                                  attribute: .right,
-                                                                 plusConstant: -10).isActive = true
-            NSLayoutConstraint.createHeightConstraintForView(view: exerLabel,
-                                                             height: 20).isActive = true
+                                                                 plusConstant: -20).isActive = true
+            NSLayoutConstraint.createHeightConstraintForView(view: exerciseView,
+                                                             height: WorkoutTableViewCell.heightPerExercise
+                                                            ).isActive = true
             
-            exerciseLabels.append(exerLabel)
-            prevLabel = exerLabel
+            exerciseLabels.append(exerciseView)
+            prevLabel = exerciseView
         }
-        
         
         // MARK: Edit Button Constraints
         editButton?.translatesAutoresizingMaskIntoConstraints = false
@@ -251,6 +264,14 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // MARK: Event functions
     
+    @objc func labelButtonPress(sender: PrettyButton) {
+        guard var exercise = workout?.getExercises()[sender.tag] else {
+            fatalError("Workout either nil or exercise out of bounds!")
+        }
+        
+        exerciseDisplayer?.displayExercise(exercise)
+    }
+    
     // Notified on a button press
     @objc func buttonPress(sender: UIButton) {
         switch(sender) {
@@ -282,7 +303,7 @@ class WorkoutTableViewCell: UITableViewCell {
     }
     
     // MARK: Constraint functions
-    
+
     // Below view top ; cling to left of view ; to the right of the fire image ; height of default height
     private func createAndActivateCellTitleConstraints() {
         

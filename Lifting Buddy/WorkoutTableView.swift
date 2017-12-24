@@ -133,8 +133,8 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
             tableView.dequeueReusableCell(withIdentifier: "cell",
                                           for: indexPath as IndexPath) as! WorkoutTableViewCell
         
-        cell.workoutSessionStarter = superview as? WorkoutSessionStarter
         cell.showViewDelegate = superview as? ShowViewDelegate
+        cell.exerciseDisplayer = superview as? ExerciseDisplayer
         cell.setWorkout(workout: sortedData[indexPath.row])
         cell.updateSelectedStatus()
         return cell
@@ -145,7 +145,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         let exerCount = CGFloat(sortedData[indexPath.row].getExercises().count)
         
         return indexPathForSelectedRow?.row == indexPath.row ?
-            UITableViewCell.defaultHeight + PrettyButton.defaultHeight + exerCount * 30.0 + (exerCount > 0 ? 26 : 0) :
+            UITableViewCell.defaultHeight + PrettyButton.defaultHeight + exerCount * WorkoutTableViewCell.heightPerExercise + (exerCount > 0 ? 26 : 0) :
             UITableViewCell.defaultHeight
     }
     

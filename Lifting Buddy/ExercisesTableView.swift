@@ -56,8 +56,34 @@ class ExercisesTableView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: TableView Functions
+    private func setupTableView() {
+        delegate = self
+        dataSource = self
+        allowsSelection = true
+        register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
+        backgroundColor = .clear
+    }
     
+    // MARK: View overrides
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        
+    }
+    
+    // MARK: Custom functions
+    
+    // Retrieve workouts
+    public func getSortedData() -> [Exercise] {
+        return sortedData
+    }
+}
+
+// MARK: TableViewDelegate Functions
+extension ExercisesTableView : UITableViewDelegate {
+    
+    // Reloads data from realm
     override func reloadData() {
         let realm = try! Realm()
         
@@ -70,27 +96,11 @@ class ExercisesTableView: UITableView {
             overlayDelegate?.showViewOverlay()
         }
         
+        let selectedIndex = indexPathForSelectedRow
         super.reloadData()
+        selectRow(at: selectedIndex, animated: true, scrollPosition: .bottom)
     }
     
-    // MARK: Custom functions
-    
-    // Retrieve workouts
-    public func getSortedData() -> [Exercise] {
-        return sortedData
-    }
-    
-    private func setupTableView() {
-        delegate = self
-        dataSource = self
-        allowsSelection = true
-        register(ExerciseTableViewCell.self, forCellReuseIdentifier: "cell")
-        backgroundColor = .clear
-    }
-}
-
-// MARK: TableViewDelegate Functions
-extension ExercisesTableView : UITableViewDelegate {
     // If the cell is selected, it should be expanded if we're not selecting an exercise.
     // Otherwise, give it the default cell height.
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

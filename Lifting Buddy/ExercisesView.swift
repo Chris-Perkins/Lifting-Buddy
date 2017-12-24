@@ -22,6 +22,8 @@ class ExercisesView: UIView {
     
     // The view we display when the tableview is empty
     private var overlayView: UIView?
+    // Whether or not we've loaded the view
+    private var loaded: Bool = false
     
     // The workouts for this view
     private let exerciseTableView: ExercisesTableView
@@ -102,6 +104,14 @@ class ExercisesView: UIView {
     // Just removes this view
     @objc func removeSelf() {
         removeSelfNicelyWithAnimation()
+    }
+    
+    public func selectExercise(exercise: Exercise) {
+        guard let indexOfExercise = exerciseTableView.getSortedData().index(of: exercise) else {
+            fatalError("Exercise selected that did not exist!")
+        }
+        let indexPath = IndexPath(row: indexOfExercise, section: 0)
+        exerciseTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
     }
     
     // MARK: Event functions

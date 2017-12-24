@@ -16,12 +16,6 @@ import Realm
 import SwiftCharts
 import CDAlertView
 
-// Returns the height of the status bar (battery view, etc)
-func getStatusBarHeight() -> CGFloat {
-    let statusBarSize = UIApplication.shared.statusBarFrame.size
-    return Swift.min(statusBarSize.width, statusBarSize.height)
-}
-
 // Time amount values (used in graphing)
 public enum TimeAmount: String {
     case MONTH = "MONTH"
@@ -39,6 +33,74 @@ precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
 infix operator ^^ : PowerPrecedence
 func ^^ (radix: Int, power: Int) -> Int {
     return Int(pow(Double(radix), Double(power)))
+}
+
+
+// MARK: Global functions
+
+// Gets the colors associated with an index
+func getColorsForIndex(_ passedIndex: Int) -> [UIColor] {
+    var colors = [UIColor]()
+    let modCount = 10
+    
+    // Lets us modify the index that was passed in
+    var index = passedIndex
+    // + 1 so index starting at 0 is given a color
+    index += 1
+    var i = 0
+    var previousColor = -1
+    while index > 0 {
+        var color: UIColor?
+        var colorIndex = mod(x: index, m: modCount)
+        if colorIndex == previousColor {
+            colorIndex = mod(x: colorIndex + 1, m: modCount)
+        }
+        
+        switch (colorIndex) {
+        case 0:
+            color = .niceRed
+        case 1:
+            color = .niceBlue
+        case 2:
+            color = .niceGreen
+        case 3:
+            color = .niceYellow
+        case 4:
+            color = .niceCyan
+        case 5:
+            color = .niceBrown
+        case 6:
+            color = .nicePurple
+        case 7:
+            color = .niceMediterranean
+        case 8:
+            color = .niceMaroon
+        case 9:
+            color = .niceOrange
+        default:
+            fatalError("Modulo returned OOB value. Check case amount in ExerciseChartCreator -> GetLineColor Method")
+        }
+        
+        i += 1
+        // Up this based on mod count. Should be the ceil of closest 10 to modCount
+        // Ex: modCount 9 -> 10, modCount 11 -> 100
+        index = index / 10^^i
+        previousColor = colorIndex
+        colors.append(color!)
+    }
+    return colors
+}
+
+// Just mods a number so it doesn't return -1
+private func mod(x: Int, m: Int) -> Int {
+    let r = x % m
+    return r < 0 ? r + m : r
+}
+
+// Returns the height of the status bar (battery view, etc)
+func getStatusBarHeight() -> CGFloat {
+    let statusBarSize = UIApplication.shared.statusBarFrame.size
+    return Swift.min(statusBarSize.width, statusBarSize.height)
 }
 
 // MARK: Extensions

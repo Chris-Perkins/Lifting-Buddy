@@ -206,7 +206,7 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
             progressionMethodButton.setToggleTextColor(color: .white)
             progressionMethodButton.setDefaultTextColor(color: .white)
             progressionMethodButton.setToggleViewColor(color:
-                getLineColorsForProgressionMethod(progressionMethod: progressionMethod)[0])
+                getColorsForIndex(progressionMethod.getIndex()!)[0])
             progressionMethodButton.setDefaultViewColor(color: .niceGray)
             progressionMethodButton.addTarget(self,
                                               action: #selector(toggleButtonPress(sender:)),

@@ -16,33 +16,25 @@ class EditExerciseTableViewCell: UITableViewCell {
     public var showViewDelegate: ShowViewDelegate?
     
     // The exercise title for this cell
-    private let exerciseNameLabel: UILabel
-    // The edit button for this cell
-    private let editButton: PrettyButton
+    private let exerciseView: LabelWithPrettyButtonView
     // The exercise associated with this cell
     private var exercise: Exercise?
     
     // MARK: Init overrides
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        exerciseNameLabel = UILabel()
-        editButton = PrettyButton()
+        exerciseView = LabelWithPrettyButtonView()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        addSubview(exerciseNameLabel)
-        addSubview(editButton)
+        addSubview(exerciseView)
         
-        editButton.addTarget(self, action: #selector(editPress(sender:)), for: .touchUpInside)
+        exerciseView.button.addTarget(self,
+                                      action: #selector(editPress(sender:)),
+                                      for: .touchUpInside)
         
         
-        /*
-         * Comments for below code: Name label takes up 75% of the view
-         * starting from the left. For example: N = Name Label, E = Edit button
-         * Layout is: NNNE
-         */
-        createAndActivateExerciseNameLabelConstraints()
-        createAndActivateEditButtonConstraints()
+        createAndActivateExerciseViewConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,13 +49,13 @@ class EditExerciseTableViewCell: UITableViewCell {
         backgroundColor = UIColor.white.withAlphaComponent(0.5)
         clipsToBounds = true
         
-        exerciseNameLabel.setDefaultProperties()
+        exerciseView.label.setDefaultProperties()
         
-        editButton.setDefaultProperties()
-        editButton.removeOverlayView()
-        editButton.animationTimeInSeconds = 0.1
-        editButton.setOverlayStyle(style: .FADE)
-        editButton.setTitle("Edit", for: .normal)
+        exerciseView.button.setDefaultProperties()
+        exerciseView.button.removeOverlayView()
+        exerciseView.button.animationTimeInSeconds = 0.1
+        exerciseView.button.setOverlayStyle(style: .FADE)
+        exerciseView.button.setTitle("Edit", for: .normal)
     }
     
     // MARK: Public methods
@@ -71,7 +63,7 @@ class EditExerciseTableViewCell: UITableViewCell {
     // Sets the exercise for this view
     public func setExercise(exercise: Exercise) {
         self.exercise = exercise
-        exerciseNameLabel.text = exercise.getName()
+        exerciseView.label.text = exercise.getName()
     }
     
     // MARK: Event Functions
@@ -87,44 +79,9 @@ class EditExerciseTableViewCell: UITableViewCell {
     
     // MARK: Constraint functions
     
-    // Cling to top, bottom, left. Width of this view * 0.66
-    private func createAndActivateExerciseNameLabelConstraints() {
-        exerciseNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseNameLabel,
-                                                             withCopyView: self,
-                                                             attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseNameLabel,
-                                                             withCopyView: self,
-                                                             attribute: .bottom).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseNameLabel,
-                                                             withCopyView: self,
-                                                             attribute: .width,
-                                                             multiplier: 2/3).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseNameLabel,
-                                                             withCopyView: self,
-                                                             attribute: .left).isActive = true
-    }
-    
-    // Cling to top, bottom, right of this view ; cling to left of exercisenamelabel
-    private func createAndActivateEditButtonConstraints() {
-        editButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
-                                                             withCopyView: self,
-                                                             attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
-                                                             withCopyView: self,
-                                                             attribute: .bottom).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editButton,
-                                                             withCopyView: self,
-                                                             attribute: .right).isActive = true
-        NSLayoutConstraint(item: exerciseNameLabel,
-                           attribute: .right,
-                           relatedBy: .equal,
-                           toItem: editButton,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+    // Cling to this view
+    private func createAndActivateExerciseViewConstraints() {
+        NSLayoutConstraint.clingViewToView(view: exerciseView,
+                                           toView: self)
     }
 }

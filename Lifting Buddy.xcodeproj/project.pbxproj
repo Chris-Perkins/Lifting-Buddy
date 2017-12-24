@@ -56,6 +56,7 @@
 		22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */; };
 		22EC7FD31F5E01FE00A1E66B /* WorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */; };
 		22ECE3941F644E1A0067171A /* WorkoutSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */; };
+		22F030141FF01B7500C5E376 /* LabelWithPrettyButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F030131FF01B7500C5E376 /* LabelWithPrettyButtonView.swift */; };
 		987A120A06EF773208F02445 /* Pods_Lifting_Buddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +114,7 @@
 		22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableView.swift; sourceTree = "<group>"; };
 		22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewCell.swift; sourceTree = "<group>"; };
 		22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSessionView.swift; sourceTree = "<group>"; };
+		22F030131FF01B7500C5E376 /* LabelWithPrettyButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPrettyButtonView.swift; sourceTree = "<group>"; };
 		C522BD41578E9EFDC2DF9433 /* Pods-Lifting Buddy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.release.xcconfig"; sourceTree = "<group>"; };
 		CA29D0A3A1559E763A7B39DE /* Pods_Lifting_Buddy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lifting_Buddy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -223,6 +225,7 @@
 				2263DF971F8DA60E00592DCB /* TimeInputField.swift */,
 				225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */,
 				2278818E1FC6627500EBFA7E /* ExerciseChartViewWithToggles.swift */,
+				22F030131FF01B7500C5E376 /* LabelWithPrettyButtonView.swift */,
 			);
 			name = "Custom UITypes";
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				22ECE3941F644E1A0067171A /* WorkoutSessionView.swift in Sources */,
 				22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */,
 				2280A2FD1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift in Sources */,
+				22F030141FF01B7500C5E376 /* LabelWithPrettyButtonView.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
 				22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */,
 				2289D4451FAF9B7700A2DF9D /* ExerciseChartCreator.swift in Sources */,

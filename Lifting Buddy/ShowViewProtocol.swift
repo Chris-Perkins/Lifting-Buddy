@@ -1,12 +1,14 @@
 //
-//  ShowViewDelegate.swift
+//  ShowViewDelegateProtocol.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 11/9/17.
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
-import UIKit
+/*
+ Simply has methods for displaying a view
+ */
 
 protocol ShowViewDelegate {
     /*

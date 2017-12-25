@@ -14,7 +14,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // MARK: View Properties
     
     // A delegate to inform for tableview actions
-    public var tableViewDelegate: TableViewDelegate?
+    public var tableViewDelegate: ExerciseHistoryEntryTableViewDelegate?
     
     // holds the progressionmethods for this history piece
     private let progressionMethods: List<ProgressionMethod>
@@ -111,11 +111,4 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         register(ExerciseHistoryTableViewCell.self, forCellReuseIdentifier: "cell")
         backgroundColor = .clear
     }
-}
-
-protocol TableViewDelegate {
-    /*
-     * Inform when a cell is deleted
-     */
-    func dataDeleted(deletedData: ExerciseHistoryEntry)
 }

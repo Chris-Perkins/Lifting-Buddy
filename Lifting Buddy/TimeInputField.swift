@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimeInputField: UIView, InputViewHolder {
+class TimeInputField: UIView {
     
     // MARK: View properties
     
@@ -121,48 +121,7 @@ class TimeInputField: UIView, InputViewHolder {
         }
     }
     
-    // MARK: InputViewHolder protocol
-    
-    // Returns our input views
-    internal func getInputViews() -> [BetterTextField] {
-        return self.timeInputView.getInputViews()
-    }
-    
-    // Returns whether not we have a valid time format
-    internal func areFieldsValid() -> Bool {
-        return  checkIfFieldValid(field: secondField) &&
-                checkIfFieldValid(field: minuteField) &&
-                checkIfFieldValid(field: hourField)
-    }
-    
-    // Helper for checking if fields are valid
-    private func checkIfFieldValid(field: BetterTextField) -> Bool {
-        let returnValue = field.text != nil
-        
-        if !returnValue {
-            field.backgroundColor = .niceRed
-        }
-        
-        return returnValue
-    }
-    
-    // Returns time as a function of seconds
-    internal func getValue() -> String {
-        // -1 indicates something went wrong
-        var totalSeconds: Float = -1
-        
-        if self.areFieldsValid() {
-            totalSeconds = 0
-            
-            totalSeconds += self.secondField.text!.floatValue!
-            totalSeconds += 60 * self.minuteField.text!.floatValue!
-            totalSeconds += 60 * 60 * self.hourField.text!.floatValue!
-        }
-        
-        return String(totalSeconds)
-    }
-    
-    // MARK: view constraints
+    // MARK: View constraints
     
     // cling to top, bottom, right. width of timer button's new height
     private func createAndActivateTimerButtonConstraints() {
@@ -244,5 +203,46 @@ class TimeInputField: UIView, InputViewHolder {
         self.secondField.textfield.isUserInteractionEnabled = true
         self.minuteField.textfield.isUserInteractionEnabled = true
         self.hourField.textfield.isUserInteractionEnabled = true
+    }
+}
+
+extension TimeInputField: InputViewHolder {
+    // Returns our input views
+    internal func getInputViews() -> [BetterTextField] {
+        return self.timeInputView.getInputViews()
+    }
+    
+    // Returns whether not we have a valid time format
+    internal func areFieldsValid() -> Bool {
+        return  checkIfFieldValid(field: secondField) &&
+            checkIfFieldValid(field: minuteField) &&
+            checkIfFieldValid(field: hourField)
+    }
+    
+    // Helper for checking if fields are valid
+    private func checkIfFieldValid(field: BetterTextField) -> Bool {
+        let returnValue = field.text != nil
+        
+        if !returnValue {
+            field.backgroundColor = .niceRed
+        }
+        
+        return returnValue
+    }
+    
+    // Returns time as a function of seconds
+    internal func getValue() -> String {
+        // -1 indicates something went wrong
+        var totalSeconds: Float = -1
+        
+        if self.areFieldsValid() {
+            totalSeconds = 0
+            
+            totalSeconds += self.secondField.text!.floatValue!
+            totalSeconds += 60 * self.minuteField.text!.floatValue!
+            totalSeconds += 60 * 60 * self.hourField.text!.floatValue!
+        }
+        
+        return String(totalSeconds)
     }
 }

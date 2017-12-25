@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
+class WorkoutSessionTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
@@ -289,21 +289,6 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
         return isComplete
     }
     
-    // MARK: TableViewDelegate Functions
-    
-    // Called when a cell is deleted
-    func dataDeleted(deletedData: ExerciseHistoryEntry) {
-        let realm = try! Realm()
-        print(realm.objects(ExerciseHistoryEntry.self))
-        
-        exercise.removeExerciseHistoryEntry(deletedData)
-        
-        print(realm.objects(ExerciseHistoryEntry.self))
-        
-        layoutIfNeeded()
-        updateCompleteStatus()
-    }
-    
     // MARK: Constraints
     
     // Cling to top, left, right ; height of baseviewcell
@@ -484,14 +469,17 @@ class WorkoutSessionTableViewCell: UITableViewCell, TableViewDelegate {
     }
 }
 
-protocol WorkoutSessionTableViewCellDelegate {
-    /*
-     * This cell height changed
-     */
-    func cellHeightDidChange(height: CGFloat, indexPath: IndexPath)
-    
-    /*
-     * This cell's completion status changed
-     */
-    func cellCompleteStatusChanged(complete: Bool)
+extension WorkoutSessionTableViewCell: ExerciseHistoryEntryTableViewDelegate {
+    // Called when a cell is deleted
+    func dataDeleted(deletedData: ExerciseHistoryEntry) {
+        let realm = try! Realm()
+        print(realm.objects(ExerciseHistoryEntry.self))
+        
+        exercise.removeExerciseHistoryEntry(deletedData)
+        
+        print(realm.objects(ExerciseHistoryEntry.self))
+        
+        layoutIfNeeded()
+        updateCompleteStatus()
+    }
 }

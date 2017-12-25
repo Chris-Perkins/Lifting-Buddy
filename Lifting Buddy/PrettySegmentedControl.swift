@@ -110,7 +110,3 @@ class PrettySegmentedControl: UIView {
     }
     
 }
-
-protocol PrettySegmentedControlDelegate {
-    func segmentSelectionChanged(index: Int)
-}

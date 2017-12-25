@@ -16,8 +16,6 @@ class ExercisesTableView: UITableView {
     
     // MARK: View Properties
     
-    // A delegate to say when we should overlay
-    public var overlayDelegate: TableViewOverlayDelegate?
     // If we're picking an exercise, have a delegate to say what exercise we picked
     public var exercisePickerDelegate: ExercisePickerDelegate?
     
@@ -89,12 +87,6 @@ extension ExercisesTableView : UITableViewDelegate {
         
         data = AnyRealmCollection(realm.objects(Exercise.self))
         sortedData = Exercise.getSortedExerciseArray(exercises: data)
-        
-        if sortedData.count > 0 {
-            overlayDelegate?.hideViewOverlay()
-        } else {
-            overlayDelegate?.showViewOverlay()
-        }
         
         let selectedIndex = indexPathForSelectedRow
         super.reloadData()

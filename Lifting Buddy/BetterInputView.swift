@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BetterInputView: UIView, InputViewHolder {
+class BetterInputView: UIView {
     
     // MARK: View properties
     
@@ -46,8 +46,40 @@ class BetterInputView: UIView, InputViewHolder {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: InputViewHolder protocol
+    // MARK: Constraints
     
+    // Spread evenly across the inputView
+    private func createAndActivateInputConstraints() {
+        
+        var prevView: UIView = self
+        
+        for view in inputViews {
+            view.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                                 withCopyView: self,
+                                                                 attribute: .top).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                                 withCopyView: self,
+                                                                 attribute: .bottom).isActive = true
+            NSLayoutConstraint(item: prevView,
+                               attribute: prevView == self ? .left : .right,
+                               relatedBy: .equal,
+                               toItem: view,
+                               attribute: .left,
+                               multiplier: 1,
+                               constant: 0).isActive = true
+            NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
+                                                                 withCopyView: self,
+                                                                 attribute: .width,
+                                                                 multiplier: 1/CGFloat(inputViews.count)).isActive = true
+            
+            prevView = view
+        }
+    }
+}
+
+extension BetterInputView: InputViewHolder {
     // returns the input views
     internal func getInputViews() -> [BetterTextField] {
         return inputViews
@@ -87,37 +119,5 @@ class BetterInputView: UIView, InputViewHolder {
         }
         
         return String(returnValue)
-    }
-    
-    // MARK: Constraints
-    
-    // Spread evenly across the inputView
-    private func createAndActivateInputConstraints() {
-        
-        var prevView: UIView = self
-        
-        for view in inputViews {
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
-                                                                 withCopyView: self,
-                                                                 attribute: .top).isActive = true
-            NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
-                                                                 withCopyView: self,
-                                                                 attribute: .bottom).isActive = true
-            NSLayoutConstraint(item: prevView,
-                               attribute: prevView == self ? .left : .right,
-                               relatedBy: .equal,
-                               toItem: view,
-                               attribute: .left,
-                               multiplier: 1,
-                               constant: 0).isActive = true
-            NSLayoutConstraint.createViewAttributeCopyConstraint(view: view,
-                                                                 withCopyView: self,
-                                                                 attribute: .width,
-                                                                 multiplier: 1/CGFloat(inputViews.count)).isActive = true
-            
-            prevView = view
-        }
     }
 }

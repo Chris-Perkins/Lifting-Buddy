@@ -1,12 +1,14 @@
 //
-//  TableOverlayProtocol.swift
+//  TableViewOverlayProtocol.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 11/3/17.
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
-import Foundation
+/*
+ A protocol to overlay something on a tableview. Currently unused.
+ */
 
 protocol TableViewOverlayDelegate {
     /*

@@ -430,10 +430,3 @@ class CreateExerciseView: UIScrollView {
                                                              attribute: .width).isActive = true
     }
 }
-
-// MARK: Protocol
-
-protocol CreateExerciseViewDelegate {
-    // Pass exercise result from this screen to the delegate
-    func finishedWithExercise(exercise: Exercise)
-}

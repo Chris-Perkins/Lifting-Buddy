@@ -20,8 +20,6 @@ class ExercisesView: UIView {
     // Whether or not we're simply selecting an exercise
     private let selectingExercise: Bool
     
-    // The view we display when the tableview is empty
-    private var overlayView: UIView?
     // Whether or not we've loaded the view
     private var loaded: Bool = false
     
@@ -63,7 +61,6 @@ class ExercisesView: UIView {
         createAndActivateExerciseTableViewConstraints()
         
         exerciseTableView.exercisePickerDelegate = self
-        exerciseTableView.overlayDelegate = self
         
         createExerciseButton.addTarget(self,
                                        action: #selector(showCreateExerciseView(sender:)),
@@ -210,27 +207,6 @@ class ExercisesView: UIView {
                                                             width: 0).isActive = true
         }
     }
-    
-    // Center in view ; height 50 ; width of 85% of this view.
-    private func createAndActivateOverlayButtonConstraints(overlayButton: UIButton) {
-        guard let overlayView = overlayView else {
-            fatalError("Unable to attach constraints; Overlay view nil")
-        }
-        
-        overlayButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: overlayView,
-                                                             withCopyView: overlayButton,
-                                                             attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: overlayView,
-                                                             withCopyView: overlayButton,
-                                                             attribute: .centerY).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: overlayButton,
-                                                         height: PrettyButton.defaultHeight).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: overlayButton,
-                                                             withCopyView: overlayView,
-                                                             attribute: .width,
-                                                             multiplier: 0.85).isActive = true
-    }
 }
 
 extension ExercisesView: ExercisePickerDelegate {
@@ -261,39 +237,4 @@ extension ExercisesView: ShowViewDelegate {
         addSubview(view)
         UIView.slideView(view, overView: self)
     }
-}
-
-extension ExercisesView: TableViewOverlayDelegate {
-    func showViewOverlay() {
-        // If the view exists, don't create another.
-        if overlayView != nil {
-            return
-        }
-        /*overlayView = UIView()
-         addSubview(overlayView!)
-         NSLayoutConstraint.clingViewToView(view: overlayView!, toView: self)
-         overlayView?.backgroundColor = .niceYellow
-         
-         let overlayButton = PrettyButton()
-         addSubview(overlayButton)
-         overlayButton.setTitle("Create Exercise", for: .normal)
-         createAndActivateOverlayButtonConstraints(overlayButton: overlayButton)
-         
-         overlayButton.setDefaultProperties()
-         overlayButton.addTarget(self, action: #selector(showCreateExerciseView(sender:)), for: .touchUpInside)*/
-    }
-    
-    func hideViewOverlay() {
-        // hide the guy
-        overlayView?.removeFromSuperview()
-        overlayView = nil
-    }
-}
-
-/* A protocol that is called when we select an exercise */
-protocol ExercisePickerDelegate {
-    /*
-     * should be called whenever an exercise is selected from the tableview
-     */
-    func didSelectExercise(exercise: Exercise)
 }

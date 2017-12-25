@@ -11,8 +11,6 @@
  Has to allow returning of input views that are BetterInputViews
  */
 
-import Foundation
-
 protocol InputViewHolder {
     // get the input views for this inputviewholder
     func getInputViews() -> [BetterTextField]

@@ -500,7 +500,3 @@ extension CreateWorkoutView: ExercisePickerDelegate {
         editExerciseTableView.appendDataToTableView(data: exercise)
     }
 }
-
-protocol CreateWorkoutViewDelegate {
-    func finishedWithWorkout(workout: Workout)
-}

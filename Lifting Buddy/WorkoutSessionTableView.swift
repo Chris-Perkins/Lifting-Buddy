@@ -225,22 +225,3 @@ extension WorkoutSessionTableView: CellDeletionDelegate {
         reloadData()
     }
 }
-
-protocol WorkoutSessionTableViewDelegate {
-    /*
-     The status of the workout is being updated
-     */
-    func updateCompleteStatus(isComplete: Bool)
-    
-    /*
-     Height of this view changed
-     */
-    func heightChange()
-}
-
-protocol CellDeletionDelegate {
-    /*
-     * The callee should delete the data at the given index
-     */
-    func deleteData(at index: Int)
-}

@@ -175,9 +175,8 @@ class WorkoutTableViewCell: UITableViewCell {
             exerciseView.label.text = exercise.getName()!
             exerciseView.label.textColor = .niceBlue
             exerciseView.label.textAlignment = .left
-            if index & 1 == 1 {
-                exerciseView.label.backgroundColor = UIColor.niceGray.withAlphaComponent(0.35)
-            }
+            exerciseView.label.backgroundColor =
+                UIColor.niceGray.withAlphaComponent(index & 1 == 1 ? 0.5 : 0.25)
             
             exerciseView.button.setDefaultProperties()
             exerciseView.button.setTitle("View", for: .normal)

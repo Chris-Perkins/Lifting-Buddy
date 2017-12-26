@@ -3,11 +3,16 @@
 
 ## About
 
-[App Store Link](https://itunes.apple.com/us/app/lifting-buddy-workout-tracker/id1328144255?ls=1&mt=8)
+  View Summaries             |  Graph Progress              | Edit Easily
+:---------------------------:|:----------------------------:|:----------------------------:
+![Summary](imgs/Summary.jpg) | ![Graph](imgs/Graph.jpg)     | ![Edit](imgs/Edit.jpg)
 
-Lifting Buddy is an iOS application designed to help you keep track of your workout progress.
+
+<b>Lifting Buddy is an iOS application designed to help you keep track of your workout progress.</b>
 
 In this readme and app, "PGM" stands for Progression Method.
+
+[App Store Link](https://itunes.apple.com/us/app/lifting-buddy-workout-tracker/id1328144255?ls=1&mt=8)
 
 ## Setup
 

@@ -121,11 +121,26 @@ class ProgressionMethod: Object {
     // Sets the new maximum value if this is indeed a maximum value.
     // TODO: Make this self max is indeed a float value for reusability
     // For now, this is fine since we know we can only ever set to a float value
-    public func setMaxIfNewMax(newMax: Float) {
-        if max == nil || newMax > max!.floatValue! {
+    public func setMax(_ newMax: Float?, requiresHigherMax: Bool = true) {
+        var shouldWrite = false
+        
+        // If we need to check if this is the highest max
+        if requiresHigherMax {
+            if let newMax = newMax, max == nil || newMax > max!.floatValue! {
+                shouldWrite = true
+            }
+        } else {
+            shouldWrite = true
+        }
+        
+        if shouldWrite {
             let realm = try! Realm()
             try! realm.write {
-                max = String(describing: newMax)
+                if let newMax = newMax {
+                    max = String(describing: newMax)
+                } else {
+                    max = nil
+                }
             }
         }
     }

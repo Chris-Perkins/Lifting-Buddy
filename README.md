@@ -41,7 +41,12 @@ v1.0.0 Released on December 22nd, 2017
 * <b>PGM Max -> Best Conversion</b> - Sometimes, the user wants the lowest possible value instead of the highest possible value (think assisted pullups, etc). To do so, I want progressionmethods to have a "max/min is best" option. This also requires pgms to undergo a realm migration.
 
 ## Known Bugs
-No outstanding bugs at this time.
+* HIGH
+	* No high priority bugs at this time 
+* MEDIUM
+	* No medium priority bugs at this time 
+* LOW [Can workaround]
+	* Reordering exercises within a workout's session then swapping back to the workout tab causes the expanded workout's cell to not be updated. This causes the "View" button to navigate to the incorrect exercise.
 
 ## Future plans
 * Convert relevant UIViews into ViewControllers (good practice)<br>

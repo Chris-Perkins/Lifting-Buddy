@@ -141,15 +141,8 @@ extension MainViewController: WorkoutSessionStarter {
             AppDelegate.sessionExercises.remove(exercise)
         }
         
-        // Asynchronously find the new maximum for each progressionmethod
-        // Done async to prevent the application from stalling while the max is being set.
-        DispatchQueue.main.async {
-            for exercise in exercises {
-                let maxValuePerPGM = ProgressionMethod.getMaxValueForProgressionMethods(fromHistory: exercise.getExerciseHistory())
-                for pgm in maxValuePerPGM.keys {
-                    pgm.setMaxIfNewMax(newMax: maxValuePerPGM[pgm]!)
-                }
-            }
+        for exercise in exercises {
+            exercise.recalculateProgressionMethodMaxValues()
         }
         
         showContentView(viewType: SectionView.ContentViews.WORKOUTS)

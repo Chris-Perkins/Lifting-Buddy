@@ -85,6 +85,20 @@ class Exercise: Object {
         return "identifier"
     }
     
+    // MARK: General functions
+    
+    // Recalculates the maximum value for each progression method
+    public func recalculateProgressionMethodMaxValues() {
+        // Asynchronously find the new maximum for each progressionmethod
+        // Done async to prevent the application from stalling while the max is being set.
+        DispatchQueue.main.async {
+            let maxPerProgressionMethod = ProgressionMethod.getMaxValueForProgressionMethods(fromHistory: self.getExerciseHistory())
+            for pgm in self.getProgressionMethods() {
+                pgm.setMax(maxPerProgressionMethod[pgm], requiresHigherMax: false)
+            }
+        }
+    }
+    
     // MARK: Encapsulated methods
     
     @objc public func getSetCount() -> Int {

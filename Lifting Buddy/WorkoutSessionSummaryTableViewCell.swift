@@ -122,9 +122,9 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
     // Creates the progression method data views
     private func createProgressionMethodSummaryViews(data: [(ProgressionMethod, // Progression method
-        Float?,          // New data
-        Float?)          // Old data
-        ]) {
+                                                             Float?,          // New data
+                                                            Float?)          // Old data
+                                                            ]) {
         var prevView: UIView = cellTitleLabel
         
         for (index, dataPiece) in data.enumerated() {

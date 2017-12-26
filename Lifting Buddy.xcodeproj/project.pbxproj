@@ -47,6 +47,7 @@
 		22A3F3EB1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A3F3EA1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift */; };
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
 		22AA6D141F218AD400624744 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D131F218AD400624744 /* SectionView.swift */; };
+		22AD725E1FF2A00F008B35EE /* ExerciseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */; };
 		22BC5AF41F3E5C2A00B150BD /* CreateWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */; };
 		22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CAA88B1F4899E600F4F42B /* CreateExerciseView.swift */; };
 		22CDEFF41FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CDEFF31FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift */; };
@@ -115,6 +116,7 @@
 		22A3F3EA1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewOverlayProtocol.swift; sourceTree = "<group>"; };
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		22AA6D131F218AD400624744 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
+		22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryView.swift; sourceTree = "<group>"; };
 		22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWorkoutView.swift; sourceTree = "<group>"; };
 		22CAA88B1F4899E600F4F42B /* CreateExerciseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateExerciseView.swift; sourceTree = "<group>"; };
 		22CDEFF31FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionSummaryTableView.swift; sourceTree = "<group>"; };
@@ -303,10 +305,11 @@
 			isa = PBXGroup;
 			children = (
 				229D87051F65FC9E00FF05DD /* Session Tab */,
-				229D87071F65FCB700FF05DD /* Edit Workout */,
-				224C21501FC8B0DD00BD2FBF /* Edit Exercise */,
 				229D87061F65FCAC00FF05DD /* Workouts Tab */,
+				229D87071F65FCB700FF05DD /* Edit Workout */,
 				228CD0A81FA6780700463B90 /* Exercises Tab */,
+				224C21501FC8B0DD00BD2FBF /* Edit Exercise */,
+				22AD725C1FF29FC8008B35EE /* Exercise History View */,
 			);
 			name = "Content Views";
 			sourceTree = "<group>";
@@ -326,6 +329,14 @@
 				22E77E051F1B35310076B3DB /* HelperFunctions.swift */,
 			);
 			name = Miscellaneous;
+			sourceTree = "<group>";
+		};
+		22AD725C1FF29FC8008B35EE /* Exercise History View */ = {
+			isa = PBXGroup;
+			children = (
+				22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */,
+			);
+			name = "Exercise History View";
 			sourceTree = "<group>";
 		};
 		22CDEFF21FC5EA74000CB8C0 /* Summary Screen */ = {
@@ -537,6 +548,7 @@
 				22FD539D1FF1C39600FB069E /* CreateWorkoutViewDelegateProtocol.swift in Sources */,
 				22FD538F1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift in Sources */,
 				22CDEFF61FC5EA9B000CB8C0 /* WorkoutSessionSummaryTableViewCell.swift in Sources */,
+				22AD725E1FF2A00F008B35EE /* ExerciseHistoryView.swift in Sources */,
 				22FD53951FF1C0D900FB069E /* WorkoutSessionTableViewDelegateProtocol.swift in Sources */,
 				226B119E1F96DB250013139B /* BetterInputView.swift in Sources */,
 				22FD53931FF1C07100FB069E /* PrettySegmentedControlDelegateProtocol.swift in Sources */,

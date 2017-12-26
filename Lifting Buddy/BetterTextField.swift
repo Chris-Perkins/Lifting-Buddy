@@ -75,7 +75,6 @@ class BetterTextField: UIView {
         label.layer.zPosition = 1
         
         textfield.placeholder = defaultString
-        
         textfield.textAlignment = .center
     }
     
@@ -133,8 +132,8 @@ class BetterTextField: UIView {
     // When the user is done editing
     @objc func editingDidEnd(sender: UITextField) {
         if isNumeric {
-            if textfield.text?.floatValue == nil {
-                textfield.text = ""
+            if sender.text?.floatValue == nil {
+                sender.text = ""
             }
         }
     }

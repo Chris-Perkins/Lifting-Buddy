@@ -65,19 +65,11 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // Create our custom cell class
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var dataToSend = [(ProgressionMethod, String)]()
-        
-        // The first progressionMethod will always be reps.
-        for (index, dataPiece) in data[indexPath.row].exerciseInfo.enumerated() {
-            dataToSend.append((progressionMethods[index],
-                               dataPiece.value!))
-        }
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ExerciseHistoryTableViewCell
         
         // update the label in case of deletion
-        cell.setLabel.text = "Set #" + String(indexPath.row + 1)
-        cell.setData(data: dataToSend)
+        cell.entryNumberLabel.text = "Entry #\(data.count - (indexPath.row))"
+        cell.setData(data: data[indexPath.row].exerciseInfo)
         
         return cell
     }
@@ -85,7 +77,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // Each cell's height depends on the number of progression methods, but there is a flat height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return ExerciseHistoryTableViewCell.baseHeight +
-            CGFloat(progressionMethods.count) *
+            CGFloat(data[indexPath.row].exerciseInfo.count) *
             ExerciseHistoryTableViewCell.heightPerProgressionMethod
     }
     
@@ -93,8 +85,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // Append some data to the tableView
     public func appendDataToTableView(data: ExerciseHistoryEntry) {
-        
-        self.data.append(data)
+        self.data.insert(data, at: 0)
         
         reloadData()
     }
@@ -107,7 +98,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     private func setupTableView() {
         delegate = self
         dataSource = self
-        allowsSelection = true
+        allowsSelection = false
         register(ExerciseHistoryTableViewCell.self, forCellReuseIdentifier: "cell")
         backgroundColor = .clear
     }

@@ -92,8 +92,13 @@ func getColorsForIndex(_ passedIndex: Int) -> [UIColor] {
 }
 
 // Just mods a number so it doesn't return -1
-private func mod(x: Int, m: Int) -> Int {
+func mod(x: Int, m: Int) -> Int {
     let r = x % m
+    return r < 0 ? r + m : r
+}
+
+func mod(x: Float, m: Float) -> Float {
+    let r = x.truncatingRemainder(dividingBy: m)
     return r < 0 ? r + m : r
 }
 

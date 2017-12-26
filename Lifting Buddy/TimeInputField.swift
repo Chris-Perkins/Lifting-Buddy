@@ -42,15 +42,23 @@ class TimeInputField: UIView {
         
         super.init(frame: frame)
         
-        self.addSubview(self.timeInputView)
-        self.addSubview(self.timerButton)
+        addSubview(self.timeInputView)
+        addSubview(self.timerButton)
         
-        self.minuteField.textfield.addTarget(self, action: #selector(checkMinuteField), for: .editingDidEnd)
-        self.secondField.textfield.addTarget(self, action: #selector(checkSecondField), for: .editingDidEnd)
-        self.timerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        minuteField.textfield.addTarget(self,
+                                        action: #selector(checkField(sender:)),
+                                        for: .editingDidEnd)
+        secondField.textfield.addTarget(self,
+                                        action: #selector(checkField(sender:)),
+                                        for: .editingDidEnd)
+        hourField.textfield.addTarget(self,
+                                      action: #selector(checkField(sender:)),
+                                      for: .editingDidEnd)
         
-        self.createAndActivateTimerButtonConstraints()
-        self.createAndActivateInputViewContainerConstraints()
+        timerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        
+        createAndActivateTimerButtonConstraints()
+        createAndActivateInputViewContainerConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,48 +70,67 @@ class TimeInputField: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        
-        self.hourField.setIsNumeric(isNumeric: true)
-        self.hourField.setDefaultString(defaultString: "0")
-        self.hourField.setLabelTitle(title: "h")
-        
-        self.minuteField.setIsNumeric(isNumeric: true)
-        self.minuteField.setDefaultString(defaultString: "0")
-        self.minuteField.setLabelTitle(title: "m")
-        
-        self.secondField.setIsNumeric(isNumeric: true)
-        self.secondField.setDefaultString(defaultString: "0")
-        self.secondField.setLabelTitle(title: "s")
-        
-        self.timerButton.setToggleTextColor(color: .white)
-        self.timerButton.setDefaultTextColor(color: .white)
-        self.timerButton.setDefaultText(text: "Start")
-        self.timerButton.setToggleText(text: "Stop")
-        self.timerButton.setToggleViewColor(color: .niceYellow)
-        self.timerButton.setDefaultViewColor(color: .niceBlue)
+        timerButton.setToggleTextColor(color: .white)
+        timerButton.setDefaultTextColor(color: .white)
+        timerButton.setDefaultText(text: "Start")
+        timerButton.setToggleText(text: "Stop")
+        timerButton.setToggleViewColor(color: .niceYellow)
+        timerButton.setDefaultViewColor(color: .niceBlue)
+    }
+    
+    // MARK: View functions
+    
+    // Sets the value of the second/minute/hour fields using the given number of seconds
+    public func setDefaultValue(seconds: Float?) {
+        if let seconds = seconds {
+            // We separate the values out using division in case of negative numbers.
+            // modulo operator wouldn't play out very well with those negatives.
+            let totalSeconds = mod(x: seconds, m: 60.0)
+            let totalMinutes = mod(x: (seconds - totalSeconds) / 60, m: 60.0)
+            let totalHours   = (seconds - totalSeconds - totalMinutes * 60) / (60 * 60)
+            
+            
+            secondField.setDefaultString(defaultString: String(format: "%.1f", totalSeconds))
+            minuteField.setDefaultString(defaultString: String(format: "%.1f", totalMinutes))
+            hourField.setDefaultString(defaultString:   String(format: "%.1f", totalHours))
+        }
+    }
+    
+    // Sets the placeholder of all views to be empty.
+    // Done to let the user enter values without text becoming full string
+    public func clearTimeFieldPlaceholders() {
+        secondField.setDefaultString(defaultString: "0")
+        minuteField.setDefaultString(defaultString: "0")
+        hourField.setDefaultString(defaultString: "0")
     }
     
     // MARK: Events functions
     
-    @objc private func checkSecondField() {
-        self.secondField.textfield.textfieldDeselected(sender: secondField.textfield)
+    @objc internal func checkField(sender: UITextField) {
+        sender.textfieldDeselected(sender: sender)
+        // Clear time fields for view cleanliness
+        clearTimeFieldPlaceholders()
         
-        if self.secondField.textfield.text?.floatValue != nil {
-            minuteField.textfield.text = String((minuteField.textfield.text!.floatValue ?? 0) +
-                                                floor((secondField.textfield.text?.floatValue)! / 60))
-            secondField.textfield.text = String(secondField.textfield.text!.floatValue!.truncatingRemainder(dividingBy: 60.0))
-            
-            self.checkMinuteField()
-        }
-    }
-    
-    @objc private func checkMinuteField() {
-        self.minuteField.textfield.textfieldDeselected(sender: minuteField.textfield)
-        
-        if self.minuteField.textfield.text?.floatValue != nil {
-            self.hourField.textfield.text = String((hourField.textfield.text!.floatValue ?? 0) +
-                                                   floor((minuteField.textfield.text?.floatValue)! / 60))
-            self.minuteField.textfield.text = String(minuteField.textfield.text!.floatValue!.truncatingRemainder(dividingBy: 60.0))
+        switch (sender) {
+        case secondField.textfield: // Make sure entered time < 60, otherwise send the rest to the minute field
+            if let seconds = secondField.textfield.text?.floatValue, seconds >= 60.0 {
+                minuteField.textfield.text = String((minuteField.textfield.text!.floatValue ?? 0) +
+                    floor((secondField.textfield.text?.floatValue)! / 60))
+                secondField.textfield.text = String(secondField.textfield.text!.floatValue!.truncatingRemainder(dividingBy: 60.0))
+                
+                // Now we need to check if the minutes are still < 60
+                self.checkField(sender: minuteField.textfield)
+            }
+        case minuteField.textfield: // Make sure entered time < 60, otherwise send the rest to hour field
+            if let minutes = minuteField.textfield.text?.floatValue, minutes >= 60 {
+                hourField.textfield.text = String((hourField.textfield.text!.floatValue ?? 0) +
+                    floor((minuteField.textfield.text?.floatValue)! / 60))
+                minuteField.textfield.text = String(minuteField.textfield.text!.floatValue!.truncatingRemainder(dividingBy: 60.0))
+            }
+        case hourField.textfield: // We don't need to check the hour field.
+            break
+        default:
+            fatalError("Textfield sent editing did end for timeinputfield, but was not set up.")
         }
     }
     
@@ -127,16 +154,16 @@ class TimeInputField: UIView {
     private func createAndActivateTimerButtonConstraints() {
         self.timerButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timerButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timerButton,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timerButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timerButton,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timerButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timerButton,
                                                              withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timerButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timerButton,
                                                              withCopyView: self,
                                                              attribute: .width,
                                                              multiplier: 0.25).isActive = true
@@ -144,21 +171,21 @@ class TimeInputField: UIView {
     
     // Take up whatever the timer button isn't
     private func createAndActivateInputViewContainerConstraints() {
-        self.timeInputView.translatesAutoresizingMaskIntoConstraints = false
+        timeInputView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeInputView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timeInputView,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeInputView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timeInputView,
                                                              withCopyView: self,
                                                              attribute: .bottom).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: self.timeInputView,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: timeInputView,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true
-        NSLayoutConstraint(item: self.timerButton,
+        NSLayoutConstraint(item: timerButton,
                            attribute: .left,
                            relatedBy: .equal,
-                           toItem: self.timeInputView,
+                           toItem: timeInputView,
                            attribute: .right,
                            multiplier: 1,
                            constant: 0).isActive = true
@@ -168,9 +195,9 @@ class TimeInputField: UIView {
     
     private func startTimer() {
         //  Make all textfields non-editable (gray to indicate)
-        self.secondField.textfield.isUserInteractionEnabled = false
-        self.minuteField.textfield.isUserInteractionEnabled = false
-        self.hourField.textfield.isUserInteractionEnabled = false
+        secondField.textfield.isUserInteractionEnabled = false
+        minuteField.textfield.isUserInteractionEnabled = false
+        hourField.textfield.isUserInteractionEnabled   = false
         
         let queue = DispatchQueue(label: "com.firm.app.timer", attributes: .concurrent)
         
@@ -186,7 +213,7 @@ class TimeInputField: UIView {
                 DispatchQueue.main.async {
                     if (self!.secondField.textfield.text) != nil {
                         self!.secondField.textfield.text = String((self!.secondField.textfield.text?.floatValue ?? 0) + 0.1)
-                        self!.checkSecondField()
+                        self!.checkField(sender: self!.secondField.textfield)
                     }
                 }
             }
@@ -200,9 +227,9 @@ class TimeInputField: UIView {
         timer = nil
         
         // Make all textfields editable again (white to indicate)
-        self.secondField.textfield.isUserInteractionEnabled = true
-        self.minuteField.textfield.isUserInteractionEnabled = true
-        self.hourField.textfield.isUserInteractionEnabled = true
+        secondField.textfield.isUserInteractionEnabled = true
+        minuteField.textfield.isUserInteractionEnabled = true
+        hourField.textfield.isUserInteractionEnabled = true
     }
 }
 

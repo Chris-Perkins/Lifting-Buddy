@@ -377,20 +377,23 @@ class WorkoutSessionTableViewCell: UITableViewCell {
                     progressionMethod.getDefaultValue() ?? progressionMethod.getName(),
                     true
                     )], frame: .zero)
-                inputContentView.addSubview(progressionInput)
                 
-                progressionInput.backgroundColor = .white
+                inputContentView.addSubview(progressionInput)
+                exerciseInputFields.append(progressionInput)
                 
                 addConstraintsToInputView(view: progressionInput, prevView: prevView)
-                exerciseInputFields.append(progressionInput)
                 
                 prevView = progressionInput
             } else {
                 let progressionInput = TimeInputField(frame: .zero)
                 
+                progressionInput.setDefaultValue(seconds: progressionMethod.getDefaultValue()?.floatValue)
+                
                 inputContentView.addSubview(progressionInput)
-                addConstraintsToInputView(view: progressionInput, prevView: prevView)
                 exerciseInputFields.append(progressionInput)
+                
+                addConstraintsToInputView(view: progressionInput, prevView: prevView)
+                
                 
                 prevView = progressionInput
             }

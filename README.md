@@ -24,7 +24,16 @@ To run this application using XCode, you will need to have CocoaPods installed.
 
 ## Road Map:
 
-v1.0.0 Released on December 22nd, 2017
+<details>
+<summary>Release History</summary>  
+
+* v1.1 Submitted December 27th, 2017
+	* Added ability to edit exercise history by navigating to exercise editing screen
+	* Update Workout cells to allow easy navigation to exercises
+	* Improved entry methods for timed progression methods
+	* Minor bug fixes
+* v1.0 Released on December 22nd, 2017
+</details>
 
 | Process                      | Progress (Estimation) | Notes                                          |
 |------------------------------|-----------------------|------------------------------------------------|

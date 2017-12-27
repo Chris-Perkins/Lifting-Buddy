@@ -165,7 +165,9 @@ class ExerciseTableViewCell: UITableViewCell {
             guard let showViewDelegate = showViewDelegate else {
                 fatalError("ShowViewDelegate not set for CreateExerciseView")
             }
-            showViewDelegate.showView(CreateExerciseView(exercise: exercise!, frame: .zero))
+            let createExerciseView = CreateExerciseView(exercise: exercise, frame: .zero)
+            createExerciseView.showViewDelegate = showViewDelegate
+            showViewDelegate.showView(createExerciseView)
         default:
             fatalError("Button press not handled in exercisestableview!")
         }

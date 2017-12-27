@@ -54,6 +54,7 @@ class MainViewController: UIViewController {
                 workoutView = WorkoutsView(frame: .zero)
                 workoutView?.exerciseDisplayer = self
             }
+            workoutView?.layoutSubviews()
             showView(workoutView!)
             
         case SectionView.ContentViews.EXERCISES:
@@ -109,16 +110,17 @@ extension MainViewController: WorkoutSessionStarter {
         sectionContentView.removeAllSubviews()
         
         // Set the current session workout
-        AppDelegate.sessionWorkout = workout
+        sessionWorkout = workout
         if workout != nil {
             // If non-nil, safely add all of it's exercises to used session exercises
             for exercise in workout!.getExercises() {
-                AppDelegate.sessionExercises.insert(exercise)
+                sessionExercises.insert(exercise)
             }
         }
         if exercise != nil {
-            AppDelegate.sessionExercises.insert(exercise!)
+            sessionExercises.insert(exercise!)
         }
+        sessionStartDate = Date(timeIntervalSinceNow: 0)
         
         sessionView = WorkoutSessionView(workout: workout,
                                          frame: .zero)
@@ -135,13 +137,12 @@ extension MainViewController: WorkoutSessionStarter {
     
     // On workout end, navigate back to the workout view.
     func endSession(workout: Workout?, exercises: List<Exercise>) {
-        AppDelegate.sessionWorkout = nil
+        sessionWorkout = nil
+        sessionStartDate = nil
         
         for exercise in exercises {
-            AppDelegate.sessionExercises.remove(exercise)
-        }
-        
-        for exercise in exercises {
+            sessionExercises.remove(exercise)
+            // Recalculate the max for each since they may need updating
             exercise.recalculateProgressionMethodMaxValues()
         }
         

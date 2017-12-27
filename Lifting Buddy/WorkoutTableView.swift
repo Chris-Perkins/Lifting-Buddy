@@ -47,6 +47,22 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     
     // MARK: TableView Functions
     
+    override func reloadData() {
+        let realm = try! Realm()
+        
+        data = AnyRealmCollection(realm.objects(Workout.self))
+        sortedData = Workout.getSortedWorkoutArray(workouts: data)
+        
+        var selectedWorkout: Workout?
+        if let selectedIndex = indexPathForSelectedRow {
+            selectedWorkout = sortedData[selectedIndex.row]
+        }
+        super.reloadData()
+        if let selectedWorkout = selectedWorkout, let indexOfWorkout = sortedData.index(of: selectedWorkout) {
+            selectRow(at: IndexPath(row: indexOfWorkout, section: 0), animated: true, scrollPosition: .bottom)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let cell = cellForRow(at: indexPath) as! WorkoutTableViewCell
         
@@ -150,16 +166,6 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
     }
     
     // MARK: Custom functions
-    
-    // Append some data to the tableView
-    public func refreshData() {
-        let realm = try! Realm()
-        
-        data = AnyRealmCollection(realm.objects(Workout.self))
-        sortedData = Workout.getSortedWorkoutArray(workouts: data)
-        
-        reloadData()
-    }
     
     // Retrieve workouts
     public func getSortedData() -> [Workout] {

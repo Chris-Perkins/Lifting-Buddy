@@ -17,6 +17,8 @@ class CreateExerciseView: UIScrollView {
     
     // delegate which receives information after creation
     public var dataDelegate: CreateExerciseViewDelegate?
+    // delegate to show a view for us
+    public var showViewDelegate: ShowViewDelegate?
     
     // the exercise we're editing
     private var editingExercise: Exercise?
@@ -34,6 +36,8 @@ class CreateExerciseView: UIScrollView {
     private let progressionsTableView: ProgressionsMethodTableView
     // adds a progression method to the tableview
     private let addProgressionTrackerButton: PrettyButton
+    // A button which lets us view the exercisehistory for the exercise
+    private let editExerciseHistoryButton: PrettyButton
     // creates the exercise
     private let createExerciseButton: PrettyButton
     // cancels creation
@@ -49,6 +53,7 @@ class CreateExerciseView: UIScrollView {
         setEntryField = BetterTextField(defaultString: "Optional: Set Count", frame: .zero)
         progressionsTableView = ProgressionsMethodTableView()
         addProgressionTrackerButton = PrettyButton()
+        editExerciseHistoryButton = PrettyButton()
         createExerciseButton = PrettyButton()
         cancelButton = PrettyButton()
         
@@ -59,6 +64,7 @@ class CreateExerciseView: UIScrollView {
         addSubview(setEntryField)
         addSubview(progressionsTableView)
         addSubview(addProgressionTrackerButton)
+        addSubview(editExerciseHistoryButton)
         addSubview(createExerciseButton)
         addSubview(cancelButton)
         
@@ -67,12 +73,14 @@ class CreateExerciseView: UIScrollView {
         createAndActivateSetEntryFieldConstraints()
         createAndActivateProgressionsTableViewConstraints()
         createAndActivateAddProgressionTrackerButtonConstraints()
+        createAndActivateEditExerciseHistoryButtonConstraints()
         createAndActivateCreateExeciseButtonConstraints()
         createAndActivateCancelButtonConstraints()
         
         addProgressionTrackerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        createExerciseButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        cancelButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        editExerciseHistoryButton.addTarget(  self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        createExerciseButton.addTarget(       self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        cancelButton.addTarget(               self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         setViewPropertiesBasedOnExercise()
     }
@@ -111,6 +119,12 @@ class CreateExerciseView: UIScrollView {
         progressionsTableView.backgroundColor = .clear
         progressionsTableView.isUserInteractionEnabled = editingExercise?.canModifyCoreProperties ?? true
         progressionsTableView.alpha = (editingExercise?.canModifyCoreProperties ?? true) ? 1 : 0.75
+        
+        // Edit Exercise History Button
+        editExerciseHistoryButton.setDefaultProperties()
+        editExerciseHistoryButton.setTitle("Edit History", for: .normal)
+        // If we can even view the history...
+        editExerciseHistoryButton.backgroundColor = self.editingExercise != nil ? .niceBlue : .niceLightBlue
         
         // Add progression method button
         addProgressionTrackerButton.setDefaultProperties()
@@ -156,13 +170,32 @@ class CreateExerciseView: UIScrollView {
             if requirementsFulfilled() {
                 let exerciseCreated: Exercise = saveAndReturnExercise()
                 
-                // Send data to delegate
+                // Send data to delegate to inform that we've changed something
                 dataDelegate?.finishedWithExercise(exercise: exerciseCreated)
+                
                 removeSelfNicelyWithAnimation()
             }
         case cancelButton:
             // Just close.
             removeSelfNicelyWithAnimation()
+        case editExerciseHistoryButton:
+            if let exercise = editingExercise {
+                guard let showViewDelegate = showViewDelegate else {
+                    fatalError("ExerciseHistory called to view, but could not be viewed!")
+                }
+                showViewDelegate.showView(ExerciseHistoryView(exercise: exercise, frame: .zero))
+            }
+            else { // Otherwise, we are creating an exercise. tell the user we can't display anything
+                let alert = CDAlertView(title: "Cannot View History",
+                                        message: "You cannot view exercise history for an exercise that was not saved!",
+                                        type: CDAlertViewType.error)
+                alert.add(action: CDAlertViewAction(title: "Ok",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceBlue,
+                                                    handler: nil))
+                alert.show()
+            }
         default:
             fatalError("User pressed a button that does not exist in switch?")
         }
@@ -395,7 +428,25 @@ class CreateExerciseView: UIScrollView {
                                                              attribute: .right).isActive = true
     }
     
-    // center horiz in view ; place below addprogressiontrackerbutton ; height 50 ; width of this view - 50
+    // center horiz in view ; place below addprogressiontrackerbutton ; height default ; width of this view - 50
+    private func createAndActivateEditExerciseHistoryButtonConstraints() {
+        editExerciseHistoryButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editExerciseHistoryButton,
+                                                             withCopyView: self,
+                                                             attribute: .centerX).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: editExerciseHistoryButton,
+                                                         belowView: addProgressionTrackerButton,
+                                                         withPadding: viewPadding).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: editExerciseHistoryButton,
+                                                         height: PrettyButton.defaultHeight).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: editExerciseHistoryButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             plusConstant: -50).isActive = true
+    }
+    
+    // center horiz in view ; place below editexercisehistorybutton ; height 50 ; width of this view - 50
     private func createAndActivateCreateExeciseButtonConstraints() {
         createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -403,7 +454,7 @@ class CreateExerciseView: UIScrollView {
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: createExerciseButton,
-                                                         belowView: addProgressionTrackerButton,
+                                                         belowView: editExerciseHistoryButton,
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: createExerciseButton,
                                                          height: PrettyButton.defaultHeight).isActive = true

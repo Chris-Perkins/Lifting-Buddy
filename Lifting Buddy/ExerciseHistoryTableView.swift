@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import CDAlertView
 
 class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
@@ -15,6 +16,14 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // A delegate to inform for tableview actions
     public var tableViewDelegate: ExerciseHistoryEntryTableViewDelegate?
+    // The tableview should function differently depending on if it's in a session view or not
+    public var isInSessionView: Bool {
+        // If the superview is a workoutsessiontableviewcell, we know this view is in a session view.
+        if let _ = superview as? WorkoutSessionTableViewCell {
+            return true
+        }
+        return false
+    }
     
     // holds the progressionmethods for this history piece
     private let progressionMethods: List<ProgressionMethod>
@@ -49,12 +58,30 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     // allow cell deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let deletionData = data[indexPath.row]
-            
-            // Have to remove data beforehand otherwise the cell completestatus doesn't update properly.
-            data.remove(at: indexPath.row)
-            tableViewDelegate?.dataDeleted(deletedData: deletionData)
-            reloadData()
+            if canModifyDataAtIndexPath(indexPath) {
+                let deletionData = data[indexPath.row]
+                
+                let realm = try! Realm()
+                try! realm.write {
+                    realm.delete(deletionData)
+                }
+                
+                // Have to remove data beforehand otherwise the cell completestatus doesn't update properly.
+                data.remove(at: indexPath.row)
+                tableViewDelegate?.dataDeleted(deletedData: deletionData)
+                
+                reloadData()
+            } else {
+                let alert = CDAlertView(title: "Cannot Delete Entry",
+                                        message: "The selected entry cannot be deleted as it is currently being used in an active session. Please delete the entry from the session tab.",
+                                        type: CDAlertViewType.error)
+                alert.add(action: CDAlertViewAction(title: "Ok",
+                                                    font: nil,
+                                                    textColor: UIColor.white,
+                                                    backgroundColor: UIColor.niceBlue,
+                                                    handler: nil))
+                alert.show()
+            }
         }
     }
     
@@ -68,7 +95,14 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ExerciseHistoryTableViewCell
         
         // update the label in case of deletion
-        cell.entryNumberLabel.text = "Entry #\(data.count - (indexPath.row))"
+        if isInSessionView {
+            cell.entryNumberLabel.text = "Entry #\(data.count - (indexPath.row))"
+            cell.isUserInteractionEnabled = true
+        } else {
+            let dateFormatter = NSDate.getDateFormatter()
+            cell.entryNumberLabel.text = dateFormatter.string(from: data[indexPath.row].date!)
+            cell.isUserInteractionEnabled = canModifyDataAtIndexPath(indexPath)
+        }
         cell.setData(data: data[indexPath.row].exerciseInfo)
         
         return cell
@@ -90,9 +124,32 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         reloadData()
     }
     
+    // Sets the data in reverse order (newest first)
+    public func setData(_ data: List<ExerciseHistoryEntry>) {
+        self.data.removeAll()
+        
+        for dataEntry in data.reversed() {
+            self.data.append(dataEntry)
+        }
+        
+        reloadData()
+    }
+    
     // Retrieve workouts
     public func getData() -> [ExerciseHistoryEntry] {
         return data
+    }
+    
+    // Determines whether or not we can modify the data at the given index path
+    public func canModifyDataAtIndexPath(_ indexPath: IndexPath) -> Bool {
+        // If we're in a session view, we can always modify it.
+        // Otherwise, if the entry was entered in a time less than the session start date
+        // This prevents the user from modifying the same data in two different places.
+        if let sessionStartDate = sessionStartDate {
+            return isInSessionView || data[indexPath.row].date!.seconds(from: sessionStartDate) < 0
+        } else {
+            return true
+        }
     }
     
     private func setupTableView() {

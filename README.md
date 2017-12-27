@@ -29,13 +29,11 @@ v1.0.0 Released on December 22nd, 2017
 | Process                      | Progress (Estimation) | Notes                                          |
 |------------------------------|-----------------------|------------------------------------------------|
 | Exercise Creation            | 9/10                  | Add nice way to choose progression method unit |
-| Exercise History Tracking    | 9/10                  | Need to implement table-based history viewing  |
 | Workout Start Rework         | 0/10                  | Unsure of design                               |
 | Optional exercise in workout | 0/10                  | Will require realm migration; Avoiding for now |
 | PGM Max -> Best Conversion.  | 0/10                  | Will require realm migration; Avoiding for now |
 
 ##### Explanations
-* <b>Exercise History Tracking</b> - I want the user to be able to edit their total history in an easy way. Using a tableview for this, and it will be located in the "Edit Exercise" View
 * <b>Workout Start Rework</b> - I just think it looks ugly. Not sure how to rework it.
 * <b>Optional exercise in workout</b> - The user should be able to set exercises as "optional" within a workout. However, I'm still not comfortable with performing realm migrations (the app tends to crash when I attempt to do so)
 * <b>PGM Max -> Best Conversion</b> - Sometimes, the user wants the lowest possible value instead of the highest possible value (think assisted pullups, etc). To do so, I want progressionmethods to have a "max/min is best" option. This also requires pgms to undergo a realm migration.

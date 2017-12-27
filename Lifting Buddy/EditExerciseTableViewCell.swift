@@ -73,8 +73,10 @@ class EditExerciseTableViewCell: UITableViewCell {
         guard let showViewDelegate = showViewDelegate else {
             fatalError("ShowViewDelegate not set for CreateExercisePicker")
         }
-        showViewDelegate.showView(CreateExerciseView(exercise: exercise!,
-                                                     frame: .zero))
+        let createExerciseView = CreateExerciseView(exercise: exercise,
+                                                    frame: .zero)
+        createExerciseView.showViewDelegate = showViewDelegate
+        showViewDelegate.showView(createExerciseView)
     }
     
     // MARK: Constraint functions

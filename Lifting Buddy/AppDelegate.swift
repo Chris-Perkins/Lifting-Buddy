@@ -16,8 +16,6 @@ import GBVersionTracking
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    public static var sessionWorkout: Workout? = nil
-    public static var sessionExercises: Set<Exercise> = Set<Exercise>()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // We need this for views to not be hidden under the keyboard
@@ -80,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // If user is actively in a session, we need to recalculate the maxes for any exercises
-        for exercise in AppDelegate.sessionExercises {
+        for exercise in sessionExercises {
             exercise.recalculateProgressionMethodMaxValues()
         }
     }

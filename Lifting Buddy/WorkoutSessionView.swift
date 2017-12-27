@@ -15,9 +15,6 @@ class WorkoutSessionView: UIScrollView {
     
     // MARK: View properties
     
-    // The date we last initialized this view
-    public static var dateLastInitialized: Date = Date.init(timeIntervalSinceNow: 0)
-    
     // Delegate to notify on workout start
     public var workoutSessionDelegate: WorkoutSessionStarter?
     
@@ -41,7 +38,6 @@ class WorkoutSessionView: UIScrollView {
     
     init(workout: Workout?, frame: CGRect) {
         self.workout = workout
-        WorkoutSessionView.dateLastInitialized = Date.init(timeIntervalSinceNow: 0)
         
         workoutNameLabel = UILabel()
         workoutSessionTableView = WorkoutSessionTableView(workout: workout,
@@ -333,7 +329,7 @@ extension WorkoutSessionView: ExercisePickerDelegate {
     func didSelectExercise(exercise: Exercise) {
         workoutSessionTableView.appendDataToTableView(data: exercise)
         // Since this exercise is now a part of the workout, we should add it as such.
-        AppDelegate.sessionExercises.insert(exercise)
+        sessionExercises.insert(exercise)
     }
 
 }

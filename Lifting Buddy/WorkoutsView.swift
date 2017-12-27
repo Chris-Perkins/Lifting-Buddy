@@ -120,7 +120,6 @@ class WorkoutsView: UIView {
 extension WorkoutsView: CreateWorkoutViewDelegate {
     // Called when a workout was created
     func finishedWithWorkout(workout: Workout) {
-        workoutTableView.refreshData()
         workoutTableView.reloadData()
         
         layoutSubviews()

@@ -52,9 +52,13 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
     
     // Initialize our cells..
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let sessionStartDate = sessionStartDate else {
+            fatalError("Date session start is nil, but summary view was called!")
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkoutSessionSummaryTableViewCell
         cell.setExercise(exercise: dataWithNoDuplicates[indexPath.row],
-                         withDateRecorded: WorkoutSessionView.dateLastInitialized)
+                         withDateRecorded: sessionStartDate)
         return cell
     }
     

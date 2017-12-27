@@ -16,7 +16,7 @@ class Workout: Object {
     // MARK: View properties
     
     public var canModifyCoreProperties: Bool {
-        return AppDelegate.sessionWorkout != self
+        return sessionWorkout != self
     }
     
     // Assign UUID to this object

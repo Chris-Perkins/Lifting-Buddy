@@ -207,7 +207,7 @@ extension WorkoutSessionTableView: CellDeletionDelegate {
         
         // Attempt to remove the exercise from AppDelegate + realm
         let exercise = data[index]
-        AppDelegate.sessionExercises.remove(exercise)
+        sessionExercises.remove(exercise)
         let realm = try! Realm()
         try! realm.write {
             data.remove(at: index)
@@ -216,7 +216,7 @@ extension WorkoutSessionTableView: CellDeletionDelegate {
         // If still in realm, the exercise had multiple of the exercise.
         // So, don't delete the exercise from the set.
         if data.contains(exercise) {
-            AppDelegate.sessionExercises.insert(exercise)
+            sessionExercises.insert(exercise)
         }
         
         

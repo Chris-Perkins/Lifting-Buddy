@@ -16,7 +16,7 @@ class Exercise: Object {
     
     // We can't modify the core properties if being used in an active session
     public var canModifyCoreProperties: Bool {
-        return !AppDelegate.sessionExercises.contains(self)
+        return !sessionExercises.contains(self)
     }
     
     // Assign UUID to this object
@@ -92,7 +92,18 @@ class Exercise: Object {
         // Asynchronously find the new maximum for each progressionmethod
         // Done async to prevent the application from stalling while the max is being set.
         DispatchQueue.main.async {
-            let maxPerProgressionMethod = ProgressionMethod.getMaxValueForProgressionMethods(fromHistory: self.getExerciseHistory())
+            var historyNotInSession = List<ExerciseHistoryEntry>()
+            if let sessionStartDate = sessionStartDate {
+                for historyPiece in self.getExerciseHistory() {
+                    if historyPiece.date!.seconds(from: sessionStartDate) < 0 {
+                        historyNotInSession.append(historyPiece)
+                    }
+                }
+            } else {
+                historyNotInSession = self.getExerciseHistory()
+            }
+            
+            let maxPerProgressionMethod = ProgressionMethod.getMaxValueForProgressionMethods(fromHistory: historyNotInSession)
             for pgm in self.getProgressionMethods() {
                 pgm.setMax(maxPerProgressionMethod[pgm], requiresHigherMax: false)
             }

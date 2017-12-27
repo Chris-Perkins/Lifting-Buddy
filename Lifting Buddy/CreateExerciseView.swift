@@ -123,8 +123,10 @@ class CreateExerciseView: UIScrollView {
         // Edit Exercise History Button
         editExerciseHistoryButton.setDefaultProperties()
         editExerciseHistoryButton.setTitle("Edit History", for: .normal)
-        // If we can even view the history...
-        editExerciseHistoryButton.backgroundColor = self.editingExercise != nil ? .niceBlue : .niceLightBlue
+        // If we can't view the history, set color to light blue to indicate the button won't work.
+        if editingExercise == nil || editingExercise!.historyIsBeingViewed {
+            editExerciseHistoryButton.backgroundColor = UIColor.niceLightBlue
+        }
         
         // Add progression method button
         addProgressionTrackerButton.setDefaultProperties()
@@ -179,15 +181,25 @@ class CreateExerciseView: UIScrollView {
             // Just close.
             removeSelfNicelyWithAnimation()
         case editExerciseHistoryButton:
-            if let exercise = editingExercise {
+            if let exercise = editingExercise, !exercise.historyIsBeingViewed {
                 guard let showViewDelegate = showViewDelegate else {
                     fatalError("ExerciseHistory called to view, but could not be viewed!")
                 }
                 showViewDelegate.showView(ExerciseHistoryView(exercise: exercise, frame: .zero))
             }
-            else { // Otherwise, we are creating an exercise. tell the user we can't display anything
-                let alert = CDAlertView(title: "Cannot View History",
-                                        message: "You cannot view exercise history for an exercise that was not saved!",
+            else {
+                let alertTitle = "Cannot View Exercise History"
+                var alertMessage: String?
+                
+                if editingExercise?.historyIsBeingViewed == true {
+                    alertMessage = "History may only be opened by one view at a time, and this exercise's history is being viewed somewhere else."
+                } else {
+                    alertMessage = "You cannot view exercise history for an exercise that was not saved!"
+                }
+                
+                // Otherwise, we are creating an exercise. tell the user we can't display anything
+                let alert = CDAlertView(title: alertTitle,
+                                        message: alertMessage,
                                         type: CDAlertViewType.error)
                 alert.add(action: CDAlertViewAction(title: "Ok",
                                                     font: nil,

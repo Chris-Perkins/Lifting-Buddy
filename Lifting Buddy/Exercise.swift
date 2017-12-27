@@ -19,6 +19,10 @@ class Exercise: Object {
         return !sessionExercises.contains(self)
     }
     
+    public var historyIsBeingViewed: Bool {
+        return ExerciseHistoryView.exercisesBeingViewed.contains(self)
+    }
+    
     // Assign UUID to this object
     @objc dynamic private var identifier: String = UUID().uuidString
     

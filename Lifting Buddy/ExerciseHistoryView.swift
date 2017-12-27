@@ -9,9 +9,14 @@
 import UIKit
 
 class ExerciseHistoryView: UIView {
-    let exercise: Exercise
-    let exerciseHistoryTableView: ExerciseHistoryTableView
-    let closeButton: PrettyButton
+    
+    // The exercises currently being viewed
+    public static var exercisesBeingViewed = Set<Exercise>()
+    
+    // The exercise being viewed
+    private let exercise: Exercise
+    private let exerciseHistoryTableView: ExerciseHistoryTableView
+    private let closeButton: PrettyButton
     
     init(exercise: Exercise, frame: CGRect) {
         self.exercise = exercise
@@ -20,6 +25,9 @@ class ExerciseHistoryView: UIView {
         closeButton = PrettyButton()
         
         super.init(frame: frame)
+        
+        // This is done to ensure that the history may not be opened in multiple views
+        ExerciseHistoryView.exercisesBeingViewed.insert(exercise)
         
         addSubview(exerciseHistoryTableView)
         addSubview(closeButton)
@@ -48,6 +56,8 @@ class ExerciseHistoryView: UIView {
     
     @objc internal func closeButtonPress() {
         exercise.recalculateProgressionMethodMaxValues()
+        // We can now free the exercise from being viewed.
+        ExerciseHistoryView.exercisesBeingViewed.remove(exercise)
         
         removeSelfNicelyWithAnimation()
     }

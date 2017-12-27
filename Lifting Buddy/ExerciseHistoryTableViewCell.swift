@@ -50,8 +50,12 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         entryNumberLabel.setDefaultProperties()
-        for dataDisplayView in dataDisplayViews {
-            dataDisplayView.textfield.backgroundColor = isUserInteractionEnabled ? .white : .niceGray
+        
+        if !isUserInteractionEnabled {
+            for dataDisplayView in dataDisplayViews {
+                dataDisplayView.textfield.text = "---"
+                dataDisplayView.textfield.backgroundColor = .niceGray
+            }
         }
     }
     

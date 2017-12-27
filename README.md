@@ -44,7 +44,7 @@ v1.0.0 Released on December 22nd, 2017
 * MEDIUM
 	* No medium priority bugs at this time 
 * LOW [Can workaround]
-	* Reordering exercises within a workout's session then swapping back to the workout tab causes the expanded workout's cell to not be updated. This causes the "View" button to navigate to the incorrect exercise.
+	* No low priority bugs at this time
 
 ## Future plans
 * Convert relevant UIViews into ViewControllers (good practice)<br>

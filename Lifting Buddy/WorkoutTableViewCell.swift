@@ -264,7 +264,7 @@ class WorkoutTableViewCell: UITableViewCell {
     // MARK: Event functions
     
     @objc func labelButtonPress(sender: PrettyButton) {
-        guard var exercise = workout?.getExercises()[sender.tag] else {
+        guard let exercise = workout?.getExercises()[sender.tag] else {
             fatalError("Workout either nil or exercise out of bounds!")
         }
         

@@ -145,9 +145,13 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         // If we're in a session view, we can always modify it.
         // Otherwise, if the entry was entered in a time less than the session start date
         // This prevents the user from modifying the same data in two different places.
-        if let sessionStartDate = sessionStartDate {
-            return !data[indexPath.row].isInvalidated &&
-                (isInSessionView || data[indexPath.row].date!.seconds(from: sessionStartDate) < 0)
+        
+        // We can never modify it if the exercise was deleted.
+        if data[indexPath.row].isInvalidated {
+            return false
+        }
+        else if let sessionStartDate = sessionStartDate {
+            return isInSessionView || data[indexPath.row].date!.seconds(from: sessionStartDate) < 0
         } else {
             return true
         }

@@ -42,7 +42,7 @@ v1.0.0 Released on December 22nd, 2017
 * HIGH
 	* No high priority bugs at this time 
 * MEDIUM
-	* No medium priority bugs at this time 
+	* If user modifies the exercisehistory in the workout and exercise tab, there is a possibility that the same exercisehistory that was deleted may attempt to be modified. This causes a crash due to invalid data.
 * LOW [Can workaround]
 	* No low priority bugs at this time
 

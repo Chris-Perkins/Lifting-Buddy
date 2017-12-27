@@ -146,7 +146,8 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         // Otherwise, if the entry was entered in a time less than the session start date
         // This prevents the user from modifying the same data in two different places.
         if let sessionStartDate = sessionStartDate {
-            return isInSessionView || data[indexPath.row].date!.seconds(from: sessionStartDate) < 0
+            return !data[indexPath.row].isInvalidated &&
+                (isInSessionView || data[indexPath.row].date!.seconds(from: sessionStartDate) < 0)
         } else {
             return true
         }

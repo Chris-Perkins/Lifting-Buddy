@@ -15,6 +15,14 @@ class CreateExerciseView: UIScrollView {
     
     // MARK: View properties
     
+    // Returns whether or not we're currently editing an exercise rather than creating
+    public var isEditingExercise: Bool {
+        if let _ = editingExercise {
+            return true
+        }
+        return false
+    }
+    
     // delegate which receives information after creation
     public var dataDelegate: CreateExerciseViewDelegate?
     // delegate to show a view for us
@@ -73,9 +81,12 @@ class CreateExerciseView: UIScrollView {
         createAndActivateSetEntryFieldConstraints()
         createAndActivateProgressionsTableViewConstraints()
         createAndActivateAddProgressionTrackerButtonConstraints()
-        createAndActivateEditExerciseHistoryButtonConstraints()
-        createAndActivateCreateExeciseButtonConstraints()
+        createAndActivateCreateExerciseButtonConstraints()
         createAndActivateCancelButtonConstraints()
+        
+        if isEditingExercise {
+            createAndActivateEditExerciseHistoryButtonConstraints()
+        }
         
         addProgressionTrackerButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         editExerciseHistoryButton.addTarget(  self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
@@ -100,7 +111,7 @@ class CreateExerciseView: UIScrollView {
         
         // Label
         createExerciseLabel.setDefaultProperties()
-        createExerciseLabel.text = editingExercise == nil ? "Create New Exercise" : "Edit Exercise"
+        createExerciseLabel.text = isEditingExercise ? "Edit Exercise" : "Create New Exercise"
         
         // Name Entry Field
         nameEntryField.setDefaultProperties()
@@ -137,7 +148,7 @@ class CreateExerciseView: UIScrollView {
         addProgressionTrackerButton.setTitle("Add Progression Tracker", for: .normal)
         
         // Create exercise button
-        createExerciseButton.setTitle(editingExercise == nil ? "Create Exercise" : "Save Exercise",
+        createExerciseButton.setTitle(isEditingExercise ? "Save Exercise" : "Create Exercise",
                                       for: .normal)
         createExerciseButton.setDefaultProperties()
         
@@ -309,7 +320,7 @@ class CreateExerciseView: UIScrollView {
         }
         
         // If this is a new exercise, create it!
-        if editingExercise == nil {
+        if !isEditingExercise {
             let realm = try! Realm()
             try! realm.write {
                 realm.add(createdExercise)
@@ -459,14 +470,14 @@ class CreateExerciseView: UIScrollView {
     }
     
     // center horiz in view ; place below editexercisehistorybutton ; height 50 ; width of this view - 50
-    private func createAndActivateCreateExeciseButtonConstraints() {
+    private func createAndActivateCreateExerciseButtonConstraints() {
         createExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseButton,
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: createExerciseButton,
-                                                         belowView: editExerciseHistoryButton,
+                                                         belowView: isEditingExercise ? editExerciseHistoryButton : addProgressionTrackerButton,
                                                          withPadding: viewPadding * 2).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: createExerciseButton,
                                                          height: PrettyButton.defaultHeight).isActive = true

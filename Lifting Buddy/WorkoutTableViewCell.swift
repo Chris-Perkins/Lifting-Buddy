@@ -101,7 +101,6 @@ class WorkoutTableViewCell: UITableViewCell {
             editButton?.setTitle("Edit", for: .normal)
             
             startWorkoutButton?.setDefaultProperties()
-            startWorkoutButton?.backgroundColor = .niceBlue
             startWorkoutButton?.setTitle("Start Workout", for: .normal)
         }
         
@@ -118,9 +117,17 @@ class WorkoutTableViewCell: UITableViewCell {
                 for exerciseLabel in exerciseLabels {
                     exerciseLabel.label.textColor = .white
                 }
+            }
+        } else if workout?.isRepeatedToday == true {
+            backgroundColor = .niceLightRed
+            
+            cellTitle.textColor = .white
+            streakLabel.textColor = .white
+            if (isSelected) {
+                for exerciseLabel in exerciseLabels {
+                    exerciseLabel.label.textColor = .white
+                }
                 
-                // Make the start button visible (green on green is BAD)
-                startWorkoutButton?.backgroundColor = .niceBlue
             }
         } else {
             cellTitle.textColor = .niceBlue
@@ -133,7 +140,7 @@ class WorkoutTableViewCell: UITableViewCell {
                 
                 backgroundColor = .niceLightGray
             } else {
-                backgroundColor = (workout?.getIfTodayWorkout())! ? .niceLightGray : .white
+                backgroundColor = .white
             }
         }
     }

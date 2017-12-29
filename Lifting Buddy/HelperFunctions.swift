@@ -309,6 +309,10 @@ extension UIColor {
         return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
     }
     
+    public static var niceLightRed: UIColor {
+        return UIColor(red: 0.9686, green: 0.5176, blue: 0.3647, alpha: 1.0)
+    }
+    
     public static var niceMaroon: UIColor {
         return UIColor(red: 0.349, green: 0.0784, blue: 0.0784, alpha: 1.0)
     }

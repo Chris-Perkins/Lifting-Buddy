@@ -15,7 +15,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     // MARK: View properties
     
     // the height we need per progressionmethod
-    public static let heightPerProgressionMethod: CGFloat = 25
+    public static let heightPerProgressionMethod: CGFloat = 35.0
     // height for the title bar
     public static let baseHeight: CGFloat = 25
     

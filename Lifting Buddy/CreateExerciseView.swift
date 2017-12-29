@@ -111,6 +111,8 @@ class CreateExerciseView: UIScrollView {
         
         // Label
         createExerciseLabel.setDefaultProperties()
+        createExerciseLabel.backgroundColor = UILabel.titleLabelBackgroundColor
+        createExerciseLabel.textColor = UILabel.titleLabelTextColor
         createExerciseLabel.text = isEditingExercise ? "Edit Exercise" : "Create New Exercise"
         
         // Name Entry Field
@@ -352,23 +354,22 @@ class CreateExerciseView: UIScrollView {
     
     // MARK: Constraints
     
-    // center horiz in view; cling to top; width of this view ; height 30
+    // Cling to left, top of self ; width of this view ; height of title
     private func createAndActivateCreateExerciseLabelConstraints() {
         createExerciseLabel.translatesAutoresizingMaskIntoConstraints = false
         
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseLabel,
                                                              withCopyView: self,
-                                                             attribute: .centerX).isActive = true
+                                                             attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseLabel,
                                                              withCopyView: self,
-                                                             attribute: .top,
-                                                             plusConstant: viewPadding).isActive = true
+                                                             attribute: .top).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: createExerciseLabel,
                                                              withCopyView: self,
                                                              attribute: .width).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: createExerciseLabel,
-                                                         height: 30).isActive = true
+                                                         height: UILabel.titleLabelHeight).isActive = true
     }
     
     // center horiz in view ; place below nameentrylabel ; height of default height ; width of this view - 40
@@ -380,7 +381,7 @@ class CreateExerciseView: UIScrollView {
                                                              attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: nameEntryField,
                                                          belowView: createExerciseLabel,
-                                                         withPadding: viewPadding / 2).isActive = true
+                                                         withPadding: viewPadding).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: nameEntryField,
                                                          height: BetterTextField.defaultHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: nameEntryField,

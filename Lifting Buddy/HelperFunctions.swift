@@ -345,6 +345,16 @@ extension UIImage {
 }
 
 extension UILabel {
+    public static var titleLabelTextColor: UIColor {
+        return .white
+    }
+    public static var titleLabelBackgroundColor: UIColor {
+        return .niceGreen
+    }
+    public static var titleLabelHeight: CGFloat {
+        return 50.0
+    }
+    
     override func setDefaultProperties() {
         font = UIFont.boldSystemFont(ofSize: 18.0)
         textAlignment = .center

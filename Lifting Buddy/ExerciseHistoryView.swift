@@ -15,11 +15,16 @@ class ExerciseHistoryView: UIView {
     
     // The exercise being viewed
     private let exercise: Exercise
+    // Displays at the top of the view. Just lets user know where they are
+    private let exerciseLabel: UILabel
+    // The tableview for the history
     private let exerciseHistoryTableView: ExerciseHistoryTableView
+    // Button to close this view
     private let closeButton: PrettyButton
     
     init(exercise: Exercise, frame: CGRect) {
         self.exercise = exercise
+        exerciseLabel = UILabel()
         exerciseHistoryTableView = ExerciseHistoryTableView(forExercise: exercise,
                                                             style: .plain)
         closeButton = PrettyButton()
@@ -29,12 +34,14 @@ class ExerciseHistoryView: UIView {
         // This is done to ensure that the history may not be opened in multiple views
         ExerciseHistoryView.exercisesBeingViewed.insert(exercise)
         
+        addSubview(exerciseLabel)
         addSubview(exerciseHistoryTableView)
         addSubview(closeButton)
         
         exerciseHistoryTableView.setData(exercise.getExerciseHistory())
         closeButton.addTarget(self, action: #selector(closeButtonPress), for: .touchUpInside)
         
+        createAndActivateExerciseLabelConstraints()
         createAndActivateExerciseHistoryTableViewConstraints()
         createAndActivateCloseButtonConstraints()
     }
@@ -48,6 +55,13 @@ class ExerciseHistoryView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        // Exercise Label
+        exerciseLabel.setDefaultProperties()
+        exerciseLabel.textColor = UILabel.titleLabelTextColor
+        exerciseLabel.backgroundColor = UILabel.titleLabelBackgroundColor
+        exerciseLabel.text = "History for \(exercise.getName()!)"
+        
+        // Close button
         closeButton.setDefaultProperties()
         closeButton.setTitle("Close", for: .normal)
     }
@@ -64,12 +78,29 @@ class ExerciseHistoryView: UIView {
     
     // MARK: Constraints
     
+    // Cling to top, left, right of self ; Height of default
+    private func createAndActivateExerciseLabelConstraints() {
+        exerciseLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseLabel,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseLabel,
+                                                             withCopyView: self,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseLabel,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: exerciseLabel,
+                                                         height: UILabel.titleLabelHeight).isActive = true
+    }
+    
+    // Cling to left, right of self ; Place below exercise label ; Place above closeButton
     private func createAndActivateExerciseHistoryTableViewConstraints() {
         exerciseHistoryTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseHistoryTableView,
-                                                             withCopyView: self,
-                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseHistoryTableView,
+                                                         belowView: exerciseLabel).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseHistoryTableView,
                                                              withCopyView: self,
                                                              attribute: .left).isActive = true

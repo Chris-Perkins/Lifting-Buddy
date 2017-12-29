@@ -109,7 +109,7 @@ class WorkoutTableViewCell: UITableViewCell {
         if let dateLastDone = workout?.getDateLastDone(),
             Calendar.current.isDateInToday(dateLastDone) {
             
-            backgroundColor = UIColor.niceGreen
+            backgroundColor = .niceGreen
             
             cellTitle.textColor = .white
             streakLabel.textColor = .white

@@ -29,6 +29,8 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     private let progressionMethods: List<ProgressionMethod>
     // holds all the values for data
     private var data: [ExerciseHistoryEntry]
+    // a label we use to display if there is no history in it
+    private var overlayLabel: UILabel?
     
     // MARK: Initializers
     
@@ -51,6 +53,10 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         super.layoutSubviews()
         
         backgroundColor = .white
+        
+        overlayLabel?.setDefaultProperties()
+        overlayLabel?.text = "No history recorded for this exercise!"
+        overlayLabel?.backgroundColor = .niceGray
     }
     
     // MARK: Tableview functions
@@ -87,6 +93,21 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if data.count == 0 {
+            // We should only display the overlay label if we're not in a session view
+            // Done because I don't think it looks nice in the session view.
+            if overlayLabel == nil && !isInSessionView {
+                overlayLabel = UILabel()
+                overlayLabel?.layer.zPosition = 100
+                
+                addSubview(overlayLabel!)
+                
+                NSLayoutConstraint.clingViewToView(view: overlayLabel!, toView: superview!)
+            }
+        } else {
+            overlayLabel?.removeFromSuperview()
+            overlayLabel = nil
+        }
         return data.count
     }
     
@@ -96,7 +117,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         
         // update the label in case of deletion
         if isInSessionView {
-            cell.entryNumberLabel.text = "Entry #\(data.count - (indexPath.row))"
+            cell.entryNumberLabel.text = "Set #\(data.count - (indexPath.row))"
             cell.isUserInteractionEnabled = true
         } else {
             let dateFormatter = NSDate.getDateFormatter()

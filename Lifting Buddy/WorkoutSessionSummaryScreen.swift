@@ -89,21 +89,21 @@ class WorkoutSessionSummaryView: UIView {
         backgroundColor = .niceGray
         
         // Header View
-        headerView.backgroundColor = .niceGreen
+        headerView.backgroundColor = UILabel.titleLabelBackgroundColor
         
         // Title label
         titleLabel.setDefaultProperties()
-        titleLabel.textColor = .white
+        titleLabel.textColor = UILabel.titleLabelTextColor
         titleLabel.text = "Tracker Name"
         
         // Value label
         valueLabel.setDefaultProperties()
-        valueLabel.textColor = .white
+        valueLabel.textColor = UILabel.titleLabelTextColor
         valueLabel.text = "Value"
         
         // Gain label constraints
         gainLabel.setDefaultProperties()
-        gainLabel.textColor = .white
+        gainLabel.textColor = UILabel.titleLabelTextColor
         gainLabel.text = "vs. Max"
         
         // Close button

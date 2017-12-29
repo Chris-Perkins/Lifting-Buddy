@@ -92,7 +92,8 @@ class WorkoutSessionView: UIScrollView {
         // Workout Name Label
         workoutNameLabel.setDefaultProperties()
         workoutNameLabel.text = workout?.getName() ?? "Custom Workout"
-        //workoutNameLabel.backgroundColor = .white
+        workoutNameLabel.backgroundColor = UILabel.titleLabelBackgroundColor
+        workoutNameLabel.textColor = UILabel.titleLabelTextColor
         
         // Add Exercise Button
         addExerciseButton.setDefaultProperties()
@@ -201,7 +202,7 @@ class WorkoutSessionView: UIScrollView {
     
     // MARK: View Constraints
     
-    // Center horiz in view ; place below top of this view ; height 20 ; width of this view - 80
+    // Center horiz in view ; place below top of this view ; height of var ; width of this view
     private func createAndActivateWorkoutNameLabelConstraints() {
         workoutNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -210,10 +211,9 @@ class WorkoutSessionView: UIScrollView {
                                                              attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
                                                              withCopyView: self,
-                                                             attribute: .top,
-                                                             plusConstant: 12.5).isActive = true
+                                                             attribute: .top).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: workoutNameLabel,
-                                                         height: 20).isActive = true
+                                                         height: UILabel.titleLabelHeight).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
                                                              withCopyView: self,
                                                              attribute: .width).isActive = true
@@ -228,8 +228,7 @@ class WorkoutSessionView: UIScrollView {
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: workoutSessionTableView,
-                                                         belowView: workoutNameLabel,
-                                                         withPadding: 12.5).isActive = true
+                                                         belowView: workoutNameLabel).isActive = true
         
         // Assign height constraint
         workoutSessionTableView.heightConstraint =

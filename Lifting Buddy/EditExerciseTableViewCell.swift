@@ -46,15 +46,13 @@ class EditExerciseTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        backgroundColor = .niceLightGray
         clipsToBounds = true
         
         exerciseView.label.setDefaultProperties()
+        exerciseView.label.font = UIFont.systemFont(ofSize: 18.0)
         
         exerciseView.button.setDefaultProperties()
-        exerciseView.button.removeOverlayView()
-        exerciseView.button.animationTimeInSeconds = 0.1
-        exerciseView.button.setOverlayStyle(style: .FADE)
         exerciseView.button.setTitle("Edit", for: .normal)
     }
     

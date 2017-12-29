@@ -56,7 +56,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         
         overlayLabel?.setDefaultProperties()
         overlayLabel?.text = "No history recorded for this exercise!"
-        overlayLabel?.backgroundColor = .niceGray
+        overlayLabel?.backgroundColor = .niceLightGray
     }
     
     // MARK: Tableview functions

@@ -346,10 +346,10 @@ extension UIImage {
 
 extension UILabel {
     public static var titleLabelTextColor: UIColor {
-        return .white
+        return .niceBlue
     }
     public static var titleLabelBackgroundColor: UIColor {
-        return .niceGreen
+        return .niceGray
     }
     public static var titleLabelHeight: CGFloat {
         return 50.0

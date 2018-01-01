@@ -218,6 +218,10 @@ class Workout: Object {
         return curStreak
     }
     
+    @objc public func getCompletedCount() -> Int {
+        return completedCount
+    }
+    
     // Remove exercise stored at an index in the int if possible
     public func removeExerciseAtIndex(index: Int) {
         if index >= 0 && index < exercises.endIndex {

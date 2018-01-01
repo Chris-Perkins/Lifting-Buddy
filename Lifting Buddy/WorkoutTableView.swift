@@ -11,7 +11,7 @@ import RealmSwift
 import Realm
 import CDAlertView
 
-class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
+class WorkoutTableView: UITableView {
     
     // MARK: View Properties
     
@@ -63,30 +63,39 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
         }
     }
     
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let cell = cellForRow(at: indexPath) as! WorkoutTableViewCell
+    // MARK: Custom functions
+    
+    // Retrieve workouts
+    public func getSortedData() -> [Workout] {
+        return sortedData
+    }
+    
+    private func setupTableView() {
+        delegate = self
+        dataSource = self
+        allowsSelection = true
+        register(WorkoutTableViewCell.self, forCellReuseIdentifier: "cell")
+        backgroundColor = .clear
+    }
+}
+
+extension WorkoutTableView: UITableViewDataSource {
+    // Data is what we use to fill in the table view
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sortedData.count
+    }
+    
+    // Create our custom cell class
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell =
+            tableView.dequeueReusableCell(withIdentifier: "cell",
+                                          for: indexPath as IndexPath) as! WorkoutTableViewCell
         
-        if indexPathForSelectedRow == indexPath {
-            deselectRow(at: indexPath, animated: true)
-            reloadData()
-            cell.updateSelectedStatus()
-            
-            return nil
-        } else {
-            var cell2: WorkoutTableViewCell? = nil
-            if indexPathForSelectedRow != nil {
-                cell2 = cellForRow(at: indexPathForSelectedRow!) as? WorkoutTableViewCell
-            }
-            
-            selectRow(at: indexPath, animated: false, scrollPosition: .none)
-            reloadData()
-            scrollToRow(at: indexPath, at: .none, animated: true)
-            
-            cell2?.updateSelectedStatus()
-            cell.updateSelectedStatus()
-            
-            return indexPath
-        }
+        cell.showViewDelegate = superview as? ShowViewDelegate
+        cell.exerciseDisplayer = superview as? ExerciseDisplayer
+        cell.setWorkout(workout: sortedData[indexPath.row])
+        cell.updateSelectedStatus()
+        return cell
     }
     
     // Deletion methods
@@ -99,7 +108,7 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
             if workout.canModifyCoreProperties {
                 let alert = CDAlertView(title: "Delete Workout?",
                                         message: "All history for '\(workout.getName()!)' will be deleted.\n" +
-                                            "This action cannot be undone.",
+                    "This action cannot be undone.",
                                         type: CDAlertViewType.warning)
                 alert.add(action: CDAlertViewAction(title: "Cancel",
                                                     font: nil,
@@ -133,50 +142,42 @@ class WorkoutTableView: UITableView, UITableViewDataSource, UITableViewDelegate 
             }
         }
     }
-    
-    // Selected a table view cell
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    }
-    
-    // Data is what we use to fill in the table view
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sortedData.count
-    }
-    
-    // Create our custom cell class
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell =
-            tableView.dequeueReusableCell(withIdentifier: "cell",
-                                          for: indexPath as IndexPath) as! WorkoutTableViewCell
+}
+
+extension WorkoutTableView: UITableViewDelegate {
+    // Expand this cell, un-expand the other cell
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let cell = cellForRow(at: indexPath) as! WorkoutTableViewCell
         
-        cell.showViewDelegate = superview as? ShowViewDelegate
-        cell.exerciseDisplayer = superview as? ExerciseDisplayer
-        cell.setWorkout(workout: sortedData[indexPath.row])
-        cell.updateSelectedStatus()
-        return cell
+        if indexPathForSelectedRow == indexPath {
+            deselectRow(at: indexPath, animated: true)
+            reloadData()
+            cell.updateSelectedStatus()
+            
+            return nil
+        } else {
+            var cell2: WorkoutTableViewCell? = nil
+            if indexPathForSelectedRow != nil {
+                cell2 = cellForRow(at: indexPathForSelectedRow!) as? WorkoutTableViewCell
+            }
+            
+            selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            reloadData()
+            scrollToRow(at: indexPath, at: .none, animated: true)
+            
+            cell2?.updateSelectedStatus()
+            cell.updateSelectedStatus()
+            
+            return indexPath
+        }
     }
     
-    // Each cell has a height of cellHeight
+    // Each cell's height depends on whether or not it has been selected
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let exerCount = CGFloat(sortedData[indexPath.row].getExercises().count)
         
         return indexPathForSelectedRow?.row == indexPath.row ?
             UITableViewCell.defaultHeight + PrettyButton.defaultHeight + exerCount * WorkoutTableViewCell.heightPerExercise + (exerCount > 0 ? 26 : 0) :
             UITableViewCell.defaultHeight
-    }
-    
-    // MARK: Custom functions
-    
-    // Retrieve workouts
-    public func getSortedData() -> [Workout] {
-        return sortedData
-    }
-    
-    private func setupTableView() {
-        delegate = self
-        dataSource = self
-        allowsSelection = true
-        register(WorkoutTableViewCell.self, forCellReuseIdentifier: "cell")
-        backgroundColor = .clear
     }
 }

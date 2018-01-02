@@ -268,7 +268,7 @@ extension PrettySegmentedControl {
 
 extension String {
     var floatValue: Float? {
-        return NumberFormatter().number(from: self)?.floatValue
+        return Float(self)
     }
 }
 

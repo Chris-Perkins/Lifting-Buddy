@@ -237,6 +237,8 @@ class WorkoutSessionTableViewCell: UITableViewCell {
                 // Set the progressionmethod default value to whatever was entered.
                 // This allows the user to see what value they entered the next time they do their workout.
                 progressionMethods[index].setDefaultValue(defaultValue: exerciseInputField.getValue())
+                exerciseInputField.setDefaultValue(exerciseInputField.getValue())
+                exerciseInputField.clearFields()
             }
             
             exercise.appendExerciseHistoryEntry(exerciseEntry)
@@ -387,7 +389,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
             } else {
                 let progressionInput = TimeInputField(frame: .zero)
                 
-                progressionInput.setDefaultValue(seconds: progressionMethod.getDefaultValue()?.floatValue)
+                progressionInput.setDefaultValue(progressionMethod.getDefaultValue())
                 
                 inputContentView.addSubview(progressionInput)
                 exerciseInputFields.append(progressionInput)

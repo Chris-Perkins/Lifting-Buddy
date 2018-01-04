@@ -20,4 +20,10 @@ protocol InputViewHolder {
     
     // Gets the value of the input view
     func getValue() -> String
+    
+    // Sets the default value for a field
+    func setDefaultValue(_ value: String?)
+    
+    // Clears all the views of the input holder
+    func clearFields()
 }

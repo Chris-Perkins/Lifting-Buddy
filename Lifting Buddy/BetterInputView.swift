@@ -120,4 +120,19 @@ extension BetterInputView: InputViewHolder {
         
         return String(returnValue)
     }
+    
+    // Needs to be overriden!
+    internal func setDefaultValue(_ value: String?) {
+        if inputViews.count > 0 {
+            inputViews[0].setDefaultString(defaultString: value)
+        } else {
+            fatalError("Set default value called when no input views initalized")
+        }
+    }
+    
+    internal func clearFields() {
+        for view in inputViews {
+            view.textfield.text = nil
+        }
+    }
 }

@@ -80,22 +80,6 @@ class TimeInputField: UIView {
     
     // MARK: View functions
     
-    // Sets the value of the second/minute/hour fields using the given number of seconds
-    public func setDefaultValue(seconds: Float?) {
-        if let seconds = seconds {
-            // We separate the values out using division in case of negative numbers.
-            // modulo operator wouldn't play out very well with those negatives.
-            let totalSeconds = mod(x: seconds, m: 60.0)
-            let totalMinutes = mod(x: (seconds - totalSeconds) / 60, m: 60.0)
-            let totalHours   = (seconds - totalSeconds - totalMinutes * 60) / (60 * 60)
-            
-            
-            secondField.setDefaultString(defaultString: String(format: "%.1f", totalSeconds))
-            minuteField.setDefaultString(defaultString: String(format: "%.1f", totalMinutes))
-            hourField.setDefaultString(defaultString:   String(format: "%.1f", totalHours))
-        }
-    }
-    
     // Sets the placeholder of all views to be empty.
     // Done to let the user enter values without text becoming full string
     public func clearTimeFieldPlaceholders() {
@@ -271,5 +255,27 @@ extension TimeInputField: InputViewHolder {
         }
         
         return String(totalSeconds)
+    }
+    
+    // Sets the value of the second/minute/hour fields using the given number of seconds
+    internal func setDefaultValue(_ value: String?) {
+        if let secondsString = value, let seconds = secondsString.floatValue {
+            // We separate the values out using division in case of negative numbers.
+            // modulo operator wouldn't play out very well with those negatives.
+            let totalSeconds = mod(x: seconds, m: 60.0)
+            let totalMinutes = mod(x: (seconds - totalSeconds) / 60, m: 60.0)
+            let totalHours   = (seconds - totalSeconds - totalMinutes * 60) / (60 * 60)
+            
+            
+            secondField.setDefaultString(defaultString: String(format: "%.1f", totalSeconds))
+            minuteField.setDefaultString(defaultString: String(format: "%.1f", totalMinutes))
+            hourField.setDefaultString(defaultString:   String(format: "%.1f", totalHours))
+        }
+    }
+    
+    internal func clearFields() {
+        secondField.textfield.text = nil
+        minuteField.textfield.text = nil
+        hourField.textfield.text = nil
     }
 }

@@ -35,6 +35,7 @@ Optional exercise in workout | 0/10 | Will require realm migration; Avoiding f
 PGM Max -> Best Conversion | 0/10 | Will require realm migration; Avoiding for now
 Label title rework | 0/10 | Current title label colors are ugly, but unsure of fix
 Last session comparison graph | 0/10 | Will display graph in summary view most likely.
+Color Themes | 0/10 | Should be easy to implement using UserDefaults
 
 ##### Explanations
 * <b>Workout Start Rework</b> - I just think it looks ugly. Not sure how to rework it.
@@ -43,6 +44,7 @@ Last session comparison graph | 0/10 | Will display graph in summary view most l
 * <b>PGM Max -> Best Conversion</b> - Sometimes, the user wants the lowest possible value instead of the highest possible value (think assisted pullups, etc). To do so, I want progressionmethods to have a "max/min is best" option. This also requires pgms to undergo a realm migration.
 * <b>Label title rework</b> - I feel like the title labels are pretty ugly. I plan on replacing the app text of "Lifting Buddy" to be more telling (e.g. change "Lifting Buddy" title label text to "Create Workout". Unsure of this design at the moment. I would prefer to just find a color scheme that works and works well.
 * <b>Last session comparison graph</b> - Would be neat to graph the previous session's results compared to current session results. Would likely be implemented in the summary view as a button.
+* <b>Color Themes</b> - Thought of as a future plan, then recommended again by a user. Based on current app, this shouldn't be too hard to change.
 
 ## Known Bugs
 * HIGH

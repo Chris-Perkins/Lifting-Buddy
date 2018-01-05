@@ -23,7 +23,8 @@ public enum TimeAmount: String {
     case ALLTIME = "ALL-TIME"
 }
 // An associated array for easy parsing
-public var TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]
+public let TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]
+public let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]
 
 
 // MARK: Operators

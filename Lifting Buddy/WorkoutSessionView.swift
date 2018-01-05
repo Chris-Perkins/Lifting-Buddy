@@ -89,11 +89,13 @@ class WorkoutSessionView: UIScrollView {
         contentSize = CGSize(width: frame.width,
                              height: cancelButton.frame.maxY + 20)
         
+        backgroundColor = isComplete ? .niceLightGreen : .niceLightGray
+        
         // Workout Name Label
         workoutNameLabel.setDefaultProperties()
         workoutNameLabel.text = workout?.getName() ?? "Custom Workout"
-        workoutNameLabel.backgroundColor = UILabel.titleLabelBackgroundColor
-        workoutNameLabel.textColor = UILabel.titleLabelTextColor
+        workoutNameLabel.backgroundColor = isComplete ? .niceLightGreen : UILabel.titleLabelBackgroundColor
+        workoutNameLabel.textColor       = isComplete ? .niceBlue       : UILabel.titleLabelTextColor
         
         // Add Exercise Button
         addExerciseButton.setDefaultProperties()
@@ -102,8 +104,8 @@ class WorkoutSessionView: UIScrollView {
         
         // Complete button
         // Modified by another method based on current complete
-        completeButton.setOverlayStyle(style: .FADE)
-        completeButton.setOverlayColor(color: .niceYellow)
+        completeButton.setDefaultProperties()
+        completeButton.backgroundColor = isComplete ? .niceGreen : .niceLightBlue
         completeButton.setTitle("Finish Workout",
                                 for: .normal)
         
@@ -299,13 +301,7 @@ extension WorkoutSessionView: WorkoutSessionTableViewDelegate {
     func updateCompleteStatus(isComplete: Bool) {
         self.isComplete = isComplete
         
-        if isComplete {
-            backgroundColor = .niceLightGreen
-            completeButton.backgroundColor = .niceGreen
-        } else {
-            backgroundColor = .niceGray
-            completeButton.backgroundColor = .niceLightBlue
-        }
+        layoutSubviews()
     }
     
     // Height of this view changed

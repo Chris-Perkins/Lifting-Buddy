@@ -177,7 +177,7 @@ extension WorkoutTableView: UITableViewDelegate {
         let exerCount = CGFloat(sortedData[indexPath.row].getExercises().count)
         
         return indexPathForSelectedRow?.row == indexPath.row ?
-            UITableViewCell.defaultHeight + PrettyButton.defaultHeight + exerCount * WorkoutTableViewCell.heightPerExercise + (exerCount > 0 ? 26 : 0) :
+            UITableViewCell.defaultHeight + PrettyButton.defaultHeight + exerCount * WorkoutTableViewCell.heightPerExercise + WorkoutTableViewCell.heightPerLabel :
             UITableViewCell.defaultHeight
     }
 }

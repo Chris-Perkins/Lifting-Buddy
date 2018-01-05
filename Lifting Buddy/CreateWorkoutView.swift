@@ -22,8 +22,6 @@ class CreateWorkoutView: UIScrollView {
     // Delegate to show a view
     public var showViewDelegate: ShowViewDelegate?
     
-    // holds the first char for the days of the week for repeat buttons
-    private final let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]
     // variable stating how many cells are in the exercise table view
     private var prevDataCount = -1
     // the exercise the user is editing

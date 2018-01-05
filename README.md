@@ -29,7 +29,6 @@ The below roadmap is not in "order of implementation"; I generally work on what 
   Process                    | Step | Notes
 :---------------------------:|:----:|:-------------------------------------------------------:
 Exercise Creation | 9/10 | Add nice way to choose progression method unit
-Workout Tab Cell Rework | 0/10 | Add label for completed count + days of the week sched
 Workout Start Rework | 0/10 | Unsure of design
 Optional exercise in workout | 0/10 | Will require realm migration; Avoiding for now
 PGM Max -> Best Conversion | 0/10 | Will require realm migration; Avoiding for now
@@ -39,7 +38,6 @@ Literal -> Localized Strings | 0/10 | Good for speedy implementation and clean c
 
 ##### Explanations
 * <b>Workout Start Rework</b> - I just think it looks ugly. Not sure how to rework it.
-* <b>Workout Tab Cell Rework</b> - Current implementation is pretty mundane. Going to make each view more useful.
 * <b>Optional exercise in workout</b> - The user should be able to set exercises as "optional" within a workout. However, I'm still not comfortable with performing realm migrations (the app tends to crash when I attempt to do so)
 * <b>PGM Max -> Best Conversion</b> - Sometimes, the user wants the lowest possible value instead of the highest possible value (think assisted pullups, etc). To do so, I want progressionmethods to have a "max/min is best" option. This also requires pgms to undergo a realm migration.
 * <b>Last session comparison graph</b> - Would be neat to graph the previous session's results compared to current session results. Would likely be implemented in the summary view as a button.

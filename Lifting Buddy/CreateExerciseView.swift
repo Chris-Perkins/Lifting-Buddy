@@ -122,7 +122,7 @@ class CreateExerciseView: UIScrollView {
         // Set entry field
         setEntryField.setDefaultProperties()
         setEntryField.setLabelTitle(title: "Sets")
-        setEntryField.textfield.keyboardType = .numberPad
+        setEntryField.setIsNumeric(isNumeric: true)
         
         // Progressions Table View
         // Prevent clipping as we can click and drag cells

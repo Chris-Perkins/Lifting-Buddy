@@ -91,7 +91,7 @@ class BetterTextField: UIView {
     // Sets if this field is numeric
     public func setIsNumeric(isNumeric: Bool) {
         self.isNumeric = isNumeric
-        textfield.keyboardType = .decimalPad
+        textfield.keyboardType = isNumeric ? .decimalPad : .default
     }
     
     // Returns if this field is numeric

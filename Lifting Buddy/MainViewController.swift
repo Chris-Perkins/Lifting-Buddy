@@ -63,6 +63,8 @@ class MainViewController: UIViewController {
             }
             showView(exercisesView!)
             exercisesView?.layoutSubviews()
+            
+            performSegue(withIdentifier: "toSettings", sender: self)
         }
     }
 }

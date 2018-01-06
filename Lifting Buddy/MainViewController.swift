@@ -63,10 +63,12 @@ class MainViewController: UIViewController {
             }
             showView(exercisesView!)
             exercisesView?.layoutSubviews()
-            
-            performSegue(withIdentifier: "toSettings", sender: self)
         }
     }
+    
+    // MARK: Event functions
+    
+    @IBAction func unwindToMenu(segue: UIStoryboardSegue) {}
 }
 
 extension MainViewController: WorkoutSessionStarter {

@@ -46,7 +46,7 @@
                     <connections>
                         <outlet property="headerView" destination="dBG-i1-qoX" id="ezF-vA-F38"/>
                         <outlet property="sectionContentView" destination="O4I-V8-PjE" id="nR9-gv-yIj"/>
-                        <segue destination="3ba-yy-OQj" kind="show" identifier="toSettings" customClass="TopDownSegue" customModule="Lifting_Buddy" customModuleProvider="target" id="MRd-2Z-9pG"/>
+                        <segue destination="3ba-yy-OQj" kind="show" identifier="toSettings" id="MRd-2Z-9pG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -67,10 +67,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="fromSettings" id="Dr9-cO-AE4"/>
+                        <segue destination="OXe-1n-GFQ" kind="unwind" identifier="exitSegue" unwindAction="unwindToMenuWithSegue:" id="v4M-xN-On7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c4w-L7-2w5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="OXe-1n-GFQ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="642" y="148"/>
         </scene>

@@ -27,6 +27,6 @@ class SettingsViewController: UIViewController {
     }
     
     private func performBackSegue() {
-        performSegue(withIdentifier: "fromSettings", sender: self)
+        performSegue(withIdentifier: "exitSegue", sender: self)
     }
 }

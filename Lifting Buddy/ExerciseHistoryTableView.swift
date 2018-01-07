@@ -52,11 +52,11 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = .white
+        backgroundColor = .primaryBlackWhiteColor
         
         overlayLabel?.setDefaultProperties()
         overlayLabel?.text = "No history recorded for this exercise!"
-        overlayLabel?.backgroundColor = .niceLightGray
+        overlayLabel?.backgroundColor = .lightestBlackWhiteColor
     }
     
     // MARK: Tableview functions

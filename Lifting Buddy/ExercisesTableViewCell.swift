@@ -96,9 +96,9 @@ class ExerciseTableViewCell: UITableViewCell {
             startExerciseButton.backgroundColor = .niceBlue
             startExerciseButton.setTitle("Start Exercise", for: .normal)
             
-            backgroundColor = .niceLightGray
+            backgroundColor = .lightBlackWhiteColor
         } else {
-            backgroundColor = .white
+            backgroundColor = .primaryBlackWhiteColor
         }
     }
     

@@ -32,7 +32,7 @@ class BetterInputView: UIView {
             btf.setLabelTitle(title: arg.0)
             btf.setIsNumeric(isNumeric: arg.2)
             
-            btf.textfield.placeholder = arg.1
+            btf.textfield.setPlaceholderString(arg.1)
             btf.textfield.setDefaultProperties()
             
             inputViews.append(btf)

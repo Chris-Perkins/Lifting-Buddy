@@ -16,7 +16,8 @@ class BetterTextField: UIView {
         // return the textfield text if possible; otherwise, return placeholder
         return !(textfield.text ?? "").isEmpty ?
             textfield.text :
-            textfield.placeholder
+            textfield.getPlaceholderString()
+        
     }
     
     // Label for this text field
@@ -70,11 +71,11 @@ class BetterTextField: UIView {
         
         label.font = UIFont.boldSystemFont(ofSize: 18.0)
         label.textAlignment = .center
-        label.backgroundColor = .niceLightGray
+        label.backgroundColor = .lightestBlackWhiteColor
         label.textColor = .niceBlue
         label.layer.zPosition = 1
         
-        textfield.placeholder = defaultString
+        textfield.setPlaceholderString(defaultString)
         textfield.textAlignment = .center
     }
     
@@ -109,7 +110,7 @@ class BetterTextField: UIView {
     public func setDefaultString(defaultString: String?) {
         self.defaultString = defaultString
         
-        textfield.placeholder = defaultString
+        textfield.setPlaceholderString(defaultString!)
     }
     
     // MARK: View functions

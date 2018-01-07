@@ -60,7 +60,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         super.layoutIfNeeded()
         
         clipsToBounds = true
-        backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        backgroundColor = UIColor.primaryBlackWhiteColor.withAlphaComponent(0.5)
         
         pickUnitButton.setDefaultProperties()
     }

@@ -68,8 +68,8 @@ extension ProgressionsMethodTableView: UITableViewDataSource {
             cell = newCell
         }
         
-        cell?.nameEntryField.textfield.textColor = isUserInteractionEnabled ? .black : .niceGray
-        cell?.pickUnitButton.backgroundColor = isUserInteractionEnabled ? .niceBlue : .niceGray
+        cell?.nameEntryField.textfield.textColor = isUserInteractionEnabled ? .primaryBlackWhiteColor : .lightBlackWhiteColor
+        cell?.pickUnitButton.backgroundColor = isUserInteractionEnabled ? .niceBlue : .lightBlackWhiteColor
         
         return cell!
     }

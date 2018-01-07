@@ -123,7 +123,7 @@ class WorkoutTableViewCell: UITableViewCell {
             
             setLabelTextColorsTo(color: .white)
         } else {
-            backgroundColor = isSelected ? .niceLightGray : .white
+            backgroundColor = isSelected ? .lightBlackWhiteColor : .primaryBlackWhiteColor
             
             setLabelTextColorsTo(color: .niceBlue, streakLabelColor: .niceRed)
         }
@@ -200,7 +200,7 @@ class WorkoutTableViewCell: UITableViewCell {
             exerciseView.label.textColor = .niceBlue
             exerciseView.label.textAlignment = .left
             exerciseView.label.backgroundColor =
-                UIColor.niceGray.withAlphaComponent(index & 1 == 1 ? 0.5 : 0.25)
+                UIColor.lightBlackWhiteColor.withAlphaComponent(index & 1 == 1 ? 0.5 : 0.25)
             
             exerciseView.button.setDefaultProperties()
             exerciseView.button.setTitle("View", for: .normal)

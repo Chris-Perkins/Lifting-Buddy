@@ -281,6 +281,51 @@ extension String {
 }
 
 extension UIColor {
+    
+    public static var primaryBlackWhiteColor: UIColor {
+        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
+        case 0:
+            return .white
+        case 1:
+            return .black
+        default:
+            fatalError("")
+        }
+    }
+    
+    public static var lightBlackWhiteColor: UIColor {
+        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
+        case 0:
+            return .niceLightGray
+        case 1:
+            return .niceDarkestGray
+        default:
+            fatalError("")
+        }
+    }
+    
+    public static var lightestBlackWhiteColor: UIColor {
+        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
+        case 0:
+            return .niceLightestGray
+        case 1:
+            return .niceDarkGray
+        default:
+            fatalError("")
+        }
+    }
+    
+    public static var oppositeBlackWhiteColor: UIColor {
+        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
+        case 0:
+            return .black
+        case 1:
+            return .white
+        default:
+            fatalError("")
+        }
+    }
+    
     public static var niceBlue: UIColor {
         return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
     }
@@ -293,8 +338,12 @@ extension UIColor {
         return UIColor(red: 0.149, green: 0.651, blue: 0.6588, alpha: 1.0)
     }
     
-    public static var niceGray: UIColor {
-        return UIColor(red: 0.90, green: 0.90, blue: 0.90, alpha: 1)
+    public static var niceDarkGray: UIColor {
+        return UIColor(hue: 0, saturation: 0, brightness: 0.4, alpha: 1.0)
+    }
+    
+    public static var niceDarkestGray: UIColor {
+        return UIColor(hue: 0, saturation: 0, brightness: 0.2, alpha: 1.0)
     }
     
     public static var niceGreen: UIColor {
@@ -310,6 +359,10 @@ extension UIColor {
     }
     
     public static var niceLightGray: UIColor {
+        return UIColor(red: 0.90, green: 0.90, blue: 0.90, alpha: 1)
+    }
+    
+    public static var niceLightestGray: UIColor {
         return UIColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1.0)
     }
     
@@ -361,7 +414,7 @@ extension UILabel {
         return .niceBlue
     }
     public static var titleLabelBackgroundColor: UIColor {
-        return .niceGray
+        return .lightBlackWhiteColor
     }
     public static var titleLabelHeight: CGFloat {
         return 50.0
@@ -436,9 +489,24 @@ extension UITextField {
     
     @objc func textfieldDeselected(sender: UITextField) {
         UIView.animate(withDuration: 0.1, animations: {
-            sender.backgroundColor = .white
-            sender.textColor = .black
+            sender.backgroundColor = .primaryBlackWhiteColor
+            sender.textColor = .oppositeBlackWhiteColor
         })
+    }
+    
+    @objc public func setPlaceholderString(_ placeholder: String?) {
+        if let placeholder = placeholder {
+            let attributedText = NSAttributedString(string: placeholder,
+                                                    attributes: [NSAttributedStringKey.foregroundColor:
+                                                        UIColor.oppositeBlackWhiteColor.withAlphaComponent(0.25)])
+            attributedPlaceholder = attributedText
+        } else {
+            attributedPlaceholder = nil
+        }
+    }
+    
+    @objc public func getPlaceholderString() -> String? {
+        return attributedPlaceholder?.string
     }
 }
 

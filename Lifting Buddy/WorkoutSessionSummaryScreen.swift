@@ -86,7 +86,7 @@ class WorkoutSessionSummaryView: UIView {
         super.layoutSubviews()
         
         // This view's layout
-        backgroundColor = .niceGray
+        backgroundColor = .lightBlackWhiteColor
         
         // Header View
         headerView.backgroundColor = UILabel.titleLabelBackgroundColor

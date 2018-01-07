@@ -145,7 +145,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
             backgroundColor = UIColor.niceGreen.withAlphaComponent(isToggled ? 0.85 : 0.75)
             cellTitle.textColor = .white
         } else {
-            backgroundColor = isToggled ? .niceLightGray : .white
+            backgroundColor = isToggled ? .lightBlackWhiteColor : .primaryBlackWhiteColor
             cellTitle.textColor = .niceBlue
         }
     }

@@ -106,7 +106,7 @@ class CreateExerciseView: UIScrollView {
         super.layoutSubviews()
         
         // self stuff
-        backgroundColor = .niceGray
+        backgroundColor = .lightBlackWhiteColor
         contentSize.height = createExerciseButton.frame.maxY + 50 + viewPadding
         
         // Label

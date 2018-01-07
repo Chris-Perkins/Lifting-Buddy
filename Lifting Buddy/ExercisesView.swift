@@ -79,7 +79,7 @@ class ExercisesView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = .niceGray
+        backgroundColor = .lightBlackWhiteColor
         
         createExerciseButton.setDefaultProperties()
         createExerciseButton.setTitle(selectingExercise ? "New Exercise" : "Create New Exercise",

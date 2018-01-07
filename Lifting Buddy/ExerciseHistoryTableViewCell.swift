@@ -54,7 +54,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
         if !isUserInteractionEnabled {
             for dataDisplayView in dataDisplayViews {
                 dataDisplayView.textfield.text = "---"
-                dataDisplayView.textfield.backgroundColor = .niceGray
+                dataDisplayView.textfield.backgroundColor = .lightBlackWhiteColor
             }
         }
     }

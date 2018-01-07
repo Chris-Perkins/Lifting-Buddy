@@ -138,7 +138,7 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
             
             // We check using bit-level comparison here. This provides a nice alternating
             // background color, making the view much more readable
-            view.backgroundColor = index&1 == 0 ? .niceLightGray : .niceGray
+            view.backgroundColor = index&1 == 0 ? .lightestBlackWhiteColor : .lightBlackWhiteColor
             
             // Then, give it constraints.
             // Cling to left, right of view. place below prevView ; height of default

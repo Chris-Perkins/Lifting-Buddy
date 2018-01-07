@@ -22,6 +22,8 @@ class SettingsViewController: UIViewController {
         prettyButton.addTarget(self, action: #selector(buttonPress(button:)), for: .touchUpInside)
     }
     
+    // DEBUG FUNCTION
+    // Modify later.
     private func setNewColorScheme() {
         let userDefaults = UserDefaults.standard
         
@@ -29,6 +31,8 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func buttonPress(button: PrettyButton) {
+        setNewColorScheme()
+        
         performBackSegue()
     }
     

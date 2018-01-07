@@ -479,6 +479,15 @@ extension UIView {
         })
     }
     
+    // Calls layoutSubviews on ALL subviews recursively
+    func layoutAllSubviews() {
+        for subview in subviews {
+            subview.layoutAllSubviews()
+        }
+        
+        layoutSubviews()
+    }
+    
     @objc func setDefaultProperties() {
         // Override me!
     }

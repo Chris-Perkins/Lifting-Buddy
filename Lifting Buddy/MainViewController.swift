@@ -37,6 +37,13 @@ class MainViewController: UIViewController {
         view.backgroundColor = .niceGray
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Done to fix coloring scheme updates not working unless app restarted
+        view.layoutAllSubviews()
+    }
+    
     // MARK: View functions
     
     func showContentView(viewType: SectionView.ContentViews) {

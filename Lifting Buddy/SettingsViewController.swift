@@ -22,6 +22,12 @@ class SettingsViewController: UIViewController {
         prettyButton.addTarget(self, action: #selector(buttonPress(button:)), for: .touchUpInside)
     }
     
+    private func setNewColorScheme() {
+        let userDefaults = UserDefaults.standard
+        
+        userDefaults.set(abs((userDefaults.value(forKey: colorSchemeString) as! Int) - 1), forKey: colorSchemeString)
+    }
+    
     @objc func buttonPress(button: PrettyButton) {
         performBackSegue()
     }

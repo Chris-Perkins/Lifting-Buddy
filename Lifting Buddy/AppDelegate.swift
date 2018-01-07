@@ -28,6 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Workout.createDefaultWorkouts()
         }
         
+        let userDefaults = UserDefaults.standard
+        if userDefaults.value(forKey: colorSchemeString) == nil {
+            // Default to light color scheme
+            userDefaults.set(0, forKey: colorSchemeString)
+        }
+        
         // Realm migration performing is here
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used

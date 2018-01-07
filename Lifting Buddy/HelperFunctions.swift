@@ -18,10 +18,17 @@ import CDAlertView
 
 // Time amount values (used in graphing)
 public enum TimeAmount: String {
-    case MONTH = "MONTH"
-    case YEAR = "YEAR"
+    case MONTH   = "MONTH"
+    case YEAR    = "YEAR"
     case ALLTIME = "ALL-TIME"
 }
+
+public let colorSchemeString = "colorScheme"
+public enum ColorScheme: Int {
+    case light = 0
+    case dark  = 1
+}
+
 // An associated array for easy parsing
 public let TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]
 public let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]

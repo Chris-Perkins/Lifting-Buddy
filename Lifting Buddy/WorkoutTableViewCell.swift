@@ -129,7 +129,7 @@ class WorkoutTableViewCell: UITableViewCell {
         }
         
         for (index, exerciseLabel) in exerciseLabels.enumerated() {
-            exerciseLabel.backgroundColor = UIColor.oppositeBlackWhiteColor.withAlphaComponent(index&1 == 1 ?
+            exerciseLabel.backgroundColor = UIColor.primaryBlackWhiteColor.withAlphaComponent(index&1 == 1 ?
                 0.05 : 0.1)
             exerciseLabel.button.setDefaultProperties()
             exerciseLabel.label.textAlignment = .left

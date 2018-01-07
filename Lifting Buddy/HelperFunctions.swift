@@ -474,8 +474,6 @@ extension UITextField {
         
         // View prettiness
         textAlignment = .center
-        
-        textfieldDeselected(sender: self)
     }
     
     // MARK: Textfield events
@@ -498,7 +496,8 @@ extension UITextField {
         if let placeholder = placeholder {
             let attributedText = NSAttributedString(string: placeholder,
                                                     attributes: [NSAttributedStringKey.foregroundColor:
-                                                        UIColor.oppositeBlackWhiteColor.withAlphaComponent(0.25)])
+                                                        UIColor.oppositeBlackWhiteColor.withAlphaComponent(
+                                                            0.25)])
             attributedPlaceholder = attributedText
         } else {
             attributedPlaceholder = nil
@@ -507,6 +506,11 @@ extension UITextField {
     
     @objc public func getPlaceholderString() -> String? {
         return attributedPlaceholder?.string
+    }
+    
+    public func resetColors() {
+        setPlaceholderString(getPlaceholderString())
+        textfieldDeselected(sender: self)
     }
 }
 
@@ -557,6 +561,7 @@ extension UIView {
     // Calls layoutSubviews on ALL subviews recursively
     func layoutAllSubviews() {
         for subview in subviews {
+            (subview as? UITextField)?.resetColors()
             subview.layoutAllSubviews()
         }
         

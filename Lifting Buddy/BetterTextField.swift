@@ -48,15 +48,14 @@ class BetterTextField: UIView {
         
         super.init(frame: frame)
         
-        textfield.setDefaultProperties()
-        
-        textfield.addTarget(self, action: #selector(editingDidEnd(sender:)), for: .editingDidEnd)
-        
         addSubview(textfield)
         addSubview(label)
         
         createAndActivateLabelConstraints()
         createAndActivateTextfieldConstraints()
+        
+        textfield.setDefaultProperties()
+        textfield.addTarget(self, action: #selector(editingDidEnd(sender:)), for: .editingDidEnd)
     }
     
     
@@ -77,6 +76,7 @@ class BetterTextField: UIView {
         
         textfield.setPlaceholderString(defaultString)
         textfield.textAlignment = .center
+        textfield.backgroundColor = .primaryBlackWhiteColor
     }
     
     // MARK: Encapsulated methods

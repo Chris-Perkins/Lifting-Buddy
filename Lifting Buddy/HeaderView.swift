@@ -98,7 +98,7 @@ class HeaderView: UIView {
         // title bar
         titleBar.text = "Lifting Buddy"
         titleBar.font = titleBar.font.withSize(20.0)
-        titleBar.textColor = .white
+        titleBar.textColor = .primaryBlackWhiteColor
         titleBar.textAlignment = .center
         
         // About button

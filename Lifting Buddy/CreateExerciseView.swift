@@ -116,11 +116,9 @@ class CreateExerciseView: UIScrollView {
         createExerciseLabel.text = isEditingExercise ? "Edit Exercise" : "Create New Exercise"
         
         // Name Entry Field
-        nameEntryField.setDefaultProperties()
         nameEntryField.setLabelTitle(title: "Name")
         
         // Set entry field
-        setEntryField.setDefaultProperties()
         setEntryField.setLabelTitle(title: "Sets")
         setEntryField.setIsNumeric(isNumeric: true)
         

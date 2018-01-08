@@ -56,6 +56,7 @@ class BetterTextField: UIView {
         
         textfield.setDefaultProperties()
         textfield.addTarget(self, action: #selector(editingDidEnd(sender:)), for: .editingDidEnd)
+        setDefaultString(defaultString: defaultString)
     }
     
     
@@ -74,9 +75,9 @@ class BetterTextField: UIView {
         label.textColor = .niceBlue
         label.layer.zPosition = 1
         
-        textfield.setPlaceholderString(defaultString)
         textfield.textAlignment = .center
         textfield.backgroundColor = .primaryBlackWhiteColor
+        textfield.textColor = .oppositeBlackWhiteColor
     }
     
     // MARK: Encapsulated methods
@@ -110,7 +111,7 @@ class BetterTextField: UIView {
     public func setDefaultString(defaultString: String?) {
         self.defaultString = defaultString
         
-        textfield.setPlaceholderString(defaultString!)
+        textfield.setPlaceholderString(defaultString)
     }
     
     // MARK: View functions

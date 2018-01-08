@@ -56,11 +56,13 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     
     // MARK: View overrides
     
-    override func layoutIfNeeded() {
-        super.layoutIfNeeded()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
         clipsToBounds = true
         backgroundColor = UIColor.primaryBlackWhiteColor.withAlphaComponent(0.5)
+        
+        pickUnitButton.backgroundColor = isUserInteractionEnabled ? .niceBlue : .lightBlackWhiteColor
         
         pickUnitButton.setDefaultProperties()
     }

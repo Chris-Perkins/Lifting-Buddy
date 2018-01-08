@@ -378,7 +378,14 @@ extension UIColor {
     }
     
     public static var niceLightGreen: UIColor {
-        return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
+        switch (UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
+        case 0:
+            return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
+        case 1:
+            return UIColor(red: 0.1176, green: 0.2667, blue: 0.1176, alpha: 1.0)
+        default:
+            fatalError("")
+        }
     }
     
     public static var niceLightRed: UIColor {

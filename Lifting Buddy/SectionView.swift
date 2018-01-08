@@ -53,6 +53,10 @@ class SectionView: UIView {
         addSubview(workoutsButton)
         addSubview(exercisesButton)
         
+        sessionButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        workoutsButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        exercisesButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        
         createAndActivateButtonConstraints(buttons: [sessionButton,
                                                      workoutsButton,
                                                      exercisesButton])
@@ -67,21 +71,21 @@ class SectionView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        // Session button
+        setButtonProperties(button: sessionButton)
+        sessionButton.setTitle("session", for: .normal)
+        
+        // Workouts Button
+        workoutsButton.setTitle("workouts", for: .normal)
+        setButtonProperties(button: workoutsButton)
+        
+        // Exercises Button
+        exercisesButton.setTitle("exercises", for: .normal)
+        setButtonProperties(button: exercisesButton)
+        
         // If this is the first time we laid out a subview, press the workout button
         if !laidOutSubviews {
             mainViewController = (viewController() as! MainViewController)
-            
-            // Session button
-            setButtonProperties(button: sessionButton)
-            sessionButton.setTitle("session", for: .normal)
-            
-            // Workouts Button
-            workoutsButton.setTitle("workouts", for: .normal)
-            setButtonProperties(button: workoutsButton)
-            
-            // Exercises Button
-            exercisesButton.setTitle("exercises", for: .normal)
-            setButtonProperties(button: exercisesButton)
             
             // Only sets properties once.
             laidOutSubviews = true
@@ -94,9 +98,10 @@ class SectionView: UIView {
     
     // Gives a button default properties, overlay of opacic white, and button press event.
     private func setButtonProperties(button: PrettyButton) {
-        button.setDefaultProperties()
-        button.setOverlayColor(color: UIColor.white.withAlphaComponent(0.25))
-        button.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        if selectedView != button {
+            button.setDefaultProperties()
+            button.setOverlayColor(color: UIColor.white.withAlphaComponent(0.25))
+        }
     }
     
     // Shows the session button

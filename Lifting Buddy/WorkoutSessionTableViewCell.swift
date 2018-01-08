@@ -108,8 +108,13 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     
     // MARK: View overrides
     
-    override func layoutIfNeeded() {
-        super.layoutIfNeeded()
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // Checks if it's safe to use exercise. Otherwise, delete this cell
+        if exercise.isInvalidated {
+            self.deletionDelegate?.deleteData(at: indexPath!.row)
+        }
         
         // Self stuff
         
@@ -147,14 +152,6 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         } else {
             backgroundColor = isToggled ? .lightBlackWhiteColor : .primaryBlackWhiteColor
             cellTitle.textColor = .niceBlue
-        }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        if exercise.isInvalidated {
-            self.deletionDelegate?.deleteData(at: indexPath!.row)
         }
     }
     

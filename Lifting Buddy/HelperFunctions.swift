@@ -287,7 +287,7 @@ extension UIColor {
         case 0:
             return .white
         case 1:
-            return .black
+            return .niceBlack
         default:
             fatalError("")
         }
@@ -318,7 +318,7 @@ extension UIColor {
     public static var oppositeBlackWhiteColor: UIColor {
         switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
         case 0:
-            return .black
+            return .niceBlack
         case 1:
             return .white
         default:
@@ -326,8 +326,19 @@ extension UIColor {
         }
     }
     
+    public static var niceBlack: UIColor {
+        return UIColor(hue: 0, saturation: 0, brightness: 0.075, alpha: 1.0)
+    }
+    
     public static var niceBlue: UIColor {
-        return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
+        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
+        case 0:
+            return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
+        case 1:
+            return UIColor(red: 0.4196, green: 0.6196, blue: 0.909866, alpha: 1.0)
+        default:
+            fatalError("")
+        }
     }
     
     public static var niceBrown: UIColor {
@@ -339,11 +350,11 @@ extension UIColor {
     }
     
     public static var niceDarkGray: UIColor {
-        return UIColor(hue: 0, saturation: 0, brightness: 0.4, alpha: 1.0)
+        return UIColor(hue: 0, saturation: 0, brightness: 0.225, alpha: 1.0)
     }
     
     public static var niceDarkestGray: UIColor {
-        return UIColor(hue: 0, saturation: 0, brightness: 0.2, alpha: 1.0)
+        return UIColor(hue: 0, saturation: 0, brightness: 0.15, alpha: 1.0)
     }
     
     public static var niceGreen: UIColor {
@@ -359,11 +370,11 @@ extension UIColor {
     }
     
     public static var niceLightGray: UIColor {
-        return UIColor(red: 0.90, green: 0.90, blue: 0.90, alpha: 1)
+        return UIColor(hue: 0, saturation: 0, brightness: 0.85, alpha: 1.0)
     }
     
     public static var niceLightestGray: UIColor {
-        return UIColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1.0)
+        return UIColor(hue: 0, saturation: 0, brightness: 0.925, alpha: 1.0)
     }
     
     public static var niceLightGreen: UIColor {
@@ -414,7 +425,7 @@ extension UILabel {
         return .niceBlue
     }
     public static var titleLabelBackgroundColor: UIColor {
-        return .lightBlackWhiteColor
+        return .lightestBlackWhiteColor
     }
     public static var titleLabelHeight: CGFloat {
         return 50.0

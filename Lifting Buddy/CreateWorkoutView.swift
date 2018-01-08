@@ -117,7 +117,7 @@ class CreateWorkoutView: UIScrollView {
         super.layoutSubviews()
         
         // Self stuff
-        backgroundColor = .lightBlackWhiteColor
+        backgroundColor = .lightestBlackWhiteColor
         contentSize.height = cancelButton.frame.maxY + viewPadding
         
         // Label

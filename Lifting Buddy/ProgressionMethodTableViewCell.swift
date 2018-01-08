@@ -60,11 +60,10 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         clipsToBounds = true
-        backgroundColor = UIColor.primaryBlackWhiteColor.withAlphaComponent(0.5)
-        
-        pickUnitButton.backgroundColor = isUserInteractionEnabled ? .niceBlue : .lightBlackWhiteColor
+        backgroundColor = .lightBlackWhiteColor
         
         pickUnitButton.setDefaultProperties()
+        pickUnitButton.backgroundColor = isUserInteractionEnabled ? .niceBlue : .lightBlackWhiteColor
     }
     
     // MARK: Custom view functions

@@ -34,7 +34,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .lightBlackWhiteColor
+        view.backgroundColor = .lightestBlackWhiteColor
     }
     
     override func viewWillAppear(_ animated: Bool) {

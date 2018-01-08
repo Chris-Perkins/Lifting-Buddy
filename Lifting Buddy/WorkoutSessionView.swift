@@ -48,7 +48,7 @@ class WorkoutSessionView: UIScrollView {
         
         super.init(frame: frame)
         
-        backgroundColor = .lightBlackWhiteColor
+        backgroundColor = .lightestBlackWhiteColor
         workoutSessionTableView.viewDelegate = self
         
         addSubview(workoutNameLabel)

@@ -53,7 +53,7 @@ class WorkoutsView: UIView {
          */
         Workout.updateAllStreaks()
         
-        backgroundColor = .lightBlackWhiteColor
+        backgroundColor = .lightestBlackWhiteColor
         
         createWorkoutButton.setDefaultProperties()
         createWorkoutButton.setTitle("Create New Workout", for: .normal)

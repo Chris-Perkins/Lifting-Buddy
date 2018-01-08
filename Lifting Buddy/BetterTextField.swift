@@ -71,7 +71,7 @@ class BetterTextField: UIView {
         
         label.font = UIFont.boldSystemFont(ofSize: 18.0)
         label.textAlignment = .center
-        label.backgroundColor = .lightestBlackWhiteColor
+        label.backgroundColor = .lightBlackWhiteColor
         label.textColor = .niceBlue
         label.layer.zPosition = 1
         

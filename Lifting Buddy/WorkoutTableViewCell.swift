@@ -123,13 +123,13 @@ class WorkoutTableViewCell: UITableViewCell {
             
             setLabelTextColorsTo(color: .white)
         } else {
-            backgroundColor = isSelected ? .lightBlackWhiteColor : .primaryBlackWhiteColor
+            backgroundColor = isSelected ? .lightestBlackWhiteColor : .primaryBlackWhiteColor
             
             setLabelTextColorsTo(color: .niceBlue, streakLabelColor: .niceRed)
         }
         
         for (index, exerciseLabel) in exerciseLabels.enumerated() {
-            exerciseLabel.backgroundColor = UIColor.primaryBlackWhiteColor.withAlphaComponent(index&1 == 1 ?
+            exerciseLabel.backgroundColor = UIColor.oppositeBlackWhiteColor.withAlphaComponent(index&1 == 1 ?
                 0.05 : 0.1)
             exerciseLabel.button.setDefaultProperties()
             exerciseLabel.label.textAlignment = .left

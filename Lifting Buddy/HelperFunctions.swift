@@ -33,6 +33,11 @@ public enum ColorScheme: Int {
 public let TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]
 public let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]
 
+// Returns the height of the status bar (battery view, etc)
+var statusBarHeight: CGFloat {
+    let statusBarSize = UIApplication.shared.statusBarFrame.size
+    return Swift.min(statusBarSize.width, statusBarSize.height)
+}
 
 // MARK: Operators
 
@@ -108,12 +113,6 @@ func mod(x: Int, m: Int) -> Int {
 func mod(x: Float, m: Float) -> Float {
     let r = x.truncatingRemainder(dividingBy: m)
     return r < 0 ? r + m : r
-}
-
-// Returns the height of the status bar (battery view, etc)
-func getStatusBarHeight() -> CGFloat {
-    let statusBarSize = UIApplication.shared.statusBarFrame.size
-    return Swift.min(statusBarSize.width, statusBarSize.height)
 }
 
 // MARK: Extensions

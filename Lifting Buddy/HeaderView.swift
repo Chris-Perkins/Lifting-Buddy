@@ -30,8 +30,6 @@ class HeaderView: UIView {
     // View for different buttons
     public let sectionView: SectionView
     
-    private let statusBarHeight = getStatusBarHeight()
-    
     // MARK: View inits
     
     override init(frame: CGRect) {

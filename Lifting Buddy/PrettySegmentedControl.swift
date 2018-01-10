@@ -49,8 +49,8 @@ class PrettySegmentedControl: UIView {
         }
         
         // Simulate a button press if we can...
-        if buttons.count >= 0 {
-            buttonPress(sender: buttons[0])
+        if buttons.count > selectedIndex {
+            buttonPress(sender: buttons[selectedIndex])
         }
         
         createAndActivateButtonConstraints()

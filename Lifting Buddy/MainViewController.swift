@@ -21,6 +21,15 @@ class MainViewController: UIViewController {
     
     // MARK: View properties
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        switch (activeColorScheme) {
+        case .light:
+            return .default
+        case .dark:
+            return .lightContent
+        }
+    }
+    
     // Cache the views so data is stored between user navigation.
     
     // The session view is special since it's main view can change.

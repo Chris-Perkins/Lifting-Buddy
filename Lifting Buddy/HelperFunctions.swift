@@ -29,6 +29,14 @@ public enum ColorScheme: Int {
     case dark  = 1
 }
 
+public var activeColorScheme: ColorScheme {
+    guard let storedValue = UserDefaults.standard.value(forKey: colorSchemeString) as? Int,
+          let colorScheme = ColorScheme(rawValue: storedValue) else {
+        fatalError("Could not retrieve the active color scheme")
+    }
+    return colorScheme
+}
+
 // An associated array for easy parsing
 public let TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]
 public let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]
@@ -282,46 +290,38 @@ extension String {
 extension UIColor {
     
     public static var primaryBlackWhiteColor: UIColor {
-        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
-        case 0:
+        switch(activeColorScheme) {
+        case .light:
             return .white
-        case 1:
+        case .dark:
             return .niceBlack
-        default:
-            fatalError("")
         }
     }
     
     public static var lightBlackWhiteColor: UIColor {
-        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
-        case 0:
+        switch(activeColorScheme) {
+        case .light:
             return .niceLightGray
-        case 1:
+        case .dark:
             return .niceDarkestGray
-        default:
-            fatalError("")
         }
     }
     
     public static var lightestBlackWhiteColor: UIColor {
-        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
-        case 0:
+        switch(activeColorScheme) {
+        case .light:
             return .niceLightestGray
-        case 1:
+        case .dark:
             return .niceDarkGray
-        default:
-            fatalError("")
         }
     }
     
     public static var oppositeBlackWhiteColor: UIColor {
-        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
-        case 0:
+        switch(activeColorScheme) {
+        case .light:
             return .niceBlack
-        case 1:
+        case .dark:
             return .white
-        default:
-            fatalError("")
         }
     }
     
@@ -330,13 +330,11 @@ extension UIColor {
     }
     
     public static var niceBlue: UIColor {
-        switch(UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
-        case 0:
+        switch(activeColorScheme) {
+        case .light:
             return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
-        case 1:
+        case .dark:
             return UIColor(red: 0.4196, green: 0.6196, blue: 0.909866, alpha: 1.0)
-        default:
-            fatalError("")
         }
     }
     
@@ -377,13 +375,11 @@ extension UIColor {
     }
     
     public static var niceLightGreen: UIColor {
-        switch (UserDefaults.standard.value(forKey: colorSchemeString) as! Int) {
-        case 0:
+        switch(activeColorScheme) {
+        case .light:
             return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
-        case 1:
+        case .dark:
             return UIColor(red: 0.1176, green: 0.2667, blue: 0.1176, alpha: 1.0)
-        default:
-            fatalError("")
         }
     }
     

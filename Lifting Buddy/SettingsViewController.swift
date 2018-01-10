@@ -11,42 +11,61 @@ import GBVersionTracking
 
 class SettingsViewController: UIViewController {
     
-    // MARK: View Controller properties
+    // MARK: View Controller Properties
     
     // Gets placed under the status bar
     let headerView = UIView()
     // Displays the title of this view
     let titleLabel = UILabel()
+    // The view which holds all information views
+    let contentView = SettingsContentView()
     // Closes the view
     let closeButton = PrettyButton()
     
     // MARK: View Controller overrides
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        switch (activeColorScheme) {
+        case .light:
+            return .default
+        case .dark:
+            return .lightContent
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(headerView)
-        headerView.addSubview(titleLabel)
+        view.addSubview(contentView)
         view.addSubview(closeButton)
+        
+        headerView.addSubview(titleLabel)
         
         closeButton.addTarget(self, action: #selector(buttonPress(button:)), for: .touchUpInside)
         
         createAndActivatHeaderViewConstraints()
         createAndActivateTitleLabelConstraints()
         createAndActivateCloseButtonConstraints()
+        
+        createAndActivateContentViewConstraints()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
+        // View
         view.backgroundColor = .lightBlackWhiteColor
 
-        headerView.backgroundColor = UILabel.titleLabelBackgroundColor
+        // HeaderView
+        headerView.backgroundColor = .primaryBlackWhiteColor
         
+        // TitleLabel
         titleLabel.setDefaultProperties()
         titleLabel.textColor       = UILabel.titleLabelTextColor
         titleLabel.text            = "Lifting Buddy v\(GBVersionTracking.currentVersion()!)"
         
+        // CloseButton
         closeButton.setDefaultProperties()
         closeButton.setTitle("Close", for: .normal)
     }
@@ -67,14 +86,6 @@ class SettingsViewController: UIViewController {
     // Returns to the calling view controller
     private func performBackSegue() {
         performSegue(withIdentifier: "exitSegue", sender: self)
-    }
-    
-    // DEBUG FUNCTION
-    // Modify later.
-    private func setNewColorScheme() {
-        let userDefaults = UserDefaults.standard
-        
-        userDefaults.set(abs((userDefaults.value(forKey: colorSchemeString) as! Int) - 1), forKey: colorSchemeString)
     }
     
     // MARK: Constraints
@@ -130,5 +141,26 @@ class SettingsViewController: UIViewController {
                                                              attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: closeButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
+    }
+    
+    // Below headerview ; cling to left, right of view ; place above closeButton
+    private func createAndActivateContentViewConstraints() {
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewBelowViewConstraint(view: contentView,
+                                                         belowView: headerView).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: contentView,
+                                                             withCopyView: view,
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: contentView,
+                                                             withCopyView: view,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint(item: closeButton,
+                           attribute: .top,
+                           relatedBy: .equal,
+                           toItem: contentView,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
 }

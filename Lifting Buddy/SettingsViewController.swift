@@ -54,6 +54,9 @@ class SettingsViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
+        // View Controller
+        setNeedsStatusBarAppearanceUpdate()
+        
         // View
         view.backgroundColor = .lightBlackWhiteColor
 

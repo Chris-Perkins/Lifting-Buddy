@@ -32,7 +32,6 @@ class PrettySegmentedControl: UIView {
         // Each button's tag is associated with the index it can be found at
         for (index, labelString) in labelStrings.enumerated() {
             let button = PrettyButton()
-            button.setDefaultProperties()
             button.setTitle(labelString.lowercased(), for: .normal)
             button.tag = index
             
@@ -58,6 +57,18 @@ class PrettySegmentedControl: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: View overrides
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        for (index, button) in buttons.enumerated() {
+            if index != selectedIndex {
+                button.setDefaultProperties()
+            }
+        }
     }
     
     // MARK: Public functions

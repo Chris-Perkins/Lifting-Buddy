@@ -36,6 +36,10 @@ public var activeColorScheme: ColorScheme {
     }
     return colorScheme
 }
+public func setNewColorScheme(_ scheme: ColorScheme) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(scheme.rawValue, forKey: colorSchemeString)
+}
 
 // An associated array for easy parsing
 public let TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]

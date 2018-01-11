@@ -18,14 +18,38 @@ import CDAlertView
 
 // Time amount values (used in graphing)
 public enum TimeAmount: String {
-    case MONTH = "MONTH"
-    case YEAR = "YEAR"
+    case MONTH   = "MONTH"
+    case YEAR    = "YEAR"
     case ALLTIME = "ALL-TIME"
 }
+
+public let colorSchemeString = "colorScheme"
+public enum ColorScheme: Int {
+    case light = 0
+    case dark  = 1
+}
+
+public var activeColorScheme: ColorScheme {
+    guard let storedValue = UserDefaults.standard.value(forKey: colorSchemeString) as? Int,
+          let colorScheme = ColorScheme(rawValue: storedValue) else {
+        fatalError("Could not retrieve the active color scheme")
+    }
+    return colorScheme
+}
+public func setNewColorScheme(_ scheme: ColorScheme) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(scheme.rawValue, forKey: colorSchemeString)
+}
+
 // An associated array for easy parsing
 public let TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]
 public let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]
 
+// Returns the height of the status bar (battery view, etc)
+var statusBarHeight: CGFloat {
+    let statusBarSize = UIApplication.shared.statusBarFrame.size
+    return Swift.min(statusBarSize.width, statusBarSize.height)
+}
 
 // MARK: Operators
 
@@ -101,12 +125,6 @@ func mod(x: Int, m: Int) -> Int {
 func mod(x: Float, m: Float) -> Float {
     let r = x.truncatingRemainder(dividingBy: m)
     return r < 0 ? r + m : r
-}
-
-// Returns the height of the status bar (battery view, etc)
-func getStatusBarHeight() -> CGFloat {
-    let statusBarSize = UIApplication.shared.statusBarFrame.size
-    return Swift.min(statusBarSize.width, statusBarSize.height)
 }
 
 // MARK: Extensions
@@ -274,8 +292,54 @@ extension String {
 }
 
 extension UIColor {
+    
+    public static var primaryBlackWhiteColor: UIColor {
+        switch(activeColorScheme) {
+        case .light:
+            return .white
+        case .dark:
+            return .niceBlack
+        }
+    }
+    
+    public static var lightBlackWhiteColor: UIColor {
+        switch(activeColorScheme) {
+        case .light:
+            return .niceLightGray
+        case .dark:
+            return .niceDarkestGray
+        }
+    }
+    
+    public static var lightestBlackWhiteColor: UIColor {
+        switch(activeColorScheme) {
+        case .light:
+            return .niceLightestGray
+        case .dark:
+            return .niceDarkGray
+        }
+    }
+    
+    public static var oppositeBlackWhiteColor: UIColor {
+        switch(activeColorScheme) {
+        case .light:
+            return .niceBlack
+        case .dark:
+            return .white
+        }
+    }
+    
+    public static var niceBlack: UIColor {
+        return UIColor(hue: 0, saturation: 0, brightness: 0.075, alpha: 1.0)
+    }
+    
     public static var niceBlue: UIColor {
-        return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
+        switch(activeColorScheme) {
+        case .light:
+            return UIColor(red: 0.291269, green: 0.459894, blue: 0.909866, alpha: 1)
+        case .dark:
+            return UIColor(red: 0.4196, green: 0.6196, blue: 0.909866, alpha: 1.0)
+        }
     }
     
     public static var niceBrown: UIColor {
@@ -286,8 +350,12 @@ extension UIColor {
         return UIColor(red: 0.149, green: 0.651, blue: 0.6588, alpha: 1.0)
     }
     
-    public static var niceGray: UIColor {
-        return UIColor(red: 0.90, green: 0.90, blue: 0.90, alpha: 1)
+    public static var niceDarkGray: UIColor {
+        return UIColor(hue: 0, saturation: 0, brightness: 0.225, alpha: 1.0)
+    }
+    
+    public static var niceDarkestGray: UIColor {
+        return UIColor(hue: 0, saturation: 0, brightness: 0.15, alpha: 1.0)
     }
     
     public static var niceGreen: UIColor {
@@ -303,11 +371,20 @@ extension UIColor {
     }
     
     public static var niceLightGray: UIColor {
-        return UIColor(red: 0.965, green: 0.965, blue: 0.965, alpha: 1.0)
+        return UIColor(hue: 0, saturation: 0, brightness: 0.875, alpha: 1.0)
+    }
+    
+    public static var niceLightestGray: UIColor {
+        return UIColor(hue: 0, saturation: 0, brightness: 0.925, alpha: 1.0)
     }
     
     public static var niceLightGreen: UIColor {
-        return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
+        switch(activeColorScheme) {
+        case .light:
+            return UIColor(red: 0.85, green: 0.95, blue: 0.85, alpha: 1)
+        case .dark:
+            return UIColor(red: 0.1176, green: 0.2667, blue: 0.1176, alpha: 1.0)
+        }
     }
     
     public static var niceLightRed: UIColor {
@@ -354,7 +431,7 @@ extension UILabel {
         return .niceBlue
     }
     public static var titleLabelBackgroundColor: UIColor {
-        return .niceGray
+        return .lightestBlackWhiteColor
     }
     public static var titleLabelHeight: CGFloat {
         return 50.0
@@ -414,8 +491,6 @@ extension UITextField {
         
         // View prettiness
         textAlignment = .center
-        
-        textfieldDeselected(sender: self)
     }
     
     // MARK: Textfield events
@@ -429,9 +504,30 @@ extension UITextField {
     
     @objc func textfieldDeselected(sender: UITextField) {
         UIView.animate(withDuration: 0.1, animations: {
-            sender.backgroundColor = .white
-            sender.textColor = .black
+            sender.backgroundColor = .primaryBlackWhiteColor
+            sender.textColor = .oppositeBlackWhiteColor
         })
+    }
+    
+    @objc public func setPlaceholderString(_ placeholder: String?) {
+        if let placeholder = placeholder {
+            let attributedText = NSAttributedString(string: placeholder,
+                                                    attributes: [NSAttributedStringKey.foregroundColor:
+                                                        UIColor.oppositeBlackWhiteColor.withAlphaComponent(
+                                                            0.25)])
+            attributedPlaceholder = attributedText
+        } else {
+            attributedPlaceholder = nil
+        }
+    }
+    
+    @objc public func getPlaceholderString() -> String? {
+        return attributedPlaceholder?.string
+    }
+    
+    public func resetColors() {
+        setPlaceholderString(getPlaceholderString())
+        textfieldDeselected(sender: self)
     }
 }
 
@@ -477,6 +573,16 @@ extension UIView {
         }, completion: {Bool in
             inView.isUserInteractionEnabled = true
         })
+    }
+    
+    // Calls layoutSubviews on ALL subviews recursively
+    func layoutAllSubviews() {
+        for subview in subviews {
+            (subview as? UITextField)?.resetColors()
+            subview.layoutAllSubviews()
+        }
+        
+        layoutSubviews()
     }
     
     @objc func setDefaultProperties() {

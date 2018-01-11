@@ -77,8 +77,8 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // MARK: View overrides
     
-    override func layoutIfNeeded() {
-        super.layoutIfNeeded()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
         chartFrame.layoutSubviews()
         
@@ -96,9 +96,9 @@ class ExerciseTableViewCell: UITableViewCell {
             startExerciseButton.backgroundColor = .niceBlue
             startExerciseButton.setTitle("Start Exercise", for: .normal)
             
-            backgroundColor = .niceLightGray
+            backgroundColor = .lightestBlackWhiteColor
         } else {
-            backgroundColor = .white
+            backgroundColor = .primaryBlackWhiteColor
         }
     }
     
@@ -149,7 +149,7 @@ class ExerciseTableViewCell: UITableViewCell {
             chartView?.destroyChart()
         }
         
-        layoutIfNeeded()
+        layoutSubviews()
     }
     
     // MARK: Event functions

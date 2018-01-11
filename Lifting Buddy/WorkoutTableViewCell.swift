@@ -123,9 +123,16 @@ class WorkoutTableViewCell: UITableViewCell {
             
             setLabelTextColorsTo(color: .white)
         } else {
-            backgroundColor = isSelected ? .niceLightGray : .white
+            backgroundColor = isSelected ? .lightestBlackWhiteColor : .primaryBlackWhiteColor
             
             setLabelTextColorsTo(color: .niceBlue, streakLabelColor: .niceRed)
+        }
+        
+        for (index, exerciseLabel) in exerciseLabels.enumerated() {
+            exerciseLabel.backgroundColor = UIColor.oppositeBlackWhiteColor.withAlphaComponent(index&1 == 1 ?
+                0.05 : 0.1)
+            exerciseLabel.button.setDefaultProperties()
+            exerciseLabel.label.textAlignment = .left
         }
     }
     
@@ -197,12 +204,7 @@ class WorkoutTableViewCell: UITableViewCell {
             exerciseLabels.append(exerciseView)
             
             exerciseView.label.text = exercise.getName()!
-            exerciseView.label.textColor = .niceBlue
-            exerciseView.label.textAlignment = .left
-            exerciseView.label.backgroundColor =
-                UIColor.niceGray.withAlphaComponent(index & 1 == 1 ? 0.5 : 0.25)
             
-            exerciseView.button.setDefaultProperties()
             exerciseView.button.setTitle("View", for: .normal)
             exerciseView.button.tag = index
             exerciseView.button.addTarget(self,
@@ -227,6 +229,8 @@ class WorkoutTableViewCell: UITableViewCell {
                                 "Completed \(workout.getCompletedCount()) times"
         
         createAndActivateStartEditWorkoutButtonConstraints(belowView: prevView)
+        
+        layoutSubviews()
     }
     
     // Returns this workout

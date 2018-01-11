@@ -46,8 +46,16 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        backgroundColor = .primaryBlackWhiteColor
+        
         cellTitleLabel.setDefaultProperties()
         cellTitleLabel.textAlignment = .left
+        
+        for (index, view) in progressionMethodSummaryViews.enumerated() {
+            // We check using bit-level comparison here. This provides a nice alternating
+            // background color, making the view much more readable
+            view.backgroundColor = UIColor.oppositeBlackWhiteColor.withAlphaComponent(index&1 == 0 ? 0.1 : 0.2)
+        }
     }
     
     // MARK: View functions
@@ -135,10 +143,6 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
             
             addSubview(view)
             progressionMethodSummaryViews.append(view)
-            
-            // We check using bit-level comparison here. This provides a nice alternating
-            // background color, making the view much more readable
-            view.backgroundColor = index&1 == 0 ? .niceLightGray : .niceGray
             
             // Then, give it constraints.
             // Cling to left, right of view. place below prevView ; height of default

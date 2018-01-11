@@ -117,7 +117,7 @@ class CreateWorkoutView: UIScrollView {
         super.layoutSubviews()
         
         // Self stuff
-        backgroundColor = .niceGray
+        backgroundColor = .lightestBlackWhiteColor
         contentSize.height = cancelButton.frame.maxY + viewPadding
         
         // Label
@@ -138,8 +138,8 @@ class CreateWorkoutView: UIScrollView {
         for repeatButton in repeatButtons {
             repeatButton.setToggleViewColor(color: .niceYellow)
             repeatButton.setToggleTextColor(color: .white)
-            repeatButton.setDefaultTextColor(color: UIColor.black.withAlphaComponent(0.25))
-            repeatButton.setDefaultViewColor(color: .white)
+            repeatButton.setDefaultTextColor(color: UIColor.oppositeBlackWhiteColor.withAlphaComponent(0.25))
+            repeatButton.setDefaultViewColor(color: .primaryBlackWhiteColor)
             
             repeatButton.layer.cornerRadius = (repeatButton.frame.width / 2)
         }

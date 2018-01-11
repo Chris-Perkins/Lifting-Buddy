@@ -46,7 +46,7 @@ class EditExerciseTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = .niceLightGray
+        backgroundColor = .lightBlackWhiteColor
         clipsToBounds = true
         
         exerciseView.label.setDefaultProperties()

@@ -107,12 +107,12 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
         // If the graph is viewable to the user, work it!
         if chartInfo.1 {
             chart = chartInfo.0
-            chart!.view.backgroundColor = .white
+            chart!.view.backgroundColor = .primaryBlackWhiteColor
             chartFrame.addSubview(chart!.view)
         } else {
             let cannotGraphView = UILabel(frame: frame)
-            cannotGraphView.backgroundColor = UIColor.niceGray
-            cannotGraphView.textColor = UIColor.niceBlue
+            cannotGraphView.backgroundColor = .lightBlackWhiteColor
+            cannotGraphView.textColor = .niceBlue
             cannotGraphView.textAlignment = .center
             // 8 is chosen arbitrarily.
             cannotGraphView.numberOfLines = 8
@@ -207,7 +207,7 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
             progressionMethodButton.setDefaultTextColor(color: .white)
             progressionMethodButton.setToggleViewColor(color:
                 getColorsForIndex(progressionMethod.getIndex()!)[0])
-            progressionMethodButton.setDefaultViewColor(color: .niceGray)
+            progressionMethodButton.setDefaultViewColor(color: .lightBlackWhiteColor)
             progressionMethodButton.addTarget(self,
                                               action: #selector(toggleButtonPress(sender:)),
                                               for: .touchUpInside)

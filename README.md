@@ -33,7 +33,6 @@ Workout Start Rework | 0/10 | Unsure of design
 Optional exercise in workout | 0/10 | Will require realm migration; Avoiding for now
 PGM Max -> Best Conversion | 0/10 | Will require realm migration; Avoiding for now
 Last session comparison graph | 0/10 | Will display graph in summary view most likely.
-Color Themes | 0/10 | Should be easy to implement using UserDefaults
 Literal -> Localized Strings | 0/10 | Good for speedy implementation and clean code.
 
 ##### Explanations
@@ -41,7 +40,6 @@ Literal -> Localized Strings | 0/10 | Good for speedy implementation and clean c
 * <b>Optional exercise in workout</b> - The user should be able to set exercises as "optional" within a workout. However, I'm still not comfortable with performing realm migrations (the app tends to crash when I attempt to do so)
 * <b>PGM Max -> Best Conversion</b> - Sometimes, the user wants the lowest possible value instead of the highest possible value (think assisted pullups, etc). To do so, I want progressionmethods to have a "max/min is best" option. This also requires pgms to undergo a realm migration.
 * <b>Last session comparison graph</b> - Would be neat to graph the previous session's results compared to current session results. Would likely be implemented in the summary view as a button.
-* <b>Color Themes</b> - Thought of as a future plan, then recommended again by a user. Based on current app, this shouldn't be too hard to change.
 * <b>Literal -> Localized Strings</b> - This would help if the app were ever translated and would also help reduce app size
 
 ## Known Bugs

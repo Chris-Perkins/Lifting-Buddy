@@ -30,8 +30,6 @@ class HeaderView: UIView {
     // View for different buttons
     public let sectionView: SectionView
     
-    private let statusBarHeight = getStatusBarHeight()
-    
     // MARK: View inits
     
     override init(frame: CGRect) {
@@ -107,7 +105,7 @@ class HeaderView: UIView {
         
         // divide view
         divideView.layer.zPosition = 1
-        divideView.backgroundColor = .white
+        divideView.backgroundColor = .primaryBlackWhiteColor
         divideView.alpha = 0.2
     }
     
@@ -115,27 +113,7 @@ class HeaderView: UIView {
     
     // Shows information about the app on dialog open
     @objc private func aboutButtonPress(sender: UIButton) {
-        let alert = CDAlertView(title: "Lifting Buddy " +
-            "v\(GBVersionTracking.currentVersion()!)",
-            message: "Your free, open-source workout tracking application.\n\n" +
-            "Email Support:\nchris@chrisperkins.me",
-            type: CDAlertViewType.custom(image: #imageLiteral(resourceName: "LiftingBuddyImage")))
-        alert.add(action: CDAlertViewAction(title: "Close",
-                                            font: nil,
-                                            textColor: UIColor.white,
-                                            backgroundColor: UIColor.niceBlue,
-                                            handler: nil))
-        alert.add(action: CDAlertViewAction(title: "View website",
-                                            font: nil,
-                                            textColor: UIColor.white,
-                                            backgroundColor: UIColor.niceBlue,
-                                            handler: { (CDAlertViewAction) in
-                                                // Open the app's URL
-                                                UIApplication.shared.open(HeaderView.appURL,
-                                                                          options: [:],
-                                                                          completionHandler: nil)
-        }))
-        alert.show()
+        viewController()?.performSegue(withIdentifier: "toSettings", sender: viewController())
     }
     
     // MARK: Constraints

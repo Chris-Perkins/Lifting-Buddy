@@ -32,8 +32,8 @@ class ToggleablePrettyButton: PrettyButton {
     
     override init(frame: CGRect) {
         isToggled = false
-        defaultViewColor = .white
-        defaultTextColor = .black
+        defaultViewColor = .primaryBlackWhiteColor
+        defaultTextColor = .oppositeBlackWhiteColor
         
         super.init(frame: frame)
         

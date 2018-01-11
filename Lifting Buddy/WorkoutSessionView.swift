@@ -48,7 +48,7 @@ class WorkoutSessionView: UIScrollView {
         
         super.init(frame: frame)
         
-        backgroundColor = .niceGray
+        backgroundColor = .lightestBlackWhiteColor
         workoutSessionTableView.viewDelegate = self
         
         addSubview(workoutNameLabel)
@@ -89,7 +89,7 @@ class WorkoutSessionView: UIScrollView {
         contentSize = CGSize(width: frame.width,
                              height: cancelButton.frame.maxY + 20)
         
-        backgroundColor = isComplete ? .niceLightGreen : .niceLightGray
+        backgroundColor = isComplete ? .niceLightGreen : .lightestBlackWhiteColor
         
         // Workout Name Label
         workoutNameLabel.setDefaultProperties()

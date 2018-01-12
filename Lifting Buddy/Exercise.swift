@@ -41,10 +41,10 @@ class Exercise: Object {
     private var progressionMethods: List<ProgressionMethod>
     
     public enum Unit: String {
-        case WEIGHT = "weight"
-        case TIME = "time"
+        case WEIGHT   = "weight"
+        case TIME     = "time"
         case DISTANCE = "distance"
-        case OTHER = "other"
+        case OTHER    = "other"
     }
     
     // MARK: Init Functions

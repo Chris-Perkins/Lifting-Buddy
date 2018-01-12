@@ -57,8 +57,12 @@ class CreateExerciseView: UIScrollView {
         editingExercise = exercise
         
         createExerciseLabel = UILabel()
-        nameEntryField = BetterTextField(defaultString: "Required: Name", frame: .zero)
-        setEntryField = BetterTextField(defaultString: "Optional: Set Count", frame: .zero)
+        nameEntryField = BetterTextField(defaultString: NSLocalizedString("ExerciseView.Textfield.Name",
+                                                                          comment: ""),
+                                         frame: .zero)
+        setEntryField = BetterTextField(defaultString: NSLocalizedString("ExerciseView.Textfield.SetCount",
+                                                                         comment: ""),
+                                        frame: .zero)
         progressionsTableView = ProgressionsMethodTableView()
         addProgressionTrackerButton = PrettyButton()
         editExerciseHistoryButton = PrettyButton()
@@ -121,7 +125,7 @@ class CreateExerciseView: UIScrollView {
         nameEntryField.setLabelTitle(title: NSLocalizedString("Button.Name", comment: ""))
         
         // Set entry field
-        setEntryField.setLabelTitle(title: "Sets")
+        setEntryField.setLabelTitle(title: NSLocalizedString("Info.Sets", comment: ""))
         setEntryField.setIsNumeric(isNumeric: true)
         
         // Progressions Table View

@@ -263,10 +263,12 @@ class WorkoutTableViewCell: UITableViewCell {
                 createWorkoutView.showViewDelegate = showViewDelegate
                 showViewDelegate?.showView(createWorkoutView)
             } else {
-                let alert = CDAlertView(title: "Cannot Edit Workout",
-                                        message: "You cannot edit the selected workout from this view while the workout is in an active session. Please modify the workout from the active session view.",
+                let alert = CDAlertView(title: NSLocalizedString("Message.CannotEditWorkout.Title",
+                                                                 comment: ""),
+                                        message: NSLocalizedString("Message.CannotEditWorkout.Desc",
+                                                                   comment: ""),
                                         type: CDAlertViewType.error)
-                alert.add(action: CDAlertViewAction(title: "Ok",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.OK", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceBlue,

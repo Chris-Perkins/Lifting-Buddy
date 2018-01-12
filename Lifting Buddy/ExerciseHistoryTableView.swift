@@ -55,7 +55,7 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
         backgroundColor = .primaryBlackWhiteColor
         
         overlayLabel?.setDefaultProperties()
-        overlayLabel?.text = "No history recorded for this exercise!"
+        overlayLabel?.text = NSLocalizedString("HistoryView.Label.EmptyOverlay", comment: "")
         overlayLabel?.backgroundColor = .lightestBlackWhiteColor
     }
     
@@ -78,10 +78,12 @@ class ExerciseHistoryTableView: UITableView, UITableViewDelegate, UITableViewDat
                 
                 reloadData()
             } else {
-                let alert = CDAlertView(title: "Cannot Delete Entry",
-                                        message: "The selected entry cannot be deleted as it is currently being used in an active session. Please delete the entry from the session tab.",
+                let alert = CDAlertView(title: NSLocalizedString("Message.CannotDeleteEntry.Title",
+                                                                 comment: ""),
+                                        message: NSLocalizedString("Message.CannotDeleteEntry.Desc",
+                                                                   comment: ""),
                                         type: CDAlertViewType.error)
-                alert.add(action: CDAlertViewAction(title: "Ok",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.OK", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceBlue,

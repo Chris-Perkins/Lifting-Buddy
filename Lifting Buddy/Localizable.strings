@@ -6,7 +6,7 @@
   Copyright © 2018 Christopher Perkins. All rights reserved.
 */
 
-// MARK: Labels that appear in the about view
+// MARK: About View
 "About.FeatureRequest.Label" = "Features? Bugs? Contact me!";
 
 "About.SelectColorScheme.Label" = "Active Color Scheme";
@@ -19,7 +19,7 @@
 "About.ViewWebsite.Label"  = "Visit Lifting Buddy's site!";
 "About.ViewWebsite.Button" = "Learn More";
 
-// MARK: Strings associated with buttons
+// MARK: Button
 "Button.Cancel"   = "Cancel";
 "Button.Close"    = "Close";
 "Button.Complete" = "Complete";
@@ -52,20 +52,38 @@
 "ExerciseView.Label.Name"            = "Name";
 "ExerciseView.Label.Repeat"          = "Repeat";
 "ExerciseView.Textfield.Name"        = "Required: Name";
+"ExerciseView.Textfield.SetCount"    = "Optional: Set Count";
 "ExerciseView.Graph"                 = "Not enough information to graph.\nPlease complete this exercise on multiple different days to track your progress.";
 
-// MARK: Strings associated with alerts
+// MARK: History View
+"HistoryView.Label.EmptyOverlay" = "No history recorded for this exercise!";
+
+// MARK: Alerts
 "Message.CancelSession.Title" = "Cancel Session?";
 "Message.CancelSession.Desc"  = "This will not delete any saved set data from this session.";
 
 "Message.CannotAddPGM.Title" = "Cannot Add Progression Method";
 "Message.CannotAddPGM.Desc"  = "This exercise's progression methods cannot be modified as it is being used in an active session.";
 
+"Message.CannotDeleteEntry.Title" = "Cannot Delete Entry";
+"Message.CannotDeleteEntry.Desc"  = "The selected entry cannot be deleted as it is currently being used in an active session. Please delete the entry from the session tab.";
+
+"Message.CannotDeleteExercise.Title" = "Cannot Delete Exercise";
+"Message.CannotDeleteExercise.Desc"   = "The selected exercise cannot be deleted as it is being used in an active session.";
+
+"Message.CannotDeleteWorkout.Title" = "Cannot Delete Workout";
+"Message.CannotDeleteWorkout.Desc"  = "The selected workout cannot be deleted as it is being used in an active session.";
+
+"Message.CannotEditWorkout.Title" = "Cannot Edit Workout";
+"Message.CannotEditWorkout.Desc"  = "You cannot edit the selected workout from this view while the workout is in an active session. Please modify the workout from the active session view.";
+
 "Message.CannotViewHistory.Title" = "Cannot View Exercise History";
 "Message.CannotViewHistory.DescMultLocations" = "History may only be opened by one view at a time, and this exercise's history is being viewed somewhere else.";
 "Message.CannotViewHistory.DescNotSaved" = "You cannot view exercise history for an exercise that was not saved!";
 
 "Message.DeleteExercise.Title" = "Delete Exercise?";
+
+"Message.DeleteWorkout.Title"  = "Delete Workout?";
 
 "Message.EndSessionPrematurely.Title" = "Complete Workout Prematurely?";
 "Message.EndSessionPrematurely.Desc"  = "Not all exercises are complete.\nComplete the workout anyways?";
@@ -76,7 +94,7 @@
 "Message.QuitSession.Title" = "Quit Current Workout Session?";
 "Message.QuitSession.Desc"  = "To start a new session, you must end your current session.\nYou will not gain streak progress.";
 
-// MARK: Session View Strings
+// MARK: Session View
 "SessionView.Button.AddExercise"   = "Add Exercise to Workout";
 "SessionView.Button.AddSet"        = "Add Set";
 "SessionView.Button.CancelWorkout" = "Cancel Workout";
@@ -84,18 +102,18 @@
 "SessionView.Label.CustomWorkout"  = "Custom Workout";
 "SessionView.Label.Skipped"        = "Skipped";
 
-// MARK: Summary View Strings
+// MARK: Summary View
 "SummaryView.Label.Title" = "Tracker Name";
 "SummaryView.Label.Value" = "Value";
 "SummaryView.Label.VsMax" = "vs. Max";
 "SummaryView.Button.EndSession" = "End Session";
 
-// MARK: Strings associated with tabs
+// MARK: Tabs
 "Tabs.Session"   = "session";
 "Tabs.Workouts"  = "workouts";
 "Tabs.Exercises" = "exercises";
 
-// MARK: Workout View Strings
+// MARK: Workout View
 "WorkoutView.Button.CreateWorkout" = "Create New Workout";
 
 // MARK: Miscellaneous
@@ -106,6 +124,12 @@
 "Timer.Start" = "Start";
 "Timer.Stop"  = "Stop";
 
+"Info.AppName" = "Lifting Buddy";
+
 "Info.Sets" = "Sets";
-"Info.Reps" = "Reps";
-"Info.Time" = "Time";
+
+"Info.Distance" = "distance";
+"Info.Time"     = "time";
+"Info.Other"    = "other";
+"Info.Reps"     = "reps";
+"Info.Weight"   = "weight";

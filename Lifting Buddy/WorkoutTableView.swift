@@ -106,16 +106,16 @@ extension WorkoutTableView: UITableViewDataSource {
             let workout = sortedData[indexPath.row]
             
             if workout.canModifyCoreProperties {
-                let alert = CDAlertView(title: "Delete Workout?",
+                let alert = CDAlertView(title: NSLocalizedString("Message.DeleteWorkout.Title", comment: ""),
                                         message: "All history for '\(workout.getName()!)' will be deleted.\n" +
                     "This action cannot be undone.",
                                         type: CDAlertViewType.warning)
-                alert.add(action: CDAlertViewAction(title: "Cancel",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Cancel", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceBlue,
                                                     handler: nil))
-                alert.add(action: CDAlertViewAction(title: "Delete",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Delete", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceRed,
@@ -130,10 +130,12 @@ extension WorkoutTableView: UITableViewDataSource {
                 }))
                 alert.show()
             } else {
-                let alert = CDAlertView(title: "Cannot Delete Workout",
-                                        message: "The selected workout cannot be deleted as it is being used in an active session.",
+                let alert = CDAlertView(title: NSLocalizedString("Message.CannotDeleteWorkout.Title",
+                                                                 comment: ""),
+                                        message: NSLocalizedString("Message.CannotDeleteWorkout.Desc",
+                                                                   comment: ""),
                                         type: CDAlertViewType.error)
-                alert.add(action: CDAlertViewAction(title: "Ok",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.OK", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceBlue,

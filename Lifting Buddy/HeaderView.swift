@@ -94,7 +94,7 @@ class HeaderView: UIView {
         backgroundColor = .niceBlue
         
         // title bar
-        titleBar.text = "Lifting Buddy"
+        titleBar.text = NSLocalizedString("Info.AppName", comment: "")
         titleBar.font = titleBar.font.withSize(20.0)
         titleBar.textColor = .white
         titleBar.textAlignment = .center

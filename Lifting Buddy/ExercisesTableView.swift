@@ -150,10 +150,12 @@ extension ExercisesTableView : UITableViewDelegate {
             let exercise = sortedData[indexPath.row]
             
             if !exercise.canModifyCoreProperties {
-                let alert = CDAlertView(title: "Cannot Delete Exercise",
-                                        message: "The selected exercise cannot be deleted as it is being used in an active session.",
+                let alert = CDAlertView(title: NSLocalizedString("Message.CannotDeleteExercise.Title",
+                                                                 comment: ""),
+                                        message: NSLocalizedString("Message.CannotDeleteExercise.Desc",
+                                                                   comment: ""),
                                         type: CDAlertViewType.error)
-                alert.add(action: CDAlertViewAction(title: "Ok",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.OK", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceBlue,

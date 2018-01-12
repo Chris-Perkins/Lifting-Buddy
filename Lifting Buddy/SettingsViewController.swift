@@ -66,7 +66,7 @@ class SettingsViewController: UIViewController {
         // TitleLabel
         titleLabel.setDefaultProperties()
         titleLabel.textColor       = UILabel.titleLabelTextColor
-        titleLabel.text            = "Lifting Buddy v\(GBVersionTracking.currentVersion()!)"
+        titleLabel.text            = NSLocalizedString("Info.AppName", comment: "") + " v\(GBVersionTracking.currentVersion()!)"
         
         // CloseButton
         closeButton.setDefaultProperties()

@@ -63,7 +63,7 @@ class ExerciseHistoryView: UIView {
         
         // Close button
         closeButton.setDefaultProperties()
-        closeButton.setTitle("Close", for: .normal)
+        closeButton.setTitle(NSLocalizedString("Button.Close", comment: ""), for: .normal)
     }
     
     // MARK: Event functions

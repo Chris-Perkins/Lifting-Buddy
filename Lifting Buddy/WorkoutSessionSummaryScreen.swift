@@ -94,21 +94,21 @@ class WorkoutSessionSummaryView: UIView {
         // Title label
         titleLabel.setDefaultProperties()
         titleLabel.textColor = UILabel.titleLabelTextColor
-        titleLabel.text = "Tracker Name"
+        titleLabel.text = NSLocalizedString("SummaryView.Label.Title", comment: "")
         
         // Value label
         valueLabel.setDefaultProperties()
         valueLabel.textColor = UILabel.titleLabelTextColor
-        valueLabel.text = "Value"
+        valueLabel.text = NSLocalizedString("SummaryView.Label.Value", comment: "")
         
         // Gain label constraints
         gainLabel.setDefaultProperties()
         gainLabel.textColor = UILabel.titleLabelTextColor
-        gainLabel.text = "vs. Max"
+        gainLabel.text = NSLocalizedString("SummaryView.Label.VsMax", comment: "")
         
         // Close button
         closeButton.setDefaultProperties()
-        closeButton.setTitle("End Session",
+        closeButton.setTitle(NSLocalizedString("SummaryView.Button.EndSession", comment: ""),
                              for: .normal)
     }
     

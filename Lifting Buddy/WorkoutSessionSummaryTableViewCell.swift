@@ -290,7 +290,7 @@ class ProgressionMethodSummaryView: UIView {
         } else {
             differenceLabel.textColor = .niceRed
             differenceLabel.backgroundColor = UIColor.niceRed.withAlphaComponent(0.2)
-            differenceLabel.text = "Skipped"
+            differenceLabel.text = NSLocalizedString("SessionView.Label.Skipped", comment: "")
         }
     }
     

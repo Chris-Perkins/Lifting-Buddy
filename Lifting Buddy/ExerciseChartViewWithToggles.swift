@@ -116,8 +116,7 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
             cannotGraphView.textAlignment = .center
             // 8 is chosen arbitrarily.
             cannotGraphView.numberOfLines = 8
-            cannotGraphView.text = "Not enough information to graph.\n" +
-                                    "Please complete this exercise on multiple different days to track your progress."
+            cannotGraphView.text = NSLocalizedString("ExerciseView.Graph", comment: "")
             
             chartFrame.addSubview(cannotGraphView)
         }

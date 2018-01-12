@@ -56,7 +56,8 @@ class WorkoutsView: UIView {
         backgroundColor = .lightestBlackWhiteColor
         
         createWorkoutButton.setDefaultProperties()
-        createWorkoutButton.setTitle("Create New Workout", for: .normal)
+        createWorkoutButton.setTitle(NSLocalizedString("WorkoutView.Button.CreateWorkout", comment: ""),
+                                     for: .normal)
         createWorkoutButton.addTarget(self,
                                       action: #selector(showCreateWorkoutView(sender:)),
                                       for: .touchUpInside)

@@ -54,7 +54,9 @@ class CreateWorkoutView: UIScrollView {
         editingWorkout = workout
         
         createWorkoutLabel = UILabel()
-        nameEntryField = BetterTextField(defaultString: "Required: Name", frame: .zero)
+        nameEntryField = BetterTextField(defaultString:
+            NSLocalizedString("ExerciseView.Textfield.Name", comment: ""),
+                                         frame: .zero)
         exerciseTableLabel = UILabel()
         editExerciseTableView = EditExerciseTableView()
         repeatLabel = UILabel()
@@ -122,17 +124,19 @@ class CreateWorkoutView: UIScrollView {
         
         // Label
         createWorkoutLabel.setDefaultProperties()
-        createWorkoutLabel.text = editingWorkout != nil ? "Edit Workout" : "Create New Workout"
+        createWorkoutLabel.text = editingWorkout != nil ?
+            NSLocalizedString("ExerciseView.Label.EditExercise", comment: ""):
+            NSLocalizedString("ExerciseView.Label.CreateExercise", comment: "")
         createWorkoutLabel.backgroundColor = UILabel.titleLabelBackgroundColor
         createWorkoutLabel.textColor = UILabel.titleLabelTextColor
         
         // Name Entry Field
         nameEntryField.setDefaultProperties()
-        nameEntryField.setLabelTitle(title: "Name")
+        nameEntryField.setLabelTitle(title: NSLocalizedString("ExerciseView.Label.Name", comment: ""))
         
         // Repeat Label
         repeatLabel.setDefaultProperties()
-        repeatLabel.text = "Repeat"
+        repeatLabel.text = NSLocalizedString("ExerciseView.Label.Repeat", comment: "")
         
         // Repeat Buton
         for repeatButton in repeatButtons {
@@ -146,7 +150,7 @@ class CreateWorkoutView: UIScrollView {
         
         // Exercise Table Label
         exerciseTableLabel.setDefaultProperties()
-        exerciseTableLabel.text = "Exercises"
+        exerciseTableLabel.text = NSLocalizedString("ExerciseView.Label.Exercises", comment: "")
         
         // Exercise Table View
         // Prevent clipping as we can click and drag cells
@@ -156,16 +160,20 @@ class CreateWorkoutView: UIScrollView {
         
         // Add exercise button
         addExerciseButton.setDefaultProperties()
-        addExerciseButton.setTitle("Add exercise", for: .normal)
+        addExerciseButton.setTitle(NSLocalizedString("ExerciseView.Button.AddExercise", comment: ""),
+                                   for: .normal)
         
         // Create workout button
         // Give it standard default properties
         createWorkoutButton.setDefaultProperties()
-        createWorkoutButton.setTitle(editingWorkout != nil ? "Save Workout" : "Create Workout", for: .normal)
+        createWorkoutButton.setTitle(editingWorkout != nil ?
+                NSLocalizedString("ExerciseView.Button.SaveExercise", comment: "") :
+                NSLocalizedString("ExerciseView.Button.CreateExercise", comment: ""),
+                                     for: .normal)
         
         // Cancel Button
         cancelButton.setDefaultProperties()
-        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitle(NSLocalizedString("Button.Cancel", comment: ""), for: .normal)
         cancelButton.backgroundColor = .niceRed
     }
     

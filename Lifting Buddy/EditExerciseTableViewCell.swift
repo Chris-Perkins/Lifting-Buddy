@@ -53,7 +53,7 @@ class EditExerciseTableViewCell: UITableViewCell {
         exerciseView.label.font = UIFont.systemFont(ofSize: 18.0)
         
         exerciseView.button.setDefaultProperties()
-        exerciseView.button.setTitle("Edit", for: .normal)
+        exerciseView.button.setTitle(NSLocalizedString("Button.Edit", comment: ""), for: .normal)
     }
     
     // MARK: Public methods

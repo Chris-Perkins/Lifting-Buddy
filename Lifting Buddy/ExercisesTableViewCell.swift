@@ -90,11 +90,11 @@ class ExerciseTableViewCell: UITableViewCell {
         
         if (isSelected) {
             editButton.setDefaultProperties()
-            editButton.setTitle("Edit", for: .normal)
+            editButton.setTitle(NSLocalizedString("Button.Edit", comment: ""), for: .normal)
             
             startExerciseButton.setDefaultProperties()
             startExerciseButton.backgroundColor = .niceBlue
-            startExerciseButton.setTitle("Start Exercise", for: .normal)
+            startExerciseButton.setTitle(NSLocalizedString("Button.StartEX", comment: ""), for: .normal)
             
             backgroundColor = .lightestBlackWhiteColor
         } else {

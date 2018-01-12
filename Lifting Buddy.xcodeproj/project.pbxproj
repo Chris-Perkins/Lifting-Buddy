@@ -62,6 +62,7 @@
 		22ECE3941F644E1A0067171A /* WorkoutSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */; };
 		22F030141FF01B7500C5E376 /* LabelWithPrettyButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F030131FF01B7500C5E376 /* LabelWithPrettyButtonView.swift */; };
 		22FAD5051FF406E200C42811 /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FAD5041FF406E200C42811 /* SessionInfo.swift */; };
+		22FD260120085444000D1B4C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22FD260020085444000D1B4C /* Localizable.strings */; };
 		22FD538F1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FD538E1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift */; };
 		22FD53911FF1BF2500FB069E /* WorkoutSessionStarterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FD53901FF1BF2500FB069E /* WorkoutSessionStarterProtocol.swift */; };
 		22FD53931FF1C07100FB069E /* PrettySegmentedControlDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FD53921FF1C07100FB069E /* PrettySegmentedControlDelegateProtocol.swift */; };
@@ -135,6 +136,7 @@
 		22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSessionView.swift; sourceTree = "<group>"; };
 		22F030131FF01B7500C5E376 /* LabelWithPrettyButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPrettyButtonView.swift; sourceTree = "<group>"; };
 		22FAD5041FF406E200C42811 /* SessionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfo.swift; sourceTree = "<group>"; };
+		22FD260020085444000D1B4C /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		22FD538E1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDisplayerProtocol.swift; sourceTree = "<group>"; };
 		22FD53901FF1BF2500FB069E /* WorkoutSessionStarterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionStarterProtocol.swift; sourceTree = "<group>"; };
 		22FD53921FF1C07100FB069E /* PrettySegmentedControlDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrettySegmentedControlDelegateProtocol.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				225E65D31F22A442004B3AF4 /* RLMSupport.swift */,
+				22FD260020085444000D1B4C /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				221A41FD1FED97FA005C0B01 /* README.md in Resources */,
 				221A41FC1FED97FA005C0B01 /* LICENSE in Resources */,
 				221A41FE1FED97FA005C0B01 /* .gitignore in Resources */,
+				22FD260120085444000D1B4C /* Localizable.strings in Resources */,
 				221A42001FED97FA005C0B01 /* .travis.yml in Resources */,
 				224697CB1F19843A0089C7CA /* Main.storyboard in Resources */,
 			);

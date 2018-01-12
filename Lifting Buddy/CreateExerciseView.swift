@@ -113,10 +113,12 @@ class CreateExerciseView: UIScrollView {
         createExerciseLabel.setDefaultProperties()
         createExerciseLabel.backgroundColor = UILabel.titleLabelBackgroundColor
         createExerciseLabel.textColor = UILabel.titleLabelTextColor
-        createExerciseLabel.text = isEditingExercise ? "Edit Exercise" : "Create New Exercise"
+        createExerciseLabel.text = isEditingExercise ?
+            NSLocalizedString("EditExerciseView.Label.EditExercise", comment: "") :
+            NSLocalizedString("EditExerciseView.Label.NewExercise", comment: "")
         
         // Name Entry Field
-        nameEntryField.setLabelTitle(title: "Name")
+        nameEntryField.setLabelTitle(title: NSLocalizedString("Button.Name", comment: ""))
         
         // Set entry field
         setEntryField.setLabelTitle(title: "Sets")
@@ -133,7 +135,9 @@ class CreateExerciseView: UIScrollView {
         
         // Edit Exercise History Button
         editExerciseHistoryButton.setDefaultProperties()
-        editExerciseHistoryButton.setTitle("Edit History", for: .normal)
+        editExerciseHistoryButton.setTitle(NSLocalizedString("EditExerciseView.Button.EditHistory",
+                                                             comment: ""),
+                                           for: .normal)
         // If we can't view the history, set color to light blue to indicate the button won't work.
         if editingExercise == nil || editingExercise!.historyIsBeingViewed {
             editExerciseHistoryButton.backgroundColor = UIColor.niceLightBlue
@@ -145,16 +149,20 @@ class CreateExerciseView: UIScrollView {
                         (editingExercise?.canModifyCoreProperties ?? true) ?
                             .niceBlue : .niceLightBlue
             
-        addProgressionTrackerButton.setTitle("Add Progression Tracker", for: .normal)
+        addProgressionTrackerButton.setTitle(NSLocalizedString("EditExerciseView.Button.AddTracker",
+                                                               comment: ""),
+                                             for: .normal)
         
         // Create exercise button
-        createExerciseButton.setTitle(isEditingExercise ? "Save Exercise" : "Create Exercise",
+        createExerciseButton.setTitle(isEditingExercise ?
+            NSLocalizedString("EditExerciseView.Button.Save",   comment: ""):
+            NSLocalizedString("EditExerciseView.Button.Create", comment: ""),
                                       for: .normal)
         createExerciseButton.setDefaultProperties()
         
         // Cancel Button
         cancelButton.setDefaultProperties()
-        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitle(NSLocalizedString("Button.Cancel", comment: ""), for: .normal)
         cancelButton.backgroundColor = .niceRed
     }
     
@@ -168,10 +176,10 @@ class CreateExerciseView: UIScrollView {
             if editingExercise?.canModifyCoreProperties ?? true {
                 progressionsTableView.appendDataToTableView(data: ProgressionMethod())
             } else {
-                let alert = CDAlertView(title: "Cannot Add Progression Method",
-                                        message: "This exercise's progression methods cannot be modified as it is being used in an active session.",
+                let alert = CDAlertView(title: NSLocalizedString(  "Message.CannotAddPGM.Title", comment: ""),
+                                        message: NSLocalizedString("Message.CannotAddPGM.Desc", comment: ""),
                                         type: CDAlertViewType.error)
-                alert.add(action: CDAlertViewAction(title: "Ok",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.OK", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceBlue,
@@ -199,20 +207,21 @@ class CreateExerciseView: UIScrollView {
                 showViewDelegate.showView(ExerciseHistoryView(exercise: exercise, frame: .zero))
             }
             else {
-                let alertTitle = "Cannot View Exercise History"
+                let alertTitle = NSLocalizedString("Message.CannotViewHistory.Title", comment: "")
                 var alertMessage: String?
                 
                 if editingExercise?.historyIsBeingViewed == true {
-                    alertMessage = "History may only be opened by one view at a time, and this exercise's history is being viewed somewhere else."
+                    alertMessage = NSLocalizedString("Message.CannotViewHistory.DescMultLocations",
+                                                     comment: "")
                 } else {
-                    alertMessage = "You cannot view exercise history for an exercise that was not saved!"
+                    alertMessage = NSLocalizedString("Message.CannotViewHistory.DescNotSaved", comment: "")
                 }
                 
                 // Otherwise, we are creating an exercise. tell the user we can't display anything
                 let alert = CDAlertView(title: alertTitle,
                                         message: alertMessage,
                                         type: CDAlertViewType.error)
-                alert.add(action: CDAlertViewAction(title: "Ok",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.OK", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceBlue,
@@ -336,10 +345,10 @@ class CreateExerciseView: UIScrollView {
         // If the exercise was deleted from another screen,
         // We have to close this view so we don't error out.
         if editingExercise?.isInvalidated == true {
-            let alert = CDAlertView(title: "Exercise Deleted",
-                                    message: "The exercise you were editing was deleted.",
+            let alert = CDAlertView(title: NSLocalizedString("Message.ExerciseDeleted.Title", comment: ""),
+                                    message: NSLocalizedString("Message.ExerciseDeleted.Desc", comment: ""),
                                     type: CDAlertViewType.error)
-            alert.add(action: CDAlertViewAction(title: "Ok",
+            alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.OK", comment: ""),
                                                 font: nil,
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceBlue,

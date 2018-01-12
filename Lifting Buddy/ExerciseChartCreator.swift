@@ -77,7 +77,7 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
 
     // Now create line models for every progression method
     for (progressionMethod, points) in pointDictionary {
-        guard var index: Int = progressionMethod.getIndex() else {
+        guard let index: Int = progressionMethod.getIndex() else {
             fatalError("Proper index not assigned! Index int returned nil.")
         }
         

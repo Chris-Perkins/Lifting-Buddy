@@ -93,26 +93,27 @@ class WorkoutSessionView: UIScrollView {
         
         // Workout Name Label
         workoutNameLabel.setDefaultProperties()
-        workoutNameLabel.text = workout?.getName() ?? "Custom Workout"
+        workoutNameLabel.text = workout?.getName() ??
+                                NSLocalizedString("SessionView.Label.CustomWorkout", comment: "")
         workoutNameLabel.backgroundColor = isComplete ? .niceLightGreen : UILabel.titleLabelBackgroundColor
         workoutNameLabel.textColor       = isComplete ? .niceBlue       : UILabel.titleLabelTextColor
         
         // Add Exercise Button
         addExerciseButton.setDefaultProperties()
-        addExerciseButton.setTitle("Add Exercise to Workout",
+        addExerciseButton.setTitle(NSLocalizedString("SessionView.Button.AddExercise", comment: ""),
                                    for: .normal)
         
         // Complete button
         // Modified by another method based on current complete
         completeButton.setDefaultProperties()
         completeButton.backgroundColor = isComplete ? .niceGreen : .niceLightBlue
-        completeButton.setTitle("Finish Workout",
+        completeButton.setTitle(NSLocalizedString("SessionView.Button.FinishWorkout", comment: ""),
                                 for: .normal)
         
         // Cancel Button
         cancelButton.setDefaultProperties()
         cancelButton.backgroundColor = .niceRed
-        cancelButton.setTitle("Cancel Workout",
+        cancelButton.setTitle(NSLocalizedString("SessionView.Button.CancelWorkout", comment: ""),
                               for: .normal)
     }
     
@@ -153,18 +154,19 @@ class WorkoutSessionView: UIScrollView {
                 completeWorkout()
             } else {
                 // Otherwise, prompt for confirmation that we want to complete the workout.
-                let alert = CDAlertView(title: "Complete Workout Prematurely?",
-                                        message: "Not all exercises are complete.\n" +
-                                            "Complete the workout anyways?",
+                let alert = CDAlertView(title: NSLocalizedString("Message.EndSessionPrematurely.Title",
+                                                                 comment: ""),
+                                        message: NSLocalizedString("Message.EndSessionPrematurely.Desc",
+                                                                   comment: ""),
                                         type: CDAlertViewType.warning)
                 
-                alert.add(action: CDAlertViewAction(title: "Cancel",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Cancel", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceBlue,
                                                     handler: nil))
                 
-                alert.add(action: CDAlertViewAction(title: "Complete",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Complete", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceRed,
@@ -175,15 +177,15 @@ class WorkoutSessionView: UIScrollView {
             }
         case cancelButton:
             // Confirm that the user indeed wants to cancel this workout
-            let alert = CDAlertView(title: "End Session?",
-                                    message: "This will not delete any previously saved set data.",
+            let alert = CDAlertView(title: NSLocalizedString("Message.CancelSession.Title", comment: ""),
+                                    message: NSLocalizedString("Message.CancelSession.Desc", comment: ""),
                                     type: CDAlertViewType.warning)
-            alert.add(action: CDAlertViewAction(title: "Cancel",
+            alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Cancel", comment: ""),
                                                 font: nil,
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceBlue,
                                                 handler: nil))
-            alert.add(action: CDAlertViewAction(title: "End",
+            alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.End", comment: ""),
                                                 font: nil,
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceRed,

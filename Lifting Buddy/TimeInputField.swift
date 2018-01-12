@@ -29,9 +29,10 @@ class TimeInputField: UIView {
     // MARK: View inits
     
     override init(frame: CGRect) {
-        self.timeInputView = BetterInputView(args: [("h", "0", true),
-                                                    ("m", "0", true),
-                                                    ("s", "0", true)], frame: .zero)
+        self.timeInputView = BetterInputView(args: [(NSLocalizedString("Time.Hour.Char", comment: ""),
+                                                     "0", true),
+                                                    (NSLocalizedString("Time.Minute.Char", comment: ""), "0", true),
+                                                    (NSLocalizedString("Time.Second.Char", comment: ""), "0", true)], frame: .zero)
         
         let inputViews = timeInputView.getInputViews()
         hourField = inputViews[0]
@@ -72,8 +73,8 @@ class TimeInputField: UIView {
         
         timerButton.setToggleTextColor(color: .white)
         timerButton.setDefaultTextColor(color: .white)
-        timerButton.setDefaultText(text: "Start")
-        timerButton.setToggleText(text: "Stop")
+        timerButton.setDefaultText(text: NSLocalizedString("Timer.Start", comment: ""))
+        timerButton.setToggleText( text: NSLocalizedString("Timer.Stop", comment: ""))
         timerButton.setToggleViewColor(color: .niceYellow)
         timerButton.setDefaultViewColor(color: .niceBlue)
     }
@@ -85,7 +86,7 @@ class TimeInputField: UIView {
     public func clearTimeFieldPlaceholders() {
         secondField.setDefaultString(defaultString: "0")
         minuteField.setDefaultString(defaultString: "0")
-        hourField.setDefaultString(defaultString: "0")
+        hourField.setDefaultString(  defaultString: "0")
     }
     
     // MARK: Events functions

@@ -73,14 +73,14 @@ class SectionView: UIView {
         
         // Session button
         setButtonProperties(button: sessionButton)
-        sessionButton.setTitle("session", for: .normal)
+        sessionButton.setTitle(NSLocalizedString("Tabs.Session", comment: ""), for: .normal)
         
         // Workouts Button
-        workoutsButton.setTitle("workouts", for: .normal)
+        workoutsButton.setTitle(NSLocalizedString("Tabs.Workouts", comment: ""), for: .normal)
         setButtonProperties(button: workoutsButton)
         
         // Exercises Button
-        exercisesButton.setTitle("exercises", for: .normal)
+        exercisesButton.setTitle(NSLocalizedString("Tabs.Exercises", comment: ""), for: .normal)
         setButtonProperties(button: exercisesButton)
         
         // If this is the first time we laid out a subview, press the workout button

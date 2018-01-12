@@ -94,15 +94,14 @@ extension MainViewController: WorkoutSessionStarter {
             self.showSession(workout: workout,
                              exercise: exercise)
         } else {
-            let alert = CDAlertView(title: "Quit Current Workout Session?",
-                                    message: "To start a new session, you must end your current session.\n" +
-                                        "You will not gain streak progress.",
+            let alert = CDAlertView(title: NSLocalizedString("Message.QuitSession.Title", comment: ""),
+                                    message: NSLocalizedString("Message.QuitSession.Desc", comment: ""),
                                     type: CDAlertViewType.warning)
-            alert.add(action: CDAlertViewAction(title: "Cancel",
+            alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Cancel", comment: ""),
                                                 font: nil,
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceBlue, handler: nil))
-            alert.add(action: CDAlertViewAction(title: "Quit",
+            alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Quit", comment: ""),
                                                 font: nil,
                                                 textColor: UIColor.white,
                                                 backgroundColor: UIColor.niceRed,

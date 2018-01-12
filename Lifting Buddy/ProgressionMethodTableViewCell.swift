@@ -43,7 +43,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         createAndActivateNameEntryFieldConstraints()
         createAndActivatePickUnitButtonConstraints()
         
-        nameEntryField.setDefaultString(defaultString: "Name")
+        nameEntryField.setDefaultString(defaultString: NSLocalizedString("Button.Name", comment: ""))
         
         pickUnitButton.addTarget(self,
                                  action: #selector(pickUnitButtonPress(sender:)),
@@ -76,7 +76,8 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         nameEntryField.textfield.text = self.progressionMethod?.getName()
         // Determine if the unit exists in our unit list
         pickUnitButton.setTitle(self.progressionMethod?.getUnit() ??
-            ((curSelect >= 0 && curSelect < ProgressionMethod.unitList.count) ? ProgressionMethod.unitList[curSelect] : "Set Unit"),
+            ((curSelect >= 0 && curSelect < ProgressionMethod.unitList.count) ? ProgressionMethod.unitList[curSelect] :
+                NSLocalizedString("EditExerciseView.Button.SetUnit", comment: "")),
                                 for: .normal)
         
         

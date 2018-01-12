@@ -82,13 +82,13 @@ class ExercisesView: UIView {
         backgroundColor = .lightestBlackWhiteColor
         
         createExerciseButton.setDefaultProperties()
-        createExerciseButton.setTitle(selectingExercise ? "New Exercise" : "Create New Exercise",
+        createExerciseButton.setTitle(NSLocalizedString("ExerciseView.Button.CreateExercise", comment: ""),
                                       for: .normal)
         
         if selectingExercise {
             cancelButton.setDefaultProperties()
             cancelButton.backgroundColor = .niceRed
-            cancelButton.setTitle("Cancel", for: .normal)
+            cancelButton.setTitle(NSLocalizedString("Button.Cancel", comment: ""), for: .normal)
         } else {
             cancelButton.alpha = 0
         }

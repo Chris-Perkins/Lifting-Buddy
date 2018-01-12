@@ -37,7 +37,9 @@ class SettingsContentView: UIScrollView {
         // Initializing
         
         colorSchemeLabel  = UILabel()
-        colorSchemePicker = PrettySegmentedControl(labelStrings: ["Light", "Dark"],
+        colorSchemePicker = PrettySegmentedControl(labelStrings: [
+            NSLocalizedString("About.SelectColorScheme.Picker.Light", comment: ""),
+            NSLocalizedString("About.SelectColorScheme.Picker.Dark",  comment: "")],
                                                    frame: .zero,
                                                    defaultIndex: activeColorScheme.rawValue)
         featureRequestLabel = UILabel()
@@ -97,11 +99,11 @@ class SettingsContentView: UIScrollView {
         
         // Color Scheme Label
         giveLabelProperties(label: colorSchemeLabel)
-        colorSchemeLabel.text = "Active Color Scheme"
+        colorSchemeLabel.text = NSLocalizedString("About.SelectColorScheme.Label", comment: "")
         
         // Feature request label
         giveLabelProperties(label: featureRequestLabel)
-        featureRequestLabel.text = "Features? Bugs? Contact me!"
+        featureRequestLabel.text = NSLocalizedString("About.FeatureRequest.Label", comment: "")
         
         // Email Me Button
         emailButton.setDefaultProperties()
@@ -109,19 +111,21 @@ class SettingsContentView: UIScrollView {
         
         // Contribute label
         giveLabelProperties(label: contributeLabel)
-        contributeLabel.text = "Do you know how to code?"
+        contributeLabel.text = NSLocalizedString("About.ViewGitHub.Label", comment: "")
         
         // Contribute button
         contributeButton.setDefaultProperties()
-        contributeButton.setTitle("View on GitHub", for: .normal)
+        contributeButton.setTitle(NSLocalizedString("About.ViewGitHub.Button", comment: ""),
+                                  for: .normal)
         
         // Website label
         giveLabelProperties(label: websiteLabel)
-        websiteLabel.text = "Visit Lifting Buddy's site!"
+        websiteLabel.text = NSLocalizedString("About.ViewWebsite.Label", comment: "")
         
         // Website button
         websiteButton.setDefaultProperties()
-        websiteButton.setTitle("Learn More", for: .normal)
+        websiteButton.setTitle(NSLocalizedString("About.ViewWebsite.Button", comment: ""),
+                               for: .normal)
     }
     
     // MARK: Custom view functions

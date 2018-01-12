@@ -108,7 +108,7 @@ class WorkoutTableViewCell: UITableViewCell {
             editButton?.setTitle("Edit", for: .normal)
             
             startWorkoutButton?.setDefaultProperties()
-            startWorkoutButton?.setTitle("Start Workout", for: .normal)
+            startWorkoutButton?.setTitle(NSLocalizedString("Button.StartWO", comment: ""), for: .normal)
         }
         
         // If the last time we did this workout was today...
@@ -205,7 +205,7 @@ class WorkoutTableViewCell: UITableViewCell {
             
             exerciseView.label.text = exercise.getName()!
             
-            exerciseView.button.setTitle("View", for: .normal)
+            exerciseView.button.setTitle(NSLocalizedString("Button.View", comment: ""), for: .normal)
             exerciseView.button.tag = index
             exerciseView.button.addTarget(self,
                                           action: #selector(labelButtonPress(sender:)),

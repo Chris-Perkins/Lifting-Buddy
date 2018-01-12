@@ -1,0 +1,111 @@
+/* 
+  Localizable.strings
+  Lifting Buddy
+
+  Created by Christopher Perkins on 1/11/18.
+  Copyright © 2018 Christopher Perkins. All rights reserved.
+*/
+
+// MARK: Labels that appear in the about view
+"About.FeatureRequest.Label" = "Features? Bugs? Contact me!";
+
+"About.SelectColorScheme.Label" = "Active Color Scheme";
+"About.SelectColorScheme.Picker.Dark"  = "Dark";
+"About.SelectColorScheme.Picker.Light" = "Light";
+
+"About.ViewGitHub.Label"  = "Are you a developer?";
+"About.ViewGitHub.Button" = "View on GitHub";
+
+"About.ViewWebsite.Label"  = "Visit Lifting Buddy's site!";
+"About.ViewWebsite.Button" = "Learn More";
+
+// MARK: Strings associated with buttons
+"Button.Cancel"   = "Cancel";
+"Button.Close"    = "Close";
+"Button.Complete" = "Complete";
+"Button.Delete"   = "Delete";
+"Button.Edit"     = "Edit";
+"Button.End"      = "End";
+"Button.Name"     = "Name";
+"Button.OK"       = "OK";
+"Button.Quit"     = "Quit";
+"Button.StartWO"  = "Start Workout";
+"Button.StartEX"  = "Start Exercise";
+"Button.View"     = "View";
+
+// MARK: Edit Exercise View
+"EditExerciseView.Button.AddTracker"  = "Add Progression Tracker";
+"EditExerciseView.Button.Create"      = "Create Exercise";
+"EditExerciseView.Button.EditHistory" = "Edit History";
+"EditExerciseView.Button.SetUnit"     = "Set Unit";
+"EditExerciseView.Button.Save"        = "Save Changes";
+"EditExerciseView.Label.EditExercise" = "Edit Exercise";
+"EditExerciseView.Label.NewExercise"  = "Create New Exercise";
+
+// MARK: Exercise View
+"ExerciseView.Button.AddExercise"    = "Add Exercise";
+"ExerciseView.Button.CreateExercise" = "Create New Exercise";
+"ExerciseView.Button.SaveExercise"   = "Save Exercise";
+"ExerciseView.Label.CreateExercise"  = "Create Exercise";
+"ExerciseView.Label.EditExercise"    = "Edit Exercise";
+"ExerciseView.Label.Exercises"       = "Exercises";
+"ExerciseView.Label.Name"            = "Name";
+"ExerciseView.Label.Repeat"          = "Repeat";
+"ExerciseView.Textfield.Name"        = "Required: Name";
+"ExerciseView.Graph"                 = "Not enough information to graph.\nPlease complete this exercise on multiple different days to track your progress.";
+
+// MARK: Strings associated with alerts
+"Message.CancelSession.Title" = "Cancel Session?";
+"Message.CancelSession.Desc"  = "This will not delete any saved set data from this session.";
+
+"Message.CannotAddPGM.Title" = "Cannot Add Progression Method";
+"Message.CannotAddPGM.Desc"  = "This exercise's progression methods cannot be modified as it is being used in an active session.";
+
+"Message.CannotViewHistory.Title" = "Cannot View Exercise History";
+"Message.CannotViewHistory.DescMultLocations" = "History may only be opened by one view at a time, and this exercise's history is being viewed somewhere else.";
+"Message.CannotViewHistory.DescNotSaved" = "You cannot view exercise history for an exercise that was not saved!";
+
+"Message.DeleteExercise.Title" = "Delete Exercise?";
+
+"Message.EndSessionPrematurely.Title" = "Complete Workout Prematurely?";
+"Message.EndSessionPrematurely.Desc"  = "Not all exercises are complete.\nComplete the workout anyways?";
+
+"Message.ExerciseDeleted.Title" = "Exercise Deleted";
+"Message.ExerciseDeleted.Desc"  = "The exercise you were editing was deleted.";
+
+"Message.QuitSession.Title" = "Quit Current Workout Session?";
+"Message.QuitSession.Desc"  = "To start a new session, you must end your current session.\nYou will not gain streak progress.";
+
+// MARK: Session View Strings
+"SessionView.Button.AddExercise"   = "Add Exercise to Workout";
+"SessionView.Button.AddSet"        = "Add Set";
+"SessionView.Button.CancelWorkout" = "Cancel Workout";
+"SessionView.Button.FinishWorkout" = "Finish Workout";
+"SessionView.Label.CustomWorkout"  = "Custom Workout";
+"SessionView.Label.Skipped"        = "Skipped";
+
+// MARK: Summary View Strings
+"SummaryView.Label.Title" = "Tracker Name";
+"SummaryView.Label.Value" = "Value";
+"SummaryView.Label.VsMax" = "vs. Max";
+"SummaryView.Button.EndSession" = "End Session";
+
+// MARK: Strings associated with tabs
+"Tabs.Session"   = "session";
+"Tabs.Workouts"  = "workouts";
+"Tabs.Exercises" = "exercises";
+
+// MARK: Workout View Strings
+"WorkoutView.Button.CreateWorkout" = "Create New Workout";
+
+// MARK: Miscellaneous
+"Time.Second.Char" = "s";
+"Time.Minute.Char" = "m";
+"Time.Hour.Char"   = "h";
+
+"Timer.Start" = "Start";
+"Timer.Stop"  = "Stop";
+
+"Info.Sets" = "Sets";
+"Info.Reps" = "Reps";
+"Info.Time" = "Time";

@@ -141,7 +141,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         
         // Add Set button
         addSetButton.setDefaultProperties()
-        addSetButton.setTitle("Add Set", for: .normal)
+        addSetButton.setTitle(NSLocalizedString("SessionView.Button.AddSet", comment: ""), for: .normal)
         
         // Different states for whether the cell is complete or not.
         // If complete: cell turns green, title color turns white to be visible.

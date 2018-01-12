@@ -160,16 +160,16 @@ extension ExercisesTableView : UITableViewDelegate {
                                                     handler: nil))
                 alert.show()
             } else {
-                let alert = CDAlertView(title: "Delete Exercise?",
+                let alert = CDAlertView(title: NSLocalizedString("Message.DeleteExercise.Title", comment: ""),
                                         message: "All history for '\(exercise.getName()!)' will be deleted.\n" +
                                             "This action cannot be undone.",
                                         type: CDAlertViewType.warning)
-                alert.add(action: CDAlertViewAction(title: "Cancel",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Cancel", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceBlue,
                                                     handler: nil))
-                alert.add(action: CDAlertViewAction(title: "Delete",
+                alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Delete", comment: ""),
                                                     font: nil,
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceRed,

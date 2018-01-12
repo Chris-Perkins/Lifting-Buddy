@@ -3,7 +3,7 @@
 
 ## About
 
-  View Summaries             |  Graph Progress              | Edit Easily
+  View Summaries             |  Graph Progress              | Edit Workouts Easily
 :---------------------------:|:----------------------------:|:----------------------------:
 ![Summary](imgs/Summary.jpg) | ![Graph](imgs/Graph.jpg)     | ![Edit](imgs/Edit.jpg)
 

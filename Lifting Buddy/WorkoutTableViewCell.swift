@@ -37,8 +37,6 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // A delegate to show a view for us
     public var showViewDelegate: ShowViewDelegate?
-    // A delegate to display an exercise in the tableview
-    public var exerciseDisplayer: ExerciseDisplayer?
     
     // The button stating whether or not we want to edit this workout
     private var editButton: PrettyButton?
@@ -245,7 +243,7 @@ class WorkoutTableViewCell: UITableViewCell {
             fatalError("Workout either nil or exercise out of bounds!")
         }
         
-        exerciseDisplayer?.displayExercise(exercise)
+        (viewController() as? ExerciseDisplayer)?.displayExercise(exercise)
     }
     
     // Notified on a button press

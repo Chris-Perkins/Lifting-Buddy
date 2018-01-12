@@ -92,7 +92,6 @@ extension WorkoutTableView: UITableViewDataSource {
                                           for: indexPath as IndexPath) as! WorkoutTableViewCell
         
         cell.showViewDelegate = superview as? ShowViewDelegate
-        cell.exerciseDisplayer = superview as? ExerciseDisplayer
         cell.setWorkout(workout: sortedData[indexPath.row])
         cell.updateSelectedStatus()
         return cell

@@ -388,6 +388,7 @@
 				22FD539C1FF1C39600FB069E /* CreateWorkoutViewDelegateProtocol.swift */,
 				22FD538E1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift */,
 				22FD539A1FF1C26E00FB069E /* ExerciseHistoryEntryTableViewDelegateProtocol.swift */,
+				22FD53A01FF1C45500FB069E /* ExercisePickerDelegateProtocol.swift */,
 				226B11A01F96E1750013139B /* InputViewProtocol.swift */,
 				22FD53921FF1C07100FB069E /* PrettySegmentedControlDelegateProtocol.swift */,
 				22DA60621FB56523009013D7 /* ShowViewProtocol.swift */,
@@ -395,7 +396,6 @@
 				22FD53901FF1BF2500FB069E /* WorkoutSessionStarterProtocol.swift */,
 				22FD53941FF1C0D900FB069E /* WorkoutSessionTableViewDelegateProtocol.swift */,
 				22FD53981FF1C1D400FB069E /* WorkoutSessionTableViewCellDelegateProtocol.swift */,
-				22FD53A01FF1C45500FB069E /* ExercisePickerDelegateProtocol.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";

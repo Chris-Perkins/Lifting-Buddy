@@ -20,12 +20,16 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     private static let heightPerProgressionMethod: CGFloat = 30
     
     private let cellTitleLabel: UILabel
+    private let cellGraphButton: PrettyButton
     private var progressionMethodSummaryViews: [ProgressionMethodSummaryView]
+    
+    private var exercise: Exercise?
     
     // MARK: View inits
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         cellTitleLabel = UILabel()
+        cellGraphButton = PrettyButton()
         progressionMethodSummaryViews = [ProgressionMethodSummaryView]()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,8 +37,12 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
         selectionStyle = .none
         
         addSubview(cellTitleLabel)
+        addSubview(cellGraphButton)
+        
+        cellGraphButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         createAndActivateCellTitleLabelConstraints()
+        createAndActivateCellGraphButtonConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,11 +54,18 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        // Self
         backgroundColor = .primaryBlackWhiteColor
         
+        // Cell Title Label
         cellTitleLabel.setDefaultProperties()
         cellTitleLabel.textAlignment = .left
         
+        // Graph Button
+        cellGraphButton.setDefaultProperties()
+        cellGraphButton.setTitle(NSLocalizedString("Button.View", comment: ""), for: .normal)
+        
+        // PGM Views
         for (index, view) in progressionMethodSummaryViews.enumerated() {
             // We check using bit-level comparison here. This provides a nice alternating
             // background color, making the view much more readable
@@ -68,6 +83,8 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
     // Called by tableview to set the exercise
     public func setExercise(exercise: Exercise, withDateRecorded: Date) {
+        self.exercise = exercise
+        
         deleteProgressionMethodSummaryViews()
         
         cellTitleLabel.text = exercise.getName()
@@ -135,7 +152,7 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
                                                             ]) {
         var prevView: UIView = cellTitleLabel
         
-        for (index, dataPiece) in data.enumerated() {
+        for dataPiece in data {
             let view = ProgressionMethodSummaryView(progressionMethod: dataPiece.0,
                                                     newValue: dataPiece.1,
                                                     oldValue: dataPiece.2,
@@ -174,6 +191,15 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
         progressionMethodSummaryViews.removeAll()
     }
     
+    // MARK: Event functions
+    
+    @objc func buttonPress(sender: PrettyButton) {
+        guard let exercise = exercise else {
+            fatalError("Exercise wants to be viewed, but was nil")
+        }
+        (viewController() as? ExerciseDisplayer)?.displayExercise(exercise)
+    }
+    
     // MARK: Constraint functions
     
     private func createAndActivateCellTitleLabelConstraints() {
@@ -186,12 +212,34 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
                                                              withCopyView: self,
                                                              attribute: .left,
                                                              plusConstant: 10).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellTitleLabel,
-                                                             withCopyView: self,
-                                                             attribute: .right,
-                                                             plusConstant: -10).isActive = true
+        NSLayoutConstraint(item: cellGraphButton,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: cellTitleLabel,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 10).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: cellTitleLabel,
                                                          height: UITableViewCell.defaultHeight).isActive = true
+    }
+    
+    private func createAndActivateCellGraphButtonConstraints() {
+        cellGraphButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellGraphButton,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellGraphButton,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellGraphButton,
+                                                             withCopyView: cellTitleLabel,
+                                                             attribute: .height).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cellGraphButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 1 - WorkoutSessionSummaryView.newDataLabelWidthOfView - WorkoutSessionSummaryView.pgmLabelWidthOfView
+                                                            ).isActive = true
     }
 }
 
@@ -316,7 +364,7 @@ class ProgressionMethodSummaryView: UIView {
     
     // MARK: Constraint functions
     
-    // Cling to left, top, bottom of view ; Width of this view / 2
+    // Cling to left, top, bottom of view ; Width of related multiplier
     private func createAndActivateTitleLabelConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -333,10 +381,11 @@ class ProgressionMethodSummaryView: UIView {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
                                                              withCopyView: self,
                                                              attribute: .width,
-                                                             multiplier: WorkoutSessionSummaryView.pgmLabelWidthOfView).isActive = true
+                                                             multiplier: WorkoutSessionSummaryView.pgmLabelWidthOfView,
+                                                             plusConstant: -10 * (1/WorkoutSessionSummaryView.pgmLabelWidthOfView)).isActive = true
     }
     
-    // Cling to top, bottom ; cling to right of titlelabel ; width of this view * 0.25
+    // Cling to top, bottom ; cling to right of titlelabel ; width of related multiplier
     private func createAndActivateNewValueLabelConstraints() {
         newValueLabel.translatesAutoresizingMaskIntoConstraints = false
         

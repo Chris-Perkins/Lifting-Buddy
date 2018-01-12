@@ -30,6 +30,8 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
         super.init(frame: .zero, style: style)
         
         // This could be done in O(n), but O(n^2) isn't even slow.
+        // We don't display multiple of the same exercise as the
+        // summary would look confusing.
         for exercise in exercises {
             if !dataWithNoDuplicates.contains(exercise) {
                 dataWithNoDuplicates.append(exercise)
@@ -57,14 +59,18 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkoutSessionSummaryTableViewCell
+        
         cell.setExercise(exercise: dataWithNoDuplicates[indexPath.row],
                          withDateRecorded: sessionStartDate)
+        
         return cell
     }
     
     // Each cell's height is retrieved based on the cell's requirements for progression methods
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return WorkoutSessionSummaryTableViewCell.heightForExercise(exercise: data[indexPath.row])
+        let heightForExercise = WorkoutSessionSummaryTableViewCell.heightForExercise(exercise: dataWithNoDuplicates[indexPath.row])
+        
+        return heightForExercise
     }
     
     // MARK: Private functions

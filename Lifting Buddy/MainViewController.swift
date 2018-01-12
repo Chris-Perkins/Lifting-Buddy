@@ -68,7 +68,6 @@ class MainViewController: UIViewController {
         case SectionView.ContentViews.WORKOUTS:
             if workoutView == nil {
                 workoutView = WorkoutsView(frame: .zero)
-                workoutView?.exerciseDisplayer = self
             }
             workoutView?.layoutSubviews()
             showView(workoutView!)

@@ -125,8 +125,8 @@ class CreateWorkoutView: UIScrollView {
         // Label
         createWorkoutLabel.setDefaultProperties()
         createWorkoutLabel.text = editingWorkout != nil ?
-            NSLocalizedString("ExerciseView.Label.EditExercise", comment: ""):
-            NSLocalizedString("ExerciseView.Label.CreateExercise", comment: "")
+            NSLocalizedString("WorkoutView.Label.EditWorkout", comment: ""):
+            NSLocalizedString("WorkoutView.Label.CreateWorkout", comment: "")
         createWorkoutLabel.backgroundColor = UILabel.titleLabelBackgroundColor
         createWorkoutLabel.textColor = UILabel.titleLabelTextColor
         
@@ -136,7 +136,7 @@ class CreateWorkoutView: UIScrollView {
         
         // Repeat Label
         repeatLabel.setDefaultProperties()
-        repeatLabel.text = NSLocalizedString("ExerciseView.Label.Repeat", comment: "")
+        repeatLabel.text = NSLocalizedString("WorkoutView.Label.Repeat", comment: "")
         
         // Repeat Buton
         for repeatButton in repeatButtons {
@@ -150,7 +150,7 @@ class CreateWorkoutView: UIScrollView {
         
         // Exercise Table Label
         exerciseTableLabel.setDefaultProperties()
-        exerciseTableLabel.text = NSLocalizedString("ExerciseView.Label.Exercises", comment: "")
+        exerciseTableLabel.text = NSLocalizedString("WorkoutView.Label.Exercises", comment: "")
         
         // Exercise Table View
         // Prevent clipping as we can click and drag cells
@@ -160,15 +160,15 @@ class CreateWorkoutView: UIScrollView {
         
         // Add exercise button
         addExerciseButton.setDefaultProperties()
-        addExerciseButton.setTitle(NSLocalizedString("ExerciseView.Button.AddExercise", comment: ""),
+        addExerciseButton.setTitle(NSLocalizedString("WorkoutView.Button.AddExercise", comment: ""),
                                    for: .normal)
         
         // Create workout button
         // Give it standard default properties
         createWorkoutButton.setDefaultProperties()
         createWorkoutButton.setTitle(editingWorkout != nil ?
-                NSLocalizedString("ExerciseView.Button.SaveExercise", comment: "") :
-                NSLocalizedString("ExerciseView.Button.CreateExercise", comment: ""),
+                NSLocalizedString("WorkoutView.Button.SaveWorkout", comment: "") :
+                NSLocalizedString("WorkoutView.Button.CreateWorkout", comment: ""),
                                      for: .normal)
         
         // Cancel Button

@@ -40,17 +40,14 @@
 "EditExerciseView.Button.SetUnit"     = "Set Unit";
 "EditExerciseView.Button.Save"        = "Save Changes";
 "EditExerciseView.Label.EditExercise" = "Edit Exercise";
-"EditExerciseView.Label.NewExercise"  = "Create New Exercise";
+"EditExerciseView.Label.NewExercise"  = "Create Exercise";
 
 // MARK: Exercise View
-"ExerciseView.Button.AddExercise"    = "Add Exercise";
-"ExerciseView.Button.CreateExercise" = "Create New Exercise";
+"ExerciseView.Button.CreateExercise" = "Create Exercise";
 "ExerciseView.Button.SaveExercise"   = "Save Exercise";
 "ExerciseView.Label.CreateExercise"  = "Create Exercise";
 "ExerciseView.Label.EditExercise"    = "Edit Exercise";
-"ExerciseView.Label.Exercises"       = "Exercises";
 "ExerciseView.Label.Name"            = "Name";
-"ExerciseView.Label.Repeat"          = "Repeat";
 "ExerciseView.Textfield.Name"        = "Required: Name";
 "ExerciseView.Textfield.SetCount"    = "Optional: Set Count";
 "ExerciseView.Graph"                 = "Not enough information to graph.\nPlease complete this exercise on multiple different days to track your progress.";
@@ -113,8 +110,14 @@
 "Tabs.Workouts"  = "workouts";
 "Tabs.Exercises" = "exercises";
 
-// MARK: Workout View
-"WorkoutView.Button.CreateWorkout" = "Create New Workout";
+// MARK: Workout/Edit View
+"WorkoutView.Button.AddExercise"   = "Add Exercise";
+"WorkoutView.Button.CreateWorkout" = "Create Workout";
+"WorkoutView.Button.SaveWorkout"   = "Save Workout";
+"WorkoutView.Label.CreateWorkout"  = "Create Workout";
+"WorkoutView.Label.EditWorkout"    = "Edit Workout";
+"WorkoutView.Label.Exercises"      = "Exercises";
+"WorkoutView.Label.Repeat"         = "Repeat";
 
 // MARK: Miscellaneous
 "Time.Second.Char" = "s";

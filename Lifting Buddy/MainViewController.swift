@@ -11,6 +11,7 @@ import RealmSwift
 import Realm
 import CDAlertView
 import GBVersionTracking
+import StoreKit
 
 class MainViewController: UIViewController {
     
@@ -51,6 +52,11 @@ class MainViewController: UIViewController {
         
         // Done to fix coloring scheme updates not working unless app restarted
         view.layoutAllSubviews()
+        
+        if GBVersionTracking.firstInstalledVersion() <= "1.2" &&
+            GBVersionTracking.isFirstLaunchForVersion() {
+            SKStoreReviewController.requestReview()
+        }
     }
     
     // MARK: View functions

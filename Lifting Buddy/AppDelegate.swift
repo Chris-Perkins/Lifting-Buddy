@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let userDefaults = UserDefaults.standard
-        if userDefaults.value(forKey: colorSchemeString) == nil {
+        if userDefaults.value(forKey: colorSchemeKey) == nil {
             setNewColorScheme(ColorScheme.light)
         }
         

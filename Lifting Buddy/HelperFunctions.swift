@@ -23,14 +23,15 @@ public enum TimeAmount: String {
     case ALLTIME = "ALL-TIME"
 }
 
-public let colorSchemeString = "colorScheme"
+// Used in getting user defined color scheme from userdefaults
+public let colorSchemeKey = "colorScheme"
 public enum ColorScheme: Int {
     case light = 0
     case dark  = 1
 }
 
 public var activeColorScheme: ColorScheme {
-    guard let storedValue = UserDefaults.standard.value(forKey: colorSchemeString) as? Int,
+    guard let storedValue = UserDefaults.standard.value(forKey: colorSchemeKey) as? Int,
           let colorScheme = ColorScheme(rawValue: storedValue) else {
         fatalError("Could not retrieve the active color scheme")
     }
@@ -38,7 +39,7 @@ public var activeColorScheme: ColorScheme {
 }
 public func setNewColorScheme(_ scheme: ColorScheme) {
     let userDefaults = UserDefaults.standard
-    userDefaults.set(scheme.rawValue, forKey: colorSchemeString)
+    userDefaults.set(scheme.rawValue, forKey: colorSchemeKey)
 }
 
 // An associated array for easy parsing

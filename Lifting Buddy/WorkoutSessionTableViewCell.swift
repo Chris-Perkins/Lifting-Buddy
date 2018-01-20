@@ -15,9 +15,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     // MARK: View properties
     
     // Padding between views
-    private let viewPadding: CGFloat = 15.0
-    // Table view height for expansion
-    private let tableViewHeight: CGFloat = 150.0
+    private static let viewPadding: CGFloat = 15.0
     
     // Title bar properties
     
@@ -117,11 +115,9 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         }
         
         // Self stuff
-        
         updateCompleteStatus()
         selectionStyle = .none
         clipsToBounds = true
-        
         
         // Cell Title
         let curSetCount: Int = exerciseHistoryTableView.getData().count
@@ -186,21 +182,23 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         let contentHeight = getContentHeight()
         
         let addSetButtonHeight = PrettyButton.defaultHeight
-        totalPadding += 1
         
-        let totalTableViewHeight = tableViewHeight + viewPadding
+        let totalTableViewHeight = WorkoutSessionTableViewCell.viewPadding +
+            ExerciseHistoryTableView.heightPerExercise(forExercise: exercise)
         totalPadding += 1
         
         // Swift compiler doesn't like if we do too much addition at once. :-)
         let heightTop = titleBarHeight + contentHeight + addSetButtonHeight
         let heightBottom = totalTableViewHeight
         
-        return heightTop + heightBottom + CGFloat(totalPadding) * viewPadding
+        return heightTop + heightBottom +
+            CGFloat(totalPadding) *  WorkoutSessionTableViewCell.viewPadding
     }
     
     // gets the height of the content view
     private func getContentHeight() -> CGFloat {
-        return viewPadding * 2 + CGFloat(exercise.getProgressionMethods().count) * 40.0
+        return  WorkoutSessionTableViewCell.viewPadding +
+            CGFloat(exercise.getProgressionMethods().count) * BetterTextField.defaultHeight
     }
     
     // saves workout data
@@ -415,9 +413,11 @@ class WorkoutSessionTableViewCell: UITableViewCell {
                            toItem: view,
                            attribute: .top,
                            multiplier: 1,
-                           constant: prevView == inputContentView ? -viewPadding : 0).isActive = true
+                           constant: prevView == inputContentView ?
+                            -WorkoutSessionTableViewCell.viewPadding : 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: view,
-                                                         height: 40).isActive = true
+                                                         height: BetterTextField.defaultHeight
+                                                        ).isActive = true
     }
     
     // Place below the input content view
@@ -428,16 +428,15 @@ class WorkoutSessionTableViewCell: UITableViewCell {
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: addSetButton,
-                                                             withCopyView: self,
-                                                             attribute: .width,
-                                                             multiplier: 0.75).isActive = true
+                                                             withCopyView: inputContentView,
+                                                             attribute: .width).isActive = true
         NSLayoutConstraint(item: inputContentView,
                            attribute: .bottom,
                            relatedBy: .equal,
                            toItem: addSetButton,
                            attribute: .top,
                            multiplier: 1,
-                           constant: -viewPadding).isActive = true
+                           constant: 0).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: addSetButton,
                                                          height: PrettyButton.defaultHeight).isActive = true
     }
@@ -458,9 +457,10 @@ class WorkoutSessionTableViewCell: UITableViewCell {
                            toItem: exerciseHistoryTableView,
                            attribute: .top,
                            multiplier: 1,
-                           constant: -viewPadding).isActive = true
+                           constant: -WorkoutSessionTableViewCell.viewPadding).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: exerciseHistoryTableView,
-                                                         height: tableViewHeight).isActive = true
+                                                         height: ExerciseHistoryTableView.heightPerExercise(forExercise:
+                                                            exercise)).isActive = true
     }
     
     // MARK: view properties assigned
@@ -470,6 +470,9 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         invisButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
 }
+
+
+// MARK: HistoryEntryDelegate Extension
 
 extension WorkoutSessionTableViewCell: ExerciseHistoryEntryTableViewDelegate {
     // Called when a cell is deleted

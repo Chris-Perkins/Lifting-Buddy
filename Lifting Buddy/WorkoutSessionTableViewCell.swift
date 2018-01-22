@@ -31,8 +31,13 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     private let inputContentView: UIView
     // add a set to the table
     private let addSetButton: PrettyButton
+    // The button we can toggle to expand/hide tableview
+    private let expandHistoryButton: ToggleablePrettyButton
     // table view that holds the history of our exercise this go around
     private let exerciseHistoryTableView: ExerciseHistoryTableView
+    
+    // The height of our tableview
+    private var tableViewHeightConstraint: NSLayoutConstraint?
     
     // the fields themselves in the inputcontent view
     private var exerciseInputFields: [InputViewHolder]
@@ -68,6 +73,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         addSetButton = PrettyButton()
         exerciseHistoryTableView = ExerciseHistoryTableView(forExercise: exercise,
                                                             style: .plain)
+        expandHistoryButton = ToggleablePrettyButton()
         
         data = [[Float]]()
         
@@ -85,6 +91,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         addSubview(inputContentView)
         addSubview(addSetButton)
         addSubview(exerciseHistoryTableView)
+        addSubview(expandHistoryButton)
         
         createAndActivateInvisButtonConstraints()
         createAndActivateCellTitleConstraints()
@@ -93,11 +100,13 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         createAndActivateInputFieldsConstraints()
         createAndActivateAddSetButtonConstraints()
         createAndActivateExerciseHistoryTableViewConstraints()
+        createAndActivateExpandHistoryButtonConstraints()
         
         giveInvisButtonProperties()
         
         exerciseHistoryTableView.tableViewDelegate = self
         addSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        expandHistoryButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -134,10 +143,20 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         // Invisible Button has to be "visible" to be pressed. So, 0.001
         invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
-        
         // Add Set button
         addSetButton.setDefaultProperties()
         addSetButton.setTitle(NSLocalizedString("SessionView.Button.AddSet", comment: ""), for: .normal)
+        
+        // Exercisehistory table
+        exerciseHistoryTableView.isScrollEnabled = false
+        
+        // Expand history button
+        expandHistoryButton.setDefaultViewColor(color: .niceBlue)
+        expandHistoryButton.setDefaultTextColor(color: .white)
+        expandHistoryButton.setDefaultText(text: NSLocalizedString("Button.Expand", comment: ""))
+        expandHistoryButton.setToggleViewColor(color: .niceYellow)
+        expandHistoryButton.setToggleTextColor(color: .white)
+        expandHistoryButton.setToggleText(text: NSLocalizedString("Button.Collapse", comment: ""))
         
         // Different states for whether the cell is complete or not.
         // If complete: cell turns green, title color turns white to be visible.
@@ -168,6 +187,18 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         }
     }
     
+    // Update the complete status (call when some value changed)
+    public func updateCompleteStatus() {
+        let newComplete = exerciseHistoryTableView.getData().count >= exercise.getSetCount()
+        
+        // We updated our completed status! So inform the delegate.
+        if newComplete != isComplete {
+            isComplete = newComplete
+            delegate?.cellCompleteStatusChanged(complete: isComplete)
+            layoutIfNeeded()
+        }
+    }
+    
     // Gets the height of the current cell
     private func getHeight() -> CGFloat {
         return isToggled ? getExpandedHeight() : UITableViewCell.defaultHeight
@@ -184,12 +215,13 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         let addSetButtonHeight = PrettyButton.defaultHeight
         
         let totalTableViewHeight = WorkoutSessionTableViewCell.viewPadding +
-            ExerciseHistoryTableView.heightPerExercise(forExercise: exercise)
+            tableViewHeightConstraint!.constant
+        let expandButtonHeight = PrettyButton.defaultHeight * 0.75
         totalPadding += 1
         
         // Swift compiler doesn't like if we do too much addition at once. :-)
         let heightTop = titleBarHeight + contentHeight + addSetButtonHeight
-        let heightBottom = totalTableViewHeight
+        let heightBottom = expandButtonHeight + totalTableViewHeight
         
         return heightTop + heightBottom +
             CGFloat(totalPadding) *  WorkoutSessionTableViewCell.viewPadding
@@ -239,17 +271,17 @@ class WorkoutSessionTableViewCell: UITableViewCell {
             exercise.appendExerciseHistoryEntry(exerciseEntry)
             
             exerciseHistoryTableView.appendDataToTableView(data: exerciseEntry)
+            heightConstraintConstantCouldChange()
         }
     }
     
-    // Update the complete status (call when some value changed)
-    public func updateCompleteStatus() {
-        let newComplete = exerciseHistoryTableView.getData().count >= exercise.getSetCount()
-        
-        // We updated our completed status! So inform the delegate.
-        if newComplete != isComplete {
-            isComplete = newComplete
-            delegate?.cellCompleteStatusChanged(complete: isComplete)
+    private func heightConstraintConstantCouldChange() {
+        if let tableViewHeightConstraint = tableViewHeightConstraint,
+            expandHistoryButton.isToggled
+        {
+            tableViewHeightConstraint.constant = exerciseHistoryTableView.getTotalHeight()
+            delegate?.cellHeightDidChange(height: getHeight(), indexPath: indexPath!)
+            
             layoutIfNeeded()
         }
     }
@@ -267,6 +299,15 @@ class WorkoutSessionTableViewCell: UITableViewCell {
             exerciseHistoryTableView.layoutIfNeeded()
             exerciseHistoryTableView.reloadData()
             updateCompleteStatus()
+            layoutIfNeeded()
+        case expandHistoryButton:
+            if expandHistoryButton.isToggled {
+                tableViewHeightConstraint?.constant = exerciseHistoryTableView.getTotalHeight()
+            } else {
+                tableViewHeightConstraint?.constant =
+                    ExerciseHistoryTableView.heightPerExercise(forExercise: exercise)
+            }
+            delegate?.cellHeightDidChange(height: getHeight(), indexPath: indexPath!)
             layoutIfNeeded()
         default:
             fatalError("Button pressed did not exist?")
@@ -441,7 +482,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
                                                          height: PrettyButton.defaultHeight).isActive = true
     }
     
-    // center horiz in view ; width of this view/1.33 ; place below add set button ; height of tableviewheight
+    // center horiz to self ; width of addset ; place below addset ; height of tableviewheight
     private func createAndActivateExerciseHistoryTableViewConstraints() {
         exerciseHistoryTableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -451,16 +492,32 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: exerciseHistoryTableView,
                                                              withCopyView: addSetButton,
                                                              attribute: .width).isActive = true
-        NSLayoutConstraint(item: addSetButton,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: exerciseHistoryTableView,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: -WorkoutSessionTableViewCell.viewPadding).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: exerciseHistoryTableView,
-                                                         height: ExerciseHistoryTableView.heightPerExercise(forExercise:
-                                                            exercise)).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: exerciseHistoryTableView,
+                                                         belowView: addSetButton,
+                                                         withPadding: WorkoutSessionTableViewCell.viewPadding).isActive = true
+       tableViewHeightConstraint =
+            NSLayoutConstraint.createHeightConstraintForView(view: exerciseHistoryTableView,
+                                                            height: ExerciseHistoryTableView.heightPerExercise(
+                                                                forExercise: exercise))
+        tableViewHeightConstraint?.isActive = true
+        
+    }
+    
+    // Center horiz with tbv ; copy tbv width ; place below tbv ; height of default / 2
+    private func createAndActivateExpandHistoryButtonConstraints() {
+        expandHistoryButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: expandHistoryButton,
+                                                             withCopyView: exerciseHistoryTableView,
+                                                             attribute: .centerX).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: expandHistoryButton,
+                                                             withCopyView: exerciseHistoryTableView,
+                                                             attribute: .width).isActive = true
+        NSLayoutConstraint.createViewBelowViewConstraint(view: expandHistoryButton,
+                                                         belowView: exerciseHistoryTableView).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: expandHistoryButton,
+                                                         height: PrettyButton.defaultHeight * 0.75
+                                                        ).isActive = true
     }
     
     // MARK: view properties assigned
@@ -477,14 +534,10 @@ class WorkoutSessionTableViewCell: UITableViewCell {
 extension WorkoutSessionTableViewCell: ExerciseHistoryEntryTableViewDelegate {
     // Called when a cell is deleted
     func dataDeleted(deletedData: ExerciseHistoryEntry) {
-        let realm = try! Realm()
-        print(realm.objects(ExerciseHistoryEntry.self))
-        
         exercise.removeExerciseHistoryEntry(deletedData)
         
-        print(realm.objects(ExerciseHistoryEntry.self))
+        heightConstraintConstantCouldChange()
         
-        layoutIfNeeded()
         updateCompleteStatus()
     }
 }

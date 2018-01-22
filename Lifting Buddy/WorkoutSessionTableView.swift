@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableViewDataSource {
+class WorkoutSessionTableView: HPReorderTableView {
     
     // MARK: View properties
     
@@ -74,14 +74,57 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
         isScrollEnabled = false
     }
     
-    // MARK: TableView Functions
-    
     override func reloadData() {
         heightConstraint?.constant = heights.reduce(0, +)
         
         super.reloadData()
     }
     
+    // MARK: Custom functions
+    
+    // Append some data to the tableView
+    public func appendDataToTableView(data: Exercise) {
+        heights.append(UITableViewCell.defaultHeight)
+        
+        let realm = try! Realm()
+        try! realm.write {
+            self.data.append(data)
+        }
+        
+        reloadData()
+        
+        checkComplete()
+    }
+    
+    // Retrieve workouts
+    public func getData() -> List<Exercise> {
+        return data
+    }
+    
+    // Check if we completed all exercises
+    public func checkComplete() {
+        if curComplete == data.count {
+            viewDelegate?.updateCompleteStatus(isComplete: true)
+        } else {
+            viewDelegate?.updateCompleteStatus(isComplete: false)
+        }
+    }
+    
+    // Setup the table view to default properties
+    private func setupTableView() {
+        delegate = self
+        dataSource = self
+        allowsSelection = true
+        register(WorkoutSessionTableViewCell.self,
+                 forCellReuseIdentifier: "cell")
+        backgroundColor = .clear
+    }
+}
+
+
+// MARK: DataSource extension
+
+extension WorkoutSessionTableView: UITableViewDataSource {
     // Moved a cell (HPRTableView requirement for drag-and-drop)
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
@@ -125,52 +168,20 @@ class WorkoutSessionTableView: HPReorderTableView, UITableViewDelegate, UITableV
             return cells[indexPath.row]
         }
     }
-    
+}
+
+
+// MARK: TableViewDelegate extension
+
+extension WorkoutSessionTableView: UITableViewDelegate {
     // Each cell has a height of cellHeight
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return heights[indexPath.row]
     }
-    
-    // MARK: Custom functions
-    
-    // Append some data to the tableView
-    public func appendDataToTableView(data: Exercise) {
-        heights.append(UITableViewCell.defaultHeight)
-        
-        let realm = try! Realm()
-        try! realm.write {
-            self.data.append(data)
-        }
-        
-        reloadData()
-        
-        checkComplete()
-    }
-    
-    // Retrieve workouts
-    public func getData() -> List<Exercise> {
-        return data
-    }
-    
-    // Setup the table view to default properties
-    private func setupTableView() {
-        delegate = self
-        dataSource = self
-        allowsSelection = true
-        register(WorkoutSessionTableViewCell.self,
-                 forCellReuseIdentifier: "cell")
-        backgroundColor = .clear
-    }
-    
-    // Check if we completed all exercises
-    public func checkComplete() {
-        if curComplete == data.count {
-            viewDelegate?.updateCompleteStatus(isComplete: true)
-        } else {
-            viewDelegate?.updateCompleteStatus(isComplete: false)
-        }
-    }
 }
+
+
+// MARK: WorkoutSessionTableViewCellDelegate extension
 
 extension WorkoutSessionTableView: WorkoutSessionTableViewCellDelegate {
     // Height of a cell changed ; update this view's height to match height change
@@ -189,6 +200,9 @@ extension WorkoutSessionTableView: WorkoutSessionTableViewCellDelegate {
         checkComplete()
     }
 }
+
+
+// MARK: CellDeletionDelegate
 
 extension WorkoutSessionTableView: CellDeletionDelegate {
     // Deletes all data that we can

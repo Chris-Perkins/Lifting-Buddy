@@ -69,7 +69,9 @@ class ExerciseHistoryTableView: UITableView {
         backgroundColor = .primaryBlackWhiteColor
         
         overlayLabel?.setDefaultProperties()
-        overlayLabel?.text = NSLocalizedString("HistoryView.Label.EmptyOverlay", comment: "")
+        overlayLabel?.text = NSLocalizedString(isInSessionView ?
+                                                "HistoryView.Label.NoSetData":
+                                                "HistoryView.Label.NoRecordedData", comment: "")
         overlayLabel?.backgroundColor = .lightestBlackWhiteColor
     }
     
@@ -96,6 +98,16 @@ class ExerciseHistoryTableView: UITableView {
     // Retrieve workouts
     public func getData() -> [ExerciseHistoryEntry] {
         return data
+    }
+    
+    public func getTotalHeight() -> CGFloat {
+        var totalHeight: CGFloat = 0.0;
+        
+        for historyEntry in getData() {
+            totalHeight += ExerciseHistoryTableView.heightPerCell(forHistoryEntry: historyEntry)
+        }
+        
+        return totalHeight
     }
     
     // Determines whether or not we can modify the data at the given index path
@@ -165,6 +177,10 @@ extension ExerciseHistoryTableView: UITableViewDelegate {
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+        self.reloadData()
+    }
 }
 
 
@@ -191,12 +207,12 @@ extension ExerciseHistoryTableView: UITableViewDataSource {
     
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if data.count == 0 {
+        if data.count == 0 && !isInSessionView {
             // We should only display the overlay label if we're not in a session view
             // Done because I don't think it looks nice in the session view.
-            if overlayLabel == nil && !isInSessionView {
+            if overlayLabel == nil {
                 overlayLabel = UILabel()
-                overlayLabel?.layer.zPosition = 100
+                overlayLabel?.layer.zPosition = 1001
                 
                 addSubview(overlayLabel!)
                 

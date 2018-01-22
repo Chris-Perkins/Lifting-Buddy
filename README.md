@@ -29,13 +29,11 @@ The below roadmap is not in "order of implementation"; I generally work on what 
   Process                    | Step | Notes
 :---------------------------:|:----:|:-------------------------------------------------------:
 Exercise Creation | 9/10 | Add nice way to choose progression method unit
-Workout Start Rework | 0/10 | Unsure of design
 Optional exercise in workout | 0/10 | Will require realm migration; Avoiding for now
 PGM Max -> Best Conversion | 0/10 | Will require realm migration; Avoiding for now
 One Rep Max Tracker | 0/10 | Should be implemented on the summary view
 
 ##### Explanations
-* <b>Workout Start Rework</b> - I just think it looks ugly. Not sure how to rework it.
 * <b>Optional exercise in workout</b> - The user should be able to set exercises as "optional" within a workout. However, I'm still not comfortable with performing realm migrations (the app tends to crash when I attempt to do so)
 * <b>PGM Max -> Best Conversion</b> - Sometimes, the user wants the lowest possible value instead of the highest possible value (think assisted pullups, etc). To do so, I want progressionmethods to have a "max/min is best" option. This also requires pgms to undergo a realm migration.
 * <b>One Rep Max Tracker</b> - Feature request

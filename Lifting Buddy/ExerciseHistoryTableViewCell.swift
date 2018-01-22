@@ -50,7 +50,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         entryNumberLabel.setDefaultProperties()
-        entryNumberLabel.backgroundColor = UIColor.primaryBlackWhiteColor
+        entryNumberLabel.backgroundColor = UIColor.lightestBlackWhiteColor.withAlphaComponent(0.5)
         entryNumberLabel.textColor       = UILabel.titleLabelTextColor
         
         if !isUserInteractionEnabled {

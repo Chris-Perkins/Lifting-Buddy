@@ -372,11 +372,11 @@ extension UIColor {
     }
     
     public static var niceLightGray: UIColor {
-        return UIColor(hue: 0, saturation: 0, brightness: 0.875, alpha: 1.0)
+        return UIColor(hue: 0, saturation: 0, brightness: 0.895, alpha: 1.0)
     }
     
     public static var niceLightestGray: UIColor {
-        return UIColor(hue: 0, saturation: 0, brightness: 0.925, alpha: 1.0)
+        return UIColor(hue: 0, saturation: 0, brightness: 0.95, alpha: 1.0)
     }
     
     public static var niceLightGreen: UIColor {

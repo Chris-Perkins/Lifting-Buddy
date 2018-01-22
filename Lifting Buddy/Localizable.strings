@@ -22,10 +22,12 @@
 // MARK: Button
 "Button.Cancel"   = "Cancel";
 "Button.Close"    = "Close";
+"Button.Collapse" = "Collapse";
 "Button.Complete" = "Complete";
 "Button.Delete"   = "Delete";
 "Button.Edit"     = "Edit";
 "Button.End"      = "End";
+"Button.Expand"   = "Expand";
 "Button.Name"     = "Name";
 "Button.OK"       = "OK";
 "Button.Quit"     = "Quit";
@@ -53,7 +55,8 @@
 "ExerciseView.Graph"                 = "Not enough information to graph.\nPlease complete this exercise on multiple different days to track your progress.";
 
 // MARK: History View
-"HistoryView.Label.EmptyOverlay" = "No history recorded for this exercise!";
+"HistoryView.Label.NoSetData"      = "No Set Data";
+"HistoryView.Label.NoRecordedData" = "No history recorded for this exercise!";
 
 // MARK: Alerts
 "Message.CancelSession.Title" = "Cancel Session?";

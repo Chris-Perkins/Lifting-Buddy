@@ -57,6 +57,12 @@ class WorkoutTableView: UITableView {
         data = AnyRealmCollection(realm.objects(Workout.self))
         sortedData = Workout.getSortedWorkoutArray(workouts: data)
         
+        for datap in data {
+            if datap.isInvalidated {
+                fatalError("???")
+            }
+        }
+        
         super.reloadData()
         if let selectedWorkout = selectedWorkout, let indexOfWorkout = sortedData.index(of: selectedWorkout) {
             selectRow(at: IndexPath(row: indexOfWorkout, section: 0), animated: true, scrollPosition: .bottom)
@@ -124,7 +130,6 @@ extension WorkoutTableView: UITableViewDataSource {
                                                             realm.delete(workout)
                                                         }
                                                         
-                                                        self.sortedData.remove(at: indexPath.row)
                                                         self.reloadData()
                 }))
                 alert.show()

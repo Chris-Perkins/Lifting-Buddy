@@ -176,6 +176,12 @@ class WorkoutTableViewCell: UITableViewCell {
         removeExerciseDependentViews()
         exerciseLabels.removeAll()
         
+        if workout.isInvalidated {
+            cellTitle.text = "<DELETED>"
+            self.workout = workout
+            return
+        }
+        
         // TODO: Determine when a change is made so we don't have to be dumb in checking.
         //if workout != workout
         cellTitle.text = workout.getName()

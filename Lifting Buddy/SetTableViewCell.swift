@@ -80,9 +80,12 @@ class SetTableViewCell: UITableViewCell {
         titleLabel.backgroundColor = UIColor.lightestBlackWhiteColor
         
         // Complete Button
-        completeButton.setDefaultText(text: "Complete")
-        completeButton.setDefaultTextColor(color: .oppositeBlackWhiteColor)
-        completeButton.setDefaultViewColor(color: .primaryBlackWhiteColor)
+        completeButton.setDefaultProperties()
+        completeButton.setDefaultText(text: "×")
+        completeButton.setDefaultTextColor(color: .white)
+        completeButton.setDefaultViewColor(color: .niceBlue)
+        completeButton.setToggleText(text: "✓")
+        completeButton.setToggleTextColor(color: .white)
         completeButton.setToggleViewColor(color: .niceGreen)
     }
     

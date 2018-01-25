@@ -50,6 +50,7 @@ class SetTableView: UITableView {
     
     public func appendDataPiece(_ dataPiece: ExerciseHistoryEntry) {
         data.append(dataPiece)
+        reloadData()
     }
     
     // Applies basic tableview properties
@@ -73,7 +74,7 @@ class SetTableView: UITableView {
 extension SetTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            fatalError("Please delete")
+            fatalError("TODO")
         }
     }
     

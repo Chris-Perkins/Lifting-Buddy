@@ -192,9 +192,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         switch(sender) {
         case addSetButton:
             setTableView.appendDataPiece(ExerciseHistoryEntry())
-            setTableView.setNeedsLayout()
-            updateCompleteStatus()
-            layoutIfNeeded()
+            heightConstraintConstantCouldChange()
         default:
             fatalError("Button pressed did not exist?")
         }

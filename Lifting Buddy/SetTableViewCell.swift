@@ -14,10 +14,18 @@ class SetTableViewCell: UITableViewCell {
     
     // The height per progression method view
     public static let heightPerProgressionMethodInput = BetterTextField.defaultHeight
+    public static let completeButtonWidthRatio = BetterTextField.labelWidthRatio
     
     private var historyEntry: ExerciseHistoryEntry?
+    /*
+     * We need a separate entry for the height constraint as it needs to be modified
+     * If we don't do this, the console throws warnings about breaking constraints.
+     *  Yes, it's annoying.
+    */
+    public var inputViewHeightConstraint: NSLayoutConstraint?
     
     public let titleLabel: UILabel
+    public let completeButton: ToggleablePrettyButton
     public let inputContentView: UIView
     
     private var pgmInputFields: [InputViewHolder]
@@ -40,16 +48,21 @@ class SetTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         titleLabel       = UILabel()
+        completeButton   = ToggleablePrettyButton()
         inputContentView = UIView()
         pgmInputFields   = [InputViewHolder]()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         addSubview(titleLabel)
+        addSubview(completeButton)
         addSubview(inputContentView)
         
         createAndActivateTitleLabelConstraints()
+        createAndActivateCompleteButtonConstraints()
         createAndActivateInputContentViewConstraints()
+        
+        completeButton.addTarget(self, action: #selector(completeButtonPress(_:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -61,9 +74,16 @@ class SetTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        // Title label
         titleLabel.setDefaultProperties()
         titleLabel.textAlignment = .left
         titleLabel.backgroundColor = UIColor.lightestBlackWhiteColor
+        
+        // Complete Button
+        completeButton.setDefaultText(text: "Complete")
+        completeButton.setDefaultTextColor(color: .oppositeBlackWhiteColor)
+        completeButton.setDefaultViewColor(color: .primaryBlackWhiteColor)
+        completeButton.setToggleViewColor(color: .niceGreen)
     }
     
     override func layoutIfNeeded() {
@@ -84,8 +104,6 @@ class SetTableViewCell: UITableViewCell {
         
         return pgmHeights + baseHeight
     }
-    
-    // MARK: View functions
     
     // create the input fields in the center field
     private func createInputFieldsForExercise(_ exercise: Exercise) {
@@ -121,7 +139,32 @@ class SetTableViewCell: UITableViewCell {
         }
     }
     
+    // MARK: View actions
+    
+    @objc private func completeButtonPress(_ button: ToggleablePrettyButton) {
+        print(button.isToggled)
+    }
+    
     // MARK: Constraints
+    
+    private func createAndActivateCompleteButtonConstraints() {
+        completeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: completeButton,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: completeButton,
+                                                             withCopyView: titleLabel,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: completeButton,
+                                                             withCopyView: titleLabel,
+                                                             attribute: .height).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: completeButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: SetTableViewCell.completeButtonWidthRatio
+                                                            ).isActive = true
+    }
     
     // Cling to top, left of self. copy width. Height of default.
     private func createAndActivateTitleLabelConstraints() {
@@ -135,12 +178,13 @@ class SetTableViewCell: UITableViewCell {
                                                              attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
                                                              withCopyView: self,
-                                                             attribute: .width).isActive = true
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: titleLabel,
                                                          height: UITableViewCell.defaultHeight
                                                         ).isActive = true
     }
     
+    // Cling to left, right of self; place below self
     private func createAndActivateInputContentViewConstraints() {
         inputContentView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -151,10 +195,11 @@ class SetTableViewCell: UITableViewCell {
                                                              attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: inputContentView,
                                                              withCopyView: self,
-                                                             attribute: .width).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: inputContentView,
-                                                             withCopyView: self,
-                                                             attribute: .bottom).isActive = true
+                                                             attribute: .right).isActive = true
+        inputViewHeightConstraint =
+            NSLayoutConstraint.createHeightConstraintForView(view: inputContentView,
+                                                             height: 0)
+        inputViewHeightConstraint?.isActive = true
     }
     
     // Add the constraints to the an input given the view and the previous view

@@ -11,6 +11,8 @@ import UIKit
 
 class BetterTextField: UIView {
     
+    public static let labelWidthRatio: CGFloat = 1/3
+    
     // MARK: View properties
     public var text: String? {
         // return the textfield text if possible; otherwise, return placeholder
@@ -185,7 +187,7 @@ class BetterTextField: UIView {
                 NSLayoutConstraint.createViewAttributeCopyConstraint(view: label,
                                                                      withCopyView: self,
                                                                      attribute: .width,
-                                                                     multiplier: 1/3)
+                                                                     multiplier: BetterTextField.labelWidthRatio)
         } else {
             curLabelWidthConstraint = NSLayoutConstraint.createWidthConstraintForView(view: label,
                                                                                       width: 0)

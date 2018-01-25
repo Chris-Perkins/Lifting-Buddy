@@ -100,6 +100,11 @@ extension SetTableView: UITableViewDataSource {
         
         cell.exercise = exercise
         cell.titleLabel.text = "\tSet #\(indexPath.row + 1)"
+        cell.layoutIfNeeded()
+        
+        // Subtract default height so the title height is not included
+        cell.inputViewHeightConstraint?.constant =
+            SetTableViewCell.getHeight(forExercise: exercise) - UITableViewCell.defaultHeight
         
         return cell
     }  

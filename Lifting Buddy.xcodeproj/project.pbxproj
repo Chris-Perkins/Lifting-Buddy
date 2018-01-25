@@ -295,8 +295,6 @@
 				22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */,
 				229D87011F65FC7400FF05DD /* WorkoutSessionTableView.swift */,
 				229D87031F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift */,
-				220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */,
-				2280A2FC1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift */,
 			);
 			name = "Session Tab";
 			sourceTree = "<group>";
@@ -358,6 +356,8 @@
 			isa = PBXGroup;
 			children = (
 				22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */,
+				220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */,
+				2280A2FC1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift */,
 			);
 			name = "Exercise History View";
 			sourceTree = "<group>";

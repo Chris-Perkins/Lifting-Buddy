@@ -49,6 +49,8 @@
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
 		22AA6D141F218AD400624744 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D131F218AD400624744 /* SectionView.swift */; };
 		22AD725E1FF2A00F008B35EE /* ExerciseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */; };
+		22B944C42019590700585D65 /* SetTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B944C32019590700585D65 /* SetTableView.swift */; };
+		22B944C62019591300585D65 /* SetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B944C52019591300585D65 /* SetTableViewCell.swift */; };
 		22BC5AF41F3E5C2A00B150BD /* CreateWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */; };
 		22C3D5A32000578C00C15276 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C3D5A22000578C00C15276 /* SettingsViewController.swift */; };
 		22C3D5A620005C8400C15276 /* TopDownSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C3D5A520005C8400C15276 /* TopDownSegue.swift */; };
@@ -123,6 +125,8 @@
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		22AA6D131F218AD400624744 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryView.swift; sourceTree = "<group>"; };
+		22B944C32019590700585D65 /* SetTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableView.swift; sourceTree = "<group>"; };
+		22B944C52019591300585D65 /* SetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableViewCell.swift; sourceTree = "<group>"; };
 		22BC5AF31F3E5C2A00B150BD /* CreateWorkoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWorkoutView.swift; sourceTree = "<group>"; };
 		22C3D5A22000578C00C15276 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		22C3D5A520005C8400C15276 /* TopDownSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopDownSegue.swift; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 				22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */,
 				229D87011F65FC7400FF05DD /* WorkoutSessionTableView.swift */,
 				229D87031F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift */,
+				22B944C32019590700585D65 /* SetTableView.swift */,
+				22B944C52019591300585D65 /* SetTableViewCell.swift */,
 			);
 			name = "Session Tab";
 			sourceTree = "<group>";
@@ -564,6 +570,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22FD539B1FF1C26E00FB069E /* ExerciseHistoryEntryTableViewDelegateProtocol.swift in Sources */,
+				22B944C42019590700585D65 /* SetTableView.swift in Sources */,
 				221A42011FED9872005C0B01 /* HPReorderTableView.h in Sources */,
 				22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */,
 				227981421F4D13BE0010DA18 /* ProgressionMethodsTableView.swift in Sources */,
@@ -574,6 +581,7 @@
 				22F030141FF01B7500C5E376 /* LabelWithPrettyButtonView.swift in Sources */,
 				22C3D5A620005C8400C15276 /* TopDownSegue.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
+				22B944C62019591300585D65 /* SetTableViewCell.swift in Sources */,
 				22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */,
 				2289D4451FAF9B7700A2DF9D /* ExerciseChartCreator.swift in Sources */,
 				2278818F1FC6627500EBFA7E /* ExerciseChartViewWithToggles.swift in Sources */,

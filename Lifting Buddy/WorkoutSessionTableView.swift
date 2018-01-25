@@ -158,7 +158,6 @@ extension WorkoutSessionTableView: UITableViewDataSource {
             cell.delegate = self
             cell.deletionDelegate = self
             cell.indexPath = indexPath
-            cell.updateToggledStatus()
             cell.updateCompleteStatus()
             
             cells.append(cell)

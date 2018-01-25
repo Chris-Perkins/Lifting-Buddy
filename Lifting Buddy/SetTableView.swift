@@ -57,7 +57,7 @@ class SetTableView: UITableView {
     private func setupTableView() {
         delegate = self
         dataSource = self
-        allowsSelection = true
+        allowsSelection = false
         backgroundColor = .clear
         register(SetTableViewCell.self, forCellReuseIdentifier: "cell")
     }
@@ -98,7 +98,8 @@ extension SetTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = dequeueReusableCell(withIdentifier: "cell") as! SetTableViewCell
         
-        cell.setColor()
+        cell.exercise = exercise
+        cell.titleLabel.text = "\tSet #\(indexPath.row + 1)"
         
         return cell
     }  

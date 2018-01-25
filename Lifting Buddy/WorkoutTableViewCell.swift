@@ -178,7 +178,7 @@ class WorkoutTableViewCell: UITableViewCell {
         
         if workout.isInvalidated {
             cellTitle.text = "<DELETED>"
-            self.workout = workout
+            self.workout = nil
             return
         }
         

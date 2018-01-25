@@ -48,15 +48,15 @@ class WorkoutTableView: UITableView {
     // MARK: TableView Functions
     
     override func reloadData() {
-        let realm = try! Realm()
-        
-        data = AnyRealmCollection(realm.objects(Workout.self))
-        sortedData = Workout.getSortedWorkoutArray(workouts: data)
-        
         var selectedWorkout: Workout?
         if let selectedIndex = indexPathForSelectedRow {
             selectedWorkout = sortedData[selectedIndex.row]
         }
+        
+        let realm = try! Realm()
+        data = AnyRealmCollection(realm.objects(Workout.self))
+        sortedData = Workout.getSortedWorkoutArray(workouts: data)
+        
         super.reloadData()
         if let selectedWorkout = selectedWorkout, let indexOfWorkout = sortedData.index(of: selectedWorkout) {
             selectRow(at: IndexPath(row: indexOfWorkout, section: 0), animated: true, scrollPosition: .bottom)

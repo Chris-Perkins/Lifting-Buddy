@@ -153,29 +153,16 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         var totalPadding = 0
         
         let titleBarHeight = UITableViewCell.defaultHeight
-        let contentHeight = getContentHeight()
         
         let addSetButtonHeight = PrettyButton.defaultHeight
-        
-        let totalTableViewHeight = WorkoutSessionTableViewCell.viewPadding +
-            tableViewHeightConstraint!.constant
-        let expandButtonHeight = PrettyButton.defaultHeight * 0.75
+        let totalTableViewHeight = tableViewHeightConstraint!.constant
         totalPadding += 1
         
-        // Swift compiler doesn't like if we do too much addition at once. :-)
-        let heightTop = titleBarHeight + contentHeight + addSetButtonHeight
-        let heightBottom = expandButtonHeight + totalTableViewHeight
-        
-        return heightTop + heightBottom +
+        return titleBarHeight + totalTableViewHeight + addSetButtonHeight +
             CGFloat(totalPadding) *  WorkoutSessionTableViewCell.viewPadding
     }
     
-    // gets the height of the content view
-    private func getContentHeight() -> CGFloat {
-        return  WorkoutSessionTableViewCell.viewPadding +
-            CGFloat(exercise.getProgressionMethods().count) * BetterTextField.defaultHeight
-    }
-    
+    // Should be called whenever the height constraint may change
     public func heightConstraintConstantCouldChange() {
         if let tableViewHeightConstraint = tableViewHeightConstraint
         {

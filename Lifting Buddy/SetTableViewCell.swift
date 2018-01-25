@@ -12,11 +12,23 @@ class SetTableViewCell: UITableViewCell {
     
     // MARK: View properties
     
+    public static let heightPerProgressionMethodInput: CGFloat = 40.0
+    
     private var historyEntry: ExerciseHistoryEntry?
     
     // MARK: View functions
     
+    public static func getHeight(forExercise exercise: Exercise) -> CGFloat {
+        let pgmHeights = CGFloat(exercise.getProgressionMethods().count) *
+                            heightPerProgressionMethodInput
+        let baseHeight = UITableViewCell.defaultHeight
+        
+        return pgmHeights + baseHeight
+    }
+    
+    // MARK: View functions
+    
     public func setColor() {
-        self.backgroundColor = .red
+        self.backgroundColor = .lightestBlackWhiteColor
     }
 }

@@ -13,8 +13,6 @@ class SetTableView: UITableView {
     
     // MARK: View properties
     
-    public static let heightPerProgressionMethodInput: CGFloat = 40.0
-    
     private var exercise: Exercise
     private var data: [ExerciseHistoryEntry]
     
@@ -39,23 +37,19 @@ class SetTableView: UITableView {
     
     // MARK: View functions
     
-    public static func getHeightPerCell(forExercise exercise: Exercise) -> CGFloat {
-        let pgmHeights = CGFloat(exercise.getProgressionMethods().count) *
-                            heightPerProgressionMethodInput
-        let baseHeight = UITableViewCell.defaultHeight
-        
-        return pgmHeights + baseHeight
-    }
-    
     // Gets the height for this view
     public func getHeight() -> CGFloat {
         return CGFloat(data.count) *
-                    SetTableView.getHeightPerCell(forExercise: exercise)
+                    SetTableViewCell.getHeight(forExercise: exercise)
     }
     
     // Gets the data for this tableview
     public func getData() -> [ExerciseHistoryEntry] {
         return data
+    }
+    
+    public func appendDataPiece(_ dataPiece: ExerciseHistoryEntry) {
+        data.append(dataPiece)
     }
     
     // Applies basic tableview properties
@@ -65,6 +59,11 @@ class SetTableView: UITableView {
         allowsSelection = true
         backgroundColor = .clear
         register(SetTableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.clipsToBounds = true
     }
 }
 
@@ -79,7 +78,7 @@ extension SetTableView: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 65
+        return SetTableViewCell.getHeight(forExercise: exercise)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -101,7 +100,5 @@ extension SetTableView: UITableViewDataSource {
         cell.setColor()
         
         return cell
-    }
-    
-    
+    }  
 }

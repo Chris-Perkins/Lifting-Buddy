@@ -43,6 +43,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     public var indexPath: IndexPath?
     // Delegate we use to change height of cells
     public var delegate: WorkoutSessionTableViewCellDelegate?
+    // The delegate we use to indicate that a cell was deleted
     public var deletionDelegate: CellDeletionDelegate?
     
     // MARK: Init Functions
@@ -97,13 +98,15 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         // Cell Title
         let curSetCount: Int = setTableView.getData().count
         let reqSetCount: Int = exercise.getSetCount()
-        /* Text depends on whether or not we have a required set amount.
+        
+        /*
+         * Text depends on whether or not we have a required set amount.
          * If we do, a format example is [1/2]
          * If we don't, the same example is [1]
          */
         cellTitle.text = reqSetCount > 0 ?
             "[\(curSetCount)/\(reqSetCount)] \(exercise.getName()!)":
-        "[\(curSetCount)] \(exercise.getName()!)"
+            "[\(curSetCount)] \(exercise.getName()!)"
         cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
         
         // Add Set button
@@ -128,7 +131,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     // MARK: View functions
     
     // Sets the exercise for this cell
-    public func setExercise(exercise: Exercise) {
+    public func setExercise(_ exercise: Exercise) {
         self.exercise = exercise
     }
     
@@ -173,12 +176,11 @@ class WorkoutSessionTableViewCell: UITableViewCell {
             CGFloat(exercise.getProgressionMethods().count) * BetterTextField.defaultHeight
     }
     
-    private func heightConstraintConstantCouldChange() {
+    public func heightConstraintConstantCouldChange() {
         if let tableViewHeightConstraint = tableViewHeightConstraint
         {
             tableViewHeightConstraint.constant = setTableView.getHeight()
             delegate?.cellHeightDidChange(height: getHeight(), indexPath: indexPath!)
-            
             layoutIfNeeded()
         }
     }
@@ -189,9 +191,8 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
         case addSetButton:
-            
-            setTableView.layoutIfNeeded()
-            setTableView.reloadData()
+            setTableView.appendDataPiece(ExerciseHistoryEntry())
+            setTableView.setNeedsLayout()
             updateCompleteStatus()
             layoutIfNeeded()
         default:
@@ -234,17 +235,18 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: setTableView,
                                                              withCopyView: self,
-                                                             attribute: .centerX).isActive = true
+                                                             attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: setTableView,
-                                                             withCopyView: addSetButton,
+                                                             withCopyView: self,
                                                              attribute: .width).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: setTableView,
                                                          belowView: cellTitle,
-                                                         withPadding: WorkoutSessionTableViewCell.viewPadding).isActive = true
+                                                         withPadding: WorkoutSessionTableViewCell.viewPadding
+                                                        ).isActive = true
         tableViewHeightConstraint =
             NSLayoutConstraint.createHeightConstraintForView(view: setTableView,
                                                              height: 0)
-        tableViewHeightConstraint?.isActive = true
+        tableViewHeightConstraint!.isActive = true
     }
     
     // Place below the input content view
@@ -255,9 +257,8 @@ class WorkoutSessionTableViewCell: UITableViewCell {
                                                              withCopyView: self,
                                                              attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: addSetButton,
-                                                             withCopyView: self,
-                                                             attribute: .width,
-                                                             multiplier: 0.75).isActive = true
+                                                             withCopyView: setTableView,
+                                                             attribute: .width).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: addSetButton,
                                                          belowView: setTableView).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: addSetButton,

@@ -10,7 +10,7 @@ import UIKit
 import Realm
 import RealmSwift
 
-class WorkoutSessionTableView: HPReorderTableView {
+class WorkoutSessionTableView: UITableView {
     
     // MARK: View properties
     
@@ -36,12 +36,12 @@ class WorkoutSessionTableView: HPReorderTableView {
         heights = [CGFloat]()
         curComplete = 0
         
+        super.init(frame: frame, style: style)
+        
         for _ in data {
             heights.append(UITableViewCell.defaultHeight)
         }
         heightConstraint?.constant = heights.reduce(0, +)
-        
-        super.init(frame: frame, style: style)
         
         setupTableView()
     }
@@ -159,6 +159,7 @@ extension WorkoutSessionTableView: UITableViewDataSource {
             cell.deletionDelegate = self
             cell.indexPath = indexPath
             cell.updateCompleteStatus()
+            cell.heightConstraintConstantCouldChange()
             
             cells.append(cell)
             return cell
@@ -187,7 +188,6 @@ extension WorkoutSessionTableView: WorkoutSessionTableViewCellDelegate {
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
         heightConstraint?.constant += height - heights[indexPath.row]
         heights[indexPath.row] = height
-        
         reloadData()
         
         viewDelegate?.heightChange()

@@ -14,8 +14,6 @@ class WorkoutSessionTableView: UITableView {
     
     // MARK: View properties
     
-    // Height constraint for this view
-    public var heightConstraint: NSLayoutConstraint?
     // The delegate for this view
     public var viewDelegate: WorkoutSessionTableViewDelegate?
     
@@ -41,7 +39,6 @@ class WorkoutSessionTableView: UITableView {
         for _ in data {
             heights.append(UITableViewCell.defaultHeight)
         }
-        heightConstraint?.constant = heights.reduce(0, +)
         
         setupTableView()
     }
@@ -63,21 +60,6 @@ class WorkoutSessionTableView: UITableView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: View overrides
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        backgroundColor = .clear
-        isScrollEnabled = false
-    }
-    
-    override func reloadData() {
-        heightConstraint?.constant = heights.reduce(0, +)
-        
-        super.reloadData()
     }
     
     // MARK: Custom functions
@@ -186,7 +168,6 @@ extension WorkoutSessionTableView: UITableViewDelegate {
 extension WorkoutSessionTableView: WorkoutSessionTableViewCellDelegate {
     // Height of a cell changed ; update this view's height to match height change
     func cellHeightDidChange(height: CGFloat, indexPath: IndexPath) {
-        heightConstraint?.constant += height - heights[indexPath.row]
         heights[indexPath.row] = height
         reloadData()
         

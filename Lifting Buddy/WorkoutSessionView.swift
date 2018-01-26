@@ -11,7 +11,7 @@ import Realm
 import RealmSwift
 import CDAlertView
 
-class WorkoutSessionView: UIScrollView {
+class WorkoutSessionView: UIView {
     
     // MARK: View properties
     
@@ -86,17 +86,15 @@ class WorkoutSessionView: UIScrollView {
         super.layoutSubviews()
         
         // Self stuff
-        contentSize = CGSize(width: frame.width,
-                             height: cancelButton.frame.maxY + 20)
-        
         backgroundColor = isComplete ? .niceLightGreen : .lightestBlackWhiteColor
         
         // Workout Name Label
         workoutNameLabel.setDefaultProperties()
-        workoutNameLabel.text = workout?.getName() ??
-                                NSLocalizedString("SessionView.Label.CustomWorkout", comment: "")
+        workoutNameLabel.text =
+            workout?.getName() ??
+            NSLocalizedString("SessionView.Label.CustomWorkout", comment: "")
         workoutNameLabel.backgroundColor = isComplete ? .niceLightGreen : UILabel.titleLabelBackgroundColor
-        workoutNameLabel.textColor       = isComplete ? .niceBlue       : UILabel.titleLabelTextColor
+        workoutNameLabel.textColor       = isComplete ? .niceBlue : UILabel.titleLabelTextColor
         
         // Add Exercise Button
         addExerciseButton.setDefaultProperties()
@@ -206,21 +204,21 @@ class WorkoutSessionView: UIScrollView {
     
     // MARK: View Constraints
     
-    // Center horiz in view ; place below top of this view ; height of var ; width of this view
+    // Cling to left, right, top of self ; height of title
     private func createAndActivateWorkoutNameLabelConstraints() {
         workoutNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
                                                              withCopyView: self,
-                                                             attribute: .centerX).isActive = true
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: workoutNameLabel,
                                                          height: UILabel.titleLabelHeight).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
-                                                             withCopyView: self,
-                                                             attribute: .width).isActive = true
         
     }
     
@@ -228,21 +226,21 @@ class WorkoutSessionView: UIScrollView {
     private func createAndActivateWorkoutSessionTableViewConstraints() {
         workoutSessionTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutSessionTableView,
-                                                             withCopyView: self,
-                                                             attribute: .centerX).isActive = true
         NSLayoutConstraint.createViewBelowViewConstraint(view: workoutSessionTableView,
                                                          belowView: workoutNameLabel).isActive = true
-        
-        // Assign height constraint
-        workoutSessionTableView.heightConstraint =
-            NSLayoutConstraint.createHeightConstraintForView(view: workoutSessionTableView,
-                                                             height: 0)
-        workoutSessionTableView.heightConstraint?.isActive = true
-        
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutSessionTableView,
                                                              withCopyView: self,
-                                                             attribute: .width).isActive = true
+                                                             attribute: .left).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutSessionTableView,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
+        NSLayoutConstraint(item: completeButton,
+                           attribute: .top,
+                           relatedBy: .equal,
+                           toItem: workoutSessionTableView,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
     
     // Below workout view ; left/right of tableview ; height of tableview cell
@@ -262,39 +260,45 @@ class WorkoutSessionView: UIScrollView {
                                                          height: UITableViewCell.defaultHeight).isActive = true
     }
     
-    // center horiz in view ; place below workoutSessionTableView ; height default; width of this view - 80
+    // Cling to right, bottom of view ; trailing cancel button ; height of cancel button
     private func createAndActivateCompleteButtonConstraints() {
         completeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: completeButton,
                                                              withCopyView: self,
-                                                             attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: completeButton,
-                                                         belowView: addExerciseButton,
-                                                         withPadding: 25).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: completeButton,
-                                                         height: PrettyButton.defaultHeight).isActive = true
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: completeButton,
                                                              withCopyView: self,
-                                                             attribute: .width,
-                                                             plusConstant: -80).isActive = true
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: completeButton,
+                                                             withCopyView: cancelButton,
+                                                             attribute: .height).isActive = true
+        NSLayoutConstraint(item: cancelButton,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: completeButton,
+                           attribute: .left,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
     
-    // Center horiz in self ; below completeButton ; height 40 ; copy width of completeButton
+    // Cling to left, bottom of self ; height default ; copy width of self * 0.5
     private func createAndActivateCancelButtonConstraints() {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
                                                              withCopyView: self,
-                                                             attribute: .centerX).isActive = true
-        NSLayoutConstraint.createViewBelowViewConstraint(view: cancelButton,
-                                                         belowView: completeButton,
-                                                         withPadding: 10).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: cancelButton,
-                                                         height: 40).isActive = true
+                                                             attribute: .left).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
-                                                             withCopyView: completeButton,
-                                                             attribute: .width).isActive = true
+                                                             withCopyView: self,
+                                                             attribute: .bottom).isActive = true
+        NSLayoutConstraint.createHeightConstraintForView(view: cancelButton,
+                                                         height: PrettyButton.defaultHeight
+                                                        ).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: cancelButton,
+                                                             withCopyView: self,
+                                                             attribute: .width,
+                                                             multiplier: 0.5).isActive = true
     }
 }
 

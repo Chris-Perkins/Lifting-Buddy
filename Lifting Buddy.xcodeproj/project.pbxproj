@@ -296,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				22CDEFF21FC5EA74000CB8C0 /* Summary Screen */,
+				22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */,
 				229D87011F65FC7400FF05DD /* WorkoutSessionTableView.swift */,
 				229D87031F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift */,
 				22B944C32019590700585D65 /* SetTableView.swift */,
@@ -310,7 +311,6 @@
 				225E65D11F22A041004B3AF4 /* WorkoutsView.swift */,
 				22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */,
 				22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */,
-				22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */,
 			);
 			name = "Workouts Tab";
 			sourceTree = "<group>";

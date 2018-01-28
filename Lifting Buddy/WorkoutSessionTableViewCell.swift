@@ -370,5 +370,6 @@ extension WorkoutSessionTableViewCell: CellDeletionDelegate {
     func deleteData(at index: Int) {
         tableViewHeightConstraint?.constant -= SetTableViewCell.getHeight(forExercise: exercise)
         heightConstraintConstantCouldChange()
+        scrollDelegate?.scrollToCell(atIndexPath: indexPath!, position: .none, animated: false)
     }
 }

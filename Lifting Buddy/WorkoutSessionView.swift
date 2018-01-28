@@ -90,16 +90,16 @@ class WorkoutSessionView: UIView {
         
         // Workout Name Label
         workoutNameLabel.setDefaultProperties()
+        workoutNameLabel.textAlignment = .left
         workoutNameLabel.text =
             workout?.getName() ??
             NSLocalizedString("SessionView.Label.CustomWorkout", comment: "")
-        workoutNameLabel.backgroundColor = isComplete ? .niceLightGreen : UILabel.titleLabelBackgroundColor
         workoutNameLabel.textColor       = isComplete ? .niceBlue : UILabel.titleLabelTextColor
         
         // Add Exercise Button
         addExerciseButton.setDefaultProperties()
-        addExerciseButton.setTitle(NSLocalizedString("SessionView.Button.AddExercise", comment: ""),
-                                   for: .normal)
+        addExerciseButton.backgroundColor = .clear
+        addExerciseButton.setImage(#imageLiteral(resourceName: "plus-sign"), for: .normal)
         
         // Complete button
         // Modified by another method based on current complete
@@ -206,16 +206,21 @@ class WorkoutSessionView: UIView {
     
     // MARK: View Constraints
     
-    // Cling to left, right, top of self ; height of title
+    // Cling to left, top of self ; cling to right of ; height of title
     private func createAndActivateWorkoutNameLabelConstraints() {
         workoutNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
                                                              withCopyView: self,
-                                                             attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
-                                                             withCopyView: self,
-                                                             attribute: .right).isActive = true
+                                                             attribute: .left,
+                                                             plusConstant: 10).isActive = true
+        NSLayoutConstraint(item: addExerciseButton,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: workoutNameLabel,
+                           attribute: .right,
+                           multiplier: 1,
+                           constant: 0).isActive = true
         NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutNameLabel,
                                                              withCopyView: self,
                                                              attribute: .top).isActive = true
@@ -245,21 +250,26 @@ class WorkoutSessionView: UIView {
                            constant: 0).isActive = true
     }
     
-    // Below workout view ; left/right of tableview ; height of tableview cell
+    // Cling to top, right of self; copy height from namelabel
     private func createAndActivateAddExerciseButtonConstraints() {
         addExerciseButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.createViewBelowViewConstraint(view: addExerciseButton,
-                                                         belowView: workoutSessionTableView,
-                                                         withPadding: 0).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutSessionTableView,
-                                                             withCopyView: addExerciseButton,
-                                                             attribute: .left).isActive = true
-        NSLayoutConstraint.createViewAttributeCopyConstraint(view: workoutSessionTableView,
-                                                             withCopyView: addExerciseButton,
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: addExerciseButton,
+                                                             withCopyView: self,
                                                              attribute: .right).isActive = true
-        NSLayoutConstraint.createHeightConstraintForView(view: addExerciseButton,
-                                                         height: UITableViewCell.defaultHeight).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: addExerciseButton,
+                                                             withCopyView: self,
+                                                             attribute: .top).isActive = true
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: addExerciseButton,
+                                                             withCopyView: workoutNameLabel,
+                                                             attribute: .height).isActive = true
+        NSLayoutConstraint(item: addExerciseButton,
+                           attribute: .height,
+                           relatedBy: .equal,
+                           toItem: addExerciseButton,
+                           attribute: .width,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
     
     // Cling to right, bottom of view ; trailing cancel button ; height of cancel button

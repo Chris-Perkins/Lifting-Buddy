@@ -108,6 +108,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         selectionStyle = .none
         clipsToBounds = true
         
+        
         // Invis Button
         // Invis Button has to be "visible" to be pressed. So, 0.001
         invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)

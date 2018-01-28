@@ -74,7 +74,6 @@ class WorkoutSessionTableView: UITableView {
         }
         
         reloadData()
-        
         checkComplete()
     }
     

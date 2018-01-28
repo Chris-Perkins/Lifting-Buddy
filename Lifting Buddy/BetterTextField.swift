@@ -84,7 +84,9 @@ class BetterTextField: UIView {
         label.layer.zPosition = 1
         
         textfield.textAlignment   = .center
-        textfield.backgroundColor = isUserInteractionEnabled ? .primaryBlackWhiteColor : UIColor.primaryBlackWhiteColor.withAlphaComponent(0.5)
+        if textfield.backgroundColor != UIColor.niceRed {
+            textfield.backgroundColor = isUserInteractionEnabled ? .primaryBlackWhiteColor : UIColor.primaryBlackWhiteColor.withAlphaComponent(0.5)
+        }
         textfield.textColor       = .oppositeBlackWhiteColor
     }
     

@@ -44,7 +44,7 @@ One Rep Max Tracker | 0/10 | Should be implemented on the summary view
 * MEDIUM
 	* No medium priority bugs at this time
 * LOW [Can workaround]
-	* Reordering toggled session tableview cells can sometimes cause weird behavior (fixed upon toggling messed up cells twice)
+	* No low priority bugs at this time
 
 ## Future plans
 * Convert relevant UIViews into ViewControllers (good practice)<br>

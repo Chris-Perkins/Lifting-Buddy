@@ -84,7 +84,7 @@ class BetterTextField: UIView {
         label.layer.zPosition = 1
         
         textfield.textAlignment   = .center
-        textfield.backgroundColor = .primaryBlackWhiteColor
+        textfield.backgroundColor = isUserInteractionEnabled ? .primaryBlackWhiteColor : UIColor.primaryBlackWhiteColor.withAlphaComponent(0.5)
         textfield.textColor       = .oppositeBlackWhiteColor
     }
     
@@ -125,6 +125,7 @@ class BetterTextField: UIView {
     // Sets the label colors for this view
     public func setLabelColors(textColor: UIColor = .niceBlue,
                                backgroundColor: UIColor = .lightBlackWhiteColor) {
+        
         labelTextColor = textColor
         labelBackgroundColor = backgroundColor
         

@@ -25,7 +25,7 @@ class BetterTextField: UIView {
     // Label for this text field
     public let textfield: UITextField
     // The label for this view
-    private let label: UILabel
+    public let label: UILabel
     
     // default string in this textfield
     private var defaultString: String?
@@ -37,6 +37,9 @@ class BetterTextField: UIView {
     private var isNumeric: Bool
     private var curLabelWidthConstraint: NSLayoutConstraint?
     
+    private var labelTextColor: UIColor
+    private var labelBackgroundColor: UIColor
+    
     // MARK: Inits
     
     init(defaultString: String?, frame: CGRect) {
@@ -47,6 +50,9 @@ class BetterTextField: UIView {
         modified = false
         userEditing = false
         isNumeric = false
+        
+        labelTextColor       = .niceBlue
+        labelBackgroundColor = .lightBlackWhiteColor
         
         super.init(frame: frame)
         
@@ -71,15 +77,15 @@ class BetterTextField: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        label.font = UIFont.boldSystemFont(ofSize: 18.0)
-        label.textAlignment = .center
-        label.backgroundColor = .lightBlackWhiteColor
-        label.textColor = .niceBlue
+        label.font            = UIFont.boldSystemFont(ofSize: 18.0)
+        label.textAlignment   = .center
+        label.backgroundColor = labelBackgroundColor
+        label.textColor       = labelTextColor
         label.layer.zPosition = 1
         
-        textfield.textAlignment = .center
+        textfield.textAlignment   = .center
         textfield.backgroundColor = .primaryBlackWhiteColor
-        textfield.textColor = .oppositeBlackWhiteColor
+        textfield.textColor       = .oppositeBlackWhiteColor
     }
     
     // MARK: Encapsulated methods
@@ -114,6 +120,15 @@ class BetterTextField: UIView {
         self.defaultString = defaultString
         
         textfield.setPlaceholderString(defaultString)
+    }
+    
+    // Sets the label colors for this view
+    public func setLabelColors(textColor: UIColor = .niceBlue,
+                               backgroundColor: UIColor = .lightBlackWhiteColor) {
+        labelTextColor = textColor
+        labelBackgroundColor = backgroundColor
+        
+        layoutSubviews()
     }
     
     // MARK: View functions

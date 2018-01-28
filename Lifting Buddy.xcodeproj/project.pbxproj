@@ -42,6 +42,9 @@
 		228315CA1F857D23001C9324 /* BetterTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228315C91F857D23001C9324 /* BetterTextField.swift */; };
 		2289D4451FAF9B7700A2DF9D /* ExerciseChartCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2289D4441FAF9B7700A2DF9D /* ExerciseChartCreator.swift */; };
 		228CD0AA1FA6782700463B90 /* ExercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228CD0A91FA6782700463B90 /* ExercisesView.swift */; };
+		229A9DCB201D52B600FACBA0 /* SetTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229A9DCA201D52B600FACBA0 /* SetTableViewCellDelegate.swift */; };
+		229A9DCD201D546E00FACBA0 /* SetTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229A9DCC201D546E00FACBA0 /* SetTableViewDelegate.swift */; };
+		229A9DCF201D5C1200FACBA0 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229A9DCE201D5C1200FACBA0 /* Notifications.swift */; };
 		229D87021F65FC7400FF05DD /* WorkoutSessionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229D87011F65FC7400FF05DD /* WorkoutSessionTableView.swift */; };
 		229D87041F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229D87031F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift */; };
 		22A36A2F1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */; };
@@ -118,6 +121,9 @@
 		228315C91F857D23001C9324 /* BetterTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterTextField.swift; sourceTree = "<group>"; };
 		2289D4441FAF9B7700A2DF9D /* ExerciseChartCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseChartCreator.swift; sourceTree = "<group>"; };
 		228CD0A91FA6782700463B90 /* ExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesView.swift; sourceTree = "<group>"; };
+		229A9DCA201D52B600FACBA0 /* SetTableViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableViewCellDelegate.swift; sourceTree = "<group>"; };
+		229A9DCC201D546E00FACBA0 /* SetTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableViewDelegate.swift; sourceTree = "<group>"; };
+		229A9DCE201D5C1200FACBA0 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		229D87011F65FC7400FF05DD /* WorkoutSessionTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSessionTableView.swift; sourceTree = "<group>"; };
 		229D87031F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSessionTableViewCell.swift; sourceTree = "<group>"; };
 		22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableViewCell.swift; sourceTree = "<group>"; };
@@ -354,6 +360,7 @@
 				2289D4441FAF9B7700A2DF9D /* ExerciseChartCreator.swift */,
 				22E77E051F1B35310076B3DB /* HelperFunctions.swift */,
 				22FAD5041FF406E200C42811 /* SessionInfo.swift */,
+				229A9DCE201D5C1200FACBA0 /* Notifications.swift */,
 			);
 			name = Miscellaneous;
 			sourceTree = "<group>";
@@ -397,6 +404,8 @@
 				22FD53A01FF1C45500FB069E /* ExercisePickerDelegateProtocol.swift */,
 				226B11A01F96E1750013139B /* InputViewProtocol.swift */,
 				22FD53921FF1C07100FB069E /* PrettySegmentedControlDelegateProtocol.swift */,
+				229A9DCC201D546E00FACBA0 /* SetTableViewDelegate.swift */,
+				229A9DCA201D52B600FACBA0 /* SetTableViewCellDelegate.swift */,
 				22DA60621FB56523009013D7 /* ShowViewProtocol.swift */,
 				22A3F3EA1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift */,
 				22FD53901FF1BF2500FB069E /* WorkoutSessionStarterProtocol.swift */,
@@ -584,6 +593,7 @@
 				22B944C62019591300585D65 /* SetTableViewCell.swift in Sources */,
 				22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */,
 				2289D4451FAF9B7700A2DF9D /* ExerciseChartCreator.swift in Sources */,
+				229A9DCB201D52B600FACBA0 /* SetTableViewCellDelegate.swift in Sources */,
 				2278818F1FC6627500EBFA7E /* ExerciseChartViewWithToggles.swift in Sources */,
 				229D87021F65FC7400FF05DD /* WorkoutSessionTableView.swift in Sources */,
 				22FD539D1FF1C39600FB069E /* CreateWorkoutViewDelegateProtocol.swift in Sources */,
@@ -595,6 +605,7 @@
 				22FD53931FF1C07100FB069E /* PrettySegmentedControlDelegateProtocol.swift in Sources */,
 				224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */,
 				22605DB41FAA8C5500FA3DAB /* ExercisesTableView.swift in Sources */,
+				229A9DCD201D546E00FACBA0 /* SetTableViewDelegate.swift in Sources */,
 				22C3D5A32000578C00C15276 /* SettingsViewController.swift in Sources */,
 				224153761F1EE12B00F7B82B /* Workout.swift in Sources */,
 				227981441F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift in Sources */,
@@ -624,6 +635,7 @@
 				229D87041F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift in Sources */,
 				22AA6D121F21851400624744 /* HeaderView.swift in Sources */,
 				22FD539F1FF1C3F800FB069E /* CreateExerciseViewDelegateProtocol.swift in Sources */,
+				229A9DCF201D5C1200FACBA0 /* Notifications.swift in Sources */,
 				225D26B61F76D6BA00F047D9 /* ToggleablePrettyButton.swift in Sources */,
 				22CDEFF41FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift in Sources */,
 				226B11A11F96E1750013139B /* InputViewProtocol.swift in Sources */,

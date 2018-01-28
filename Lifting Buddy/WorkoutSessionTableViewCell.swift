@@ -66,7 +66,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
-        curSet     = 1
+        curSet     = 0
         isComplete = false
         isToggled  = false
         
@@ -83,6 +83,8 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         createAndActivateCellTitleConstraints()
         createAndActivateAddSetButtonConstraints()
         createAndActivateSetTableViewConstraints()
+        
+        setTableView.completedSetCountDelegate = self
         
         invisButton.addTarget( self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         addSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
@@ -103,7 +105,6 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         }
         
         // Self stuff
-        updateCompleteStatus()
         selectionStyle = .none
         clipsToBounds = true
         
@@ -112,17 +113,17 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         invisButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.001)
         
         // Cell Title
-        let curSetCount: Int = setTableView.getData().count
-        let reqSetCount: Int = exercise.getSetCount()
+        curSet = setTableView.completedSetCount
+        let reqSet = exercise.getSetCount()
         
         /*
          * Text depends on whether or not we have a required set amount.
          * If we do, a format example is [1/2]
          * If we don't, the same example is [1]
          */
-        cellTitle.text = reqSetCount > 0 ?
-            "[\(curSetCount)/\(reqSetCount)] \(exercise.getName()!)":
-            "[\(curSetCount)] \(exercise.getName()!)"
+        cellTitle.text = reqSet > 0 ?
+            "[\(curSet)/\(reqSet)] \(exercise.getName()!)":
+            "[\(curSet)] \(exercise.getName()!)"
         cellTitle.font = UIFont.boldSystemFont(ofSize: 18.0)
         
         // Add Set button
@@ -142,6 +143,8 @@ class WorkoutSessionTableViewCell: UITableViewCell {
             backgroundColor     = .primaryBlackWhiteColor
             cellTitle.textColor = .niceBlue
         }
+        
+        updateCompleteStatus()
     }
     
     // MARK: View functions
@@ -153,13 +156,15 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     
     // Update the complete status (call when some value changed)
     public func updateCompleteStatus() {
-        let newComplete = setTableView.getData().count >= exercise.getSetCount()
+        let newComplete = setTableView.completedSetCount >= exercise.getSetCount()
         
         // We updated our completed status! So inform the delegate.
         if newComplete != isComplete {
             isComplete = newComplete
             delegate?.cellCompleteStatusChanged(complete: isComplete)
-            layoutIfNeeded()
+            layoutSubviews()
+        } else if curSet != setTableView.completedSetCount {
+            layoutSubviews()
         }
     }
     
@@ -336,6 +341,12 @@ extension WorkoutSessionTableViewCell: ExerciseHistoryEntryTableViewDelegate {
         
         heightConstraintConstantCouldChange()
         
+        updateCompleteStatus()
+    }
+}
+
+extension WorkoutSessionTableViewCell: SetTableViewDelegate {
+    func completedSetCountChanged() {
         updateCompleteStatus()
     }
 }

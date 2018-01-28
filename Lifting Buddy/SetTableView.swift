@@ -13,14 +13,23 @@ class SetTableView: UITableView {
     
     // MARK: View properties
     
+    public var completedSetCountDelegate: SetTableViewDelegate?
+    
+    public var completedSetCount: Int {
+        didSet {
+            completedSetCountDelegate?.completedSetCountChanged()
+        }
+    }
+    
     private var exercise: Exercise
     private var data: [ExerciseHistoryEntry]
     
     // MARK: View inits
     
     init(forExercise exercise: Exercise) {
-        self.exercise = exercise
-        data          = [ExerciseHistoryEntry]()
+        self.exercise     = exercise
+        data              = [ExerciseHistoryEntry]()
+        completedSetCount = 0
         
         super.init(frame: .zero, style: .plain)
         
@@ -72,9 +81,18 @@ class SetTableView: UITableView {
 // MARK: TableViewDelegate Extension
 
 extension SetTableView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        
         if editingStyle == .delete {
-            fatalError("TODO")
+            // We simply need to remove the completed set count from this cell.
+            // This prevents a bug by having additional cell completed counts
+            // If the cell was deleted.
+            let cell = cellForRow(at: indexPath) as! SetTableViewCell
+            
+            if cell.completeButton.isToggled {
+                completedSetCount -= 1
+            }
         }
     }
     
@@ -88,7 +106,7 @@ extension SetTableView: UITableViewDelegate {
 }
 
 
-// MARK: Data Source Extension
+// MARK: DataSource Extension
 
 extension SetTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,8 +116,12 @@ extension SetTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = dequeueReusableCell(withIdentifier: "cell") as! SetTableViewCell
         
-        cell.exercise = exercise
+        cell.exercise       = exercise
+        cell.historyEntry   = data[indexPath.row]
+        cell.statusDelegate = self
+        
         cell.titleLabel.text = "\tSet #\(indexPath.row + 1)"
+        
         cell.layoutIfNeeded()
         
         // Subtract default height so the title height is not included
@@ -108,4 +130,13 @@ extension SetTableView: UITableViewDataSource {
         
         return cell
     }  
+}
+
+
+// MARK: SetTableViewCellDelegate Extension
+
+extension SetTableView: SetTableViewCellDelegate {
+    func setStatusUpdate(toCompletionStatus completionStatus: Bool) {
+        completedSetCount += completionStatus ? 1 :  -1
+    }
 }

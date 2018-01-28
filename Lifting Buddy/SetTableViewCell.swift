@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class SetTableViewCell: UITableViewCell {
     
@@ -14,9 +16,12 @@ class SetTableViewCell: UITableViewCell {
     
     // The height per progression method view
     public static let heightPerProgressionMethodInput = BetterTextField.defaultHeight
+    // The ratio compared to this view that the complete button should take up
     public static let completeButtonWidthRatio = BetterTextField.labelWidthRatio
     
-    private var historyEntry: ExerciseHistoryEntry?
+    // The delegate we use to inform of status changed (completion button press)
+    public var statusDelegate: SetTableViewCellDelegate?
+    
     /*
      * We need a separate entry for the height constraint as it needs to be modified
      * If we don't do this, the console throws warnings about breaking constraints.
@@ -26,10 +31,10 @@ class SetTableViewCell: UITableViewCell {
     
     public let titleLabel: UILabel
     public let completeButton: ToggleablePrettyButton
+    // View where the set entries take place
     public let inputContentView: UIView
     
     private var pgmInputFields: [InputViewHolder]
-    
     
     public var exercise: Exercise? {
         didSet {
@@ -43,6 +48,7 @@ class SetTableViewCell: UITableViewCell {
             layoutSubviews()
         }
     }
+    public var historyEntry: ExerciseHistoryEntry?
     
     // MARK: View init
     
@@ -63,6 +69,12 @@ class SetTableViewCell: UITableViewCell {
         createAndActivateInputContentViewConstraints()
         
         completeButton.addTarget(self, action: #selector(completeButtonPress(_:)), for: .touchUpInside)
+        // We send the completeSessionNotification if the session ends for any reason.
+        // This can happen when the application terminates or the complete session button is press.
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(saveExerciseHistoryInformation),
+                                               name: completeSessionNotification,
+                                               object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,7 +89,8 @@ class SetTableViewCell: UITableViewCell {
         // Title label
         titleLabel.setDefaultProperties()
         titleLabel.textAlignment = .left
-        titleLabel.backgroundColor = UIColor.lightestBlackWhiteColor
+        titleLabel.backgroundColor = completeButton.isToggled ?
+                                        .niceLightGreen : .lightestBlackWhiteColor
         
         // Complete Button
         completeButton.setDefaultProperties()
@@ -87,6 +100,18 @@ class SetTableViewCell: UITableViewCell {
         completeButton.setToggleText(text: "✓")
         completeButton.setToggleTextColor(color: .white)
         completeButton.setToggleViewColor(color: .niceGreen)
+        
+        for inputViewHolder in pgmInputFields {
+            for inputView in inputViewHolder.getInputViews() {
+                if completeButton.isToggled {
+                    inputView.setLabelColors(backgroundColor: .niceLightGreen)
+                    inputView.textfield.isUserInteractionEnabled = false
+                } else {
+                    inputView.setLabelColors()
+                    inputView.textfield.isUserInteractionEnabled = true
+                }
+            }
+        }
     }
     
     override func layoutIfNeeded() {
@@ -142,10 +167,42 @@ class SetTableViewCell: UITableViewCell {
         }
     }
     
+    // Gets a history piece from all the fields
+    func getExercisePiecesFromInputFields() -> List<RLMExercisePiece> {
+        let exerciseList = List<RLMExercisePiece>()
+        
+        for (index, pgm) in exercise!.getProgressionMethods().enumerated() {
+            let exercisePiece = RLMExercisePiece()
+            
+            exercisePiece.progressionMethod = pgm
+            exercisePiece.value = pgmInputFields[index].getValue()
+            
+            exerciseList.append(exercisePiece)
+        }
+        
+        return exerciseList
+    }
+    
     // MARK: View actions
     
     @objc private func completeButtonPress(_ button: ToggleablePrettyButton) {
-        print(button.isToggled)
+        statusDelegate?.setStatusUpdate(toCompletionStatus: button.isToggled)
+    }
+    
+    @objc func saveExerciseHistoryInformation() {
+        let realm = try! Realm()
+        if let historyEntry = historyEntry,
+            completeButton.isToggled {
+            
+            historyEntry.date = Date()
+            historyEntry.exerciseInfo = getExercisePiecesFromInputFields()
+            
+            try! realm.write {
+                realm.add(historyEntry)
+            }
+            
+            exercise?.appendExerciseHistoryEntry(historyEntry)
+        }
     }
     
     // MARK: Constraints

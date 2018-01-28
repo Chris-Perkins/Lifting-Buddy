@@ -124,6 +124,8 @@ class WorkoutSessionView: UIView {
     
     // When we complete the workout, show the summary screen.
     private func completeWorkout() {
+        NotificationCenter.default.post(name: completeSessionNotification, object: nil)
+        
         workout?.incrementWorkoutCount()
         workout?.setDateLastDone(date: Date(timeIntervalSinceNow: 0))
         

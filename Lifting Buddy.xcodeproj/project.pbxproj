@@ -26,6 +26,7 @@
 		2250CAE01FC2632C00B21C4A /* WorkoutSessionSummaryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2250CADF1FC2632C00B21C4A /* WorkoutSessionSummaryScreen.swift */; };
 		22533B551F549B1500EE474E /* ProgressionMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22533B541F549B1500EE474E /* ProgressionMethod.swift */; };
 		2255BBA52005911000B051B0 /* SettingsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2255BBA42005911000B051B0 /* SettingsContentView.swift */; };
+		22578F91201D939C00D9E38C /* UITableViewScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22578F90201D939C00D9E38C /* UITableViewScrollDelegate.swift */; };
 		225D26B61F76D6BA00F047D9 /* ToggleablePrettyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */; };
 		225E65D21F22A041004B3AF4 /* WorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D11F22A041004B3AF4 /* WorkoutsView.swift */; };
 		225E65D41F22A442004B3AF4 /* RLMSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D31F22A442004B3AF4 /* RLMSupport.swift */; };
@@ -105,6 +106,7 @@
 		2250CADF1FC2632C00B21C4A /* WorkoutSessionSummaryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionSummaryScreen.swift; sourceTree = "<group>"; };
 		22533B541F549B1500EE474E /* ProgressionMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressionMethod.swift; sourceTree = "<group>"; };
 		2255BBA42005911000B051B0 /* SettingsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContentView.swift; sourceTree = "<group>"; };
+		22578F90201D939C00D9E38C /* UITableViewScrollDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewScrollDelegate.swift; sourceTree = "<group>"; };
 		225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleablePrettyButton.swift; sourceTree = "<group>"; };
 		225E65D11F22A041004B3AF4 /* WorkoutsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsView.swift; sourceTree = "<group>"; };
 		225E65D31F22A442004B3AF4 /* RLMSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMSupport.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 				22FD53A01FF1C45500FB069E /* ExercisePickerDelegateProtocol.swift */,
 				226B11A01F96E1750013139B /* InputViewProtocol.swift */,
 				22FD53921FF1C07100FB069E /* PrettySegmentedControlDelegateProtocol.swift */,
+				22578F90201D939C00D9E38C /* UITableViewScrollDelegate.swift */,
 				229A9DCC201D546E00FACBA0 /* SetTableViewDelegate.swift */,
 				229A9DCA201D52B600FACBA0 /* SetTableViewCellDelegate.swift */,
 				22DA60621FB56523009013D7 /* ShowViewProtocol.swift */,
@@ -635,6 +638,7 @@
 				229D87041F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift in Sources */,
 				22AA6D121F21851400624744 /* HeaderView.swift in Sources */,
 				22FD539F1FF1C3F800FB069E /* CreateExerciseViewDelegateProtocol.swift in Sources */,
+				22578F91201D939C00D9E38C /* UITableViewScrollDelegate.swift in Sources */,
 				229A9DCF201D5C1200FACBA0 /* Notifications.swift in Sources */,
 				225D26B61F76D6BA00F047D9 /* ToggleablePrettyButton.swift in Sources */,
 				22CDEFF41FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift in Sources */,

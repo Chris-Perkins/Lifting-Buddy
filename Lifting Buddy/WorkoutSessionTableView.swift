@@ -137,9 +137,12 @@ extension WorkoutSessionTableView: UITableViewDataSource {
             let cell = WorkoutSessionTableViewCell(exercise: data[indexPath.row],
                                                    style: .default,
                                                    reuseIdentifier: nil)
-            cell.delegate = self
+            
+            cell.delegate         = self
             cell.deletionDelegate = self
-            cell.indexPath = indexPath
+            cell.scrollDelegate   = self
+            cell.indexPath        = indexPath
+            
             cell.updateCompleteStatus()
             cell.updateToggledStatus()
             cell.heightConstraintConstantCouldChange()
@@ -183,7 +186,7 @@ extension WorkoutSessionTableView: WorkoutSessionTableViewCellDelegate {
 }
 
 
-// MARK: CellDeletionDelegate
+// MARK: CellDeletionDelegate Extension
 
 extension WorkoutSessionTableView: CellDeletionDelegate {
     // Deletes all data that we can
@@ -218,5 +221,17 @@ extension WorkoutSessionTableView: CellDeletionDelegate {
         heights.remove(at: index)
         checkComplete()
         reloadData()
+    }
+}
+
+extension WorkoutSessionTableView: UITableViewScrollDelegate {
+    /*
+     * We have this here as if we scroll to bottom if we add a cell, but we scroll to the top
+     * If we expand/collapse the cell. This causes differing behaviors, and therefore this is
+     * necessary... but not necessarily pretty.
+     */
+    func scrollToCell(atIndexPath indexPath: IndexPath, position: UITableViewScrollPosition,
+                      animated: Bool) {
+        scrollToRow(at: indexPath, at: position, animated: animated)
     }
 }

@@ -114,15 +114,6 @@ class SetTableViewCell: UITableViewCell {
         }
     }
     
-    override func layoutIfNeeded() {
-        super.layoutIfNeeded()
-        
-        titleLabel.drawText(in: CGRect(x: 10,
-                                       y: 0,
-                                       width: titleLabel.frame.width - 20,
-                                       height: titleLabel.frame.height))
-    }
-    
     // MARK: View functions
     
     public static func getHeight(forExercise exercise: Exercise) -> CGFloat {

@@ -14,6 +14,7 @@ class SetTableView: UITableView {
     // MARK: View properties
     
     public var completedSetCountDelegate: SetTableViewDelegate?
+    public var cellDeletionDelegate: CellDeletionDelegate?
     
     public var completedSetCount: Int {
         didSet {
@@ -23,13 +24,15 @@ class SetTableView: UITableView {
     
     private var exercise: Exercise
     private var data: [ExerciseHistoryEntry]
+    private var cells: [SetTableViewCell]
     
     // MARK: View inits
     
     init(forExercise exercise: Exercise) {
         self.exercise     = exercise
-        data              = [ExerciseHistoryEntry]()
         completedSetCount = 0
+        data              = [ExerciseHistoryEntry]()
+        cells             = [SetTableViewCell]()
         
         super.init(frame: .zero, style: .plain)
         
@@ -93,6 +96,15 @@ extension SetTableView: UITableViewDelegate {
             if cell.completeButton.isToggled {
                 completedSetCount -= 1
             }
+            
+            data.remove(at: indexPath.row)
+            if indexPath.row < cells.count {
+                cells.remove(at: indexPath.row)
+            }
+            
+            cellDeletionDelegate?.deleteData(at: indexPath.row)
+            
+            reloadData()
         }
     }
     
@@ -114,21 +126,31 @@ extension SetTableView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = dequeueReusableCell(withIdentifier: "cell") as! SetTableViewCell
+        var cell: SetTableViewCell?
         
-        cell.exercise       = exercise
-        cell.historyEntry   = data[indexPath.row]
-        cell.statusDelegate = self
+        if indexPath.row < cells.count {
+            cell = cells[indexPath.row]
+        } else {
+            cell = SetTableViewCell(style: .default, reuseIdentifier: nil)
+            
+            cell?.exercise       = exercise
+            cell?.historyEntry   = data[indexPath.row]
+            cell?.statusDelegate = self
+            
+            // Subtract default height so the title height is not included
+            cell?.inputViewHeightConstraint?.constant =
+                SetTableViewCell.getHeight(forExercise: exercise) - UITableViewCell.defaultHeight
+            
+            cells.append(cell!)
+        }
         
-        cell.titleLabel.text = "\tSet #\(indexPath.row + 1)"
+        guard let setCell = cell else {
+            fatalError("Cell does not exist, but it should?")
+        }
         
-        cell.layoutIfNeeded()
+        setCell.titleLabel.text = "\tSet #\(indexPath.row + 1)"
         
-        // Subtract default height so the title height is not included
-        cell.inputViewHeightConstraint?.constant =
-            SetTableViewCell.getHeight(forExercise: exercise) - UITableViewCell.defaultHeight
-        
-        return cell
+        return setCell
     }  
 }
 

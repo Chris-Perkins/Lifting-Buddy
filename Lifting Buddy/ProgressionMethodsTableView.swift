@@ -76,6 +76,7 @@ extension ProgressionsMethodTableView: UITableViewDataSource {
         
         if editingStyle == .delete {
             data.remove(at: indexPath.row)
+            cells.remove(at: indexPath.row)
             
             heightConstraint?.constant -= UITableViewCell.defaultHeight
             reloadData()

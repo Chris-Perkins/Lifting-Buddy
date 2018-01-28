@@ -23,6 +23,8 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     public var delegate: WorkoutSessionTableViewCellDelegate?
     // The delegate we use to indicate that a cell was deleted
     public var deletionDelegate: CellDeletionDelegate?
+    // Delegate we inform where to scroll
+    public var scrollDelegate: UITableViewScrollDelegate?
     
     // the button we press to toggle this cell. It's invisible (basically)
     private let invisButton: UIButton
@@ -36,6 +38,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     public let addSetButton: PrettyButton
     // The actual table view where we input data
     public let setTableView: SetTableView
+    
     // The height of our tableview
     private var tableViewHeightConstraint: NSLayoutConstraint?
     
@@ -45,8 +48,6 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     private var isComplete: Bool
     // Whether or not this view is toggled
     private var isToggled: Bool
-    // Data we're displaying
-    private var data: [[Float]]
     // The current set we're doing
     private var curSet: Int
     
@@ -61,8 +62,6 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         setLabel     = UILabel()
         addSetButton = PrettyButton()
         setTableView = SetTableView(forExercise: exercise)
-        
-        data = [[Float]]()
         
         // Initialize to minimum height of the cell label + the viewPadding associated
         // between the two views.
@@ -84,10 +83,11 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         createAndActivateAddSetButtonConstraints()
         createAndActivateSetTableViewConstraints()
         
-        setTableView.completedSetCountDelegate = self
-        
         invisButton.addTarget( self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         addSetButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        
+        setTableView.completedSetCountDelegate = self
+        setTableView.cellDeletionDelegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -203,7 +203,10 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         {
             tableViewHeightConstraint.constant = setTableView.getHeight()
             delegate?.cellHeightDidChange(height: getHeight(), indexPath: indexPath!)
-            layoutIfNeeded()
+            
+            UIView.animate(withDuration: 0.25, animations: {
+                self.layoutIfNeeded()
+            })
         }
     }
     
@@ -215,9 +218,17 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         case invisButton:
             isToggled = !isToggled
             updateToggledStatus()
+            
+            scrollDelegate?.scrollToCell(atIndexPath: indexPath!,
+                                         position: .top, animated: false)
         case addSetButton:
             setTableView.appendDataPiece(ExerciseHistoryEntry())
             heightConstraintConstantCouldChange()
+            
+            // Don't animate as we would cause the tableview to scroll way down every time.
+            // that's bad.
+            scrollDelegate?.scrollToCell(atIndexPath: indexPath!,
+                                         position: .bottom, animated: false)
         default:
             fatalError("Button pressed did not exist?")
         }
@@ -345,8 +356,18 @@ extension WorkoutSessionTableViewCell: ExerciseHistoryEntryTableViewDelegate {
     }
 }
 
+
+// MARK: SetTableViewDelegate
+
 extension WorkoutSessionTableViewCell: SetTableViewDelegate {
     func completedSetCountChanged() {
         updateCompleteStatus()
+    }
+}
+
+extension WorkoutSessionTableViewCell: CellDeletionDelegate {
+    func deleteData(at index: Int) {
+        tableViewHeightConstraint?.constant -= SetTableViewCell.getHeight(forExercise: exercise)
+        heightConstraintConstantCouldChange()
     }
 }

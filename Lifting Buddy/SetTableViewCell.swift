@@ -176,9 +176,26 @@ class SetTableViewCell: UITableViewCell {
         return exerciseList
     }
     
+    // Determines if we can save exercises
+    private func determineIfCanSaveFields() -> Bool {
+        var returnVal = true
+        for inputView in pgmInputFields {
+            returnVal = returnVal && inputView.areFieldsValid()
+        }
+        
+        return returnVal
+    }
+    
     // MARK: View actions
     
     @objc private func completeButtonPress(_ button: ToggleablePrettyButton) {
+        // If we can't save the fields, don't do anything.
+        if !determineIfCanSaveFields() {
+            completeButton.setIsToggled(toggled: false)
+            
+            return
+        }
+        
         statusDelegate?.setStatusUpdate(toCompletionStatus: button.isToggled)
         
         for (index, pgm) in exercise!.getProgressionMethods().enumerated() {

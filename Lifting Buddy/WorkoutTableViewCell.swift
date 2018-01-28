@@ -79,6 +79,10 @@ class WorkoutTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        if workout?.isInvalidated == true {
+            return
+        }
+        
         clipsToBounds = true
         
         cellTitle.textColor = .niceBlue

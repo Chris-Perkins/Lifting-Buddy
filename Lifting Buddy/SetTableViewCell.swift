@@ -101,7 +101,12 @@ class SetTableViewCell: UITableViewCell {
         completeButton.setToggleTextColor(color: .white)
         completeButton.setToggleViewColor(color: .niceGreen)
         
-        for inputViewHolder in pgmInputFields {
+        for (index, inputViewHolder) in pgmInputFields.enumerated() {
+            if !completeButton.isToggled {
+                inputViewHolder.setDefaultValue(
+                    exercise?.getProgressionMethods()[index].getDefaultValue())
+            }
+            
             for inputView in inputViewHolder.getInputViews() {
                 if completeButton.isToggled {
                     inputView.setLabelColors(backgroundColor: .niceLightGreen)
@@ -196,11 +201,11 @@ class SetTableViewCell: UITableViewCell {
             return
         }
         
-        statusDelegate?.setStatusUpdate(toCompletionStatus: button.isToggled)
-        
         for (index, pgm) in exercise!.getProgressionMethods().enumerated() {
             pgm.setDefaultValue(defaultValue: pgmInputFields[index].getValue())
         }
+        
+        statusDelegate?.setStatusUpdate(toCompletionStatus: button.isToggled)
     }
     
     @objc func saveExerciseHistoryInformation() {

@@ -160,5 +160,9 @@ extension SetTableView: UITableViewDataSource {
 extension SetTableView: SetTableViewCellDelegate {
     func setStatusUpdate(toCompletionStatus completionStatus: Bool) {
         completedSetCount += completionStatus ? 1 :  -1
+        
+        for cell in visibleCells {
+            cell.layoutSubviews()
+        }
     }
 }

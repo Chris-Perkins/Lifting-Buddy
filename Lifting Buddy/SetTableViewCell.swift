@@ -187,6 +187,10 @@ class SetTableViewCell: UITableViewCell {
     
     @objc private func completeButtonPress(_ button: ToggleablePrettyButton) {
         statusDelegate?.setStatusUpdate(toCompletionStatus: button.isToggled)
+        
+        for (index, pgm) in exercise!.getProgressionMethods().enumerated() {
+            pgm.setDefaultValue(defaultValue: pgmInputFields[index].getValue())
+        }
     }
     
     @objc func saveExerciseHistoryInformation() {
@@ -194,10 +198,10 @@ class SetTableViewCell: UITableViewCell {
         if let historyEntry = historyEntry,
             completeButton.isToggled {
             
-            historyEntry.date = Date()
-            historyEntry.exerciseInfo = getExercisePiecesFromInputFields()
-            
             try! realm.write {
+                historyEntry.date = Date()
+                historyEntry.exerciseInfo = getExercisePiecesFromInputFields()
+                
                 realm.add(historyEntry)
             }
             

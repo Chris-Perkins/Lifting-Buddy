@@ -100,6 +100,8 @@ class ProgressionMethodTableViewCell: UITableViewCell {
         // If this progression method doesn't have an index, it has not been added to realm
         // so, add this to realm
         if pgm.getIndex() == nil {
+            pgm.setDefaultValue(defaultValue: nameEntryField.text)
+            
             let realm = try! Realm()
             try! realm.write {
                 realm.add(pgm)

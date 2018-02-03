@@ -12,6 +12,7 @@ import RealmSwift
 class SetTableView: UITableView {
     
     // MARK: View properties
+    public var sessionStartDate = Date()
     
     public var completedSetCountDelegate: SetTableViewDelegate?
     public var cellDeletionDelegate: CellDeletionDelegate?
@@ -149,6 +150,10 @@ extension SetTableView: UITableViewDataSource {
         }
         
         setCell.titleLabel.text = "\tSet #\(indexPath.row + 1)"
+        // This is done to store the session sets in order.
+        // Yes, it's a hacky fix.
+        // However, I could not think of a better way to design this
+        setCell.setDate = sessionStartDate.addingTimeInterval(Double(indexPath.row))
         
         return setCell
     }  

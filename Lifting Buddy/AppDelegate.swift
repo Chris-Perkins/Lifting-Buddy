@@ -64,8 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        NotificationCenter.default.post(name: completeSessionNotification, object: nil)
-        
         // If user is actively in a session, we need to recalculate the maxes for any exercises
         for exercise in sessionExercises {
             exercise.recalculateProgressionMethodMaxValues()

@@ -8,4 +8,4 @@
 
 import Foundation
 
-let completeSessionNotification = Notification.Name(rawValue: "completeSessionNotification")
+// No notifications for now!

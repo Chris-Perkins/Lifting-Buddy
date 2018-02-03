@@ -163,11 +163,41 @@ class Exercise: Object {
         return exerciseHistory
     }
     
-    // Adds an entry to this exercise
-    public func appendExerciseHistoryEntry(_ exerciseHistoryEntry: ExerciseHistoryEntry) {
+    // Adds an entry to this exercise in order
+    public func insertExerciseHistoryEntry(_ exerciseHistoryEntry: ExerciseHistoryEntry) {
         let realm = try! Realm()
         try! realm.write {
-            exerciseHistory.append(exerciseHistoryEntry)
+            exerciseHistory.insert(exerciseHistoryEntry,
+                                   at: getInsertionIndex(forExerciseHistoryEntry: exerciseHistoryEntry))
+        }
+    }
+    
+    // Inserts the date in the appropriate index using a binary search
+    private func getInsertionIndex(forExerciseHistoryEntry exerciseHistoryEntry: ExerciseHistoryEntry) -> Int {
+        var low = 0
+        var high = exerciseHistory.count
+        var checkDate: Date?
+        
+        guard let insertDate = exerciseHistoryEntry.date else {
+            return 0
+        }
+        
+        while low < high {
+            let mid: Int = (low + high) / 2
+            checkDate = exerciseHistory[mid].date
+            
+            if (checkDate == nil || checkDate! < insertDate) {
+                low = mid + 1
+            } else {
+                high = mid - 1
+            }
+        }
+        
+        if low < exerciseHistory.count {
+            checkDate = exerciseHistory[low].date
+            return (checkDate == nil || checkDate! < insertDate) ? low + 1 : low
+        } else {
+            return exerciseHistory.count
         }
     }
     

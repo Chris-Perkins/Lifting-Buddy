@@ -19,6 +19,8 @@ class SetTableViewCell: UITableViewCell {
     // The ratio compared to this view that the complete button should take up
     public static let completeButtonWidthRatio = BetterTextField.labelWidthRatio
     
+    public var setDate: Date?
+    
     // The delegate we use to inform of status changed (completion button press)
     public var statusDelegate: SetTableViewCellDelegate?
     
@@ -69,12 +71,6 @@ class SetTableViewCell: UITableViewCell {
         createAndActivateInputContentViewConstraints()
         
         completeButton.addTarget(self, action: #selector(completeButtonPress(_:)), for: .touchUpInside)
-        // We send the completeSessionNotification if the session ends for any reason.
-        // This can happen when the application terminates or the complete session button is press.
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(saveExerciseHistoryInformation),
-                                               name: completeSessionNotification,
-                                               object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -197,7 +193,6 @@ class SetTableViewCell: UITableViewCell {
         // If we can't save the fields, don't do anything.
         if !determineIfCanSaveFields() {
             completeButton.setIsToggled(toggled: false)
-            
             return
         }
         
@@ -206,21 +201,31 @@ class SetTableViewCell: UITableViewCell {
         }
         
         statusDelegate?.setStatusUpdate(toCompletionStatus: button.isToggled)
+        
+        saveExerciseHistoryInformation()
     }
     
+    // Note: this can save out of order.
+    // If user saves their sets out of order, it will be stored out of order.
+    // This is a pretty hacky fix.
     @objc func saveExerciseHistoryInformation() {
         let realm = try! Realm()
-        if let historyEntry = historyEntry,
-            completeButton.isToggled {
-            
-            try! realm.write {
-                historyEntry.date = Date()
-                historyEntry.exerciseInfo = getExercisePiecesFromInputFields()
+        if let historyEntry = historyEntry {
+            if completeButton.isToggled {
+                try! realm.write {
+                    historyEntry.date = setDate
+                    historyEntry.exerciseInfo = getExercisePiecesFromInputFields()
+                    
+                    realm.add(historyEntry)
+                }
                 
-                realm.add(historyEntry)
+                exercise?.insertExerciseHistoryEntry(historyEntry)
+            } else {
+                exercise?.removeExerciseHistoryEntry(historyEntry)
+                
+                // We remake the history entry since the previous was deleted/invalidated.
+                self.historyEntry = ExerciseHistoryEntry()
             }
-            
-            exercise?.appendExerciseHistoryEntry(historyEntry)
         }
     }
     

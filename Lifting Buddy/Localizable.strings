@@ -122,6 +122,17 @@
 "WorkoutView.Label.Exercises"      = "Exercises";
 "WorkoutView.Label.Repeat"         = "Repeat";
 
+// MARK: Messages
+"Message.NewBest.Title" = "New Progression Method Best!";
+"Message.NewBest.Desc"  = "{0}: {1}";
+
+"Message.ExerciseComplete.Title" = "{0} Complete!";
+
+"Message.WorkoutComplete.Title" = "{0} Complete!";
+"Message.WorkoutComplete.Desc"  = "Completed {0} Times!";
+
+"Message.SessionComplete.Title" = "Session Complete!";
+
 // MARK: Miscellaneous
 "Time.Second.Char" = "s";
 "Time.Minute.Char" = "m";

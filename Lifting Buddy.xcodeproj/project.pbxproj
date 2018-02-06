@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		220A79C92028F12F000B4EA7 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A79C82028F12F000B4EA7 /* Message.swift */; };
+		220A79CC20291E0D000B4EA7 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A79CB20291E0D000B4EA7 /* MessageView.swift */; };
 		220A94251F95146400B5CF60 /* ExerciseHistoryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */; };
 		221A41FC1FED97FA005C0B01 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 221A41F61FED97FA005C0B01 /* LICENSE */; };
 		221A41FD1FED97FA005C0B01 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 221A41F81FED97FA005C0B01 /* README.md */; };
@@ -86,6 +87,7 @@
 /* Begin PBXFileReference section */
 		07EAE38F8336E92D79D24030 /* Pods-Lifting Buddy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.debug.xcconfig"; sourceTree = "<group>"; };
 		220A79C82028F12F000B4EA7 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		220A79CB20291E0D000B4EA7 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryTableView.swift; sourceTree = "<group>"; };
 		221A41F61FED97FA005C0B01 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		221A41F71FED97FA005C0B01 /* HPReorderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPReorderTableView.h; sourceTree = "<group>"; };
@@ -177,6 +179,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		220A79CA20291CF2000B4EA7 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				220A79C82028F12F000B4EA7 /* Message.swift */,
+				220A79CB20291E0D000B4EA7 /* MessageView.swift */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
 		221A41F41FED97F9005C0B01 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +247,7 @@
 				225D44101F510FD700B35D80 /* Custom UITypes */,
 				22AA6D0E1F21847F00624744 /* Content Views */,
 				224153791F1EE2C500F7B82B /* Workout Classes */,
+				220A79CA20291CF2000B4EA7 /* Messages */,
 				22AA6D101F2184BD00624744 /* Miscellaneous */,
 				225E65D51F22A446004B3AF4 /* Supporting Files */,
 				224697C91F19843A0089C7CA /* Main.storyboard */,
@@ -365,7 +377,6 @@
 				22E77E051F1B35310076B3DB /* HelperFunctions.swift */,
 				22FAD5041FF406E200C42811 /* SessionInfo.swift */,
 				229A9DCE201D5C1200FACBA0 /* Notifications.swift */,
-				220A79C82028F12F000B4EA7 /* Message.swift */,
 			);
 			name = Miscellaneous;
 			sourceTree = "<group>";
@@ -590,6 +601,7 @@
 				22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */,
 				227981421F4D13BE0010DA18 /* ProgressionMethodsTableView.swift in Sources */,
 				2250CAE01FC2632C00B21C4A /* WorkoutSessionSummaryScreen.swift in Sources */,
+				220A79CC20291E0D000B4EA7 /* MessageView.swift in Sources */,
 				22ECE3941F644E1A0067171A /* WorkoutSessionView.swift in Sources */,
 				22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */,
 				2280A2FD1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift in Sources */,

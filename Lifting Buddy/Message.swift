@@ -16,11 +16,14 @@ public enum MessageType {
 }
 
 public struct Message {
-    private let type: MessageType
-    public let identifier: String?
+    // The type of message this is
+    public let type: MessageType
+    // The identifier for the message (typically the name that describes the value)
+    private let identifier: String?
+    // The value we're displaying
     private let value: String?
     
-    public var getMessageTitle: String {
+    public var messageTitle: String {
         switch type {
         case .NewBest:
             return NSLocalizedString("Message.NewBest.Title", comment: "")
@@ -35,7 +38,7 @@ public struct Message {
         }
     }
     
-    public var getMessageDescription: String? {
+    public var messageDescription: String? {
         switch type {
         case .NewBest:
             return NSLocalizedString("Message.NewBest.Desc",

@@ -72,13 +72,14 @@ class MainViewController: UIViewController {
             guard let sessionView = sessionView else {
                 fatalError("Session view called, but is nil!")
             }
+            sessionView.layoutAllSubviews()
             showView(sessionView)
             
         case SectionView.ContentViews.WORKOUTS:
             if workoutView == nil {
                 workoutView = WorkoutsView(frame: .zero)
             }
-            workoutView?.layoutSubviews()
+            workoutView?.layoutAllSubviews()
             showView(workoutView!)
             
         case SectionView.ContentViews.EXERCISES:

@@ -13,12 +13,15 @@ import CDAlertView
 import GBVersionTracking
 import StoreKit
 
+// MARK: ViewController Declaration
+
 class MainViewController: UIViewController {
     
     // MARK: IBOutlets
     
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var sectionContentView: UIView!
+    @IBOutlet weak var messageContainerView: UIView!
     
     // MARK: View properties
     
@@ -82,8 +85,8 @@ class MainViewController: UIViewController {
             if exercisesView == nil {
                 exercisesView = ExercisesView(frame: .zero)
             }
+            exercisesView?.layoutAllSubviews()
             showView(exercisesView!)
-            exercisesView?.layoutSubviews()
         }
     }
     
@@ -91,6 +94,8 @@ class MainViewController: UIViewController {
     
     @IBAction func unwindToMenu(segue: UIStoryboardSegue) {}
 }
+
+// MARK: WorkoutSessionStarter Extension
 
 extension MainViewController: WorkoutSessionStarter {
     func startSession(workout: Workout?,
@@ -180,6 +185,8 @@ extension MainViewController: WorkoutSessionStarter {
     }
 }
 
+// MARK: ShowViewDelegate Extension
+
 extension MainViewController: ShowViewDelegate {
     func showView(_ view: UIView) {
         sectionContentView.addSubview(view)
@@ -189,9 +196,35 @@ extension MainViewController: ShowViewDelegate {
     }
 }
 
+// MARK: ExerciseDisplayer Extension
+
 extension MainViewController: ExerciseDisplayer {
     func displayExercise(_ exercise: Exercise) {
         headerView.sectionView.imitateButtonPress(forButton: headerView.sectionView.exercisesButton)
         exercisesView?.selectExercise(exercise: exercise)
+    }
+}
+
+// MARK: MessageDisplayer Extension
+
+extension MainViewController: MessageDisplayer {
+    func displayMessage(_ message: Message) {
+        let messageV = MessageView(withMessage: message, andHeight: messageContainerView.frame.height)
+        
+        UIView.slideView(messageV, overView: messageContainerView)
+    }
+    
+    func messageQueueStarted() {
+        UIView.animate(withDuration: 0.25) {
+            self.headerView.aboutButton.alpha = 0
+            self.headerView.titleBar.alpha    = 0
+        }
+    }
+    
+    func messageQueueEnded() {
+        UIView.animate(withDuration: 0.25) {
+            self.headerView.aboutButton.alpha = 1
+            self.headerView.titleBar.alpha    = 1
+        }
     }
 }

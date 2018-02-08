@@ -20,13 +20,13 @@ class HeaderView: UIView {
     private static let appURL = URL(string: "http://chrisperkins.me/LiftingBuddy/")!
     
     // Bar below status bar
-    private let contentView: UIView
+    public let contentView: UIView
     // Bar that displays title of app
-    private let titleBar: UILabel
+    public let titleBar: UILabel
     // Button to display info about the app
-    private let aboutButton: UIButton
+    public let aboutButton: UIButton
     // Dividing bar
-    private let divideView: UIView
+    public let divideView: UIView
     // View for different buttons
     public let sectionView: SectionView
     
@@ -90,7 +90,7 @@ class HeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        layer.zPosition = 100
+        // Self
         backgroundColor = .niceBlue
         
         // title bar

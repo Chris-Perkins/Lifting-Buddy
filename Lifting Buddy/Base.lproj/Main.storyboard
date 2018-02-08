@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14092" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14081.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,9 +24,18 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dBG-i1-qoX" customClass="HeaderView" customModule="Lifting_Buddy" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mC3-yM-1Jw" userLabel="MessageContainer">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" red="0.29126899290000002" green="0.4598940299" blue="0.90986615420000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="mC3-yM-1Jw" secondAttribute="trailing" id="H9a-es-Lk0"/>
+                                    <constraint firstItem="mC3-yM-1Jw" firstAttribute="leading" secondItem="dBG-i1-qoX" secondAttribute="leading" id="Huf-33-ume"/>
                                     <constraint firstAttribute="height" constant="100" id="SEB-YA-e1Z"/>
+                                    <constraint firstItem="mC3-yM-1Jw" firstAttribute="top" secondItem="dBG-i1-qoX" secondAttribute="top" id="nbg-4S-O81"/>
+                                    <constraint firstItem="mC3-yM-1Jw" firstAttribute="height" secondItem="dBG-i1-qoX" secondAttribute="height" multiplier="0.5" constant="15" id="s2g-XF-dtR"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4I-V8-PjE">
@@ -45,13 +55,14 @@
                     </view>
                     <connections>
                         <outlet property="headerView" destination="dBG-i1-qoX" id="ezF-vA-F38"/>
+                        <outlet property="messageContainerView" destination="mC3-yM-1Jw" id="Zrh-lh-EBP"/>
                         <outlet property="sectionContentView" destination="O4I-V8-PjE" id="nR9-gv-yIj"/>
-                        <segue destination="3ba-yy-OQj" kind="showDetail" identifier="toSettings" action="showViewController:sender:" id="MRd-2Z-9pG"/>
+                        <segue destination="3ba-yy-OQj" kind="showDetail" identifier="toSettings" id="MRd-2Z-9pG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-174" y="152"/>
+            <point key="canvasLocation" x="-175.36231884057972" y="151.63043478260872"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="lAo-dG-R6E">

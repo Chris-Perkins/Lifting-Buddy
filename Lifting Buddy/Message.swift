@@ -15,7 +15,8 @@ public enum MessageType {
     case SessionComplete
 }
 
-public struct Message {
+/* This is declared as an NSObject because we use it an @objc protocol */
+public class Message: NSObject {
     // The type of message this is
     public let type: MessageType
     // The identifier for the message (typically the name that describes the value)
@@ -26,7 +27,9 @@ public struct Message {
     public var messageTitle: String {
         switch type {
         case .NewBest:
-            return NSLocalizedString("Message.NewBest.Title", comment: "")
+            return NSLocalizedString("Message.NewBest.Title",
+                                     comment: "").replacingOccurrences(of: "{0}", with:
+                                        identifier!).replacingOccurrences(of: "{1}", with: value!)
         case .WorkoutComplete:
             return NSLocalizedString("Message.WorkoutComplete.Title",
                                      comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
@@ -35,19 +38,6 @@ public struct Message {
                                      comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
         case .SessionComplete:
             return NSLocalizedString("Message.SessionComplete.Title", comment: "")
-        }
-    }
-    
-    public var messageDescription: String? {
-        switch type {
-        case .NewBest:
-            return NSLocalizedString("Message.NewBest.Desc",
-                                     comment: "{0}: {1}").replacingOccurrences(of: "{0}", with: identifier!).replacingOccurrences(of: "{1}", with: value!)
-        case .WorkoutComplete:
-            return NSLocalizedString("Message.WorkoutComplete.Desc",
-                                     comment: "{0}").replacingOccurrences(of: "{0}", with: value!)
-        default:
-            return nil
         }
     }
     

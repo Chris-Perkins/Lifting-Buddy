@@ -45,6 +45,7 @@
 		2280A2FD1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280A2FC1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift */; };
 		228315CA1F857D23001C9324 /* BetterTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228315C91F857D23001C9324 /* BetterTextField.swift */; };
 		2289D4451FAF9B7700A2DF9D /* ExerciseChartCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2289D4441FAF9B7700A2DF9D /* ExerciseChartCreator.swift */; };
+		228CBBDD202E704000884FE6 /* MessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228CBBDC202E704000884FE6 /* MessageQueue.swift */; };
 		228CD0AA1FA6782700463B90 /* ExercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228CD0A91FA6782700463B90 /* ExercisesView.swift */; };
 		229A9DCB201D52B600FACBA0 /* SetTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229A9DCA201D52B600FACBA0 /* SetTableViewCellDelegate.swift */; };
 		229A9DCD201D546E00FACBA0 /* SetTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229A9DCC201D546E00FACBA0 /* SetTableViewDelegate.swift */; };
@@ -128,6 +129,7 @@
 		2280A2FC1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		228315C91F857D23001C9324 /* BetterTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterTextField.swift; sourceTree = "<group>"; };
 		2289D4441FAF9B7700A2DF9D /* ExerciseChartCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseChartCreator.swift; sourceTree = "<group>"; };
+		228CBBDC202E704000884FE6 /* MessageQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageQueue.swift; sourceTree = "<group>"; };
 		228CD0A91FA6782700463B90 /* ExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesView.swift; sourceTree = "<group>"; };
 		229A9DCA201D52B600FACBA0 /* SetTableViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableViewCellDelegate.swift; sourceTree = "<group>"; };
 		229A9DCC201D546E00FACBA0 /* SetTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableViewDelegate.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			children = (
 				220A79C82028F12F000B4EA7 /* Message.swift */,
 				220A79CB20291E0D000B4EA7 /* MessageView.swift */,
+				228CBBDC202E704000884FE6 /* MessageQueue.swift */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -598,6 +601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				228CBBDD202E704000884FE6 /* MessageQueue.swift in Sources */,
 				22FD539B1FF1C26E00FB069E /* ExerciseHistoryEntryTableViewDelegateProtocol.swift in Sources */,
 				22B944C42019590700585D65 /* SetTableView.swift in Sources */,
 				221A42011FED9872005C0B01 /* HPReorderTableView.h in Sources */,

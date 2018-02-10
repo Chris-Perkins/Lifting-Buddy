@@ -48,9 +48,6 @@ class MessageView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // Self
-        backgroundColor = .niceRed
-        
         // Title label
         titleLabel.setDefaultProperties()
         titleLabel.textColor = .primaryBlackWhiteColor

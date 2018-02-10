@@ -213,6 +213,12 @@ extension MainViewController: MessageDisplayer {
         let messageV = MessageView(withMessage: message, andHeight: messageContainerView.frame.height)
         
         UIView.slideView(messageV, overView: messageContainerView)
+        
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (timer) in
+            UIView.animate(withDuration: 0.25, animations: {
+                messageV.alpha = 0
+            })
+        }
     }
     
     func messageQueueStarted() {

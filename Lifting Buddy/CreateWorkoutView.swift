@@ -180,7 +180,8 @@ class CreateWorkoutView: UIScrollView {
     // MARK: Event functions
     
     @objc func buttonPress(sender: PrettyButton) {
-        nameEntryField.textfield.resignFirstResponder()
+        // Resigns all keyboards
+        endEditing(true)
         
         switch (sender) {
         case addExerciseButton:

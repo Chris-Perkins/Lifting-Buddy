@@ -175,6 +175,9 @@ class CreateExerciseView: UIScrollView {
     @objc func buttonPress(sender: UIButton) {
         checkIfExerciseInvalidated()
         
+        // Dismisses the keyboard from all possible textfields
+        endEditing(true)
+        
         switch(sender){
         case addProgressionTrackerButton:
             if editingExercise?.canModifyCoreProperties ?? true {

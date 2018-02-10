@@ -153,6 +153,11 @@ class WorkoutSessionView: UIView {
             chooseExerciseView.exercisePickerDelegate = self
             showView(chooseExerciseView)
         case completeButton:
+            /* Found here: https://stackoverflow.com/questions/37229132/swift-how-to-resign-first-responder-on-all-uitextfield
+               Allows us to dismiss the keyboard on all possible textfields
+            */
+            endEditing(true)
+            
             if isComplete {
                 // If complete, we can just complete.
                 completeWorkout()

@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
         // Done to fix coloring scheme updates not working unless app restarted
         view.layoutAllSubviews()
         
-        if GBVersionTracking.firstInstalledVersion() <= "1.2" &&
+        if GBVersionTracking.firstInstalledVersion() <= "1.4" &&
             GBVersionTracking.isFirstLaunchForVersion() {
             SKStoreReviewController.requestReview()
         }

@@ -50,7 +50,7 @@ class MessageView: UIView {
         
         // Title label
         titleLabel.setDefaultProperties()
-        titleLabel.textColor = .primaryBlackWhiteColor
+        titleLabel.textColor = .white
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
         titleLabel.text = message.messageTitle
     }

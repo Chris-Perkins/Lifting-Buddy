@@ -163,6 +163,13 @@ class WorkoutSessionTableViewCell: UITableViewCell {
         if newComplete != isComplete {
             isComplete = newComplete
             delegate?.cellCompleteStatusChanged(complete: isComplete)
+            
+            // We only display the message if the exercise is complete and > 0 sets to do
+            if isComplete && exercise.getSetCount() != 0 {
+                MessageQueue.append(Message(type: .ExerciseComplete,
+                                            identifier: exercise.getName(),
+                                            value: nil))
+            }
             layoutSubviews()
         } else if curSet != setTableView.completedSetCount {
             layoutSubviews()

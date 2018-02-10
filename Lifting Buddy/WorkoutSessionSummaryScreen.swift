@@ -124,6 +124,8 @@ class WorkoutSessionSummaryView: UIView {
     @objc private func buttonPress(sender: UIButton) {
         switch sender {
         case closeButton:
+            MessageQueue.append(Message(type: .SessionComplete, identifier: nil, value: nil))
+            
             workoutSessionDelegate?.endSession(workout: workout, exercises: exercises)
             removeSelfNicelyWithAnimation()
         default:

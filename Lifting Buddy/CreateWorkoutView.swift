@@ -203,6 +203,10 @@ class CreateWorkoutView: UIScrollView {
                 // Send info to delegate, animate up then remove self
                 let savedWorkout = saveAndReturnWorkout()
                 
+                MessageQueue.append(Message(type: editingWorkout == nil ? .ObjectCreated: .ObjectSaved,
+                                                identifier: savedWorkout.getName(),
+                                                value: nil))
+                
                 // Prevent user interaction with all subviews
                 for subview in subviews {
                     subview.isUserInteractionEnabled = false

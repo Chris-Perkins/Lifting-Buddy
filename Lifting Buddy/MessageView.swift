@@ -36,7 +36,7 @@ class MessageView: UIView {
         addSubview(imageView)
         
         createAndActivateTitleLabelConstraints()
-        createAndActivateImageViewConstraints()
+        //createAndActivateImageViewConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,7 +51,7 @@ class MessageView: UIView {
         // Title label
         titleLabel.setDefaultProperties()
         titleLabel.textColor = .primaryBlackWhiteColor
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 24.0)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
         titleLabel.text = message.messageTitle
     }
     
@@ -69,13 +69,16 @@ class MessageView: UIView {
                                                              withCopyView: self,
                                                              attribute: .top,
                                                              plusConstant: statusBarHeight).isActive = true
-        NSLayoutConstraint(item: imageView,
+        /*NSLayoutConstraint(item: imageView,
                            attribute: .left,
                            relatedBy: .equal,
                            toItem: titleLabel,
                            attribute: .right,
                            multiplier: 1,
-                           constant: 0).isActive = true
+                           constant: 0).isActive = true*/
+        NSLayoutConstraint.createViewAttributeCopyConstraint(view: titleLabel,
+                                                             withCopyView: self,
+                                                             attribute: .right).isActive = true
         NSLayoutConstraint.createHeightConstraintForView(view: titleLabel,
                                                          height: height - statusBarHeight).isActive = true
     }

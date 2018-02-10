@@ -195,6 +195,10 @@ class CreateExerciseView: UIScrollView {
             if requirementsFulfilled() {
                 let exerciseCreated: Exercise = saveAndReturnExercise()
                 
+                MessageQueue.append(Message(type: editingExercise == nil ? .ObjectCreated : .ObjectSaved,
+                                            identifier: exerciseCreated.getName(),
+                                            value: nil))
+                
                 // Send data to delegate to inform that we've changed something
                 dataDelegate?.finishedWithExercise(exercise: exerciseCreated)
                 

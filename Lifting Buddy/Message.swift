@@ -13,6 +13,8 @@ public enum MessageType {
     case WorkoutComplete
     case ExerciseComplete
     case SessionComplete
+    case ObjectSaved
+    case ObjectCreated
 }
 
 /* This is declared as an NSObject because we use it an @objc protocol */
@@ -27,23 +29,30 @@ public class Message: NSObject {
     public var messageTitle: String {
         switch type {
         case .NewBest:
-            return NSLocalizedString("Message.NewBest.Title",
+            return NSLocalizedString("Message.NewBest",
                                      comment: "").replacingOccurrences(of: "{0}", with:
                                         identifier!).replacingOccurrences(of: "{1}", with: value!)
         case .WorkoutComplete:
-            return NSLocalizedString("Message.WorkoutComplete.Title",
-                                     comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
+            return NSLocalizedString("Message.WorkoutComplete",
+                                     comment: "{0}").replacingOccurrences(of: "{0}", with:
+                                        identifier!).replacingOccurrences(of: "{1}", with: value!)
         case .ExerciseComplete:
-            return NSLocalizedString("Message.ExerciseComplete.Title",
+            return NSLocalizedString("Message.ExerciseComplete",
                                      comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
         case .SessionComplete:
-            return NSLocalizedString("Message.SessionComplete.Title", comment: "")
+            return NSLocalizedString("Message.SessionComplete", comment: "")
+        case .ObjectSaved:
+            return NSLocalizedString("Message.ObjectSaved",
+                                     comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
+        case .ObjectCreated:
+            return NSLocalizedString("Message.ObjectCreated",
+                                     comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
         }
     }
     
     init(type: MessageType, identifier: String?, value: String?) {
         self.type  = type
-        self.identifier = String(identifier?.prefix(12) ?? "")
+        self.identifier = identifier//String(identifier?.prefix(16) ?? "")
         self.value = value
     }
 }

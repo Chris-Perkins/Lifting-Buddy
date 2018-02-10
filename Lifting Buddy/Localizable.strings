@@ -123,13 +123,12 @@
 "WorkoutView.Label.Repeat"         = "Repeat";
 
 // MARK: Messages
-"Message.NewBest.Title" = "{0}: {1}";
-
-"Message.ExerciseComplete.Title" = "{0} Complete!";
-
-"Message.WorkoutComplete.Title" = "{0} Complete!";
-
-"Message.SessionComplete.Title" = "Session Complete!";
+"Message.NewBest"          = "New max: {1} for '{0}'!";
+"Message.ExerciseComplete" = "'{0}' complete!";
+"Message.WorkoutComplete"  = "'{0}' completed {1} times!";
+"Message.SessionComplete"  = "Session complete!";
+"Message.ObjectSaved"      = "'{0}' saved!";
+"Message.ObjectCreated"    = "'{0}' created!";
 
 // MARK: Miscellaneous
 "Time.Second.Char" = "s";

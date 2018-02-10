@@ -134,6 +134,12 @@ class WorkoutSessionView: UIView {
         showView(summaryView)
         
         workoutSessionDelegate?.sessionViewChanged(toView: summaryView)
+        
+        if let workout = workout {
+            MessageQueue.append(Message(type: .WorkoutComplete,
+                                        identifier: workout.getName(),
+                                        value: String(describing: workout.getCompletedCount())))
+        }
     }
     
     // MARK: Event functions

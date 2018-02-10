@@ -106,6 +106,7 @@ class SetTableViewCell: UITableViewCell {
             for inputView in inputViewHolder.getInputViews() {
                 if completeButton.isToggled {
                     inputView.setLabelColors(backgroundColor: .niceLightGreen)
+                    inputView.textfield.resignFirstResponder()
                     inputView.isUserInteractionEnabled = false
                     inputView.layoutSubviews()
                 } else {

@@ -292,6 +292,7 @@ class Workout: Object {
         // Progression method holding weight
         var weightPGM = ProgressionMethod.createWeightPGM()
         weightPGM.setIndex(index: 1)
+        weightPGM.setDefaultValue(defaultValue: "weight")
         
         // Bench press tracked by reps & weight
         benchPress.appendProgressionMethod(progressionMethod: repsPGM)
@@ -317,6 +318,7 @@ class Workout: Object {
         
         // Progression method holding weight
         weightPGM = ProgressionMethod.createWeightPGM()
+        weightPGM.setDefaultValue(defaultValue: "weight")
         weightPGM.setIndex(index: 1)
         
         // incline press tracked by reps & weight
@@ -383,6 +385,7 @@ class Workout: Object {
         repsPGM.setDefaultValue(defaultValue: "5")
         
         var weightPGM = ProgressionMethod.createWeightPGM()
+        weightPGM.setDefaultValue(defaultValue: "weight")
         weightPGM.setIndex(index: 1)
         
         squats.appendProgressionMethod(progressionMethod: repsPGM)
@@ -406,6 +409,7 @@ class Workout: Object {
         repsPGM.setDefaultValue(defaultValue: "10")
         
         weightPGM = ProgressionMethod.createWeightPGM()
+        weightPGM.setDefaultValue(defaultValue: "weight")
         weightPGM.setIndex(index: 1)
         
         legCurls.appendProgressionMethod(progressionMethod: repsPGM)
@@ -426,7 +430,7 @@ class Workout: Object {
         planks.setSetCount(setCount: 1)
         
         let timePGM = ProgressionMethod()
-        timePGM.setDefaultValue(defaultValue: "3")
+        timePGM.setDefaultValue(defaultValue: "0")
         timePGM.setName(name: "Time")
         timePGM.setUnit(unit: ProgressionMethod.Unit.TIME.rawValue.lowercased())
         timePGM.setIndex(index: 0)

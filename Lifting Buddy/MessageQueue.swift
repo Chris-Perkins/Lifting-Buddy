@@ -13,29 +13,27 @@ public class MessageQueue {
     
     private static var messageQueue = [Message]()
     private static var queueTimer: Timer?
-    private static var mvc: MainViewController? {
-        return (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController as? MainViewController
+    private static var md: MessageDisplayer? {
+        return (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController as? MessageDisplayer
     }
     
     public static func append(_ message: Message) {
         messageQueue.append(message)
         
         if queueTimer == nil {
-            mvc?.messageQueueStarted()
+            md?.messageQueueStarted?()
             
             queueTimer = Timer.scheduledTimer(withTimeInterval: messageDisplayTime, repeats: true) { (timer) in
-                
-                if let mvc =
-                    (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController as? MainViewController {
+                if let md = md {
                     
                     if messageQueue.count == 0 {
                         queueTimer?.invalidate()
                         queueTimer = nil
-                        mvc.messageQueueEnded()
+                        md.messageQueueEnded?()
                         return
                     }
                     
-                    mvc.displayMessage(messageQueue[0])
+                    md.displayMessage(messageQueue[0])
                     messageQueue.remove(at: 0)
                 }
             }

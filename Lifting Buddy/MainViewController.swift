@@ -169,6 +169,7 @@ extension MainViewController: WorkoutSessionStarter {
     func endSession(workout: Workout?, exercises: List<Exercise>) {
         sessionWorkout = nil
         sessionStartDate = nil
+        entriesPerPGMInSession.removeAll()
         
         for exercise in exercises {
             sessionExercises.remove(exercise)

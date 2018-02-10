@@ -149,6 +149,26 @@ class ProgressionMethod: Object {
         return max?.floatValue
     }
     
+    // Gets displayed the value for a value in the gain/value label
+    // Just used for standardization.
+    public func getDisplayValue(forValue value: Float) -> String {
+        var returnStr = ""
+        
+        if getUnit()?.lowercased() == ProgressionMethod.Unit.TIME.rawValue.lowercased() {
+            if abs(value) >= 60 * 60 {   // If value is in hours...
+                returnStr = String(format: "%.1fh", value / (60.0 * 60.0))
+            } else if abs(value) >= 60 { // If value is in minutes...
+                returnStr = String(format: "%.1fm", value / 60.0)
+            } else {                // If value is in seconds...
+                returnStr = String(format: "%.1fs", value)
+            }
+        } else {
+            returnStr = String(format: "%.1f", value)
+        }
+        
+        return returnStr
+    }
+    
     // MARK: Static methods
     
     public static func getMaxValueForProgressionMethods(fromHistory history: List<ExerciseHistoryEntry>) -> Dictionary<ProgressionMethod, Float> {

@@ -123,7 +123,7 @@
 "WorkoutView.Label.Repeat"         = "Repeat";
 
 // MARK: Messages
-"Message.NewBest"          = "New max: {1} for '{0}'!";
+"Message.NewBest"          = "New Max! {1} for '{0}'!";
 "Message.ExerciseComplete" = "'{0}' complete!";
 "Message.WorkoutComplete"  = "'{0}' completed {1} times!";
 "Message.SessionComplete"  = "Session complete!";

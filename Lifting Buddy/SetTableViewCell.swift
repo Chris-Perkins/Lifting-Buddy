@@ -196,8 +196,37 @@ class SetTableViewCell: UITableViewCell {
             return
         }
         
+        // Lets us set the default values for everything
         for (index, pgm) in exercise!.getProgressionMethods().enumerated() {
-            pgm.setDefaultValue(defaultValue: pgmInputFields[index].getValue())
+            let savedValue = pgmInputFields[index].getValue()
+            
+            // If the button is toggled, save the information immediately.
+            if button.isToggled {
+                pgm.setDefaultValue(defaultValue: savedValue)
+                
+                if let oldMax = pgm.getMaxValue(), savedValue.floatValue! > oldMax &&
+                    // This lets us check if the value entered is greater than any for the same pgm
+                    // In this session.
+                    (entriesPerPGMInSession[pgm] == nil || entriesPerPGMInSession[pgm]!.count == 0 ||
+                        entriesPerPGMInSession[pgm]!.max()! < savedValue.floatValue!) {
+                    MessageQueue.append(Message(type: .NewBest,
+                                                identifier: pgm.getName(),
+                                                value: pgm.getDisplayValue(forValue: savedValue.floatValue!)))
+                }
+                
+                if entriesPerPGMInSession[pgm] == nil {
+                    entriesPerPGMInSession[pgm] = [Float]()
+                }
+                entriesPerPGMInSession[pgm]!.append(savedValue.floatValue!)
+            } else {
+                // We cycle through to delete whatever value was just un-saved.
+                for (index, value) in entriesPerPGMInSession[pgm]!.enumerated() {
+                    if value == savedValue.floatValue! {
+                        entriesPerPGMInSession[pgm]?.remove(at: index)
+                        break
+                    }
+                }
+            }
         }
         
         statusDelegate?.setStatusUpdate(toCompletionStatus: button.isToggled)

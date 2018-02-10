@@ -62,6 +62,12 @@ class MainViewController: UIViewController {
         }
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        sectionContentView.clipsToBounds = true
+    }
+    
     // MARK: View functions
     
     func showContentView(viewType: SectionView.ContentViews) {

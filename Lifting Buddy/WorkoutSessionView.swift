@@ -136,9 +136,9 @@ class WorkoutSessionView: UIView {
         workoutSessionDelegate?.sessionViewChanged(toView: summaryView)
         
         if let workout = workout {
-            MessageQueue.append(Message(type: .WorkoutComplete,
-                                        identifier: workout.getName(),
-                                        value: String(describing: workout.getCompletedCount())))
+            MessageQueue.shared.append(Message(type: .workoutComplete,
+                                               identifier: workout.getName(),
+                                               value: String(describing: workout.getCompletedCount())))
         }
     }
     

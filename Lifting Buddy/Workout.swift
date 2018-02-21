@@ -432,7 +432,7 @@ class Workout: Object {
         let timePGM = ProgressionMethod()
         timePGM.setDefaultValue(defaultValue: "0")
         timePGM.setName(name: "Time")
-        timePGM.setUnit(unit: ProgressionMethod.Unit.TIME.rawValue.lowercased())
+        timePGM.setUnit(unit: ProgressionMethod.Unit.time.rawValue.lowercased())
         timePGM.setIndex(index: 0)
         
         planks.appendProgressionMethod(progressionMethod: timePGM)

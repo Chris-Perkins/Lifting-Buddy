@@ -110,23 +110,21 @@ func createChartFromExerciseHistory(exerciseHistory: List<ExerciseHistoryEntry>,
     var xValues = [ChartAxisValue]()
     
     switch (timeAmount) {
-    case TimeAmount.MONTH:
+    case .month:
         for i in -5...0 {
             xValues.append(createDateAxisValue(Calendar.current.date(byAdding: .day,
                                                                      value: 6 * i,
                                                                      to: Date(timeIntervalSinceNow: 0))!,
                                                displayFormatter: displayFormatter))
         }
-    break
-    case TimeAmount.YEAR:
+    case .year:
         for i in -6...0 {
             xValues.append(createDateAxisValue(Calendar.current.date(byAdding: .month,
                                                                      value: i * 2,
                                                                      to: Date(timeIntervalSinceNow: 0))!,
                                                displayFormatter: displayFormatter))
         }
-    break
-    case TimeAmount.ALLTIME:
+    case .alltime:
         let distanceBetweenMinAndToday = Date.init(timeIntervalSinceNow: 0).timeIntervalSince(minimumDate)
         
         var prevDate: Date? = nil

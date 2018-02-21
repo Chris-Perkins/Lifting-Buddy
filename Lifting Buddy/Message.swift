@@ -9,12 +9,13 @@
 import Foundation
 
 public enum MessageType {
-    case NewBest
-    case WorkoutComplete
-    case ExerciseComplete
-    case SessionComplete
-    case ObjectSaved
-    case ObjectCreated
+    case newBest
+    case workoutComplete
+    case exerciseComplete
+    case sessionComplete
+    case objectSaved
+    case objectCreated
+    case objectDeleted
 }
 
 /* This is declared as an NSObject because we use it an @objc protocol */
@@ -28,24 +29,27 @@ public class Message: NSObject {
     
     public var messageTitle: String {
         switch type {
-        case .NewBest:
+        case .newBest:
             return NSLocalizedString("Message.NewBest",
                                      comment: "").replacingOccurrences(of: "{0}", with:
                                         identifier!).replacingOccurrences(of: "{1}", with: value!)
-        case .WorkoutComplete:
+        case .workoutComplete:
             return NSLocalizedString("Message.WorkoutComplete",
                                      comment: "{0}").replacingOccurrences(of: "{0}", with:
                                         identifier!).replacingOccurrences(of: "{1}", with: value!)
-        case .ExerciseComplete:
+        case .exerciseComplete:
             return NSLocalizedString("Message.ExerciseComplete",
                                      comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
-        case .SessionComplete:
+        case .sessionComplete:
             return NSLocalizedString("Message.SessionComplete", comment: "")
-        case .ObjectSaved:
+        case .objectSaved:
             return NSLocalizedString("Message.ObjectSaved",
                                      comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
-        case .ObjectCreated:
+        case .objectCreated:
             return NSLocalizedString("Message.ObjectCreated",
+                                     comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
+        case .objectDeleted:
+            return NSLocalizedString("Message.ObjectDeleted",
                                      comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)
         }
     }

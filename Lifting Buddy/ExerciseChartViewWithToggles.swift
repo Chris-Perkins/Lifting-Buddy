@@ -39,7 +39,7 @@ public class ExerciseChartViewWithToggles: UIView, PrettySegmentedControlDelegat
         self.exercise = exercise
         self.chartWidth = chartWidth
         
-        selectedTimeAmount = TimeAmount.MONTH
+        selectedTimeAmount = TimeAmount.month
         filterProgressionMethods = Set<ProgressionMethod>()
         
         timeAmountSelectionView = PrettySegmentedControl(labelStrings: TimeAmountArray.map {$0.rawValue},

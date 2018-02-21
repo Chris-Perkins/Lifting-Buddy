@@ -133,7 +133,7 @@ class SetTableViewCell: UITableViewCell {
         var prevView = inputContentView
         
         for progressionMethod in exercise.getProgressionMethods() {
-            if progressionMethod.getUnit() != ProgressionMethod.Unit.TIME.rawValue {
+            if progressionMethod.getUnit() != ProgressionMethod.Unit.time.rawValue {
                 let progressionInput = BetterInputView(args: [(
                     progressionMethod.getName(),
                     progressionMethod.getDefaultValue() ?? progressionMethod.getName(),
@@ -210,9 +210,9 @@ class SetTableViewCell: UITableViewCell {
                     // In this session.
                     (entriesPerPGMInSession[pgm] == nil || entriesPerPGMInSession[pgm]!.count == 0 ||
                         entriesPerPGMInSession[pgm]!.max()! < savedValue.floatValue!) {
-                    MessageQueue.append(Message(type: .NewBest,
-                                                identifier: pgm.getName(),
-                                                value: pgm.getDisplayValue(forValue: savedValue.floatValue!)))
+                    MessageQueue.shared.append(Message(type: .newBest,
+                                                       identifier: pgm.getName(),
+                                                       value: pgm.getDisplayValue(forValue: savedValue.floatValue!)))
                 }
                 
                 if entriesPerPGMInSession[pgm] == nil {

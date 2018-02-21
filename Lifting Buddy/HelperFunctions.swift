@@ -18,9 +18,9 @@ import CDAlertView
 
 // Time amount values (used in graphing)
 public enum TimeAmount: String {
-    case MONTH   = "MONTH"
-    case YEAR    = "YEAR"
-    case ALLTIME = "ALL-TIME"
+    case month   = "MONTH"
+    case year    = "YEAR"
+    case alltime = "ALL-TIME"
 }
 
 // Used in getting user defined color scheme from userdefaults
@@ -43,7 +43,7 @@ public func setNewColorScheme(_ scheme: ColorScheme) {
 }
 
 // An associated array for easy parsing
-public let TimeAmountArray = [TimeAmount.MONTH, TimeAmount.YEAR, TimeAmount.ALLTIME]
+public let TimeAmountArray = [TimeAmount.month, TimeAmount.year, TimeAmount.alltime]
 public let daysOfTheWeekChars = ["S", "M", "T", "W", "T", "F", "S"]
 
 // Returns the height of the status bar (battery view, etc)
@@ -275,7 +275,7 @@ extension PrettyButton {
     override func setDefaultProperties() {
         backgroundColor = .niceBlue
         setOverlayColor(color: .niceYellow)
-        setOverlayStyle(style: .FADE)
+        setOverlayStyle(style: .fade)
         cornerRadius = 0
     }
 }

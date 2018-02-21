@@ -31,10 +31,10 @@ import UIKit
     private static let overlayViewTag: Int = 1337
     
     public enum Styles {
-        case NONE
-        case SLIDE
-        case BLOOM
-        case FADE
+        case none
+        case slide
+        case bloom
+        case fade
     }
     
     // Default style of button is none
@@ -43,7 +43,7 @@ import UIKit
     // MARK: Init Functions
     
     override init(frame: CGRect) {
-        style = Styles.NONE
+        style = .none
         
         super.init(frame: frame)
         
@@ -63,7 +63,7 @@ import UIKit
     }
     
     required init?(coder aDecoder: NSCoder) {
-        style = Styles.NONE
+        style = .none
         
         super.init(coder: aDecoder)
     }
@@ -83,15 +83,15 @@ import UIKit
     
     @objc func startPress(sender: PrettyButton) {
         switch style {
-        case Styles.NONE:
+        case .none:
             break
-        case Styles.SLIDE:
+        case .slide:
             createSlideView()
             break
-        case Styles.BLOOM:
+        case .bloom:
             createBloomView()
             break
-        case Styles.FADE:
+        case .fade:
             createFadeView()
             break
         }

@@ -9,32 +9,45 @@
 import Foundation
 
 public class MessageQueue {
-    public static let messageDisplayTime: Double = 5.0
     
-    private static var messageQueue = [Message]()
-    private static var queueTimer: Timer?
-    private static var md: MessageDisplayer? {
+    private static var activeInstance: MessageQueue?
+    
+    // Returns or creates and returns the shared instance
+    public static var shared: MessageQueue {
+        if let instance = activeInstance {
+            return instance
+        } else {
+            activeInstance = MessageQueue()
+            return activeInstance!
+        }
+    }
+    
+    public let messageDisplayTime: Double = 5.0
+    
+    private var messageQueue = [Message]()
+    private var queueTimer: Timer?
+    private var md: MessageDisplayer? {
         return (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController as? MessageDisplayer
     }
     
-    public static func append(_ message: Message) {
+    public func append(_ message: Message) {
         messageQueue.append(message)
         
         if queueTimer == nil {
             md?.messageQueueStarted?()
             
             queueTimer = Timer.scheduledTimer(withTimeInterval: messageDisplayTime, repeats: true) { (timer) in
-                if let md = md {
+                if let md = self.md {
                     
-                    if messageQueue.count == 0 {
-                        queueTimer?.invalidate()
-                        queueTimer = nil
+                    if self.messageQueue.count == 0 {
+                        self.queueTimer?.invalidate()
+                        self.queueTimer = nil
                         md.messageQueueEnded?()
                         return
                     }
                     
-                    md.displayMessage(messageQueue[0])
-                    messageQueue.remove(at: 0)
+                    md.displayMessage(self.messageQueue[0])
+                    self.messageQueue.remove(at: 0)
                 }
             }
             

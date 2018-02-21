@@ -198,9 +198,9 @@ class CreateExerciseView: UIScrollView {
             if requirementsFulfilled() {
                 let exerciseCreated: Exercise = saveAndReturnExercise()
                 
-                MessageQueue.append(Message(type: editingExercise == nil ? .ObjectCreated : .ObjectSaved,
-                                            identifier: exerciseCreated.getName(),
-                                            value: nil))
+                MessageQueue.shared.append(Message(type: editingExercise == nil ? .objectCreated : .objectSaved,
+                                                   identifier: exerciseCreated.getName(),
+                                                   value: nil))
                 
                 // Send data to delegate to inform that we've changed something
                 dataDelegate?.finishedWithExercise(exercise: exerciseCreated)
@@ -257,8 +257,8 @@ class CreateExerciseView: UIScrollView {
             }
         } else {
             let repProgressionMethod = ProgressionMethod()
-            repProgressionMethod.setName(name: ProgressionMethod.Unit.REPS.rawValue)
-            repProgressionMethod.setUnit(unit: ProgressionMethod.Unit.REPS.rawValue)
+            repProgressionMethod.setName(name: ProgressionMethod.Unit.reps.rawValue)
+            repProgressionMethod.setUnit(unit: ProgressionMethod.Unit.reps.rawValue)
             
             progressionsTableView.appendDataToTableView(data: repProgressionMethod)
         }

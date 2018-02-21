@@ -74,21 +74,21 @@ class MainViewController: UIViewController {
         sectionContentView.removeAllSubviews()
         
         switch(viewType) {
-        case SectionView.ContentViews.SESSION:
+        case .session:
             guard let sessionView = sessionView else {
                 fatalError("Session view called, but is nil!")
             }
             sessionView.layoutAllSubviews()
             showView(sessionView)
             
-        case SectionView.ContentViews.WORKOUTS:
+        case .workouts:
             if workoutView == nil {
                 workoutView = WorkoutsView(frame: .zero)
             }
             workoutView?.layoutAllSubviews()
             showView(workoutView!)
             
-        case SectionView.ContentViews.EXERCISES:
+        case .exercises:
             if exercisesView == nil {
                 exercisesView = ExercisesView(frame: .zero)
             }
@@ -183,7 +183,7 @@ extension MainViewController: WorkoutSessionStarter {
             exercise.recalculateProgressionMethodMaxValues()
         }
         
-        showContentView(viewType: SectionView.ContentViews.WORKOUTS)
+        showContentView(viewType: .workouts)
         sessionView = nil
         headerView.sectionView.hideSessionButton()
     }

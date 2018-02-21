@@ -29,11 +29,11 @@ class ProgressionMethod: Object {
     @objc dynamic private var max: String?
     
     public enum Unit: String {
-        case WEIGHT     = "weight"
-        case TIME       = "time"
-        case DISTANCE   = "distance"
-        case OTHER      = "other"
-        case REPS       = "reps"
+        case weight     = "weight"
+        case time       = "time"
+        case distance   = "distance"
+        case other      = "other"
+        case reps       = "reps"
     }
     public static let unitList = ["weight", "time", "distance", "other", "reps"]
     
@@ -154,7 +154,7 @@ class ProgressionMethod: Object {
     public func getDisplayValue(forValue value: Float) -> String {
         var returnStr = ""
         
-        if getUnit()?.lowercased() == ProgressionMethod.Unit.TIME.rawValue.lowercased() {
+        if getUnit()?.lowercased() == ProgressionMethod.Unit.time.rawValue.lowercased() {
             if abs(value) >= 60 * 60 {   // If value is in hours...
                 returnStr = String(format: "%.1fh", value / (60.0 * 60.0))
             } else if abs(value) >= 60 { // If value is in minutes...
@@ -202,7 +202,7 @@ class ProgressionMethod: Object {
         // Progression method holding reps
         let repsPGM = ProgressionMethod()
         repsPGM.setName(name: "Reps")
-        repsPGM.setUnit(unit: ProgressionMethod.Unit.REPS.rawValue.lowercased())
+        repsPGM.setUnit(unit: ProgressionMethod.Unit.reps.rawValue.lowercased())
         
         return repsPGM
     }
@@ -211,7 +211,7 @@ class ProgressionMethod: Object {
     public static func createWeightPGM() -> ProgressionMethod {
         let weightPGM = ProgressionMethod()
         weightPGM.setName(name: "Weight")
-        weightPGM.setUnit(unit: ProgressionMethod.Unit.WEIGHT.rawValue.lowercased())
+        weightPGM.setUnit(unit: ProgressionMethod.Unit.weight.rawValue.lowercased())
         
         return weightPGM
     }

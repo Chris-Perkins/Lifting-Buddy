@@ -34,9 +34,9 @@ class SectionView: UIView {
     // MARK: Enums
     
     public enum ContentViews {
-        case SESSION
-        case WORKOUTS
-        case EXERCISES
+        case session
+        case workouts
+        case exercises
     }
     
     
@@ -156,11 +156,11 @@ class SectionView: UIView {
             
             switch(sender) {
             case sessionButton:
-                viewType = .SESSION
+                viewType = .session
             case workoutsButton:
-                viewType = .WORKOUTS
+                viewType = .workouts
             case exercisesButton:
-                viewType = .EXERCISES
+                viewType = .exercises
             default:
                 fatalError("User requested view that isn't set up.")
             }

@@ -119,6 +119,10 @@ extension WorkoutTableView: UITableViewDataSource {
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceRed,
                                                     handler: { (CDAlertViewAction) in
+                                                        MessageQueue.shared.append(Message(type: .objectDeleted,
+                                                                                           identifier: workout.getName(),
+                                                                                           value: nil))
+                                                        
                                                         let realm = try! Realm()
                                                         try! realm.write {
                                                             realm.delete(workout)

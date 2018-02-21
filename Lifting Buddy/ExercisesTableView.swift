@@ -176,9 +176,12 @@ extension ExercisesTableView : UITableViewDelegate {
                                                     textColor: UIColor.white,
                                                     backgroundColor: UIColor.niceRed,
                                                     handler: { (CDAlertViewAction) in
-                                                        let realm = try! Realm()
+                                                        MessageQueue.shared.append(Message(type: .objectDeleted,
+                                                                                           identifier: exercise.getName(),
+                                                                                           value: nil))
                                                         
                                                         exercise.removeProgressionMethods()
+                                                        let realm = try! Realm()
                                                         try! realm.write {
                                                             realm.delete(exercise)
                                                         }

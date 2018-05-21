@@ -85,7 +85,7 @@ class SectionView: UIView {
         
         // If this is the first time we laid out a subview, press the workout button
         if !laidOutSubviews {
-            mainViewController = (viewController() as! MainViewController)
+            mainViewController = (viewContainingController() as! MainViewController)
             
             // Only sets properties once.
             laidOutSubviews = true

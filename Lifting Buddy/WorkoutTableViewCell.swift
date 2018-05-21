@@ -253,14 +253,14 @@ class WorkoutTableViewCell: UITableViewCell {
             fatalError("Workout either nil or exercise out of bounds!")
         }
         
-        (viewController() as? ExerciseDisplayer)?.displayExercise(exercise)
+        (viewContainingController() as? ExerciseDisplayer)?.displayExercise(exercise)
     }
     
     // Notified on a button press
     @objc func buttonPress(sender: UIButton) {
         switch(sender) {
         case startWorkoutButton!:
-            guard let mainViewController = viewController() as? MainViewController else {
+            guard let mainViewController = viewContainingController() as? MainViewController else {
                 fatalError("view controller is now main view controller?")
             }
             mainViewController.startSession(workout: workout, exercise: nil)

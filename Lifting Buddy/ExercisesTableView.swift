@@ -188,6 +188,7 @@ extension ExercisesTableView : UITableViewDelegate {
                                                         
                                                         self.sortedData.remove(at: indexPath.row)
                                                         self.reloadData()
+                                                        return true
                 }))
                 alert.show()
             }

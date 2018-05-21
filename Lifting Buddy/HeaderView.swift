@@ -113,7 +113,7 @@ class HeaderView: UIView {
     
     // Shows information about the app on dialog open
     @objc private func aboutButtonPress(sender: UIButton) {
-        viewController()?.performSegue(withIdentifier: "toSettings", sender: viewController())
+        viewContainingController()?.performSegue(withIdentifier: "toSettings", sender: viewContainingController())
     }
     
     // MARK: Constraints

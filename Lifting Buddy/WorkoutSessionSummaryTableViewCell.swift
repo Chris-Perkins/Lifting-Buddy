@@ -197,7 +197,7 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
         guard let exercise = exercise else {
             fatalError("Exercise wants to be viewed, but was nil")
         }
-        (viewController() as? ExerciseDisplayer)?.displayExercise(exercise)
+        (viewContainingController() as? ExerciseDisplayer)?.displayExercise(exercise)
     }
     
     // MARK: Constraint functions

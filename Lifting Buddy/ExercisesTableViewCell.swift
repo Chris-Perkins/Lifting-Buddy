@@ -157,7 +157,7 @@ class ExerciseTableViewCell: UITableViewCell {
     @objc private func buttonPress(sender: UIButton) {
         switch(sender) {
         case startExerciseButton:
-            guard let mainViewController = viewController() as? MainViewController else {
+            guard let mainViewController = viewContainingController() as? MainViewController else {
                 fatalError("view controller is now main view controller?")
             }
             mainViewController.startSession(workout: nil, exercise: exercise!)

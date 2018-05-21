@@ -133,6 +133,7 @@ extension MainViewController: WorkoutSessionStarter {
                                                     (self.sessionView as? WorkoutSessionSummaryView)?.endSession()
                                                     self.showSession(workout: workout,
                                                                      exercise: exercise)
+                                                    return true
             }))
             alert.show()
         }

@@ -129,6 +129,8 @@ extension WorkoutTableView: UITableViewDataSource {
                                                         }
                                                         
                                                         self.reloadData()
+                                                        
+                                                        return true
                 }))
                 alert.show()
             } else {

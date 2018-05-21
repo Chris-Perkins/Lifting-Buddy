@@ -206,8 +206,8 @@ extension SettingsContentView: PrettySegmentedControlDelegate {
     func segmentSelectionChanged(index: Int) {
         setNewColorScheme(ColorScheme(rawValue: index)!)
         
-        viewController()?.viewWillLayoutSubviews()
-        viewController()?.view?.layoutAllSubviews()
+        viewContainingController()?.viewWillLayoutSubviews()
+        viewContainingController()?.view?.layoutAllSubviews()
     }
     
 }

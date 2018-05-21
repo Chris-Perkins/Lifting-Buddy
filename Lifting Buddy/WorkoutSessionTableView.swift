@@ -234,3 +234,12 @@ extension WorkoutSessionTableView: UITableViewScrollDelegate {
         scrollToRow(at: indexPath, at: position, animated: animated)
     }
 }
+
+extension WorkoutSessionTableView: HPReorderTableViewDelegate {
+    func tableView(_ tableView: UITableView!, willBeginCellReorderAt indexPath: IndexPath!) {
+        for cell in cells {
+            cell.isToggled = false
+            cell.updateToggledStatus()
+        }
+    }
+}

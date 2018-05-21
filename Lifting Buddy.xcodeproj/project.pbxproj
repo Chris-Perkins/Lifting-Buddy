@@ -806,6 +806,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DB8SUTA9JU;
 				INFOPLIST_FILE = "Lifting Buddy/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -828,6 +829,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DB8SUTA9JU;
 				INFOPLIST_FILE = "Lifting Buddy/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;

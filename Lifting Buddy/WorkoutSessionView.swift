@@ -181,6 +181,7 @@ class WorkoutSessionView: UIView {
                                                     backgroundColor: UIColor.niceRed,
                                                     handler: { (CDAlertViewAction) in
                                                         self.completeWorkout()
+                                                        return true
                 }))
                 alert.show()
             }
@@ -200,6 +201,7 @@ class WorkoutSessionView: UIView {
                                                 backgroundColor: UIColor.niceRed,
                                                 handler: { (CDAlertViewAction) in
                                                     self.endSession()
+                                                    return true
             }))
             
             alert.show()

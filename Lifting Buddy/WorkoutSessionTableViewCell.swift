@@ -47,7 +47,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     // Whether or not this exercise is complete
     private var isComplete: Bool
     // Whether or not this view is toggled
-    private var isToggled: Bool
+    public var isToggled: Bool
     // The current set we're doing
     private var curSet: Int
     

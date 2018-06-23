@@ -234,16 +234,41 @@ class Workout: Object {
     }
     
     public static func getSortedWorkoutArray(workouts: AnyRealmCollection<Workout>) -> [Workout] {
-        
-        let sortedWorkouts = workouts.sorted(by: {
-            // If #1's workout is today and #2's is not, then it's "less".
-            // If #1 and #2 are both either today or not today, then determine by name.
-            // Otherwise, #1 is "greater".
-            ($0.isRepeatedToday && !($1.isRepeatedToday)) ||
-                ($0.isRepeatedToday == $1.isRepeatedToday && ($0.getName())! < ($1.getName())!)
-        })
+        let sortedWorkouts = workouts.sorted(by: { ($0.getName())! < ($1.getName())! })
         
         return sortedWorkouts
+    }
+    
+    /**
+     Returns a list of tuples of workouts and their weekdaysorted by their respect to today.
+     For example: when [MondayWorkout_1, TuesdayWorkout, WednesdayWorkout, MondayWorkout_2] and it's
+     Wednesday, returns [("Wednesday", [WednesdayWorkout]), ..., 
+     ("Monday", [MondayWorkout_1, MondayWorkout_2]), ("Tuesday", [TuesdayWorkout])]
+     
+     - Parameter workouts: The workouts that should be sorted.
+     - Returns: The sorted workouts separated by their relevance in respect to today as a list of
+     tuples.
+     */
+    public static func getSortedWorkoutsSeparatedByDays(workouts: AnyRealmCollection<Workout>) ->
+        [(String, [Workout])] {
+        let daysOfTheWeekCount = daysOfTheWeekChars.count
+        
+        let sortedWorkouts = getSortedWorkoutArray(workouts: workouts);
+        var returnedWorkouts = [(String, [Workout])](repeating: ("", [Workout]()), count: daysOfTheWeekCount);
+        let offsetForSort = Date().getDayOfTheWeekIndex();
+        
+        for workout in sortedWorkouts {
+            for (index, isActiveOnDay) in workout.daysOfTheWeek.enumerated() {
+                if (isActiveOnDay.value == true) {
+                    returnedWorkouts[(index - offsetForSort).modulo(returnedWorkouts.count)].0 =
+                        Date.convertDayIndexToWeekdayName(dayIndex: index)!
+                    returnedWorkouts[(index - offsetForSort).modulo(returnedWorkouts.count)].1
+                        .append(workout)
+                }
+            }
+        }
+        
+        return returnedWorkouts
     }
     
     /* Updates our streak counter by resetting the streak

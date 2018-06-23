@@ -36,7 +36,7 @@ public class Message: NSObject {
         case .workoutComplete:
             return NSLocalizedString("Message.WorkoutComplete",
                                      comment: "{0}").replacingOccurrences(of: "{0}", with:
-                                        identifier!).replacingOccurrences(of: "{1}", with: value!)
+                                        identifier!).replacingOccurrences(of: "{1}", with: value!).replacingOccurrences(of: "{2}", with: value! == "1" ? "" : "s")
         case .exerciseComplete:
             return NSLocalizedString("Message.ExerciseComplete",
                                      comment: "{0}").replacingOccurrences(of: "{0}", with: identifier!)

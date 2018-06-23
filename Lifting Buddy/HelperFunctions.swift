@@ -178,7 +178,7 @@ extension NSDate {
     }
     
     // Gets the day of the week as a string
-    public func getDayOfWeek(_ fromDate:String, formatter: DateFormatter = NSDate.getDateFormatter()) -> Int? {
+    public func getDayOfWeek(_ fromDate: String, formatter: DateFormatter = NSDate.getDateFormatter()) -> Int? {
         guard let date = formatter.date(from: fromDate) else { return nil }
         let myCalendar = Calendar(identifier: .gregorian)
         let weekDay = myCalendar.component(.weekday, from: date)
@@ -187,9 +187,64 @@ extension NSDate {
 }
 
 extension Date {
+    private static let daysOfTheWeek =
+        ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    
     /// Returns the amount of seconds from another date
     func seconds(from date: Date) -> Int {
         return Calendar.current.dateComponents([.second], from: date, to: self).second ?? 0
+    }
+    
+    public static func getDaysOfTheWeekStrings() -> [String] {
+        return daysOfTheWeek;
+    }
+    
+    /**
+     Attempts to convert an index into the correspondent weekday string; 0-indexed.
+     
+     - Parameter index: the index of the date (0 is Sunday, 6 is Saturday)
+     - Returns: A String representing the name of the weekday if the index is valid; nil otherwise.
+    */
+    public static func convertDayIndexToWeekdayName(dayIndex index: Int) -> String? {
+        if (index < 0 || index >= daysOfTheWeek.count) {
+            return nil
+        }
+        
+        return daysOfTheWeek[index]
+    }
+    
+    /**
+     Attempts to convert a String into the index of the day of the week it's related to; 0-indexed.
+     
+     - Parameter weekdayName: The String that represents a weekday name
+     - Returns: The index of the weekday (0-indexed) if it could be found; nil otherwise.
+    */
+    public static func convertWeekdayNameToIndex(weekdayName: String) -> Int? {
+        if (daysOfTheWeek.contains(weekdayName)) {
+            return daysOfTheWeek.index(of: weekdayName)
+        } else {
+            return nil
+        }
+    }
+    
+    /**
+     Attempts to get the day of the week for the Date instance; 0-indexed.
+     
+     - Returns: The index of the day of the week this date is; 0-indexed.
+    */
+    public func getDayOfTheWeekIndex() -> Int {
+        let date = Date()
+        let myCalendar = Calendar(identifier: .gregorian)
+        let weekDay = myCalendar.component(.weekday, from: date)
+        return weekDay - 1
+    }
+}
+
+extension Int {
+    public func modulo(_ moduloNumber: Int) -> Int {
+        let moduloValue = self % moduloNumber
+        
+        return moduloValue < 0 ? moduloValue + moduloNumber : moduloValue
     }
 }
 

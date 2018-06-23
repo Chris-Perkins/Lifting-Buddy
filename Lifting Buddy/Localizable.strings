@@ -125,7 +125,7 @@
 // MARK: Messages
 "Message.NewBest"          = "New Max! {1} for {0}!";
 "Message.ExerciseComplete" = "{0} complete!";
-"Message.WorkoutComplete"  = "{0} completed {1} times!";
+"Message.WorkoutComplete"  = "{0} completed {1} time{2}!";
 "Message.SessionComplete"  = "Session complete!";
 "Message.ObjectSaved"      = "{0} saved";
 "Message.ObjectCreated"    = "{0} created";

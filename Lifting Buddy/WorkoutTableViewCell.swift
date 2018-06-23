@@ -44,6 +44,8 @@ class WorkoutTableViewCell: UITableViewCell {
     private var startWorkoutButton: PrettyButton?
     // The exercises this cell has
     private var exercises = List<Exercise>()
+    // Whether or not this workout requires attention for some reason
+    public var workoutRequiresAttention: Bool = false
     
     // MARK: View inits
     
@@ -113,21 +115,22 @@ class WorkoutTableViewCell: UITableViewCell {
             startWorkoutButton?.setTitle(NSLocalizedString("Button.StartWO", comment: ""), for: .normal)
         }
         
+        if (!workoutRequiresAttention) {
+            backgroundColor = isSelected ? .lightestBlackWhiteColor : .primaryBlackWhiteColor
+            
+            setLabelTextColorsTo(color: .niceBlue, streakLabelColor: .niceRed)
+        }
         // If the last time we did this workout was today...
-        if let dateLastDone = workout?.getDateLastDone(),
+        else if let dateLastDone = workout?.getDateLastDone(),
             Calendar.current.isDateInToday(dateLastDone) {
             
             backgroundColor = .niceGreen
             
             setLabelTextColorsTo(color: .white)
-        } else if workout?.isRepeatedToday == true {
+        } else {
             backgroundColor = .niceLightRed
             
             setLabelTextColorsTo(color: .white)
-        } else {
-            backgroundColor = isSelected ? .lightestBlackWhiteColor : .primaryBlackWhiteColor
-            
-            setLabelTextColorsTo(color: .niceBlue, streakLabelColor: .niceRed)
         }
         
         for (index, exerciseLabel) in exerciseLabels.enumerated() {
@@ -186,8 +189,6 @@ class WorkoutTableViewCell: UITableViewCell {
             return
         }
         
-        // TODO: Determine when a change is made so we don't have to be dumb in checking.
-        //if workout != workout
         cellTitle.text = workout.getName()
         
         self.workout = workout

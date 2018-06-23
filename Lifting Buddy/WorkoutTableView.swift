@@ -16,7 +16,7 @@ class WorkoutTableView: UITableView {
     // MARK: View Properties
     
     // The data displayed in cells
-    private var sortedData: [Workout]
+    private var sortedData: [(String, [Workout])]
     private var data: AnyRealmCollection<Workout>
     
     // MARK: Initializers
@@ -24,7 +24,7 @@ class WorkoutTableView: UITableView {
     override init(frame: CGRect, style: UITableViewStyle) {
         let realm = try! Realm()
         data = AnyRealmCollection(realm.objects(Workout.self))
-        sortedData = Workout.getSortedWorkoutArray(workouts: data)
+        sortedData = Workout.getSortedWorkoutsSeparatedByDays(workouts: data)
         
         super.init(frame: frame, style: style)
         
@@ -34,7 +34,7 @@ class WorkoutTableView: UITableView {
     init(style: UITableViewStyle) {
         let realm = try! Realm()
         data = AnyRealmCollection(realm.objects(Workout.self))
-        sortedData = Workout.getSortedWorkoutArray(workouts: data)
+        sortedData = Workout.getSortedWorkoutsSeparatedByDays(workouts: data)
         
         super.init(frame: .zero, style: style)
         
@@ -48,25 +48,17 @@ class WorkoutTableView: UITableView {
     // MARK: TableView Functions
     
     override func reloadData() {
-        var selectedWorkout: Workout?
-        if let selectedIndex = indexPathForSelectedRow {
-            selectedWorkout = sortedData[selectedIndex.row]
-        }
-        
         let realm = try! Realm()
         data = AnyRealmCollection(realm.objects(Workout.self))
-        sortedData = Workout.getSortedWorkoutArray(workouts: data)
+        sortedData = Workout.getSortedWorkoutsSeparatedByDays(workouts: data)
         
         super.reloadData()
-        if let selectedWorkout = selectedWorkout, let indexOfWorkout = sortedData.index(of: selectedWorkout) {
-            selectRow(at: IndexPath(row: indexOfWorkout, section: 0), animated: true, scrollPosition: .bottom)
-        }
     }
     
     // MARK: Custom functions
     
     // Retrieve workouts
-    public func getSortedData() -> [Workout] {
+    public func getSortedData() -> [(String, [Workout])] {
         return sortedData
     }
     
@@ -80,9 +72,13 @@ class WorkoutTableView: UITableView {
 }
 
 extension WorkoutTableView: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sortedData.count
+    }
+    
     // Data is what we use to fill in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sortedData.count
+        return sortedData[section].1.count
     }
     
     // Create our custom cell class
@@ -92,8 +88,11 @@ extension WorkoutTableView: UITableViewDataSource {
                                           for: indexPath as IndexPath) as! WorkoutTableViewCell
         
         cell.showViewDelegate = superview as? ShowViewDelegate
-        cell.setWorkout(workout: sortedData[indexPath.row])
+        cell.setWorkout(workout: sortedData[indexPath.section].1[indexPath.row])
         cell.updateSelectedStatus()
+        
+        // IndexPath of 0 denotes that this workout is today
+        cell.workoutRequiresAttention = indexPath.section == 0
         return cell
     }
     
@@ -102,11 +101,11 @@ extension WorkoutTableView: UITableViewDataSource {
         
         if editingStyle == .delete {
             
-            let workout = sortedData[indexPath.row]
+            let workout = sortedData[indexPath.section].1[indexPath.row]
             
             if workout.canModifyCoreProperties {
                 let alert = CDAlertView(title: NSLocalizedString("Message.DeleteWorkout.Title", comment: ""),
-                                        message: "All history for '\(workout.getName()!)' will be deleted.\n" +
+                                        message: "This will delete all records of '\(workout.getName()!)', and this includes its occurrences on other days.n" +
                     "This action cannot be undone.",
                                         type: CDAlertViewType.warning)
                 alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Cancel", comment: ""),
@@ -151,6 +150,22 @@ extension WorkoutTableView: UITableViewDataSource {
 }
 
 extension WorkoutTableView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.backgroundColor = UIColor.primaryBlackWhiteColor
+        if let headerView = view as? UITableViewHeaderFooterView {
+            headerView.backgroundView?.backgroundColor = UIColor.lightBlackWhiteColor
+            headerView.textLabel?.textColor = UILabel.titleLabelTextColor
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return sortedData[section].1.isEmpty ? 0 : 30
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sortedData[section].0
+    }
+    
     // Expand this cell, un-expand the other cell
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let cell = cellForRow(at: indexPath) as! WorkoutTableViewCell
@@ -180,9 +195,9 @@ extension WorkoutTableView: UITableViewDelegate {
     
     // Each cell's height depends on whether or not it has been selected
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let exerCount = CGFloat(sortedData[indexPath.row].getExercises().count)
+        let exerCount = CGFloat(sortedData[indexPath.section].1[indexPath.row].getExercises().count)
         
-        return indexPathForSelectedRow?.row == indexPath.row ?
+        return indexPathForSelectedRow?.elementsEqual(indexPath) ?? false ?
             UITableViewCell.defaultHeight + PrettyButton.defaultHeight + exerCount * WorkoutTableViewCell.heightPerExercise + WorkoutTableViewCell.heightPerLabel :
             UITableViewCell.defaultHeight
     }

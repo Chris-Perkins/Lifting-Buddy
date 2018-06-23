@@ -64,9 +64,9 @@ class SettingsContentView: UIScrollView {
         
         colorSchemePicker.delegate = self
         
-        emailButton.addTarget(     self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        emailButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         contributeButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
-        websiteButton.addTarget(   self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
+        websiteButton.addTarget(self, action: #selector(buttonPress(sender:)), for: .touchUpInside)
         
         // Constraints below
         

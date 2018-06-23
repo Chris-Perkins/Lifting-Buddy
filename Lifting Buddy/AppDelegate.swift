@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let userDefaults = UserDefaults.standard
         if userDefaults.value(forKey: colorSchemeKey) == nil {
-            setNewColorScheme(ColorScheme.light)
+            setNewColorScheme(ColorScheme.dark)
         }
         
         // Realm migration performing is here

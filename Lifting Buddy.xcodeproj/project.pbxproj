@@ -16,6 +16,7 @@
 		221A41FF1FED97FA005C0B01 /* HPReorderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 221A41FA1FED97FA005C0B01 /* HPReorderTableView.m */; };
 		221A42001FED97FA005C0B01 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 221A41FB1FED97FA005C0B01 /* .travis.yml */; };
 		221A42011FED9872005C0B01 /* HPReorderTableView.h in Sources */ = {isa = PBXBuildFile; fileRef = 221A41F71FED97FA005C0B01 /* HPReorderTableView.h */; };
+		221BD44A20E069C100D9EE71 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221BD44920E069C100D9EE71 /* InitialViewController.swift */; };
 		222AAA69202BD072006B58F4 /* MessageDisplayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AAA68202BD072006B58F4 /* MessageDisplayerProtocol.swift */; };
 		223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223590901F427D1A002BE0BF /* EditExerciseTableView.swift */; };
 		224153761F1EE12B00F7B82B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153751F1EE12B00F7B82B /* Workout.swift */; };
@@ -97,6 +98,7 @@
 		221A41F91FED97FA005C0B01 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		221A41FA1FED97FA005C0B01 /* HPReorderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPReorderTableView.m; sourceTree = "<group>"; };
 		221A41FB1FED97FA005C0B01 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		221BD44920E069C100D9EE71 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		222AAA68202BD072006B58F4 /* MessageDisplayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDisplayerProtocol.swift; sourceTree = "<group>"; };
 		223590901F427D1A002BE0BF /* EditExerciseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableView.swift; sourceTree = "<group>"; };
 		223CF15F1FCC9C2F0093BBC7 /* Lifting-Buddy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Lifting-Buddy-Bridging-Header.h"; path = "Lifting Buddy/Lifting-Buddy-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 			children = (
 				224697C71F19843A0089C7CA /* MainViewController.swift */,
 				22C3D5A22000578C00C15276 /* SettingsViewController.swift */,
+				221BD44920E069C100D9EE71 /* InitialViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 				227981441F4D13F50010DA18 /* ProgressionMethodTableViewCell.swift in Sources */,
 				2255BBA52005911000B051B0 /* SettingsContentView.swift in Sources */,
 				22FD53971FF1C19F00FB069E /* CellDeletionDelegateProtocol.swift in Sources */,
+				221BD44A20E069C100D9EE71 /* InitialViewController.swift in Sources */,
 				225E65D21F22A041004B3AF4 /* WorkoutsView.swift in Sources */,
 				22A3F3EB1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift in Sources */,
 				22A36A2F1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ndD-oL-hPs">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,10 +10,46 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Initial View Controller-->
+        <scene sceneID="AH1-cu-ONw">
+            <objects>
+                <viewController id="ndD-oL-hPs" customClass="InitialViewController" customModule="Lifting_Buddy" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="noV-g7-4XP"/>
+                        <viewControllerLayoutGuide type="bottom" id="sLt-oj-zik"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AA7-jh-wzU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's Lift" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="9JR-lp-DBg">
+                                <rect key="frame" x="21.333333333333343" y="20.666666666666686" width="372.66666666666663" height="662.66666666666652"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="90"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.30196078431372547" green="0.47058823529411764" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="9JR-lp-DBg" firstAttribute="centerX" secondItem="AA7-jh-wzU" secondAttribute="centerX" id="HRS-X1-sFN"/>
+                            <constraint firstItem="9JR-lp-DBg" firstAttribute="height" secondItem="AA7-jh-wzU" secondAttribute="height" multiplier="0.9" id="R1F-Hu-uGX"/>
+                            <constraint firstItem="9JR-lp-DBg" firstAttribute="width" secondItem="AA7-jh-wzU" secondAttribute="width" multiplier="0.9" id="Xf5-6v-cpm"/>
+                            <constraint firstItem="9JR-lp-DBg" firstAttribute="centerY" secondItem="AA7-jh-wzU" secondAttribute="centerY" constant="-16" id="y5I-XU-Jxh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="welcomeLabel" destination="9JR-lp-DBg" id="haA-mE-wss"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="ContentSegue" id="cpD-4C-me9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AWK-zi-mwz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-880" y="152"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="Lifting_Buddy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" id="BYZ-38-t0r" customClass="MainViewController" customModule="Lifting_Buddy" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>

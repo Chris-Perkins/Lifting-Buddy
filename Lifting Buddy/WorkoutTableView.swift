@@ -151,7 +151,6 @@ extension WorkoutTableView: UITableViewDataSource {
 
 extension WorkoutTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.backgroundColor = UIColor.primaryBlackWhiteColor
         if let headerView = view as? UITableViewHeaderFooterView {
             headerView.backgroundView?.backgroundColor = UIColor.lightBlackWhiteColor
             headerView.textLabel?.textColor = UILabel.titleLabelTextColor

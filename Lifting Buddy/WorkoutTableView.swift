@@ -105,7 +105,7 @@ extension WorkoutTableView: UITableViewDataSource {
             
             if workout.canModifyCoreProperties {
                 let alert = CDAlertView(title: NSLocalizedString("Message.DeleteWorkout.Title", comment: ""),
-                                        message: "This will delete all records of '\(workout.getName()!)', and this includes its occurrences on other days.n" +
+                                        message: "This will delete all records of '\(workout.getName()!)', and this includes its occurrences on other days." +
                     "This action cannot be undone.",
                                         type: CDAlertViewType.warning)
                 alert.add(action: CDAlertViewAction(title: NSLocalizedString("Button.Cancel", comment: ""),

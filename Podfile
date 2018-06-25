@@ -20,4 +20,6 @@ target 'Lifting Buddy' do
   # For custom alerts
   pod 'CDAlertView'
 
+  pod 'ClingConstraints', '~> 1.0'
+
 end

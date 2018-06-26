@@ -254,19 +254,34 @@ class Workout: Object {
         let daysOfTheWeekCount = daysOfTheWeekChars.count
         
         let sortedWorkouts = getSortedWorkoutArray(workouts: workouts);
-        var returnedWorkouts = [(String, [Workout])](repeating: ("", [Workout]()), count: daysOfTheWeekCount);
+        // + 1 so we can append to the end in case of unassigned date
+        var returnedWorkouts = [(String, [Workout])](repeating: ("", [Workout]()),
+                                                     count: daysOfTheWeekCount);
         let offsetForSort = Date().getDayOfTheWeekIndex();
         
         for workout in sortedWorkouts {
             for (index, isActiveOnDay) in workout.daysOfTheWeek.enumerated() {
                 if (isActiveOnDay.value == true) {
-                    returnedWorkouts[(index - offsetForSort).modulo(returnedWorkouts.count)].0 =
+                    let indexOfInsertion = (index - offsetForSort).modulo(returnedWorkouts.count)
+                    returnedWorkouts[indexOfInsertion].0 = indexOfInsertion == 0 ?
+                        NSLocalizedString("Workout.AssignedToday", comment: "") :
                         Date.convertDayIndexToWeekdayName(dayIndex: index)!
-                    returnedWorkouts[(index - offsetForSort).modulo(returnedWorkouts.count)].1
-                        .append(workout)
+                    returnedWorkouts[indexOfInsertion].1.append(workout)
                 }
             }
         }
+            
+        let workoutsWithNoDate = sortedWorkouts.filter {
+            for workoutDayValue in $0.getsDayOfTheWeek() {
+                if workoutDayValue.value {
+                    return false
+                }
+            }
+            
+            return true
+        }
+        returnedWorkouts.append((NSLocalizedString("Workout.UnassignedDate", comment: ""),
+                                 workoutsWithNoDate))
         
         return returnedWorkouts
     }

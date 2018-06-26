@@ -122,6 +122,10 @@
 "WorkoutView.Label.Exercises"      = "Exercises";
 "WorkoutView.Label.Repeat"         = "Repeat";
 
+// MARK: Workouts
+"Workout.AssignedToday" = "Today";
+"Workout.UnassignedDate" = "Unassigned";
+
 // MARK: Messages
 "Message.NewBest"          = "New Max! {1} for {0}!";
 "Message.ExerciseComplete" = "{0} complete!";

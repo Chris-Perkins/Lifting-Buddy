@@ -296,7 +296,7 @@ class CreateExerciseView: UIScrollView {
                 
                 cell.nameEntryField.backgroundColor = .niceRed
             }
-            if cell.curSelect == -1 {
+            if ProgressionMethod.Unit(rawValue: cell.pickUnitButton.currentTitle ?? "") == nil {
                 fulfilled = false
                 
                 cell.pickUnitButton.backgroundColor = .niceRed

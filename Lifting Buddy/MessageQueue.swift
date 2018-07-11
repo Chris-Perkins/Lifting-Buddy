@@ -26,18 +26,18 @@ public class MessageQueue {
     
     private var messageQueue = [Message]()
     private var queueTimer: Timer?
-    private var md: MessageDisplayer? {
-        return (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController as? MessageDisplayer
+    private var messageDisplayer: MessageDisplayer? {
+        return (UIApplication.shared.delegate as? AppDelegate)?.mainViewController
     }
     
     public func append(_ message: Message) {
         messageQueue.append(message)
         
         if queueTimer == nil {
-            md?.messageQueueStarted?()
+            messageDisplayer?.messageQueueStarted?()
             
             queueTimer = Timer.scheduledTimer(withTimeInterval: messageDisplayTime, repeats: true) { (timer) in
-                if let md = self.md {
+                if let md = self.messageDisplayer {
                     
                     if self.messageQueue.count == 0 {
                         self.queueTimer?.invalidate()

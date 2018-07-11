@@ -47,6 +47,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        (UIApplication.shared.delegate as? AppDelegate)?.mainViewController = self
         view.backgroundColor = .lightestBlackWhiteColor
     }
     

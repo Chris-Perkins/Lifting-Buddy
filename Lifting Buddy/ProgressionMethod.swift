@@ -28,14 +28,13 @@ class ProgressionMethod: Object {
     // The maximum we've ever done for this progressionMethod
     @objc dynamic private var max: String?
     
-    public enum Unit: String {
-        case weight     = "weight"
-        case time       = "time"
-        case distance   = "distance"
-        case other      = "other"
-        case reps       = "reps"
+    public enum Unit: String, CaseIterable {
+        case weight = "weight"
+        case reps = "reps"
+        case time = "time"
+        case distance = "distance"
+        case other = "other"
     }
-    public static let unitList = ["weight", "time", "distance", "other", "reps"]
     
     // MARK: Init Functions
     

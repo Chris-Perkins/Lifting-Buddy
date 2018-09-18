@@ -21,7 +21,7 @@ class ProgressionsMethodTableView: HPReorderTableView, UITableViewDelegate {
     
     // MARK: Override Init
     
-    override init(frame: CGRect, style: UITableViewStyle) {
+    override init(frame: CGRect, style: UITableView.Style) {
         data = [ProgressionMethod]()
         cells = [ProgressionMethodTableViewCell]()
         
@@ -72,7 +72,8 @@ extension ProgressionsMethodTableView: UITableViewDataSource {
     }
     
     // Deletion methods
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle:UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             data.remove(at: indexPath.row)

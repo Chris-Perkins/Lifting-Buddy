@@ -309,7 +309,7 @@ extension NSLayoutConstraint {
     // Just a faster way to create a layout constraint copy. The original way is waaaay too long.
     public static func createViewAttributeCopyConstraint(view: UIView,
                                                          withCopyView: UIView,
-                                                         attribute: NSLayoutAttribute,
+                                                         attribute: NSLayoutConstraint.Attribute,
                                                          multiplier: CGFloat = 1.0,
                                                          plusConstant: CGFloat = 0.0) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: withCopyView,
@@ -474,11 +474,11 @@ extension UIColor {
 
 extension UIImage {
     public func rotateNinetyDegreesClockwise() -> UIImage {
-        return UIImage(cgImage: cgImage!, scale: 1, orientation: UIImageOrientation.right)
+        return UIImage(cgImage: cgImage!, scale: 1, orientation: UIImage.Orientation.right)
     }
     
     public func rotateNinetyDegreesCounterClockwise() -> UIImage {
-        return UIImage(cgImage: cgImage!, scale: 1, orientation: UIImageOrientation.left)
+        return UIImage(cgImage: cgImage!, scale: 1, orientation: UIImage.Orientation.left)
     }
 }
 
@@ -568,7 +568,7 @@ extension UITextField {
     @objc public func setPlaceholderString(_ placeholder: String?) {
         if let placeholder = placeholder {
             let attributedText = NSAttributedString(string: placeholder,
-                                                    attributes: [NSAttributedStringKey.foregroundColor:
+                                                    attributes: [NSAttributedString.Key.foregroundColor:
                                                         UIColor.oppositeBlackWhiteColor.withAlphaComponent(
                                                             0.25)])
             attributedPlaceholder = attributedText

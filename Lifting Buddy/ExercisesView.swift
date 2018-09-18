@@ -42,7 +42,7 @@ class ExercisesView: UIView {
         
         exerciseTableView = ExercisesTableView(exercises: AnyRealmCollection(exercises),
                                                selectingExercise: selectingExercise,
-                                               style: UITableViewStyle.plain)
+                                               style: UITableView.Style.plain)
         footerView = UIView()
         createExerciseButton = PrettyButton()
         cancelButton = PrettyButton()

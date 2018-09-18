@@ -43,7 +43,7 @@ class ExerciseTableViewCell: UITableViewCell {
     
     // MARK: Init functions
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         cellTitle = UILabel()
         expandImage = UIImageView(image: #imageLiteral(resourceName: "DownArrow"))
         invisButton = UIButton()

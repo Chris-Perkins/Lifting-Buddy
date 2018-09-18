@@ -22,7 +22,7 @@ class EditExerciseTableViewCell: UITableViewCell {
     
     // MARK: Init overrides
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         exerciseView = LabelWithPrettyButtonView()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)

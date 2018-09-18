@@ -7,6 +7,6 @@
 //
 
 protocol UITableViewScrollDelegate {
-    func scrollToCell(atIndexPath indexPath: IndexPath, position: UITableViewScrollPosition,
+    func scrollToCell(atIndexPath indexPath: IndexPath, position: UITableView.ScrollPosition,
                       animated: Bool)
 }

@@ -29,7 +29,7 @@ class ExerciseHistoryTableViewCell: UITableViewCell {
     
     // MARK: Inits
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         data = List<RLMExercisePiece>()
         entryNumberLabel = UILabel()
         dataDisplayViews = [BetterTextField]()

@@ -27,7 +27,7 @@ class WorkoutSessionSummaryTableViewCell: UITableViewCell {
     
     // MARK: View inits
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         cellTitleLabel = UILabel()
         cellGraphButton = PrettyButton()
         progressionMethodSummaryViews = [ProgressionMethodSummaryView]()

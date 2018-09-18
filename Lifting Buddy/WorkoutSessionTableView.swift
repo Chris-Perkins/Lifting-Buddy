@@ -28,7 +28,7 @@ class WorkoutSessionTableView: UITableView {
     
     // MARK: Initializers
     
-    init(workout: Workout?, frame: CGRect, style: UITableViewStyle) {
+    init(workout: Workout?, frame: CGRect, style: UITableView.Style) {
         data = workout?.getExercises() ?? List<Exercise>()
         cells = [WorkoutSessionTableViewCell]()
         heights = [CGFloat]()
@@ -43,7 +43,7 @@ class WorkoutSessionTableView: UITableView {
         setupTableView()
     }
     
-    init(workout: Workout?, style: UITableViewStyle) {
+    init(workout: Workout?, style: UITableView.Style) {
         data = workout?.getExercises() ?? List<Exercise>()
         cells = [WorkoutSessionTableViewCell]()
         heights = [CGFloat]()
@@ -119,7 +119,7 @@ extension WorkoutSessionTableView: UITableViewDataSource {
     }
     
     // Deletion methods
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             deleteData(at: indexPath.row)
         }
@@ -229,7 +229,7 @@ extension WorkoutSessionTableView: UITableViewScrollDelegate {
      * If we expand/collapse the cell. This causes differing behaviors, and therefore this is
      * necessary... but not necessarily pretty.
      */
-    func scrollToCell(atIndexPath indexPath: IndexPath, position: UITableViewScrollPosition,
+    func scrollToCell(atIndexPath indexPath: IndexPath, position: UITableView.ScrollPosition,
                       animated: Bool) {
         scrollToRow(at: indexPath, at: position, animated: animated)
     }

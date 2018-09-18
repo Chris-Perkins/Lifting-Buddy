@@ -14,7 +14,7 @@ import Foundation
 class TopDownSegue: UIStoryboardSegue {
     let duration: TimeInterval = 0.25
     let delay: TimeInterval = 0
-    let animationOptions: UIViewAnimationOptions = [.curveEaseIn]
+    let animationOptions: UIView.AnimationOptions = [.curveEaseIn]
     
     override func perform() {
         // get views

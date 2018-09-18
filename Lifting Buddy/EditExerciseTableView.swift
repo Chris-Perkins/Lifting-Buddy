@@ -17,7 +17,7 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource, UITableV
     
     // MARK: Override Init
     
-    override init(frame: CGRect, style: UITableViewStyle) {
+    override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         
         delegate = self
@@ -53,7 +53,8 @@ class EditExerciseTableView: HPReorderTableView, UITableViewDataSource, UITableV
     }
     
     // Deletion methods
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             deleteData(at: indexPath.row)

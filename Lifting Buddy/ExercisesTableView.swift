@@ -29,7 +29,7 @@ class ExercisesTableView: UITableView {
     // MARK: Initializers
     
     init(exercises: AnyRealmCollection<Exercise>, selectingExercise: Bool, frame: CGRect,
-         style: UITableViewStyle) {
+         style: UITableView.Style) {
         self.selectingExercise = selectingExercise
         
         data = exercises
@@ -40,7 +40,7 @@ class ExercisesTableView: UITableView {
         setupTableView()
     }
     
-    init(exercises: AnyRealmCollection<Exercise>, selectingExercise: Bool, style: UITableViewStyle) {
+    init(exercises: AnyRealmCollection<Exercise>, selectingExercise: Bool, style: UITableView.Style) {
         self.selectingExercise = selectingExercise
         data = exercises
         sortedData = Exercise.getSortedExerciseArray(exercises: data)
@@ -143,7 +143,8 @@ extension ExercisesTableView : UITableViewDelegate {
     }
     
     // Deletion methods
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             

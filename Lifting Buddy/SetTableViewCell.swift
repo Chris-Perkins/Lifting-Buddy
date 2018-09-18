@@ -54,7 +54,7 @@ class SetTableViewCell: UITableViewCell {
     
     // MARK: View init
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         titleLabel       = UILabel()
         completeButton   = ToggleablePrettyButton()
         inputContentView = UIView()

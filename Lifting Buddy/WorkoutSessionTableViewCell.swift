@@ -53,7 +53,7 @@ class WorkoutSessionTableViewCell: UITableViewCell {
     
     // MARK: Init Functions
     
-    init(exercise: Exercise, style: UITableViewCellStyle, reuseIdentifier: String?) {
+    init(exercise: Exercise, style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.exercise = exercise
         
         invisButton  = UIButton()

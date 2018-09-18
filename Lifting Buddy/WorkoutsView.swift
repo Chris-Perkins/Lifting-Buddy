@@ -25,7 +25,7 @@ class WorkoutsView: UIView {
     // MARK: View inits
     
     override init(frame: CGRect) {
-        workoutTableView = WorkoutTableView(style: UITableViewStyle.plain)
+        workoutTableView = WorkoutTableView(style: UITableView.Style.plain)
         createWorkoutButton = PrettyButton()
         
         super.init(frame: frame)

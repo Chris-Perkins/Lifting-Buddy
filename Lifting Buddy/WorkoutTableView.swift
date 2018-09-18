@@ -21,7 +21,7 @@ class WorkoutTableView: UITableView {
     
     // MARK: Initializers
     
-    override init(frame: CGRect, style: UITableViewStyle) {
+    override init(frame: CGRect, style: UITableView.Style) {
         let realm = try! Realm()
         data = AnyRealmCollection(realm.objects(Workout.self))
         sortedData = Workout.getSortedWorkoutsSeparatedByDays(workouts: data)
@@ -31,7 +31,7 @@ class WorkoutTableView: UITableView {
         setupTableView()
     }
     
-    init(style: UITableViewStyle) {
+    init(style: UITableView.Style) {
         let realm = try! Realm()
         data = AnyRealmCollection(realm.objects(Workout.self))
         sortedData = Workout.getSortedWorkoutsSeparatedByDays(workouts: data)
@@ -97,7 +97,7 @@ extension WorkoutTableView: UITableViewDataSource {
     }
     
     // Deletion methods
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             

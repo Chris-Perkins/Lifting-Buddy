@@ -48,7 +48,7 @@ class ExerciseHistoryTableView: UITableView {
     
     // MARK: Initializers
     
-    init(forExercise exercise: Exercise, style: UITableViewStyle) {
+    init(forExercise exercise: Exercise, style: UITableView.Style) {
         progressionMethods = exercise.getProgressionMethods()
         data = [ExerciseHistoryEntry]()
         
@@ -147,7 +147,8 @@ extension ExerciseHistoryTableView: UITableViewDelegate {
     }
     
     // allow cell deletion
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if canModifyDataAtIndexPath(indexPath) {
                 let deletionData = data[indexPath.row]

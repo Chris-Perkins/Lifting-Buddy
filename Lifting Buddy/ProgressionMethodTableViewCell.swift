@@ -42,7 +42,7 @@ class ProgressionMethodTableViewCell: UITableViewCell {
     
     // MARK: Init overrides
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         nameEntryField = BetterTextField(defaultString: nil, frame: .zero)
         pickUnitButton = PrettyButton()
         loaded = false

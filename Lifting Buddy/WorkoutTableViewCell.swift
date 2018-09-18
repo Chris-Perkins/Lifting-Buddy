@@ -49,7 +49,7 @@ class WorkoutTableViewCell: UITableViewCell {
     
     // MARK: View inits
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         cellTitle = UILabel()
         fireImage = UIImageView(image: #imageLiteral(resourceName: "Fire"))
         streakLabel = UILabel()

@@ -23,7 +23,7 @@ class WorkoutSessionSummaryTableView: UITableView, UITableViewDataSource, UITabl
     
     // MARK: View overrides
     
-    init(workout: Workout?, exercises: List<Exercise>, style: UITableViewStyle) {
+    init(workout: Workout?, exercises: List<Exercise>, style: UITableView.Style) {
         data = exercises
         dataWithNoDuplicates = [Exercise]()
         

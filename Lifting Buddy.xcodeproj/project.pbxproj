@@ -237,13 +237,6 @@
 		224697B91F19843A0089C7CA = {
 			isa = PBXGroup;
 			children = (
-				2205A1D12290580400575BE3 /* WeakContainer.swift */,
-				2205A1CF2290558F00575BE3 /* ThemeColorableView.swift */,
-				2205A1CD2290535E00575BE3 /* ThemeHost.swift */,
-				2267D4CF228E00A7004165A7 /* ThemeColorVariant.swift */,
-				2267D4CD228E001D004165A7 /* ThemeColorProvider.swift */,
-				2267D4CB228DFD88004165A7 /* UIColorLBThemeExtension.swift */,
-				2267D4C9228DFC6B004165A7 /* LBNavigationController.swift */,
 				223CF15F1FCC9C2F0093BBC7 /* Lifting-Buddy-Bridging-Header.h */,
 				224697C41F19843A0089C7CA /* Lifting Buddy */,
 				224697C31F19843A0089C7CA /* Products */,
@@ -263,6 +256,8 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
+				22F5512C22907D8100CDFC68 /* View Controllers */,
+				22F5512922907D2700CDFC68 /* Theme Colors */,
 				2205A2812290750B00575BE3 /* Old */,
 				224697C91F19843A0089C7CA /* Main.storyboard */,
 				224697CC1F19843A0089C7CA /* Assets.xcassets */,
@@ -443,6 +438,43 @@
 				22F551232290795600CDFC68 /* .travis.yml */,
 			);
 			path = HPReorderTableView;
+			sourceTree = "<group>";
+		};
+		22F5512922907D2700CDFC68 /* Theme Colors */ = {
+			isa = PBXGroup;
+			children = (
+				22F5512A22907D3100CDFC68 /* General Logic */,
+				2267D4CB228DFD88004165A7 /* UIColorLBThemeExtension.swift */,
+			);
+			path = "Theme Colors";
+			sourceTree = "<group>";
+		};
+		22F5512A22907D3100CDFC68 /* General Logic */ = {
+			isa = PBXGroup;
+			children = (
+				22F5512B22907D4700CDFC68 /* Data Structures */,
+				2205A1CF2290558F00575BE3 /* ThemeColorableView.swift */,
+				2205A1CD2290535E00575BE3 /* ThemeHost.swift */,
+				2267D4CF228E00A7004165A7 /* ThemeColorVariant.swift */,
+				2267D4CD228E001D004165A7 /* ThemeColorProvider.swift */,
+			);
+			path = "General Logic";
+			sourceTree = "<group>";
+		};
+		22F5512B22907D4700CDFC68 /* Data Structures */ = {
+			isa = PBXGroup;
+			children = (
+				2205A1D12290580400575BE3 /* WeakContainer.swift */,
+			);
+			path = "Data Structures";
+			sourceTree = "<group>";
+		};
+		22F5512C22907D8100CDFC68 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2267D4C9228DFC6B004165A7 /* LBNavigationController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		22FD538D1FF1BEA800FB069E /* Protocols */ = {

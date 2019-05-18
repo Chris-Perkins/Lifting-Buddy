@@ -1,0 +1,6 @@
+framework module GBVersionTracking {
+  umbrella header "GBVersionTracking-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -13,12 +13,6 @@
 		220A79C92028F12F000B4EA7 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A79C82028F12F000B4EA7 /* Message.swift */; };
 		220A79CC20291E0D000B4EA7 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A79CB20291E0D000B4EA7 /* MessageView.swift */; };
 		220A94251F95146400B5CF60 /* ExerciseHistoryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */; };
-		221A41FC1FED97FA005C0B01 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 221A41F61FED97FA005C0B01 /* LICENSE */; };
-		221A41FD1FED97FA005C0B01 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 221A41F81FED97FA005C0B01 /* README.md */; };
-		221A41FE1FED97FA005C0B01 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 221A41F91FED97FA005C0B01 /* .gitignore */; };
-		221A41FF1FED97FA005C0B01 /* HPReorderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 221A41FA1FED97FA005C0B01 /* HPReorderTableView.m */; };
-		221A42001FED97FA005C0B01 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 221A41FB1FED97FA005C0B01 /* .travis.yml */; };
-		221A42011FED9872005C0B01 /* HPReorderTableView.h in Sources */ = {isa = PBXBuildFile; fileRef = 221A41F71FED97FA005C0B01 /* HPReorderTableView.h */; };
 		221BD44A20E069C100D9EE71 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221BD44920E069C100D9EE71 /* InitialViewController.swift */; };
 		222AAA69202BD072006B58F4 /* MessageDisplayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AAA68202BD072006B58F4 /* MessageDisplayerProtocol.swift */; };
 		223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223590901F427D1A002BE0BF /* EditExerciseTableView.swift */; };
@@ -79,6 +73,11 @@
 		22EC7FD31F5E01FE00A1E66B /* WorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */; };
 		22ECE3941F644E1A0067171A /* WorkoutSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */; };
 		22F030141FF01B7500C5E376 /* LabelWithPrettyButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F030131FF01B7500C5E376 /* LabelWithPrettyButtonView.swift */; };
+		22F551242290795600CDFC68 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 22F5511E2290795600CDFC68 /* LICENSE */; };
+		22F551252290795600CDFC68 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 22F551202290795600CDFC68 /* README.md */; };
+		22F551262290795600CDFC68 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 22F551212290795600CDFC68 /* .gitignore */; };
+		22F551272290795600CDFC68 /* HPReorderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F551222290795600CDFC68 /* HPReorderTableView.m */; };
+		22F551282290795600CDFC68 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 22F551232290795600CDFC68 /* .travis.yml */; };
 		22FAD5051FF406E200C42811 /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FAD5041FF406E200C42811 /* SessionInfo.swift */; };
 		22FD260120085444000D1B4C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22FD260020085444000D1B4C /* Localizable.strings */; };
 		22FD538F1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FD538E1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift */; };
@@ -102,12 +101,6 @@
 		220A79C82028F12F000B4EA7 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		220A79CB20291E0D000B4EA7 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryTableView.swift; sourceTree = "<group>"; };
-		221A41F61FED97FA005C0B01 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		221A41F71FED97FA005C0B01 /* HPReorderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPReorderTableView.h; sourceTree = "<group>"; };
-		221A41F81FED97FA005C0B01 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		221A41F91FED97FA005C0B01 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		221A41FA1FED97FA005C0B01 /* HPReorderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPReorderTableView.m; sourceTree = "<group>"; };
-		221A41FB1FED97FA005C0B01 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		221BD44920E069C100D9EE71 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		222AAA68202BD072006B58F4 /* MessageDisplayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDisplayerProtocol.swift; sourceTree = "<group>"; };
 		223590901F427D1A002BE0BF /* EditExerciseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableView.swift; sourceTree = "<group>"; };
@@ -171,6 +164,12 @@
 		22EC7FD21F5E01FE00A1E66B /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewCell.swift; sourceTree = "<group>"; };
 		22ECE3931F644E1A0067171A /* WorkoutSessionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSessionView.swift; sourceTree = "<group>"; };
 		22F030131FF01B7500C5E376 /* LabelWithPrettyButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPrettyButtonView.swift; sourceTree = "<group>"; };
+		22F5511E2290795600CDFC68 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		22F5511F2290795600CDFC68 /* HPReorderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPReorderTableView.h; sourceTree = "<group>"; };
+		22F551202290795600CDFC68 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		22F551212290795600CDFC68 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		22F551222290795600CDFC68 /* HPReorderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPReorderTableView.m; sourceTree = "<group>"; };
+		22F551232290795600CDFC68 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		22FAD5041FF406E200C42811 /* SessionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfo.swift; sourceTree = "<group>"; };
 		22FD260020085444000D1B4C /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		22FD538E1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDisplayerProtocol.swift; sourceTree = "<group>"; };
@@ -199,6 +198,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2205A2812290750B00575BE3 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				22F5511C2290795600CDFC68 /* Externals */,
+				224697C51F19843A0089C7CA /* AppDelegate.swift */,
+				22AA6D0F1F2184A400624744 /* View Controllers */,
+				225D44101F510FD700B35D80 /* Custom UITypes */,
+				22AA6D0E1F21847F00624744 /* Content Views */,
+				224153791F1EE2C500F7B82B /* Workout Classes */,
+				220A79CA20291CF2000B4EA7 /* Messages */,
+				22AA6D101F2184BD00624744 /* Miscellaneous */,
+				225E65D51F22A446004B3AF4 /* Supporting Files */,
+			);
+			path = Old;
+			sourceTree = "<group>";
+		};
 		220A79CA20291CF2000B4EA7 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,27 +222,6 @@
 				228CBBDC202E704000884FE6 /* MessageQueue.swift */,
 			);
 			name = Messages;
-			sourceTree = "<group>";
-		};
-		221A41F41FED97F9005C0B01 /* Externals */ = {
-			isa = PBXGroup;
-			children = (
-				221A41F51FED97F9005C0B01 /* HPReorderTableView */,
-			);
-			path = Externals;
-			sourceTree = SOURCE_ROOT;
-		};
-		221A41F51FED97F9005C0B01 /* HPReorderTableView */ = {
-			isa = PBXGroup;
-			children = (
-				221A41FA1FED97FA005C0B01 /* HPReorderTableView.m */,
-				221A41F71FED97FA005C0B01 /* HPReorderTableView.h */,
-				221A41F61FED97FA005C0B01 /* LICENSE */,
-				221A41F81FED97FA005C0B01 /* README.md */,
-				221A41F91FED97FA005C0B01 /* .gitignore */,
-				221A41FB1FED97FA005C0B01 /* .travis.yml */,
-			);
-			path = HPReorderTableView;
 			sourceTree = "<group>";
 		};
 		224153791F1EE2C500F7B82B /* Workout Classes */ = {
@@ -269,15 +263,7 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
-				221A41F41FED97F9005C0B01 /* Externals */,
-				224697C51F19843A0089C7CA /* AppDelegate.swift */,
-				22AA6D0F1F2184A400624744 /* View Controllers */,
-				225D44101F510FD700B35D80 /* Custom UITypes */,
-				22AA6D0E1F21847F00624744 /* Content Views */,
-				224153791F1EE2C500F7B82B /* Workout Classes */,
-				220A79CA20291CF2000B4EA7 /* Messages */,
-				22AA6D101F2184BD00624744 /* Miscellaneous */,
-				225E65D51F22A446004B3AF4 /* Supporting Files */,
+				2205A2812290750B00575BE3 /* Old */,
 				224697C91F19843A0089C7CA /* Main.storyboard */,
 				224697CC1F19843A0089C7CA /* Assets.xcassets */,
 				224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */,
@@ -438,6 +424,27 @@
 			name = "Summary Screen";
 			sourceTree = "<group>";
 		};
+		22F5511C2290795600CDFC68 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				22F5511D2290795600CDFC68 /* HPReorderTableView */,
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
+		22F5511D2290795600CDFC68 /* HPReorderTableView */ = {
+			isa = PBXGroup;
+			children = (
+				22F5511E2290795600CDFC68 /* LICENSE */,
+				22F5511F2290795600CDFC68 /* HPReorderTableView.h */,
+				22F551202290795600CDFC68 /* README.md */,
+				22F551212290795600CDFC68 /* .gitignore */,
+				22F551222290795600CDFC68 /* HPReorderTableView.m */,
+				22F551232290795600CDFC68 /* .travis.yml */,
+			);
+			path = HPReorderTableView;
+			sourceTree = "<group>";
+		};
 		22FD538D1FF1BEA800FB069E /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -543,14 +550,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22F551252290795600CDFC68 /* README.md in Resources */,
+				22F551262290795600CDFC68 /* .gitignore in Resources */,
+				22F551282290795600CDFC68 /* .travis.yml in Resources */,
 				224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */,
 				224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */,
-				221A41FD1FED97FA005C0B01 /* README.md in Resources */,
-				221A41FC1FED97FA005C0B01 /* LICENSE in Resources */,
-				221A41FE1FED97FA005C0B01 /* .gitignore in Resources */,
 				22FD260120085444000D1B4C /* Localizable.strings in Resources */,
-				221A42001FED97FA005C0B01 /* .travis.yml in Resources */,
 				224697CB1F19843A0089C7CA /* Main.storyboard in Resources */,
+				22F551242290795600CDFC68 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,7 +623,6 @@
 				2267D4CE228E001D004165A7 /* ThemeColorProvider.swift in Sources */,
 				22FD539B1FF1C26E00FB069E /* ExerciseHistoryEntryTableViewDelegateProtocol.swift in Sources */,
 				22B944C42019590700585D65 /* SetTableView.swift in Sources */,
-				221A42011FED9872005C0B01 /* HPReorderTableView.h in Sources */,
 				22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */,
 				227981421F4D13BE0010DA18 /* ProgressionMethodsTableView.swift in Sources */,
 				2250CAE01FC2632C00B21C4A /* WorkoutSessionSummaryScreen.swift in Sources */,
@@ -628,6 +634,7 @@
 				22F030141FF01B7500C5E376 /* LabelWithPrettyButtonView.swift in Sources */,
 				22C3D5A620005C8400C15276 /* TopDownSegue.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
+				22F551272290795600CDFC68 /* HPReorderTableView.m in Sources */,
 				2205A1D02290558F00575BE3 /* ThemeColorableView.swift in Sources */,
 				22B944C62019591300585D65 /* SetTableViewCell.swift in Sources */,
 				22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */,
@@ -687,7 +694,6 @@
 				226B11A11F96E1750013139B /* InputViewProtocol.swift in Sources */,
 				222AAA69202BD072006B58F4 /* MessageDisplayerProtocol.swift in Sources */,
 				22FAD5051FF406E200C42811 /* SessionInfo.swift in Sources */,
-				221A41FF1FED97FA005C0B01 /* HPReorderTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

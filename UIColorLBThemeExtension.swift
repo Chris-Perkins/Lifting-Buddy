@@ -13,13 +13,13 @@ extension UIColor {
     /// LBTheme is a sub-structure of UIColor that contains the colors of Lifting Buddy's theme.
     ///
     /// This can be accessed via `UIColor.LBTheme`.
-    public struct LBTheme {
+    internal struct LBTheme {
 
-        /// The Light theme struct. This conforms to LBThemeColorProvider to provide easy access to the colors available
+        /// The Light theme class. This conforms to LBThemeColorProvider to provide easy access to the colors available
         /// in the light theme of Lifting Buddy.
         ///
         /// This can be accessed via `UIColor.LBTheme.Light`.
-        public struct Light: LBThemeColorProvider {
+        internal class Light: ThemeColorProvider {
 
             /// The primary background color of Lifting Buddy. This color should be used for backgrounds.
             private static let primaryColorNormal = UIColor(red: 24 / 100, green: 35 / 100, blue: 100 / 255, alpha: 1)
@@ -30,7 +30,7 @@ extension UIColor {
             /// - Returns: The light theme's primary color of the input variant
             ///
             /// The primary color should be used for screen-filling backgrounds.
-            public func getPrimaryColor(variant: LBColorVariant) -> UIColor {
+            public func getPrimaryColor(variant: ThemeColorVariant) -> UIColor {
                 return Light.primaryColorNormal
             }
 
@@ -42,7 +42,7 @@ extension UIColor {
             /// The primary accent color should be used in:
             /// 1. The navigation bar
             /// 1. UIButtons
-            public func getPrimaryAccentColor(variant: LBColorVariant) -> UIColor {
+            public func getPrimaryAccentColor(variant: ThemeColorVariant) -> UIColor {
                 return Light.primaryColorNormal
             }
 
@@ -54,7 +54,7 @@ extension UIColor {
             /// The secondary accent color should be used in:
             /// 1. UIBarButtonItems
             /// 1. Toggle-able buttons (on/off, radio buttons)
-            public func getSecondaryAccentColor(variant: LBColorVariant) -> UIColor {
+            public func getSecondaryAccentColor(variant: ThemeColorVariant) -> UIColor {
                 return Light.primaryColorNormal
             }
 

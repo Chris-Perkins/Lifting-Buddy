@@ -9,7 +9,7 @@
 import Foundation
 
 /// A navigation controller that has a navigation bar that is styled in Lifting Buddy's manner.
-public class LBNavigationController: UINavigationController {
+internal class LBNavigationController: UINavigationController {
 
     /// Called after the view for this ViewController loads. Also causes the navigation bar to style itself
     /// appropriately.

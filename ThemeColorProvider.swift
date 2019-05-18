@@ -1,5 +1,5 @@
 //
-//  LBThemeColorProvider.swift
+//  ThemeColorProvider.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 5/16/19.
@@ -9,7 +9,7 @@
 import Foundation
 
 /// A color provider is used to provide the colors for a theme in Lifting Buddy.
-public protocol LBThemeColorProvider {
+public protocol ThemeColorProvider {
 
     /// Used to retrieve the primary color for this theme with an input color variant.
     ///
@@ -17,7 +17,7 @@ public protocol LBThemeColorProvider {
     /// - Returns: The primary color of the input variant
     ///
     /// The primary color should be used for screen-filling backgrounds.
-    func getPrimaryColor(variant: LBColorVariant) -> UIColor
+    func getPrimaryColor(variant: ThemeColorVariant) -> UIColor
 
     /// Used to retrieve the primary accent color for this theme with an input color variant.
     ///
@@ -27,7 +27,7 @@ public protocol LBThemeColorProvider {
     /// The primary accent color should be used in:
     /// 1. The navigation bar
     /// 1. UIButtons
-    func getPrimaryAccentColor(variant: LBColorVariant) -> UIColor
+    func getPrimaryAccentColor(variant: ThemeColorVariant) -> UIColor
 
     /// Used to retrieve the primary accent color for this theme with an input color variant.
     ///
@@ -37,5 +37,5 @@ public protocol LBThemeColorProvider {
     /// The secondary accent color should be used in:
     /// 1. UIBarButtonItems
     /// 1. Toggle-able buttons (on/off, radio buttons)
-    func getSecondaryAccentColor(variant: LBColorVariant) -> UIColor
+    func getSecondaryAccentColor(variant: ThemeColorVariant) -> UIColor
 }

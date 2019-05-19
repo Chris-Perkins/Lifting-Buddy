@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ndD-oL-hPs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6La-8b-wv8">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -44,6 +44,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AWK-zi-mwz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-880" y="152"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="RfJ-t1-MfH">
+            <objects>
+                <navigationController id="6La-8b-wv8" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CAq-tp-7eD" customClass="LBNavigationBar" customModule="Lifting_Buddy" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="KAg-Gg-Ldj" kind="relationship" relationship="rootViewController" id="esa-dr-Jhu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U5p-9e-1z7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-881" y="-669"/>
+        </scene>
+        <!--Workouts-->
+        <scene sceneID="I4l-Qt-Bnc">
+            <objects>
+                <viewController id="KAg-Gg-Ldj" customClass="TestVC" customModule="Lifting_Buddy" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SaH-AY-Q5Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="eOJ-2Y-00a"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ik1-wV-ZLJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZx-Cl-EEO">
+                                <rect key="frame" x="28" y="72" width="358" height="656"/>
+                                <state key="normal" title="Change"/>
+                                <connections>
+                                    <action selector="pressTheme:" destination="KAg-Gg-Ldj" eventType="touchUpInside" id="XHP-GV-4ku"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XZx-Cl-EEO" firstAttribute="top" secondItem="SaH-AY-Q5Y" secondAttribute="bottom" constant="8" id="2ly-MH-071"/>
+                            <constraint firstItem="XZx-Cl-EEO" firstAttribute="leading" secondItem="ik1-wV-ZLJ" secondAttribute="leadingMargin" constant="8" id="AJD-3i-gdX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XZx-Cl-EEO" secondAttribute="trailing" constant="8" id="ZK4-xK-S8n"/>
+                            <constraint firstItem="eOJ-2Y-00a" firstAttribute="top" secondItem="XZx-Cl-EEO" secondAttribute="bottom" constant="8" id="t8m-PO-hLE"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Workouts" id="Bu1-eH-4ko"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5KY-UV-BTa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-175" y="-669"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">

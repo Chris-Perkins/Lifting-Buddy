@@ -49,7 +49,7 @@ open class ThemeHost {
     /// - Warning: Not yet complete; currently only uses the Light color theme.
     private init() {
         // TODO: Make this dynamic and stored.
-        activeColorTheme = UIColor.LBTheme.Light()
+        activeColorTheme = LBTheme.LBDarkTheme()
     }
 
     /// Adds the input `ThemeColorableView` to the views that listen to changes in the theme. Also calls

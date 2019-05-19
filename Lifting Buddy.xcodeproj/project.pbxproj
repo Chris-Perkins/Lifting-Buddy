@@ -34,7 +34,7 @@
 		22605DB41FAA8C5500FA3DAB /* ExercisesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22605DB31FAA8C5500FA3DAB /* ExercisesTableView.swift */; };
 		22605DB61FAA8CC200FA3DAB /* ExercisesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22605DB51FAA8CC200FA3DAB /* ExercisesTableViewCell.swift */; };
 		2263DF981F8DA60E00592DCB /* TimeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2263DF971F8DA60E00592DCB /* TimeInputField.swift */; };
-		2267D4CC228DFD88004165A7 /* UIColorLBThemeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2267D4CB228DFD88004165A7 /* UIColorLBThemeExtension.swift */; };
+		2267D4CC228DFD88004165A7 /* LBTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2267D4CB228DFD88004165A7 /* LBTheme.swift */; };
 		2267D4CE228E001D004165A7 /* ThemeColorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2267D4CD228E001D004165A7 /* ThemeColorProvider.swift */; };
 		2267D4D0228E00A7004165A7 /* ThemeColorVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2267D4CF228E00A7004165A7 /* ThemeColorVariant.swift */; };
 		226B119E1F96DB250013139B /* BetterInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B119D1F96DB250013139B /* BetterInputView.swift */; };
@@ -78,6 +78,8 @@
 		22F551272290795600CDFC68 /* HPReorderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F551222290795600CDFC68 /* HPReorderTableView.m */; };
 		22F551282290795600CDFC68 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 22F551232290795600CDFC68 /* .travis.yml */; };
 		22F551312291BCE100CDFC68 /* LBNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F551302291BCE100CDFC68 /* LBNavigationBar.swift */; };
+		22F551382291E9F600CDFC68 /* LBLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F551372291E9F600CDFC68 /* LBLightTheme.swift */; };
+		22F5513A2291EA9200CDFC68 /* LBDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F551392291EA9200CDFC68 /* LBDarkTheme.swift */; };
 		22FAD5051FF406E200C42811 /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FAD5041FF406E200C42811 /* SessionInfo.swift */; };
 		22FD260120085444000D1B4C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22FD260020085444000D1B4C /* Localizable.strings */; };
 		22FD538F1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FD538E1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift */; };
@@ -125,7 +127,7 @@
 		22605DB31FAA8C5500FA3DAB /* ExercisesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesTableView.swift; sourceTree = "<group>"; };
 		22605DB51FAA8CC200FA3DAB /* ExercisesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesTableViewCell.swift; sourceTree = "<group>"; };
 		2263DF971F8DA60E00592DCB /* TimeInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputField.swift; sourceTree = "<group>"; };
-		2267D4CB228DFD88004165A7 /* UIColorLBThemeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorLBThemeExtension.swift; sourceTree = "<group>"; };
+		2267D4CB228DFD88004165A7 /* LBTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBTheme.swift; sourceTree = "<group>"; };
 		2267D4CD228E001D004165A7 /* ThemeColorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorProvider.swift; sourceTree = "<group>"; };
 		2267D4CF228E00A7004165A7 /* ThemeColorVariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorVariant.swift; sourceTree = "<group>"; };
 		226B119D1F96DB250013139B /* BetterInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterInputView.swift; sourceTree = "<group>"; };
@@ -170,6 +172,8 @@
 		22F551222290795600CDFC68 /* HPReorderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPReorderTableView.m; sourceTree = "<group>"; };
 		22F551232290795600CDFC68 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		22F551302291BCE100CDFC68 /* LBNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LBNavigationBar.swift; sourceTree = "<group>"; };
+		22F551372291E9F600CDFC68 /* LBLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBLightTheme.swift; sourceTree = "<group>"; };
+		22F551392291EA9200CDFC68 /* LBDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBDarkTheme.swift; sourceTree = "<group>"; };
 		22FAD5041FF406E200C42811 /* SessionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfo.swift; sourceTree = "<group>"; };
 		22FD260020085444000D1B4C /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		22FD538E1FF1BEE800FB069E /* ExerciseDisplayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDisplayerProtocol.swift; sourceTree = "<group>"; };
@@ -443,8 +447,8 @@
 		22F5512922907D2700CDFC68 /* Theme Colors */ = {
 			isa = PBXGroup;
 			children = (
+				22F551362291E9E100CDFC68 /* LB Themes */,
 				22F5512A22907D3100CDFC68 /* General Logic */,
-				2267D4CB228DFD88004165A7 /* UIColorLBThemeExtension.swift */,
 			);
 			path = "Theme Colors";
 			sourceTree = "<group>";
@@ -475,6 +479,16 @@
 				22F551302291BCE100CDFC68 /* LBNavigationBar.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		22F551362291E9E100CDFC68 /* LB Themes */ = {
+			isa = PBXGroup;
+			children = (
+				2267D4CB228DFD88004165A7 /* LBTheme.swift */,
+				22F551372291E9F600CDFC68 /* LBLightTheme.swift */,
+				22F551392291EA9200CDFC68 /* LBDarkTheme.swift */,
+			);
+			path = "LB Themes";
 			sourceTree = "<group>";
 		};
 		22FD538D1FF1BEA800FB069E /* Protocols */ = {
@@ -663,6 +677,7 @@
 				22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */,
 				2280A2FD1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift in Sources */,
 				22F030141FF01B7500C5E376 /* LabelWithPrettyButtonView.swift in Sources */,
+				22F551382291E9F600CDFC68 /* LBLightTheme.swift in Sources */,
 				22C3D5A620005C8400C15276 /* TopDownSegue.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
 				22F551272290795600CDFC68 /* HPReorderTableView.m in Sources */,
@@ -709,7 +724,7 @@
 				220A94251F95146400B5CF60 /* ExerciseHistoryTableView.swift in Sources */,
 				223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */,
 				228CD0AA1FA6782700463B90 /* ExercisesView.swift in Sources */,
-				2267D4CC228DFD88004165A7 /* UIColorLBThemeExtension.swift in Sources */,
+				2267D4CC228DFD88004165A7 /* LBTheme.swift in Sources */,
 				22EC7FD31F5E01FE00A1E66B /* WorkoutTableViewCell.swift in Sources */,
 				224153781F1EE1F000F7B82B /* Exercise.swift in Sources */,
 				22BC5AF41F3E5C2A00B150BD /* CreateWorkoutView.swift in Sources */,
@@ -720,6 +735,7 @@
 				22AA6D121F21851400624744 /* HeaderView.swift in Sources */,
 				22FD539F1FF1C3F800FB069E /* CreateExerciseViewDelegateProtocol.swift in Sources */,
 				22578F91201D939C00D9E38C /* UITableViewScrollDelegate.swift in Sources */,
+				22F5513A2291EA9200CDFC68 /* LBDarkTheme.swift in Sources */,
 				229A9DCF201D5C1200FACBA0 /* Notifications.swift in Sources */,
 				225D26B61F76D6BA00F047D9 /* ToggleablePrettyButton.swift in Sources */,
 				22CDEFF41FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift in Sources */,

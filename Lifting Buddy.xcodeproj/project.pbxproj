@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2205A1CE2290535E00575BE3 /* ThemeHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A1CD2290535E00575BE3 /* ThemeHost.swift */; };
-		2205A1D02290558F00575BE3 /* ThemeColorableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A1CF2290558F00575BE3 /* ThemeColorableView.swift */; };
+		2205A1D02290558F00575BE3 /* ThemeColorableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A1CF2290558F00575BE3 /* ThemeColorableElement.swift */; };
 		2205A1D22290580400575BE3 /* WeakContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205A1D12290580400575BE3 /* WeakContainer.swift */; };
 		220A79C92028F12F000B4EA7 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A79C82028F12F000B4EA7 /* Message.swift */; };
 		220A79CC20291E0D000B4EA7 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A79CB20291E0D000B4EA7 /* MessageView.swift */; };
@@ -98,7 +98,7 @@
 /* Begin PBXFileReference section */
 		07EAE38F8336E92D79D24030 /* Pods-Lifting Buddy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lifting Buddy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lifting Buddy/Pods-Lifting Buddy.debug.xcconfig"; sourceTree = "<group>"; };
 		2205A1CD2290535E00575BE3 /* ThemeHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHost.swift; sourceTree = "<group>"; };
-		2205A1CF2290558F00575BE3 /* ThemeColorableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorableView.swift; sourceTree = "<group>"; };
+		2205A1CF2290558F00575BE3 /* ThemeColorableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorableElement.swift; sourceTree = "<group>"; };
 		2205A1D12290580400575BE3 /* WeakContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakContainer.swift; sourceTree = "<group>"; };
 		220A79C82028F12F000B4EA7 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		220A79CB20291E0D000B4EA7 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -457,7 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				22F5512B22907D4700CDFC68 /* Data Structures */,
-				2205A1CF2290558F00575BE3 /* ThemeColorableView.swift */,
+				2205A1CF2290558F00575BE3 /* ThemeColorableElement.swift */,
 				2205A1CD2290535E00575BE3 /* ThemeHost.swift */,
 				2267D4CF228E00A7004165A7 /* ThemeColorVariant.swift */,
 				2267D4CD228E001D004165A7 /* ThemeColorProvider.swift */,
@@ -681,7 +681,7 @@
 				22C3D5A620005C8400C15276 /* TopDownSegue.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
 				22F551272290795600CDFC68 /* HPReorderTableView.m in Sources */,
-				2205A1D02290558F00575BE3 /* ThemeColorableView.swift in Sources */,
+				2205A1D02290558F00575BE3 /* ThemeColorableElement.swift in Sources */,
 				22B944C62019591300585D65 /* SetTableViewCell.swift in Sources */,
 				22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */,
 				22F551312291BCE100CDFC68 /* LBNavigationBar.swift in Sources */,

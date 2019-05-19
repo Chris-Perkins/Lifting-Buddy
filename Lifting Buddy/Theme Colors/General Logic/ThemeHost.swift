@@ -11,8 +11,8 @@
 /// This class is singleton-patterned, and no external initialization can be done. The class can be accessed via
 /// `ThemeHost.shared`.
 ///
-/// `ThemeColorableViews` can use this class to listen to changes in color theme using
-/// `ThemeHost#bindThemeColorableViewToTheme(_: ThemeColorableView)`.
+/// `ThemeColorableElement`s can use this class to listen to changes in color theme using
+/// `ThemeHost#bindThemeColorableElementToTheme(_: ThemeColorableElement)`.
 ///
 /// The theme can be changed by using `ThemeHost#activeColorTheme = <YourColorTheme>`.
 open class ThemeHost {
@@ -34,13 +34,13 @@ open class ThemeHost {
 
     /// The views that are colorable and are listening to changes in the color theme.
     ///
-    /// - Note: While the container is of WeakContainers of UIView-type, they actually contain `ThemeColorableView`s.
-    /// This is because `ThemeHost#bindThemeColorableViewToTheme(_: ThemeColorableView)` only accepts
-    /// ThemeColorableViews.
+    /// - Note: While the container is of WeakContainers of UIView-type, they actually contain `ThemeColorableElement`s.
+    /// This is because `ThemeHost#bindThemeColorableElementToTheme(_: ThemeColorableElement)` only accepts
+    /// ThemeColorableElements.
     ///
     /// - Note: It is assumed that this array will never become too large (>1000 elements). If this occurs, then the
     /// performance of your application may suffer.
-    private var colorableViewContainersBoundToTheme = [WeakContainer<UIView>]()
+    private var themeColorableElementContainersBoundToTheme = [WeakContainer<UIView>]()
 
     /// Initializes a ThemeHost with the stored color theme.
     ///
@@ -50,26 +50,27 @@ open class ThemeHost {
         activeColorTheme = LBTheme.LBDarkTheme()
     }
 
-    /// Adds the input `ThemeColorableView` to the views that listen to changes in the theme. Also calls
+    /// Adds the input `ThemeColorableElement` to the views that listen to changes in the theme. Also calls
     /// `color(using: ThemeColorProvider)` to recolor the view to the current theme..
     ///
-    /// - Parameter colorableView: The ThemeColorableView
-    public func bindThemeColorableViewToTheme(_ colorableView: ThemeColorableView) {
+    /// - Parameter colorableView: The ThemeColorableElement
+    public func bindThemeColorableElementToTheme(_ colorableView: ThemeColorableElement) {
         colorableView.color(using: activeColorTheme)
 
-        colorableViewContainersBoundToTheme.append(WeakContainer(value: colorableView))
+        themeColorableElementContainersBoundToTheme.append(WeakContainer(value: colorableView))
     }
 
-    /// Removes any references to nil `ThemeColorableViews` in `colorableViewsBoundToTheme`. Used to prevent the array
-    /// from getting mis-managed and too large.
+    /// Removes any references to nil `ThemeColorableElement`s in `themeColorableElementContainersBoundToTheme`. Used to
+    /// prevent the array from getting mis-managed and too large.
     private func removeNilColorableViewListeners() {
-        colorableViewContainersBoundToTheme = colorableViewContainersBoundToTheme.filter { $0.value != nil }
+        themeColorableElementContainersBoundToTheme =
+            themeColorableElementContainersBoundToTheme.filter { $0.value != nil }
     }
 
-    /// Calls `ThemeColorableView#color(using: ThemeColorProvider)` for all view containers bound to theme.
+    /// Calls `ThemeColorableElement#color(using: ThemeColorProvider)` for all view containers bound to theme.
     private func changeAllBindedViewColorsToActiveTheme() {
-        for viewContainer in colorableViewContainersBoundToTheme {
-            guard let colorableViewsBoundToTheme = viewContainer.value as? ThemeColorableView else {
+        for viewContainer in themeColorableElementContainersBoundToTheme {
+            guard let colorableViewsBoundToTheme = viewContainer.value as? ThemeColorableElement else {
                 return
             }
 

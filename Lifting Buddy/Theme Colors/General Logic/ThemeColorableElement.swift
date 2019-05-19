@@ -1,5 +1,5 @@
 //
-//  ThemeColorableView.swift
+//  ThemeColorableElement.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 5/18/19.
@@ -9,9 +9,9 @@
 /// A UIView-bound protocol that allows for the generalizing of UIView instances so that they can listen to changes in
 /// theme.
 ///
-/// Conforming to this protocol also provides `ThemeColorableView#addToThemeHost()` for use in adding colorable views
+/// Conforming to this protocol also provides `ThemeColorableElement#addToThemeHost()` for use in adding colorable views
 /// to the host.
-public protocol ThemeColorableView where Self: UIView {
+public protocol ThemeColorableElement where Self: UIView {
 
     /// Causes this view to recolor using the input ThemeColorProvider
     ///
@@ -19,12 +19,12 @@ public protocol ThemeColorableView where Self: UIView {
     func color(using colorProvider: ThemeColorProvider)
 }
 
-// MARK: - ThemeColorableView provided functions
+// MARK: - ThemeColorableElement provided functions
 
-extension ThemeColorableView {
+extension ThemeColorableElement {
 
-    /// Adds this ThemeColorableView to the ThemeHost.
+    /// Adds this ThemeColorableElement to the ThemeHost.
     internal func addToThemeHost() {
-        ThemeHost.shared.bindThemeColorableViewToTheme(self)
+        ThemeHost.shared.bindThemeColorableElementToTheme(self)
     }
 }

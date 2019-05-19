@@ -8,7 +8,7 @@
 
 // MARK: - LBNavigationBar main declaration
 
-/// A Lifting-Buddy-styled UINavigationBar. Conforms to ThemeColorableView so the navigation bar can change colors
+/// A Lifting-Buddy-styled UINavigationBar. Conforms to ThemeColorableElement so the navigation bar can change colors
 /// based on the theme.
 ///
 /// - Note: If used on the Storyboard, certain variables will be overriden. Those variables are:
@@ -60,9 +60,9 @@ internal class LBNavigationBar: UINavigationBar {
     }
 }
 
-// MARK: - ThemeColorableView Extension
+// MARK: - ThemeColorableElement Extension
 
-extension LBNavigationBar: ThemeColorableView {
+extension LBNavigationBar: ThemeColorableElement {
 
     /// Causes this view to recolor using the input ThemeColorProvider
     ///

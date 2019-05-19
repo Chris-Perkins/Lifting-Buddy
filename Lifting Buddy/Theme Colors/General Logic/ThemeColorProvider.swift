@@ -11,6 +11,11 @@ import Foundation
 /// A color provider is used to provide the colors for a theme in Lifting Buddy.
 public protocol ThemeColorProvider {
 
+    /// Retrieves the style that navigation bars should use in this theme.
+    ///
+    /// - Returns: The navigation bar style for this theme
+    func getNavigationBarStyle() -> UIBarStyle
+
     /// Used to retrieve the primary color for this theme with an input color variant.
     ///
     /// - Parameter variant: The variant of the color to retrieve

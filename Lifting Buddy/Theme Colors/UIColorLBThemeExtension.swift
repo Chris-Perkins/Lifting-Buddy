@@ -22,7 +22,14 @@ extension UIColor {
         internal class Light: ThemeColorProvider {
 
             /// The primary background color of Lifting Buddy. This color should be used for backgrounds.
-            private static let primaryColorNormal = UIColor(red: 24 / 100, green: 35 / 100, blue: 100 / 255, alpha: 1)
+            private static let primaryColorNormal = UIColor(red: 61 / 255, green: 90 / 255, blue: 254 / 255, alpha: 1)
+
+            /// Retrieves the style that navigation bars should use in the Light theme.
+            ///
+            /// - Returns: `UIBarStyle.blackOpaque`
+            func getNavigationBarStyle() -> UIBarStyle {
+                return .blackOpaque
+            }
 
             /// Used to retrieve the primary color for the Light theme with an input color variant.
             ///

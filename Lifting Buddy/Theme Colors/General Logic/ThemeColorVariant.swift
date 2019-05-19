@@ -6,8 +6,6 @@
 //  Copyright © 2019 Christopher Perkins. All rights reserved.
 //
 
-import Foundation
-
 /// The different types of variants that each app theme Color can have.
 ///
 /// - light: The light variant of a color

@@ -6,8 +6,6 @@
 //  Copyright © 2019 Christopher Perkins. All rights reserved.
 //
 
-import Foundation
-
 /// A class that contains a weak reference to a value.
 ///
 /// This allows for a Collection of weak-references.

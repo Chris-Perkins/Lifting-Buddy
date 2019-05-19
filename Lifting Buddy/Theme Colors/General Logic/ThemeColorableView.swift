@@ -6,8 +6,6 @@
 //  Copyright © 2019 Christopher Perkins. All rights reserved.
 //
 
-import Foundation
-
 /// A UIView-bound protocol that allows for the generalizing of UIView instances so that they can listen to changes in
 /// theme.
 ///

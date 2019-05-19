@@ -6,8 +6,6 @@
 //  Copyright © 2019 Christopher Perkins. All rights reserved.
 //
 
-import Foundation
-
 /// A color provider that lets a list of views listen to changes in the coloring theme. Access via `shared`.
 ///
 /// This class is singleton-patterned, and no external initialization can be done. The class can be accessed via

@@ -6,8 +6,6 @@
 //  Copyright © 2019 Christopher Perkins. All rights reserved.
 //
 
-import Foundation
-
 /// A color provider is used to provide the colors for a theme in Lifting Buddy.
 public protocol ThemeColorProvider {
 

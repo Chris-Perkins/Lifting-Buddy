@@ -16,13 +16,20 @@ extension LBTheme {
     /// in the dark theme of Lifting Buddy.
     internal class LBDarkTheme: ThemeColorProvider {
 
-        /// The primary background color of Dark Lifting Buddy. This color should be used for backgrounds.
-        private static let primaryColorNormal = UIColor(red: 61 / 255, green: 90 / 255, blue: 254 / 255, alpha: 1)
+        /// The primary background color of Lifting Buddy in the dark theme.
+        private static let primaryColorNormal = UIColor(red: 33 / 255, green: 33 / 255, blue: 33 / 255, alpha: 1)
 
-        /// Retrieves the style that navigation bars should use in the Light theme.
+        /// The primary accent color of Dark Lifting Buddy in the dark theme.
+        private static let primaryAccentColorNormal = UIColor(red: 61 / 255, green: 90 / 255, blue: 254 / 255, alpha: 1)
+
+        /// The secondary accent color of Lifting Buddy in the dark theme.
+        private static let secondaryAccentColorNormal =
+            UIColor(red: 251 / 255, green: 192 / 255, blue: 45 / 255, alpha: 1)
+
+        /// Retrieves the style that `UIBar`s should use in the Light theme.
         ///
-        /// - Returns: `UIBarStyle.default`
-        func getNavigationBarStyle() -> UIBarStyle {
+        /// - Returns: `UIBarStyle.blackOpaque`
+        func getUIBarStyle() -> UIBarStyle {
             return .blackOpaque
         }
 
@@ -45,7 +52,7 @@ extension LBTheme {
         /// 1. The navigation bar
         /// 1. UIButtons
         public func getPrimaryAccentColor(variant: ThemeColorVariant) -> UIColor {
-            return LBDarkTheme.primaryColorNormal
+            return LBDarkTheme.primaryAccentColorNormal
         }
 
         /// Used to retrieve the Dark theme's primary accent color for this theme with an input color variant.
@@ -57,7 +64,7 @@ extension LBTheme {
         /// 1. UIBarButtonItems
         /// 1. Toggle-able buttons (on/off, radio buttons)
         public func getSecondaryAccentColor(variant: ThemeColorVariant) -> UIColor {
-            return LBDarkTheme.primaryColorNormal
+            return LBDarkTheme.secondaryAccentColorNormal
         }
 
         /// Initializes a Dark ThemeColorProvider.

@@ -6,12 +6,12 @@
 //  Copyright © 2019 Christopher Perkins. All rights reserved.
 //
 
-/// A UIView-bound protocol that allows for the generalizing of UIView instances so that they can listen to changes in
+/// A class-bound protocol that allows for the generalizing of object instances so that they can listen to changes in
 /// theme.
 ///
 /// Conforming to this protocol also provides `ThemeColorableElement#addToThemeHost()` for use in adding colorable views
 /// to the host.
-public protocol ThemeColorableElement where Self: UIView {
+public protocol ThemeColorableElement: class {
 
     /// Causes this view to recolor using the input ThemeColorProvider
     ///

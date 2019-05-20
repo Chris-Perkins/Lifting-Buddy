@@ -8,11 +8,11 @@
 
 /// The different types of variants that each app theme Color can have.
 ///
-/// - light: The light variant of a color
-/// - normal: The normal variant of a color
-/// - dark: The dark variant of a color
+/// - innerElement: The variant that should be used when the same color is used for an inner element.
+/// - mainElement: The main variant of a color
+/// - outerElement: The variant that should be used when the same color is used for an element outside the main element.
 public enum ThemeColorVariant {
-    case light
-    case normal
-    case dark
+    case innerElement
+    case mainElement
+    case outerElement
 }

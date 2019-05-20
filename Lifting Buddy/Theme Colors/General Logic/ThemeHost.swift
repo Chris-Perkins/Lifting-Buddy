@@ -40,14 +40,14 @@ open class ThemeHost {
     ///
     /// - Note: It is assumed that this array will never become too large (>1000 elements). If this occurs, then the
     /// performance of your application may suffer.
-    private var themeColorableElementContainersBoundToTheme = [WeakContainer<UIView>]()
+    private var themeColorableElementContainersBoundToTheme = [WeakContainer<AnyObject>]()
 
     /// Initializes a ThemeHost with the stored color theme.
     ///
     /// - Warning: Not yet complete; currently only uses the Light color theme.
     private init() {
         // TODO: Make this dynamic and stored.
-        activeColorTheme = LBTheme.LBDarkTheme()
+        activeColorTheme = LBTheme.LBLightTheme()
     }
 
     /// Adds the input `ThemeColorableElement` to the views that listen to changes in the theme. Also calls

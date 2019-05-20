@@ -73,8 +73,8 @@ extension LBNavigationBar: ThemeColorableElement {
     /// * Bar tint - Use the theme's primary accent color
     /// * Tint - Use the secondary accent color
     internal func color(using colorProvider: ThemeColorProvider) {
-        barStyle = colorProvider.getNavigationBarStyle()
-        barTintColor = colorProvider.getPrimaryAccentColor(variant: .normal)
-        tintColor = colorProvider.getSecondaryAccentColor(variant: .normal)
+        barStyle = colorProvider.getUIBarStyle()
+        barTintColor = colorProvider.getPrimaryAccentColor(variant: .mainElement)
+        tintColor = colorProvider.getSecondaryAccentColor(variant: .mainElement)
     }
 }

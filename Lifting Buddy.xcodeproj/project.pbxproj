@@ -66,6 +66,7 @@
 		22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CAA88B1F4899E600F4F42B /* CreateExerciseView.swift */; };
 		22CDEFF41FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CDEFF31FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift */; };
 		22CDEFF61FC5EA9B000CB8C0 /* WorkoutSessionSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CDEFF51FC5EA9B000CB8C0 /* WorkoutSessionSummaryTableViewCell.swift */; };
+		22D7576B22931AC100B54E5E /* LBTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D7576A22931AC100B54E5E /* LBTabBarController.swift */; };
 		22DA60631FB56523009013D7 /* ShowViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DA60621FB56523009013D7 /* ShowViewProtocol.swift */; };
 		22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E77E051F1B35310076B3DB /* HelperFunctions.swift */; };
 		22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */; };
@@ -159,6 +160,7 @@
 		22CAA88B1F4899E600F4F42B /* CreateExerciseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateExerciseView.swift; sourceTree = "<group>"; };
 		22CDEFF31FC5EA8D000CB8C0 /* WorkoutSessionSummaryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionSummaryTableView.swift; sourceTree = "<group>"; };
 		22CDEFF51FC5EA9B000CB8C0 /* WorkoutSessionSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionSummaryTableViewCell.swift; sourceTree = "<group>"; };
+		22D7576A22931AC100B54E5E /* LBTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBTabBarController.swift; sourceTree = "<group>"; };
 		22DA60621FB56523009013D7 /* ShowViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewProtocol.swift; sourceTree = "<group>"; };
 		22E77E051F1B35310076B3DB /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableView.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
+				22D7576922931AA400B54E5E /* View Controllers */,
 				22F5512D2291B51700CDFC68 /* Views */,
 				22F5512922907D2700CDFC68 /* Theme Colors */,
 				2205A2812290750B00575BE3 /* Old */,
@@ -421,6 +424,14 @@
 				22CDEFF51FC5EA9B000CB8C0 /* WorkoutSessionSummaryTableViewCell.swift */,
 			);
 			name = "Summary Screen";
+			sourceTree = "<group>";
+		};
+		22D7576922931AA400B54E5E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				22D7576A22931AC100B54E5E /* LBTabBarController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		22F5511C2290795600CDFC68 /* Externals */ = {
@@ -680,6 +691,7 @@
 				22F551382291E9F600CDFC68 /* LBLightTheme.swift in Sources */,
 				22C3D5A620005C8400C15276 /* TopDownSegue.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
+				22D7576B22931AC100B54E5E /* LBTabBarController.swift in Sources */,
 				22F551272290795600CDFC68 /* HPReorderTableView.m in Sources */,
 				2205A1D02290558F00575BE3 /* ThemeColorableElement.swift in Sources */,
 				22B944C62019591300585D65 /* SetTableViewCell.swift in Sources */,

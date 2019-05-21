@@ -12,31 +12,31 @@ public extension UIView {
 
     /**
      Creates, activates, and returns a list of NSLayoutConstraint that copies the specified
-     viewToCopy's attributes.
+     object's attributes.
      
      - Parameter attributes: The attributes that should be copied
-     - Parameter viewToCopy: The view whose attributes should be copied from
-     - Returns: A list of  NSLayoutConstraints that copy the specified viewToCopy's attributes
+     - Parameter objectToCopy: The object whose attributes should be copied from
+     - Returns: A list of  NSLayoutConstraints that copy the specified objectToCopy's attributes
      */
     @discardableResult func copy(_ attributes: NSLayoutConstraint.Attribute...,
-                                 of viewToCopy: UIView) -> [NSLayoutConstraint] {
-        return attributes.map { self.copy($0, of: viewToCopy) }
+                                 of objectToCopy: UIView) -> [NSLayoutConstraint] {
+        return attributes.map { self.copy($0, of: objectToCopy) }
     }
     
     /**
-     Creates, activates, and returns an NSLayoutConstraint that copies the specified viewToCopy's
+     Creates, activates, and returns an NSLayoutConstraint that copies the specified object's
      attribute.
      
      - Parameter attribute: The attribute that should be copied
-     - Parameter viewToCopy: The view whose attribute should be copied from
-     - Returns: An NSLayoutConstraint that copies the specified viewToCopy's attribute
+     - Parameter objectToCopy: The object whose attribute should be copied from
+     - Returns: An NSLayoutConstraint that copies the specified objectToCopy's attribute
      */
     @discardableResult func copy(_ attribute: NSLayoutConstraint.Attribute,
-                                 of viewToCopy: UIView) -> NSLayoutConstraint {
+                                 of objectToCopy: Any) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         
         let copiedConstraint = NSLayoutConstraint(item: self, attribute: attribute,
-                                                  relatedBy: .equal, toItem: viewToCopy,
+                                                  relatedBy: .equal, toItem: objectToCopy,
                                                   attribute: attribute, multiplier: 1, constant: 0)
         copiedConstraint.isActive = true
         
@@ -45,24 +45,24 @@ public extension UIView {
     
     /**
      Creates, activats, and returns a constraint that clings this view's specified attribute to the
-     specified view's clingedAttribute.
+     specified object's clingedAttribute.
      
-     Example: ```cling(attribute: .left, toView: button, .right)``` would cling this view's
+     Example: `cling(attribute: .left, toView: button, .right)` would cling this view's
      left-side to the button's right-side.
      
      - Parameter clingerAttribute: The attribute that this view should cling from
-     - Parameter clingedView: The view that should be clinged to
+     - Parameter clingedObject: The view that should be clinged to
      - Parameter clingedAttribute: The attribute from the clingedView that this constraint should
      cling to
      - Returns: The constraint that was clinged to
      */
     @discardableResult func cling(_ clingerAttribute: NSLayoutConstraint.Attribute,
-                                  to clingedView: UIView,
+                                  to clingedObject: Any,
                                   _ clingedAttribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         
         let clingedConstraint = NSLayoutConstraint(item: self, attribute: clingerAttribute,
-                                                   relatedBy: .equal, toItem: clingedView,
+                                                   relatedBy: .equal, toItem: clingedObject,
                                                    attribute: clingedAttribute, multiplier: 1,
                                                    constant: 0)
         clingedConstraint.isActive = true

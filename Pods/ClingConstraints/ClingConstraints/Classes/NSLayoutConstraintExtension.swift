@@ -8,7 +8,8 @@
 
 import UIKit
 
-extension NSLayoutConstraint {
+public extension NSLayoutConstraint {
+
     /**
      Creates a new constraint with the given multiplier and the original constraint's other
      properties, deactivates and removes the old constraint, activates the created constraint, and
@@ -17,7 +18,7 @@ extension NSLayoutConstraint {
      - Parameter newMultiplier: The multiplier that should be set for the new constraint
      - Returns: The new activated constraint with the provided `newMultiplier` value
      */
-    @discardableResult public func withMultiplier(_ newMultiplier: CGFloat) -> NSLayoutConstraint {
+    @discardableResult func withMultiplier(_ newMultiplier: CGFloat) -> NSLayoutConstraint {
         let newConstraint = NSLayoutConstraint(item: firstItem!, attribute: firstAttribute,
                                                relatedBy: relation, toItem: secondItem,
                                                attribute: secondAttribute,
@@ -35,7 +36,7 @@ extension NSLayoutConstraint {
      - Parameter offset: The offset that the constraint should have
      - Returns: This constraint with the offset of the provided offset value
     */
-    @discardableResult public func withOffset(_ offset: CGFloat) -> NSLayoutConstraint {
+    @discardableResult func withOffset(_ offset: CGFloat) -> NSLayoutConstraint {
         isActive = false
         constant = offset
         isActive = true
@@ -51,8 +52,7 @@ extension NSLayoutConstraint {
      - Parameter priority: The priority that should be set for the new constraint
      - Returns: The new activated constraint with the provided `priority` value
      */
-    @discardableResult public func withPriority( _ priority: UILayoutPriority)
-        -> NSLayoutConstraint {
+    @discardableResult func withPriority( _ priority: UILayoutPriority) -> NSLayoutConstraint {
         let newConstraint = NSLayoutConstraint(item: firstItem!, attribute: firstAttribute,
                                                relatedBy: relation, toItem: secondItem,
                                                attribute: secondAttribute,
@@ -73,8 +73,7 @@ extension NSLayoutConstraint {
      - Parameter newRelation: The relation that should be set for the new constraint
      - Returns: The new activated constraint with the provided `newRelation` value
      */
-    @discardableResult public func withRelation(_ newRelation: NSLayoutConstraint.Relation)
-        -> NSLayoutConstraint {
+    @discardableResult func withRelation(_ newRelation: NSLayoutConstraint.Relation) -> NSLayoutConstraint {
         let newConstraint = NSLayoutConstraint(item: firstItem!, attribute: firstAttribute,
                                                relatedBy: newRelation, toItem: secondItem,
                                                attribute: secondAttribute,

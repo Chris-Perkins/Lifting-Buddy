@@ -9,6 +9,7 @@
 import UIKit
 
 public extension UIView {
+
     /**
      Creates, activates, and returns a list of NSLayoutConstraint that copies the specified
      viewToCopy's attributes.
@@ -17,8 +18,8 @@ public extension UIView {
      - Parameter viewToCopy: The view whose attributes should be copied from
      - Returns: A list of  NSLayoutConstraints that copy the specified viewToCopy's attributes
      */
-    @discardableResult public func copy(_ attributes: NSLayoutConstraint.Attribute...,
-        of viewToCopy: UIView) -> [NSLayoutConstraint] {
+    @discardableResult func copy(_ attributes: NSLayoutConstraint.Attribute...,
+                                 of viewToCopy: UIView) -> [NSLayoutConstraint] {
         return attributes.map { self.copy($0, of: viewToCopy) }
     }
     
@@ -30,8 +31,8 @@ public extension UIView {
      - Parameter viewToCopy: The view whose attribute should be copied from
      - Returns: An NSLayoutConstraint that copies the specified viewToCopy's attribute
      */
-    @discardableResult public func copy(_ attribute: NSLayoutConstraint.Attribute,
-                                        of viewToCopy: UIView) -> NSLayoutConstraint {
+    @discardableResult func copy(_ attribute: NSLayoutConstraint.Attribute,
+                                 of viewToCopy: UIView) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         
         let copiedConstraint = NSLayoutConstraint(item: self, attribute: attribute,
@@ -55,9 +56,9 @@ public extension UIView {
      cling to
      - Returns: The constraint that was clinged to
      */
-    @discardableResult public func cling(
-        _ clingerAttribute: NSLayoutConstraint.Attribute, to clingedView: UIView,
-        _ clingedAttribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint {
+    @discardableResult func cling(_ clingerAttribute: NSLayoutConstraint.Attribute,
+                                  to clingedView: UIView,
+                                  _ clingedAttribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         
         let clingedConstraint = NSLayoutConstraint(item: self, attribute: clingerAttribute,
@@ -92,10 +93,10 @@ public extension UIView {
      - Returns: The constraints created to fill this view horizontally. These will be alternating
      sequences of `.left` and `.width` constraints for each view in the input variable `views`.
      */
-    @discardableResult public func fill(_ fillMethod: FillMethod,
-                                        withViews views: [UIView],
-                                        withSpacing spacing: CGFloat,
-                                        spacesInternally: Bool = true) -> [NSLayoutConstraint] {
+    @discardableResult func fill(_ fillMethod: FillMethod,
+                                 withViews views: [UIView],
+                                 withSpacing spacing: CGFloat,
+                                 spacesInternally: Bool = true) -> [NSLayoutConstraint] {
         switch (fillMethod) {
         case .bottomToTop:
             return fillVertically(fillMethod, withViews: views,
@@ -216,7 +217,7 @@ public extension UIView {
      
      - Parameter height: The height that the NSLayoutConstraint should specify for this view
      */
-    @discardableResult public func setHeight(_ height: CGFloat) -> NSLayoutConstraint {
+    @discardableResult func setHeight(_ height: CGFloat) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         
         let constraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal,
@@ -233,7 +234,7 @@ public extension UIView {
      
      - Parameter width: The width that the NSLayoutConstraint should specify for this view
      */
-    @discardableResult public func setWidth(_ width: CGFloat) -> NSLayoutConstraint {
+    @discardableResult func setWidth(_ width: CGFloat) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         
         let constraint = NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal,

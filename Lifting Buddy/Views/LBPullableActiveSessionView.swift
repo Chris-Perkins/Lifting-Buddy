@@ -9,6 +9,8 @@
 // MARK: - LBPullableActiveSessionView Main Declaration
 
 /// A view that is used for displaying information about the active session.
+///
+/// - Note: This is currently just a skeleton, and needs to be filled in to be useful.
 internal class LBPullableActiveSessionView: UIView {
 
     /// Initializes an LBPullableActiveSessionView instance with the provided frame. Adds this view to the theme.
@@ -28,7 +30,6 @@ internal class LBPullableActiveSessionView: UIView {
 
         addToThemeHost()
     }
-
 }
 
 // MARK: - ThemeColorableElement Extension

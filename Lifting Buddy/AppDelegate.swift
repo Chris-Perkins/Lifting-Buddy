@@ -22,6 +22,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         let mainVC = LBSessionTabBarViewController(nibName: nil, bundle: nil)
+
+        // MARK: - TEST LOGIC STARTS
+        let vc1 = UINavigationController(navigationBarClass: LBNavigationBar.self, toolbarClass: nil)
+        let pushedVC1 = UIViewController(nibName: nil, bundle: nil)
+        pushedVC1.title = "View Controller 1"
+        pushedVC1.view.backgroundColor = UIColor.white
+        vc1.pushViewController(pushedVC1, animated: true)
+        mainVC.addTab(displayItem: UITabBarItem(tabBarSystemItem: .bookmarks, tag: 1), viewController: vc1)
+
+        let vc2 = UINavigationController(navigationBarClass: LBNavigationBar.self, toolbarClass: nil)
+        let pushedVC2 = UIViewController(nibName: nil, bundle: nil)
+        pushedVC2.title = "View Controller 2"
+        vc2.pushViewController(pushedVC2, animated: true)
+        mainVC.addTab(displayItem: UITabBarItem(tabBarSystemItem: .favorites, tag: 2), viewController: vc2)
+        // MARK: - TEST LOGIC ENDS
         
         window = UIWindow()
         window?.makeKeyAndVisible()

@@ -57,6 +57,17 @@ internal class LBSessionTabBarViewController: UIViewController {
         setupSubviewsLayout()
     }
 
+    /// Adds a selectable tab with the specified item to view controller pair. The new item will be visible on the tab
+    /// bar.
+    ///
+    /// - Parameters:
+    ///   - displayItem: The item that should be used as the display for the UIViewController
+    ///   - viewController: The View Controller associated with the object
+    public func addTab(displayItem: UITabBarItem, viewController: UIViewController) {
+        addChild(viewController)
+        tabBarItemViewControllerPairs.append((displayItem, viewController))
+    }
+
     /// Causes all of the views to constrain themselves accordingly.
     ///
     /// The layout of the views is as follows:
@@ -82,17 +93,6 @@ internal class LBSessionTabBarViewController: UIViewController {
 
         containerView.copy(.top, .left, .right, of: view)
         containerView.cling(.bottom, to: activeSessionView, .top)
-    }
-
-    /// Adds a selectable tab with the specified item to view controller pair. The new item will be visible on the tab
-    /// bar.
-    ///
-    /// - Parameters:
-    ///   - displayItem: The item that should be used as the display for the UIViewController
-    ///   - viewController: The View Controller associated with the object
-    public func addTab(displayItem: UITabBarItem, viewController: UIViewController) {
-        addChild(viewController)
-        tabBarItemViewControllerPairs.append((displayItem, viewController))
     }
 }
 

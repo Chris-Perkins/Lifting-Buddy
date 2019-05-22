@@ -1,6 +1,5 @@
 //
-// TODO: Fix inconsistent file header
-//  UIColorLBThemeExtension.swift
+//  LBTheme.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 5/16/19.

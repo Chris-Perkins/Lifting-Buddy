@@ -11,7 +11,7 @@ import ClingConstraints
 /// A ViewController that allows has three main components:
 /// 1. A Tab Bar
 /// 2. An "Active Session" Bar
-/// 3. A container view
+/// 3. A container view that takes the view of the ViewController that is selected from the Tab Bar
 ///
 /// This acts as the main View Controller for Lifting Buddy, and should be used as the hub for all main View
 /// Controllers.
@@ -49,6 +49,7 @@ internal class LBSessionTabBarViewController: UIViewController {
     }
 
     /// Called when the view for this UIViewController. Causes all of the views to layout themselves via constraints.
+    /// Assigns the tab bar delegate to `self`.
     override internal func viewDidLoad() {
         super.viewDidLoad()
 

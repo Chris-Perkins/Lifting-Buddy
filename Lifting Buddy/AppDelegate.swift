@@ -6,35 +6,31 @@
 //  Copyright © 2017 Christopher Perkins. All rights reserved.
 //
 
-import UIKit
 import IQKeyboardManagerSwift
 import Realm
 import RealmSwift
-import GBVersionTracking
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
+
+    // TODO: Remove when purging old files
     var mainViewController: MainViewController?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        let mainVC = LBSessionTabBarViewController(nibName: nil, bundle: nil)
+        
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        window?.rootViewController = mainVC
+
         // We need this for views to not be hidden under the keyboard
         IQKeyboardManager.shared.enable = true
-        // Start tracking version
-        GBVersionTracking.track()
-        
-        // If this is the first launch EVER, build some workouts.
-        if (GBVersionTracking.isFirstLaunchEver()) {
-            Workout.createDefaultWorkouts()
-        }
-        
-        let userDefaults = UserDefaults.standard
-        if userDefaults.value(forKey: colorSchemeKey) == nil {
-            setNewColorScheme(ColorScheme.dark)
-        }
-        
+
+        // TODO: Migrate to new database
         // Realm migration performing is here
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used

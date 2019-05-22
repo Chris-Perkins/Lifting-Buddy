@@ -20,7 +20,6 @@
 		224153781F1EE1F000F7B82B /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153771F1EE1F000F7B82B /* Exercise.swift */; };
 		224697C61F19843A0089C7CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697C51F19843A0089C7CA /* AppDelegate.swift */; };
 		224697C81F19843A0089C7CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697C71F19843A0089C7CA /* MainViewController.swift */; };
-		224697CB1F19843A0089C7CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697C91F19843A0089C7CA /* Main.storyboard */; };
 		224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 224697CC1F19843A0089C7CA /* Assets.xcassets */; };
 		224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */; };
 		224697D81F19E8060089C7CA /* PrettyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224697D71F19E8060089C7CA /* PrettyButton.swift */; };
@@ -55,6 +54,7 @@
 		229D87041F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229D87031F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift */; };
 		22A36A2F1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */; };
 		22A3F3EB1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A3F3EA1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift */; };
+		22A828FA2294C91B0055F662 /* LBSessionTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A828F92294C91B0055F662 /* LBSessionTabBarController.swift */; };
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
 		22AA6D141F218AD400624744 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D131F218AD400624744 /* SectionView.swift */; };
 		22AD725E1FF2A00F008B35EE /* ExerciseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */; };
@@ -68,7 +68,6 @@
 		22CDEFF61FC5EA9B000CB8C0 /* WorkoutSessionSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CDEFF51FC5EA9B000CB8C0 /* WorkoutSessionSummaryTableViewCell.swift */; };
 		22D7576B22931AC100B54E5E /* LBTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D7576A22931AC100B54E5E /* LBTabBarController.swift */; };
 		22D757702293AB0800B54E5E /* LBTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D7576F2293AB0800B54E5E /* LBTabBar.swift */; };
-		22D757722293BDE400B54E5E /* LBSessionTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D757712293BDE400B54E5E /* LBSessionTabBarViewController.swift */; };
 		22DA60631FB56523009013D7 /* ShowViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DA60621FB56523009013D7 /* ShowViewProtocol.swift */; };
 		22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E77E051F1B35310076B3DB /* HelperFunctions.swift */; };
 		22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */; };
@@ -115,7 +114,6 @@
 		224697C21F19843A0089C7CA /* Lifting Buddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lifting Buddy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		224697C51F19843A0089C7CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		224697C71F19843A0089C7CA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		224697CA1F19843A0089C7CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		224697CC1F19843A0089C7CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		224697CF1F19843A0089C7CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		224697D11F19843A0089C7CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -151,6 +149,7 @@
 		229D87031F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSessionTableViewCell.swift; sourceTree = "<group>"; };
 		22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableViewCell.swift; sourceTree = "<group>"; };
 		22A3F3EA1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewOverlayProtocol.swift; sourceTree = "<group>"; };
+		22A828F92294C91B0055F662 /* LBSessionTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBSessionTabBarController.swift; sourceTree = "<group>"; };
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		22AA6D131F218AD400624744 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryView.swift; sourceTree = "<group>"; };
@@ -164,7 +163,6 @@
 		22CDEFF51FC5EA9B000CB8C0 /* WorkoutSessionSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionSummaryTableViewCell.swift; sourceTree = "<group>"; };
 		22D7576A22931AC100B54E5E /* LBTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBTabBarController.swift; sourceTree = "<group>"; };
 		22D7576F2293AB0800B54E5E /* LBTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBTabBar.swift; sourceTree = "<group>"; };
-		22D757712293BDE400B54E5E /* LBSessionTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBSessionTabBarViewController.swift; sourceTree = "<group>"; };
 		22DA60621FB56523009013D7 /* ShowViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewProtocol.swift; sourceTree = "<group>"; };
 		22E77E051F1B35310076B3DB /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		22EC7FD01F5E01ED00A1E66B /* WorkoutTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableView.swift; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				22F5511C2290795600CDFC68 /* Externals */,
-				224697C51F19843A0089C7CA /* AppDelegate.swift */,
 				22AA6D0F1F2184A400624744 /* View Controllers */,
 				225D44101F510FD700B35D80 /* Custom UITypes */,
 				22AA6D0E1F21847F00624744 /* Content Views */,
@@ -266,11 +263,11 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
+				224697C51F19843A0089C7CA /* AppDelegate.swift */,
 				22D7576922931AA400B54E5E /* View Controllers */,
 				22F5512D2291B51700CDFC68 /* Views */,
 				22F5512922907D2700CDFC68 /* Theme Colors */,
 				2205A2812290750B00575BE3 /* Old */,
-				224697C91F19843A0089C7CA /* Main.storyboard */,
 				224697CC1F19843A0089C7CA /* Assets.xcassets */,
 				224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */,
 				224697D11F19843A0089C7CA /* Info.plist */,
@@ -434,7 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				22D7576A22931AC100B54E5E /* LBTabBarController.swift */,
-				22D757712293BDE400B54E5E /* LBSessionTabBarViewController.swift */,
+				22A828F92294C91B0055F662 /* LBSessionTabBarController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -619,7 +616,6 @@
 				224697D01F19843A0089C7CA /* LaunchScreen.storyboard in Resources */,
 				224697CD1F19843A0089C7CA /* Assets.xcassets in Resources */,
 				22FD260120085444000D1B4C /* Localizable.strings in Resources */,
-				224697CB1F19843A0089C7CA /* Main.storyboard in Resources */,
 				22F551242290795600CDFC68 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -694,6 +690,7 @@
 				22EC7FD11F5E01ED00A1E66B /* WorkoutTableView.swift in Sources */,
 				2280A2FD1F9BB80F00F64AF1 /* ExerciseHistoryTableViewCell.swift in Sources */,
 				22F030141FF01B7500C5E376 /* LabelWithPrettyButtonView.swift in Sources */,
+				22A828FA2294C91B0055F662 /* LBSessionTabBarController.swift in Sources */,
 				22F551382291E9F600CDFC68 /* LBLightTheme.swift in Sources */,
 				22C3D5A620005C8400C15276 /* TopDownSegue.swift in Sources */,
 				224697C81F19843A0089C7CA /* MainViewController.swift in Sources */,
@@ -701,7 +698,6 @@
 				22F551272290795600CDFC68 /* HPReorderTableView.m in Sources */,
 				2205A1D02290558F00575BE3 /* ThemeColorableElement.swift in Sources */,
 				22B944C62019591300585D65 /* SetTableViewCell.swift in Sources */,
-				22D757722293BDE400B54E5E /* LBSessionTabBarViewController.swift in Sources */,
 				22CAA88C1F4899E600F4F42B /* CreateExerciseView.swift in Sources */,
 				22F551312291BCE100CDFC68 /* LBNavigationBar.swift in Sources */,
 				2289D4451FAF9B7700A2DF9D /* ExerciseChartCreator.swift in Sources */,
@@ -768,14 +764,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		224697C91F19843A0089C7CA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				224697CA1F19843A0089C7CA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		224697CE1F19843A0089C7CA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

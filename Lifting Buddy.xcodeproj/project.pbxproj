@@ -266,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				224697C51F19843A0089C7CA /* AppDelegate.swift */,
+				22A828FD2294E72C0055F662 /* Retired */,
 				22D7576922931AA400B54E5E /* View Controllers */,
 				22F5512D2291B51700CDFC68 /* Views */,
 				22F5512922907D2700CDFC68 /* Theme Colors */,
@@ -366,6 +367,14 @@
 			name = "Edit Workout";
 			sourceTree = "<group>";
 		};
+		22A828FD2294E72C0055F662 /* Retired */ = {
+			isa = PBXGroup;
+			children = (
+				22D7576A22931AC100B54E5E /* LBTabBarController.swift */,
+			);
+			path = Retired;
+			sourceTree = "<group>";
+		};
 		22AA6D0E1F21847F00624744 /* Content Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,7 +441,6 @@
 		22D7576922931AA400B54E5E /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				22D7576A22931AC100B54E5E /* LBTabBarController.swift */,
 				22A828F92294C91B0055F662 /* LBSessionTabBarController.swift */,
 			);
 			path = "View Controllers";

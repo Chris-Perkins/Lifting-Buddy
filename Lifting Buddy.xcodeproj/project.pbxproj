@@ -55,6 +55,7 @@
 		22A36A2F1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */; };
 		22A3F3EB1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A3F3EA1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift */; };
 		22A828FA2294C91B0055F662 /* LBSessionTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A828F92294C91B0055F662 /* LBSessionTabBarController.swift */; };
+		22A828FC2294D12F0055F662 /* LBPullableActiveSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A828FB2294D12F0055F662 /* LBPullableActiveSessionView.swift */; };
 		22AA6D121F21851400624744 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D111F21851400624744 /* HeaderView.swift */; };
 		22AA6D141F218AD400624744 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA6D131F218AD400624744 /* SectionView.swift */; };
 		22AD725E1FF2A00F008B35EE /* ExerciseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */; };
@@ -150,6 +151,7 @@
 		22A36A2E1F43A1F5000DCDBF /* EditExerciseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableViewCell.swift; sourceTree = "<group>"; };
 		22A3F3EA1FACCC8E00BEAB97 /* TableViewOverlayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewOverlayProtocol.swift; sourceTree = "<group>"; };
 		22A828F92294C91B0055F662 /* LBSessionTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBSessionTabBarController.swift; sourceTree = "<group>"; };
+		22A828FB2294D12F0055F662 /* LBPullableActiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBPullableActiveSessionView.swift; sourceTree = "<group>"; };
 		22AA6D111F21851400624744 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		22AA6D131F218AD400624744 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		22AD725D1FF2A00F008B35EE /* ExerciseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryView.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 			children = (
 				22F551302291BCE100CDFC68 /* LBNavigationBar.swift */,
 				22D7576F2293AB0800B54E5E /* LBTabBar.swift */,
+				22A828FB2294D12F0055F662 /* LBPullableActiveSessionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -750,6 +753,7 @@
 				2205A1D22290580400575BE3 /* WeakContainer.swift in Sources */,
 				22AA6D121F21851400624744 /* HeaderView.swift in Sources */,
 				22FD539F1FF1C3F800FB069E /* CreateExerciseViewDelegateProtocol.swift in Sources */,
+				22A828FC2294D12F0055F662 /* LBPullableActiveSessionView.swift in Sources */,
 				22578F91201D939C00D9E38C /* UITableViewScrollDelegate.swift in Sources */,
 				22F5513A2291EA9200CDFC68 /* LBDarkTheme.swift in Sources */,
 				229A9DCF201D5C1200FACBA0 /* Notifications.swift in Sources */,

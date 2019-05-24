@@ -57,7 +57,7 @@ internal class LBSessionViewControllerDismissAnimator: NSObject, UIViewControlle
         container.addSubview(tabController.view)
         container.addSubview(sessionController.view)
 
-        // The fake tab bar; slides down as the user drags upwards.
+        // The fake tab bar; slides up as the user drags downwards.
         let fakeTabBar = createFakeTabBar(fromLBSessionTabBarViewController: tabController)
         if let fakeTabBar = fakeTabBar {
             // Show the tab bar below the

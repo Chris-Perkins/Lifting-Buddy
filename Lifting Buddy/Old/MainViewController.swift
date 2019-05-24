@@ -59,7 +59,9 @@ class MainViewController: UIViewController {
         
         if GBVersionTracking.firstInstalledVersion() <= "1.4" &&
             GBVersionTracking.isFirstLaunchForVersion() {
-            SKStoreReviewController.requestReview()
+            if #available(iOS 10.3, *) {
+                SKStoreReviewController.requestReview()
+            }
         }
     }
     

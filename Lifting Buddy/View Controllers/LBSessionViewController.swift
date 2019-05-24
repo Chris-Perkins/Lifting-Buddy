@@ -1,5 +1,5 @@
 //
-//  SessionViewController.swift
+//  LBSessionViewController.swift
 //  Lifting Buddy
 //
 //  Created by Christopher Perkins on 5/22/19.
@@ -8,10 +8,10 @@
 
 import ClingConstraints
 
-// MARK: - SessionViewController Main Declaration
+// MARK: - LBSessionViewController Main Declaration
 
 /// The View Controller where users can enter their workout information by using an input workout.
-internal class SessionViewController: UIViewController {
+internal class LBSessionViewController: UIViewController {
 
     // TODO: Make this take in a workout that should be used for the session
 
@@ -30,8 +30,8 @@ internal class SessionViewController: UIViewController {
     /// The container view for all the content of this ViewController.
     private lazy var contentContainerView = UIView(frame: .zero)
 
-    /// The label that is used for testing if the SessionViewController is working. This will be deleted once the
-    /// SessionViewController is complete.
+    /// The label that is used for testing if the LBSessionViewController is working. This will be deleted once the
+    /// LBSessionViewController is complete.
     private lazy var testLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = UIColor.black
@@ -41,8 +41,8 @@ internal class SessionViewController: UIViewController {
         return label
     }()
 
-    /// Initializes an SessionViewController with the provided nibName or bundle. Both optional. Adds this
-    /// SessionViewController to the theme host.
+    /// Initializes an LBSessionViewController with the provided nibName or bundle. Both optional. Adds this
+    /// LBSessionViewController to the theme host.
     ///
     /// - Parameters:
     ///   - nibNameOrNil: The nib name; optional
@@ -53,7 +53,7 @@ internal class SessionViewController: UIViewController {
         addToThemeHost()
     }
 
-    /// Initializes an SessionViewController from the provided NSCoder. Adds this SessionViewController to the theme
+    /// Initializes an LBSessionViewController from the provided NSCoder. Adds this LBSessionViewController to the theme
     /// host.
     ///
     /// - Parameter aDecoder: The NSCoder to initialize with
@@ -115,7 +115,7 @@ internal class SessionViewController: UIViewController {
 
 // MARK: - ThemeColorableElement Extension
 
-extension SessionViewController: ThemeColorableElement {
+extension LBSessionViewController: ThemeColorableElement {
 
     /// Colors the tab bar such that it is Lifting Buddy style themed with the parameter theme.
     ///

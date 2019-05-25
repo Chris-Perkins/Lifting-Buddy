@@ -113,7 +113,7 @@ internal class LBSessionTabBarViewController: UIViewController {
                                                              percentDifferenceForSnapCompletion: 0.03)
         dismissSessionViewControllerInteractor =
             PullDownDismissViewControllerInteractiveTransition(fromViewController: sessionViewController,
-                                                               pullableView: sessionViewController.closeButton,
+                                                               pullableView: sessionViewController.headerBar,
                                                                pullDownToView: activeSessionView,
                                                                percentThresholdForCompletion: 0.2,
                                                                percentDifferenceForSnapCompletion: 0.03)
@@ -168,6 +168,7 @@ extension LBSessionTabBarViewController: UITabBarDelegate {
             return
         }
 
+        // Get the view associated with the view controller and constrain it to fill the view
         containerView.addSubview(tabBarItemViewControllerPair.1.view)
         tabBarItemViewControllerPair.1.view.copy(.top, .bottom, .left, .right, of: containerView)
     }

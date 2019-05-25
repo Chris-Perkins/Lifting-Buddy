@@ -15,15 +15,45 @@ internal class LBSessionViewController: UIViewController {
 
     // TODO: Make this take in a workout that should be used for the session
 
-    /// The view which contains the button that can be closed.
-    public private(set) lazy var closeContainerView = UIView(frame: .zero)
+    /// The header bar is a view that is used as the "header" for this View Controller.
+    public private(set) lazy var headerBar = UIView(frame: .zero)
 
-    /// The button that allows for this UIViewController to be dismissed.
+    /// The headerInfoContainer is the container for all of the header bar's contents
+    public private(set) lazy var headerInfoContainer = UIView(frame: .zero)
+
+    /// The title label for for the header info container. This will initialize the header title label with a preferred
+    /// font of `.largeTitle` if available or `.title2` otherwise. Currently, this sets a dummy title of "Workout Name".
+    /// Disables interaction to allow the user to drag down by pressing where the label is.
+    public private(set) lazy var headerTitleLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        if #available(iOS 11.0, *) {
+            label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+        } else {
+            label.font = UIFont.preferredFont(forTextStyle: .title2)
+        }
+        label.isUserInteractionEnabled = false
+        label.text = "Workout Name"
+        // TODO: Use dynamic contrasting based on theme on recolor instead of doing this here :/
+        label.textColor = UIColor.white
+        return label
+    }()
+
+    /// The button that can be pressed by the user to allow the user to edit the currently active workout. The
+    /// initialized button will have its title set.
+    public private(set) lazy var editWorkoutButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        // Todo:
+        button.setTitle("edit", for: .normal)
+        return button
+    }()
+
+    /// The button that allows for this UIViewController to be dismissed. The initialized button will have it's title
+    /// set and have a touch up inside event selector of `closeButtonPress(sender:)`
     public private(set) lazy var closeButton: UIButton = {
         let button = UIButton(frame: .zero)
-        button.backgroundColor = UIColor.gray
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.setTitle("Close", for: .normal)
+        // todo: make this an image that doesn't suck
+        button.setTitle("v", for: .normal)
+        button.addTarget(self, action: #selector(closeButtonPress(sender:)), for: .touchUpInside)
         return button
     }()
 
@@ -67,7 +97,6 @@ internal class LBSessionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        closeButton.addTarget(self, action: #selector(closeButtonPress(sender:)), for: .touchUpInside)
         setupSubviewsLayout()
     }
 
@@ -86,29 +115,59 @@ internal class LBSessionViewController: UIViewController {
     /// Causes the views to lay themselves out accordingly.
     ///
     /// The layout is as follows:
-    /// 1. testLabel
-    ///     * Fill the view horizontally with padding of 16
-    ///     * Centered horizontally and vertically
+    /// 1. Header Bar
+    ///     * Copy the top, left, and right of the view (height is dynamic)
+    ///     1. Header Info Container
+    ///         * Copy the left, right of Header Bar with padding of 16
+    ///         * Place 8 above the bottom of the Header Bar
+    ///         * Place 8 below the top layout guide
+    ///         * Height is dynamic
+    ///         1. Close Button
+    ///             * Copy the left, top, and bottom of Header Info Container
+    ///             * Aspect ratio of 1:1
+    ///         1. Header Title Label
+    ///             * Copy the top, bottom of Header Info Container
+    ///             * Place between the Edit Workoout Button and the Close Button with 4 padding
+    ///         1. Edit Workout Button
+    ///             * Copy the right, top, and bottom of Header Info Container
+    ///             * Aspect ratio of 1:1
+    /// 1. Content Container View
+    ///     * Place below the header bar, fill the rest of the view
+    ///     1. Test Label
+    ///         * Center horizontally, vertically in the content container
     ///
     /// - Warning: This assumes `view` is non-nil.
     private func setupSubviewsLayout() {
-        view.addSubview(closeContainerView)
+        view.addSubview(headerBar)
         view.addSubview(contentContainerView)
 
-        closeContainerView.addSubview(closeButton)
+        headerBar.addSubview(headerInfoContainer)
         contentContainerView.addSubview(testLabel)
 
+        headerInfoContainer.addSubview(closeButton)
+        headerInfoContainer.addSubview(headerTitleLabel)
+        headerInfoContainer.addSubview(editWorkoutButton)
 
-        closeContainerView.cling(.top, to: topLayoutGuide, .bottom)
-        closeContainerView.copy(.left, .right, of: view)
+        headerBar.copy(.top, .left, .right, of: view)
+        headerInfoContainer.cling(.top, to: topLayoutGuide, .bottom).withOffset(8)
+        headerInfoContainer.copy(.left, of: headerBar).withOffset(16)
+        headerInfoContainer.copy(.right, of: headerBar).withOffsets(-16)
+        headerInfoContainer.copy(.bottom, of: headerBar).withOffsets(-8)
+
+        closeButton.copy(.top, .left, .bottom, of: headerInfoContainer)
+        closeButton.cling(.width, to: headerInfoContainer, .height)
+
+        headerTitleLabel.copy(.top, .bottom, of: headerInfoContainer)
+        headerTitleLabel.cling(.left, to: closeButton, .right).withOffset(4)
+        headerTitleLabel.cling(.right, to: editWorkoutButton, .left).withOffset(4)
+
+        editWorkoutButton.copy(.top, .bottom, .right, of: headerInfoContainer)
+        editWorkoutButton.cling(.width, to: editWorkoutButton, .height)
 
         contentContainerView.copy(.left, .right, of: view)
         contentContainerView.cling(.bottom, to: bottomLayoutGuide, .top)
-        contentContainerView.cling(.top, to: closeContainerView, .bottom)
+        contentContainerView.cling(.top, to: headerBar, .bottom)
 
-        closeButton.copy(.top, .left, .right, .bottom, of: closeContainerView)
-
-        testLabel.copy(.width, of: contentContainerView).withOffsets(-16)
         testLabel.copy(.centerX, .centerY, of: contentContainerView)
     }
 }
@@ -122,8 +181,14 @@ extension LBSessionViewController: ThemeColorableElement {
     /// - Parameter colorProvider: The provider of the theme colors.
     ///
     /// Colors the elements as follows:
+    /// * headerBar.backgroundColor - Use the primary accent color's main variant
     /// * view.backgroundColor - Use the primary color's main variant
+    /// * closeButton - Use the secondary accent color's main variant
+    /// * editWorkoutButton - Use the secondary accent color's main variant
     func color(using colorProvider: ThemeColorProvider) {
+        headerBar.backgroundColor = colorProvider.getPrimaryAccentColor(variant: .mainElement)
         view.backgroundColor = colorProvider.getPrimaryColor(variant: .mainElement)
+        closeButton.setTitleColor(colorProvider.getSecondaryAccentColor(variant: .mainElement), for: .normal)
+        editWorkoutButton.setTitleColor(colorProvider.getSecondaryAccentColor(variant: .mainElement), for: .normal)
     }
 }

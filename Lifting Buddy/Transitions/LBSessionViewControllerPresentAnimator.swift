@@ -86,18 +86,28 @@ internal class LBSessionViewControllerPresentAnimator: NSObject, UIViewControlle
         let animOptions: UIView.AnimationOptions =
             transitionContext.isInteractive ? [UIView.AnimationOptions.curveLinear] : []
         let animationDuration = transitionDuration(using: transitionContext)
+
+        // This animation is much more front-loaded than the previous, which means the fake session view fades out
+        // MUCH faster. This provides a nicer change for the fake session view to disappear.
+        UIView.animate(withDuration: animationDuration,
+                       delay: 0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 5.0,
+                       options: animOptions,
+                       animations: {
+                        // Fades the fake session view out
+                        fakeSessionView?.alpha = 0
+        })
         UIView.animate(withDuration: animationDuration, delay: 0, options: animOptions, animations: {
             // Scrubs the view controller's frame upwards as the user scrubs upwards.
             toVC.view.frame = fromRect
+            // Animates the tab bar to go down below the container when the user drags upwards (if non-nil)
             if let fakeTabBar = fakeTabBar {
-                // Animates the tab bar to go down below the container when the user drags upwards
                 fakeTabBar.frame = CGRect(x: 0,
                                           y: container.frame.height,
                                           width: fakeTabBar.frame.width,
                                           height: fakeTabBar.frame.height)
             }
-            // Fades the fake session view
-            fakeSessionView?.alpha = 0
         }) { _ in
             fakeTabBar?.removeFromSuperview()
             fakeSessionView?.removeFromSuperview()

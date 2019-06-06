@@ -23,4 +23,7 @@ target 'Lifting Buddy' do
   # For better programmatic constraints
   pod 'ClingConstraints'
 
+  # For pretty collection view
+  pod 'MagazineLayout'
+
 end

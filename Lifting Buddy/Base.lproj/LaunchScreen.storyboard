@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,14 +22,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's Lift" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="OTA-g9-oQA">
-                                <rect key="frame" x="18.5" y="17.5" width="337.5" height="600"/>
+                                <rect key="frame" x="19" y="17.5" width="337.5" height="600"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="90"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F2z-yd-KMp">
+                                <rect key="frame" x="48" y="52" width="240" height="128"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qfq-wx-eT1">
+                                        <rect key="frame" x="0.0" y="20" width="216" height="108"/>
+                                        <color key="backgroundColor" red="0.23921568630000001" green="0.35294117650000001" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tha-TU-7Fq">
+                                        <rect key="frame" x="201.5" y="0.0" width="38.5" height="38.5"/>
+                                        <color key="backgroundColor" red="0.98431372549999996" green="0.75294117650000003" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Tha-TU-7Fq" secondAttribute="height" multiplier="1:1" id="NPl-De-R55"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="2tw-wJ-xTL"/>
+                                    <constraint firstItem="qfq-wx-eT1" firstAttribute="top" secondItem="Tha-TU-7Fq" secondAttribute="centerY" constant="0.80000000000000004" id="IcT-eA-W32"/>
+                                    <constraint firstItem="Tha-TU-7Fq" firstAttribute="height" relation="lessThanOrEqual" secondItem="F2z-yd-KMp" secondAttribute="height" multiplier="0.3" id="LCc-Nf-liM"/>
+                                    <constraint firstAttribute="bottom" secondItem="qfq-wx-eT1" secondAttribute="bottom" id="RFP-Co-p1a"/>
+                                    <constraint firstItem="qfq-wx-eT1" firstAttribute="trailing" secondItem="Tha-TU-7Fq" secondAttribute="trailing" multiplier="0.9" id="UAB-PO-43N"/>
+                                    <constraint firstItem="Tha-TU-7Fq" firstAttribute="width" secondItem="F2z-yd-KMp" secondAttribute="width" multiplier="0.3" priority="999" id="YHz-Du-ja2"/>
+                                    <constraint firstAttribute="height" constant="128" id="ckc-0j-AKc"/>
+                                    <constraint firstItem="Tha-TU-7Fq" firstAttribute="top" secondItem="F2z-yd-KMp" secondAttribute="top" id="l86-zX-23K"/>
+                                    <constraint firstAttribute="trailing" secondItem="Tha-TU-7Fq" secondAttribute="trailing" id="xZS-sy-OMb"/>
+                                    <constraint firstItem="qfq-wx-eT1" firstAttribute="leading" secondItem="F2z-yd-KMp" secondAttribute="leading" id="zkK-fa-3vq"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.29198133949999999" green="0.4580289125" blue="0.91091817620000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="F2z-yd-KMp" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="32" id="DJZ-0L-4R6"/>
+                            <constraint firstItem="F2z-yd-KMp" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="32" id="J1h-j0-Dhy"/>
                             <constraint firstItem="OTA-g9-oQA" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.9" id="UHA-EK-WpK"/>
                             <constraint firstItem="OTA-g9-oQA" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="UUu-BZ-SI8"/>
                             <constraint firstItem="OTA-g9-oQA" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.9" id="c9g-ZW-2CS"/>

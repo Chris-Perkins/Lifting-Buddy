@@ -22,13 +22,13 @@ internal class LBSessionTabBarViewController: UIViewController {
 
     /// The active session view that should be displayed on top of the tab bar. Provides context about the current
     /// workout session.
-    public private(set) lazy var activeSessionView = LBPullableActiveSessionView(frame: .zero)
+    public private(set) lazy var activeSessionView = LBPullableActiveSessionView()
 
     /// The tab bar that should be displayed at the bottom of the view.
-    public private(set) lazy var tabBar = LBTabBar(frame: .zero)
+    public private(set) lazy var tabBar = LBTabBar()
 
     /// The view that should be used to display views from other `UIViewController`s.
-    public private(set) lazy var containerView = UIView(frame: .zero)
+    public private(set) lazy var containerView = UIView()
 
     /// The UIViewController that shows details about the active workout session.
     private lazy var sessionViewController = LBSessionViewController(nibName: nil, bundle: nil)

@@ -14,6 +14,7 @@
 		220A79CC20291E0D000B4EA7 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A79CB20291E0D000B4EA7 /* MessageView.swift */; };
 		220A94251F95146400B5CF60 /* ExerciseHistoryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */; };
 		221BD44A20E069C100D9EE71 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221BD44920E069C100D9EE71 /* InitialViewController.swift */; };
+		22205E9B22A63EF3005EEB07 /* LBReusableWorkoutIconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22205E9A22A63EF2005EEB07 /* LBReusableWorkoutIconCell.swift */; };
 		222AAA69202BD072006B58F4 /* MessageDisplayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222AAA68202BD072006B58F4 /* MessageDisplayerProtocol.swift */; };
 		223590911F427D1A002BE0BF /* EditExerciseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223590901F427D1A002BE0BF /* EditExerciseTableView.swift */; };
 		224153761F1EE12B00F7B82B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224153751F1EE12B00F7B82B /* Workout.swift */; };
@@ -113,6 +114,7 @@
 		220A79CB20291E0D000B4EA7 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		220A94241F95146400B5CF60 /* ExerciseHistoryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryTableView.swift; sourceTree = "<group>"; };
 		221BD44920E069C100D9EE71 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		22205E9A22A63EF2005EEB07 /* LBReusableWorkoutIconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBReusableWorkoutIconCell.swift; sourceTree = "<group>"; };
 		222AAA68202BD072006B58F4 /* MessageDisplayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDisplayerProtocol.swift; sourceTree = "<group>"; };
 		223590901F427D1A002BE0BF /* EditExerciseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditExerciseTableView.swift; sourceTree = "<group>"; };
 		223CF15F1FCC9C2F0093BBC7 /* Lifting-Buddy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Lifting-Buddy-Bridging-Header.h"; path = "Lifting Buddy/Lifting-Buddy-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 				22F551302291BCE100CDFC68 /* LBNavigationBar.swift */,
 				22D7576F2293AB0800B54E5E /* LBTabBar.swift */,
 				22A828FB2294D12F0055F662 /* LBPullableActiveSessionView.swift */,
+				22205E9A22A63EF2005EEB07 /* LBReusableWorkoutIconCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -788,6 +791,7 @@
 				22533B551F549B1500EE474E /* ProgressionMethod.swift in Sources */,
 				2263DF981F8DA60E00592DCB /* TimeInputField.swift in Sources */,
 				22ADD3662297429400A6A1F0 /* LBSessionViewControllerPresentAnimator.swift in Sources */,
+				22205E9B22A63EF3005EEB07 /* LBReusableWorkoutIconCell.swift in Sources */,
 				229D87041F65FC8200FF05DD /* WorkoutSessionTableViewCell.swift in Sources */,
 				2205A1D22290580400575BE3 /* WeakContainer.swift in Sources */,
 				22ADD3602297089F00A6A1F0 /* PullDownDismissViewControllerInteractiveTransition.swift in Sources */,

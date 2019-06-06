@@ -16,16 +16,16 @@ internal class LBSessionViewController: UIViewController {
     // TODO: Make this take in a workout that should be used for the session
 
     /// The header bar is a view that is used as the "header" for this View Controller.
-    public private(set) lazy var headerBar = UIView(frame: .zero)
+    public private(set) lazy var headerBar = UIView()
 
     /// The headerInfoContainer is the container for all of the header bar's contents
-    public private(set) lazy var headerInfoContainer = UIView(frame: .zero)
+    public private(set) lazy var headerInfoContainer = UIView()
 
     /// The title label for for the header info container. This will initialize the header title label with a preferred
     /// font of `.largeTitle` if available or `.title2` otherwise. Currently, this sets a dummy title of "Workout Name".
     /// Disables interaction to allow the user to drag down by pressing where the label is.
     public private(set) lazy var headerTitleLabel: UILabel = {
-        let label = UILabel(frame: .zero)
+        let label = UILabel()
         if #available(iOS 11.0, *) {
             label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         } else {
@@ -41,7 +41,7 @@ internal class LBSessionViewController: UIViewController {
     /// The button that can be pressed by the user to allow the user to edit the currently active workout. The
     /// initialized button will have its title set.
     public private(set) lazy var editWorkoutButton: UIButton = {
-        let button = UIButton(frame: .zero)
+        let button = UIButton()
         // Todo:
         button.setTitle("edit", for: .normal)
         return button
@@ -50,7 +50,7 @@ internal class LBSessionViewController: UIViewController {
     /// The button that allows for this UIViewController to be dismissed. The initialized button will have it's title
     /// set and have a touch up inside event selector of `closeButtonPress(sender:)`
     public private(set) lazy var closeButton: UIButton = {
-        let button = UIButton(frame: .zero)
+        let button = UIButton()
         // todo: make this an image that doesn't suck
         button.setTitle("v", for: .normal)
         button.addTarget(self, action: #selector(closeButtonPress(sender:)), for: .touchUpInside)
@@ -58,12 +58,12 @@ internal class LBSessionViewController: UIViewController {
     }()
 
     /// The container view for all the content of this ViewController.
-    private lazy var contentContainerView = UIView(frame: .zero)
+    private lazy var contentContainerView = UIView()
 
     /// The label that is used for testing if the LBSessionViewController is working. This will be deleted once the
     /// LBSessionViewController is complete.
     private lazy var testLabel: UILabel = {
-        let label = UILabel(frame: .zero)
+        let label = UILabel()
         label.textColor = UIColor.black
         label.numberOfLines = 2
         label.text = "test\nhello"

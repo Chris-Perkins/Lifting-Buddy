@@ -15,7 +15,8 @@ import ClingConstraints
 /// - Note: This is currently just a skeleton, and needs to be filled in to be useful.
 internal class LBPullableActiveSessionView: UIView {
 
-    public private(set) lazy var expandButton = UIButton(frame: .zero)
+    /// The button that is used to show that the pullable session view is expandable
+    public private(set) lazy var expandButton = UIButton()
 
     /// Initializes an LBPullableActiveSessionView instance with the provided frame. Adds this view to the theme.
     /// Constrains subviews.

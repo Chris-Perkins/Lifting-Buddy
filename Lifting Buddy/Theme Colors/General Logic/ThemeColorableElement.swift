@@ -27,4 +27,9 @@ extension ThemeColorableElement {
     internal func addToThemeHost() {
         ThemeHost.shared.bindThemeColorableElementToTheme(self)
     }
+
+    /// Calls `color` of self by using the colors in the currently active theme.
+    internal func requestRecolor() {
+        color(using: ThemeHost.shared.activeColorTheme)
+    }
 }

@@ -9,6 +9,13 @@
 import ClingConstraints
 
 class TestVC: UIViewController {
+
+    public let contractingContainer: SizeChangeOnPressViewContainer = {
+        let container = SizeChangeOnPressViewContainer()
+        container.sizeChangingView.backgroundColor = UIColor.blue
+        return container
+    }()
+
     public let testButtonThing: UIButton = {
         let button = UIButton()
         button.setTitle("yo", for: .normal)
@@ -20,8 +27,16 @@ class TestVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        view.addSubview(testButtonThing)
-        testButtonThing.copy(.centerX, .centerY, of: view)
+
+        view.addSubview(contractingContainer)
+        contractingContainer.sizeChangingView.addSubview(testButtonThing)
+
+        contractingContainer.copy(.centerX, .centerY, of: view)
+        contractingContainer.copy(.width, .height, of: view).withMultipliers(0.5)
+
+        testButtonThing.copy(.centerX, .centerY, of: contractingContainer.sizeChangingView)
+        testButtonThing.backgroundColor = UIColor.black
+        testButtonThing.copy(.width, of: contractingContainer.sizeChangingView).withMultipliers(0.5)
     }
 
     @objc func test() {

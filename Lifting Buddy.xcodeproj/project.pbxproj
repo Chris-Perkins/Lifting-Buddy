@@ -29,6 +29,7 @@
 		2255BBA52005911000B051B0 /* SettingsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2255BBA42005911000B051B0 /* SettingsContentView.swift */; };
 		2255C3C522A8DB9D00748A7C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2255C3C422A8DB9D00748A7C /* TestVC.swift */; };
 		2255C3C822A8DE1900748A7C /* LBWorkoutsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2255C3C722A8DE1900748A7C /* LBWorkoutsViewController.swift */; };
+		2255C3D222AC265300748A7C /* SizeChangeOnPressViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2255C3D122AC265300748A7C /* SizeChangeOnPressViewContainer.swift */; };
 		22578F91201D939C00D9E38C /* UITableViewScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22578F90201D939C00D9E38C /* UITableViewScrollDelegate.swift */; };
 		225D26B61F76D6BA00F047D9 /* ToggleablePrettyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */; };
 		225E65D21F22A041004B3AF4 /* WorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225E65D11F22A041004B3AF4 /* WorkoutsView.swift */; };
@@ -134,6 +135,7 @@
 		2255BBA42005911000B051B0 /* SettingsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContentView.swift; sourceTree = "<group>"; };
 		2255C3C422A8DB9D00748A7C /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		2255C3C722A8DE1900748A7C /* LBWorkoutsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBWorkoutsViewController.swift; sourceTree = "<group>"; };
+		2255C3D122AC265300748A7C /* SizeChangeOnPressViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeChangeOnPressViewContainer.swift; sourceTree = "<group>"; };
 		22578F90201D939C00D9E38C /* UITableViewScrollDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewScrollDelegate.swift; sourceTree = "<group>"; };
 		225D26B51F76D6BA00F047D9 /* ToggleablePrettyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleablePrettyButton.swift; sourceTree = "<group>"; };
 		225E65D11F22A041004B3AF4 /* WorkoutsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsView.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 		2255C3D022AC262500748A7C /* General */ = {
 			isa = PBXGroup;
 			children = (
+				2255C3D122AC265300748A7C /* SizeChangeOnPressViewContainer.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -763,6 +766,7 @@
 				22B944C42019590700585D65 /* SetTableView.swift in Sources */,
 				22E77E061F1B35310076B3DB /* HelperFunctions.swift in Sources */,
 				227981421F4D13BE0010DA18 /* ProgressionMethodsTableView.swift in Sources */,
+				2255C3D222AC265300748A7C /* SizeChangeOnPressViewContainer.swift in Sources */,
 				2250CAE01FC2632C00B21C4A /* WorkoutSessionSummaryScreen.swift in Sources */,
 				220A79CC20291E0D000B4EA7 /* MessageView.swift in Sources */,
 				22ECE3941F644E1A0067171A /* WorkoutSessionView.swift in Sources */,

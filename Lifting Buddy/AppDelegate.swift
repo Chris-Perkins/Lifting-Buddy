@@ -20,28 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        let mainVC = LBSessionTabBarViewController(nibName: nil, bundle: nil)
-
-        // MARK: - TEST LOGIC STARTS
-        let vc1 = UINavigationController(navigationBarClass: LBNavigationBar.self, toolbarClass: nil)
-        let pushedVC1 = UIViewController(nibName: nil, bundle: nil)
-        pushedVC1.title = "View Controller 1"
-        pushedVC1.view.backgroundColor = UIColor.white
-        vc1.pushViewController(pushedVC1, animated: true)
-        mainVC.addTab(displayItem: UITabBarItem(tabBarSystemItem: .bookmarks, tag: 1), viewController: vc1)
-
-        let vc2 = UINavigationController(navigationBarClass: LBNavigationBar.self, toolbarClass: nil)
-        let pushedVC2 = UIViewController(nibName: nil, bundle: nil)
-        pushedVC2.title = "View Controller 2"
-        vc2.pushViewController(pushedVC2, animated: true)
-        mainVC.addTab(displayItem: UITabBarItem(tabBarSystemItem: .favorites, tag: 2), viewController: vc2)
-        // MARK: - TEST LOGIC ENDS
-        
-        window = UIWindow()
-        window?.makeKeyAndVisible()
-        window?.rootViewController = mainVC
-
         // We need this for views to not be hidden under the keyboard
         IQKeyboardManager.shared.enable = true
 
@@ -72,6 +50,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         Realm.Configuration.defaultConfiguration = config
         let _ = try! Realm()
+
+        let mainVC = LBSessionTabBarViewController(nibName: nil, bundle: nil)
+
+        // MARK: - TEST LOGIC STARTS
+        let vc1 = UINavigationController(navigationBarClass: LBNavigationBar.self, toolbarClass: nil)
+        let pushedVC1 = TestVC()
+        pushedVC1.title = "View Controller 1"
+        pushedVC1.view.backgroundColor = UIColor.white
+        vc1.pushViewController(pushedVC1, animated: true)
+        mainVC.addTab(displayItem: UITabBarItem(tabBarSystemItem: .bookmarks, tag: 1), viewController: vc1)
+
+        let vc2 = UINavigationController(navigationBarClass: LBNavigationBar.self, toolbarClass: nil)
+        let pushedVC2 = LBWorkoutsViewController()
+        pushedVC2.title = "View Controller 2"
+        vc2.pushViewController(pushedVC2, animated: true)
+        mainVC.addTab(displayItem: UITabBarItem(tabBarSystemItem: .favorites, tag: 2), viewController: vc2)
+        // MARK: - TEST LOGIC ENDS
+
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        window?.rootViewController = mainVC
         
         return true
     }

@@ -9,19 +9,19 @@
 import ClingConstraints
 
 /// A cell that is used to display information about a workout.
-internal class LBReusableWorkoutIconCell: UICollectionReusableView {
+internal class LBReusableWorkoutIconCell: UICollectionViewCell {
 
     /// The image that contains the fire graphic.
     private static let fireImage = UIImage(named: "Fire")
 
     /// Holds the values of the different layout-based values used in constraining the subviews of this view.
-    private struct LayoutValues {
+    internal struct LayoutValues {
 
-        /// The maximum multiplier for the relation between `streakImageView`'s and `self`'s height.
-        static let streakImageViewSelfHeightMultiplier: CGFloat = 0.4
+        /// The maximum multiplier for the relation between `streakImageView`'s and `self`'s width.
+        static let streakImageViewSelfWidthMultiplier: CGFloat = 0.3
 
         /// The aspect ratio that the streakImageView should have.
-        static let streakImageViewAspectRatio: CGFloat = 256 / 194
+        static let streakImageViewAspectRatio: CGFloat = 194 / 256
 
         /// Private initializer to disallow initialization.
         private init() {}
@@ -110,18 +110,16 @@ internal class LBReusableWorkoutIconCell: UICollectionReusableView {
         addSubview(streakImageView)
         streakImageView.addSubview(streakLabel)
 
-        fakeCellView.copy(.bottom, .left, of: self)
-        fakeCellView.cling(.top, to: streakImageView, .centerY)
-        fakeCellView.cling(.right, to: streakImageView, .centerX)
+        fakeCellView.copy(.top, .left, .bottom, .right, of: self)
 
         cellTitle.copy(.bottom, .left, .right, of: fakeCellView)
 
         cellImageView.copy(.top, .left, .right, of: fakeCellView)
         cellImageView.cling(.bottom, to: cellTitle, .top)
 
-        streakImageView.copy(.height, of: self)
-            .withMultipliers(LayoutValues.streakImageViewSelfHeightMultiplier)
-        streakImageView.cling(.height, to: streakImageView, .width)
+        streakImageView.copy(.width, of: self)
+            .withMultipliers(LayoutValues.streakImageViewSelfWidthMultiplier)
+        streakImageView.cling(.width, to: streakImageView, .height)
             .withMultiplier(LayoutValues.streakImageViewAspectRatio)
         streakImageView.copy(.top, .right, of: self)
 

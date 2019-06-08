@@ -11,7 +11,7 @@ import ClingConstraints
 // MARK: - LBSessionViewController Main Declaration
 
 /// The View Controller where users can enter their workout information by using an input workout.
-internal class LBSessionViewController: UIViewController {
+final internal class LBSessionViewController: UIViewController {
 
     // TODO: Make this take in a workout that should be used for the session
 

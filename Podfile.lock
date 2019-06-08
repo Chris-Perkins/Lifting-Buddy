@@ -3,7 +3,6 @@ PODS:
   - ClingConstraints (1.1.4)
   - GBVersionTracking (1.3.2)
   - IQKeyboardManagerSwift (6.3.0)
-  - MagazineLayout (1.4.5)
   - Realm (3.15.0):
     - Realm/Headers (= 3.15.0)
   - Realm/Headers (3.15.0)
@@ -16,7 +15,6 @@ DEPENDENCIES:
   - ClingConstraints
   - GBVersionTracking
   - IQKeyboardManagerSwift
-  - MagazineLayout
   - RealmSwift
   - SwiftCharts (from `https://github.com/i-schuetz/SwiftCharts.git`)
 
@@ -26,7 +24,6 @@ SPEC REPOS:
     - ClingConstraints
     - GBVersionTracking
     - IQKeyboardManagerSwift
-    - MagazineLayout
     - Realm
     - RealmSwift
 
@@ -44,11 +41,10 @@ SPEC CHECKSUMS:
   ClingConstraints: 404e9bc6b215d4be7b126b8ff996c098af3594f1
   GBVersionTracking: c9b5eb256a234e01b5b44731fda86a3488760c49
   IQKeyboardManagerSwift: a8228c257614af98743b4cd8584637025f36358f
-  MagazineLayout: dcd0e08fbda3f891c77b88bd43997f298e8d496a
   Realm: 9b834e1be6062f544805252c812348872dc5d4ed
   RealmSwift: 8a41886f8ab6efef9eb8df97de2f2bb911561a79
   SwiftCharts: 2e755ea292f0b87d3e4b2c1eb5afc080a20cdc15
 
-PODFILE CHECKSUM: 04b229f389dfc7284b83428071fb2c5b52bd2b2b
+PODFILE CHECKSUM: d7e9a39441aed70f3a1ad35340a5a3260c54c322
 
 COCOAPODS: 1.6.1

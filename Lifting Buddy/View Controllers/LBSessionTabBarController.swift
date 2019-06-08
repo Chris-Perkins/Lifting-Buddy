@@ -15,7 +15,7 @@ import ClingConstraints
 ///
 /// This acts as the main View Controller for Lifting Buddy, and should be used as the hub for all main View
 /// Controllers.
-internal class LBSessionTabBarViewController: UIViewController {
+final internal class LBSessionTabBarViewController: UIViewController {
 
     /// The height of the "active session view" in this View Controller.
     private static let activeSessionViewHeight: CGFloat = 50.0

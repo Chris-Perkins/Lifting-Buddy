@@ -283,6 +283,7 @@
 		224697C41F19843A0089C7CA /* Lifting Buddy */ = {
 			isa = PBXGroup;
 			children = (
+				2255C3CC22A9E51A00748A7C /* Data */,
 				22ADD3532295D2CD00A6A1F0 /* Transitions */,
 				224697C51F19843A0089C7CA /* AppDelegate.swift */,
 				22A828FD2294E72C0055F662 /* Retired */,
@@ -322,6 +323,13 @@
 				2255C3C422A8DB9D00748A7C /* TestVC.swift */,
 			);
 			path = "Test Group";
+			sourceTree = "<group>";
+		};
+		2255C3CC22A9E51A00748A7C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		225D44101F510FD700B35D80 /* Custom UITypes */ = {
@@ -688,7 +696,6 @@
 				"${BUILT_PRODUCTS_DIR}/ClingConstraints/ClingConstraints.framework",
 				"${BUILT_PRODUCTS_DIR}/GBVersionTracking/GBVersionTracking.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/MagazineLayout/MagazineLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftCharts/SwiftCharts.framework",
@@ -699,7 +706,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ClingConstraints.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GBVersionTracking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MagazineLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCharts.framework",

@@ -332,6 +332,24 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		2255C3CF22AC261700748A7C /* Lifting Buddy Styled */ = {
+			isa = PBXGroup;
+			children = (
+				22F551302291BCE100CDFC68 /* LBNavigationBar.swift */,
+				22D7576F2293AB0800B54E5E /* LBTabBar.swift */,
+				22A828FB2294D12F0055F662 /* LBPullableActiveSessionView.swift */,
+				22205E9A22A63EF2005EEB07 /* LBReusableWorkoutIconCell.swift */,
+			);
+			path = "Lifting Buddy Styled";
+			sourceTree = "<group>";
+		};
+		2255C3D022AC262500748A7C /* General */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
 		225D44101F510FD700B35D80 /* Custom UITypes */ = {
 			isa = PBXGroup;
 			children = (
@@ -549,10 +567,8 @@
 		22F5512D2291B51700CDFC68 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				22F551302291BCE100CDFC68 /* LBNavigationBar.swift */,
-				22D7576F2293AB0800B54E5E /* LBTabBar.swift */,
-				22A828FB2294D12F0055F662 /* LBPullableActiveSessionView.swift */,
-				22205E9A22A63EF2005EEB07 /* LBReusableWorkoutIconCell.swift */,
+				2255C3D022AC262500748A7C /* General */,
+				2255C3CF22AC261700748A7C /* Lifting Buddy Styled */,
 			);
 			path = Views;
 			sourceTree = "<group>";

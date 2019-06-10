@@ -22,7 +22,7 @@ import ClingConstraints
     /// onSet: Update the contracted constraints multiplier
     ///
     /// Set to a value of 0-1 to contract, >1 to expand, otherwise invalid.
-    @IBInspectable public var sizeChangeAmount: CGFloat = 0.75 {
+    @IBInspectable public var sizeChangeAmount: CGFloat = 0.85 {
         didSet {
             sizeChangeConstraints.withMultipliers(sizeChangeAmount)
         }

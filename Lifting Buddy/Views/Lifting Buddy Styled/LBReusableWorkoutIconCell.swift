@@ -7,9 +7,10 @@
 //
 
 import ClingConstraints
+import MagazineLayout
 
 /// A cell that is used to display information about a workout.
-internal class LBReusableWorkoutIconCell: UICollectionViewCell {
+internal class LBReusableWorkoutIconCell: MagazineLayoutCollectionViewCell {
 
     /// The image that contains the fire graphic.
     private static let fireImage = UIImage(named: "Fire")
@@ -26,6 +27,9 @@ internal class LBReusableWorkoutIconCell: UICollectionViewCell {
         /// Private initializer to disallow initialization.
         private init() {}
     }
+
+    /// A view that will allow the view to contract while the view is being pressed.
+    public private(set) lazy var contractingViewContainer = SizeChangeOnPressViewContainer()
 
     /// The label that displays the current streak count.
     public private(set) lazy var streakLabel: UILabel = UILabel()
@@ -90,38 +94,42 @@ internal class LBReusableWorkoutIconCell: UICollectionViewCell {
     /// Lays out the subviews by adding them as subviews and constraining them.
     ///
     /// The layout of this view is as follows:
-    /// 1. Streak Image View
-    ///     * On top of the fake cell
-    ///     * Takes up 40% of this view's height; aspect ratio is 256 / 194
-    ///     1. Streak Label
-    ///         * Center inside Streak Image View
-    /// 1. Fake Cell View
-    ///     * Cling to the bottom, left of `self`
-    ///     * Cling `top` and `right` to the vertical and horizontal center of Stream Image View respectively
-    ///     1. Cell Title
-    ///         * Copy the bottom, left, and right constraints of `self`
-    ///         * Height is automatic based on content
-    ///     1. Cell Image
-    ///         * Fill the rest of the space
+    /// 1. Contracting View Container
+    ///     * Fill this view
+    ///     1. Streak Image View
+    ///         * On top of the fake cell
+    ///         * Takes up 40% of this view's height; aspect ratio is 256 / 194
+    ///         1. Streak Label
+    ///             * Center inside Streak Image View
+    ///     1. Fake Cell View
+    ///         * Cling to the bottom, left of `self`
+    ///         * Cling `top` and `right` to the vertical and horizontal center of Stream Image View respectively
+    ///         1. Cell Title
+    ///             * Copy the bottom, left, and right constraints of `self`
+    ///             * Height is automatic based on content
+    ///         1. Cell Image
+    ///             * Fill the rest of the space
     private func setupSubViewsLayout() {
-        addSubview(fakeCellView)
+        contentView.addSubview(contractingViewContainer)
+        contractingViewContainer.sizeChangingView.addSubview(fakeCellView)
         fakeCellView.addSubview(cellTitle)
         fakeCellView.addSubview(cellImageView)
-        addSubview(streakImageView)
+        contractingViewContainer.sizeChangingView.addSubview(streakImageView)
         streakImageView.addSubview(streakLabel)
 
-        fakeCellView.copy(.top, .left, .bottom, .right, of: self)
+        contractingViewContainer.copy(.left, .right, .bottom, .top, of: contentView)
 
+        fakeCellView.copy(.top, .left, .bottom, .right, of: contractingViewContainer.sizeChangingView)
         cellTitle.copy(.bottom, .left, .right, of: fakeCellView)
 
         cellImageView.copy(.top, .left, .right, of: fakeCellView)
         cellImageView.cling(.bottom, to: cellTitle, .top)
 
-        streakImageView.copy(.width, of: self)
+        streakImageView.copy(.width, of: contractingViewContainer.sizeChangingView)
             .withMultipliers(LayoutValues.streakImageViewSelfWidthMultiplier)
         streakImageView.cling(.width, to: streakImageView, .height)
             .withMultiplier(LayoutValues.streakImageViewAspectRatio)
-        streakImageView.copy(.top, .right, of: self)
+        streakImageView.copy(.top, .right, of: contractingViewContainer.sizeChangingView)
 
         streakLabel.copy(.centerX, .centerY, of: streakImageView)
     }
